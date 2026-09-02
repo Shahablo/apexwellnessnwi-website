@@ -168,8 +168,6 @@ test("generated pages contain no fragment routing or editor-only controls", () =
     assert.doesNotMatch(html, forbiddenMarkup, `${page.slug} includes editor runtime markup`);
     assert.doesNotMatch(html, /\bcontenteditable(?:\s*=|\s|>)/i, `${page.slug} includes contenteditable`);
     assert.doesNotMatch(html, editorControl, `${page.slug} includes an editor control`);
-    assert.match(html, /<html\b[^>]*\bclass=["'][^"']*\bno-js\b/i, `${page.slug} needs a no-JavaScript navigation fallback`);
-
     const currentLinks = startTags(html, "a").filter(({ attrs }) => attrs["aria-current"] === "page");
     assert.ok(
       currentLinks.some(({ attrs }) => attrs.href === page.slug),
@@ -351,10 +349,13 @@ test("deployment artifacts protect dotfiles and define site-wide security header
 
   const assetsIgnore = await readFile(assetsIgnorePath, "utf8");
   const headers = await readFile(headersPath, "utf8");
+  const siteCss = await readFile(join(publicRoot, "assets", "site.css"), "utf8");
   const wrangler = JSON.parse(await readFile(wranglerPath, "utf8"));
   assert.match(assetsIgnore, /(?:^|\n)\s*(?:\.git|\*\*\/\.git)(?:\/\*\*)?\s*(?:\n|$)/i, ".assetsignore must exclude .git");
   assert.match(assetsIgnore, /(?:^|\n)\s*(?:\.\*|\*\*\/\.\*|\*\*\/\.[^\n]*)\s*(?:\n|$)/, ".assetsignore must exclude dotfiles");
   assert.match(headers, /(?:^|\n)\/\*\s*(?:\n|$)/, "_headers needs a site-wide /* rule");
+  assert.match(siteCss, /@media\s*\(scripting:\s*none\)[\s\S]*?\.nav-toggle\s*\{[\s\S]*?display:\s*none/i, "the no-JavaScript fallback must hide the inert menu toggle");
+  assert.match(siteCss, /@media\s*\(scripting:\s*none\)[\s\S]*?\.site-nav\s*\{[\s\S]*?display:\s*flex[\s\S]*?max-height:\s*none[\s\S]*?overflow:\s*visible/i, "the no-JavaScript fallback must expose the complete mobile navigation");
   assert.equal(wrangler.assets?.directory, "./public/", "only public/ may be deployed as static assets");
   assert.equal(wrangler.workers_dev, false, "the production Worker must not expose its stable workers.dev route");
   assert.equal(wrangler.preview_urls, true, "version preview URLs must remain enabled");

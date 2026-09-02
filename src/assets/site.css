@@ -282,24 +282,6 @@ a:hover {
   display: flex;
 }
 
-.no-js .site-header-inner {
-  flex-wrap: wrap;
-}
-
-.no-js .nav-toggle {
-  display: none;
-}
-
-.no-js .site-nav {
-  display: flex;
-  position: static;
-  width: 100%;
-  margin-top: 0.75rem;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-sm);
-  box-shadow: none;
-}
-
 .site-nav ul {
   display: flex;
   flex-direction: column;
@@ -1183,6 +1165,32 @@ div.pricing-table {
   .nav-cta {
     margin: 0 0 0 clamp(0.3rem, 0.8vw, 0.8rem);
     padding-inline: clamp(0.75rem, 1.3vw, 1.1rem);
+  }
+}
+
+@media (scripting: none) and (max-width: 69.999rem) {
+  .site-header {
+    position: static;
+  }
+
+  .site-header-inner {
+    flex-wrap: wrap;
+  }
+
+  .nav-toggle {
+    display: none;
+  }
+
+  .site-nav {
+    display: flex;
+    position: static;
+    width: 100%;
+    margin-top: 0.75rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    box-shadow: none;
+    max-height: none;
+    overflow: visible;
   }
 }
 

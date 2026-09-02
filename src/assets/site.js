@@ -1,8 +1,6 @@
 (() => {
   "use strict";
 
-  document.documentElement.classList.remove("no-js");
-
   const DESKTOP_MENU_QUERY = "(min-width: 70rem)";
 
   function normalizePath(value) {

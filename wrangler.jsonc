@@ -33,7 +33,7 @@
     }
   ],
   "vars": {
-    "CONSENT_VERSION": "priority-2026-09"
+    "FOUNDING_CONSENT_VERSION": "founding-consultation-2026-09"
   },
   "observability": {
     "enabled": true

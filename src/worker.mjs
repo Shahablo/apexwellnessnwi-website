@@ -1,4 +1,5 @@
-import { onRequest as handlePriorityRequest } from "../functions/api/priority.js";
+import { onRequest as handleFoundingConsultationRequest } from "../functions/api/founding-consultation.js";
+import { onRequest as handleRetiredPriorityRequest } from "../functions/api/priority.js";
 
 function notFound() {
   return new Response(JSON.stringify({
@@ -22,8 +23,19 @@ function notFound() {
 export async function handleWorkerRequest(request, env, ctx = {}) {
   const url = new URL(request.url);
 
+  if (url.pathname === "/api/founding-consultation") {
+    return handleFoundingConsultationRequest({
+      request,
+      env,
+      waitUntil: typeof ctx.waitUntil === "function" ? ctx.waitUntil.bind(ctx) : undefined,
+      passThroughOnException: typeof ctx.passThroughOnException === "function"
+        ? ctx.passThroughOnException.bind(ctx)
+        : undefined,
+    });
+  }
+
   if (url.pathname === "/api/priority") {
-    return handlePriorityRequest({
+    return handleRetiredPriorityRequest({
       request,
       env,
       waitUntil: typeof ctx.waitUntil === "function" ? ctx.waitUntil.bind(ctx) : undefined,

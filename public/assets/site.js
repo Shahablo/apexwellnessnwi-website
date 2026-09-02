@@ -43,6 +43,7 @@
 
     const setOpen = (open, returnFocus = false) => {
       nav.classList.toggle("is-open", open);
+      document.body.classList.toggle("nav-open", open);
       toggle.setAttribute("aria-expanded", String(open));
       toggle.setAttribute("aria-label", open ? "Close main menu" : "Open main menu");
 
@@ -87,6 +88,14 @@
     setCurrentNavigationItem(nav);
   }
 
+  function redirectLegacyPriorityFragment() {
+    const fragment = window.location.hash.toLowerCase();
+    if (normalizePath(window.location.href) !== "/") return false;
+    if (!["#priority", "#priority-list"].includes(fragment)) return false;
+    window.location.replace("/founding-patients/");
+    return true;
+  }
+
   function ensureStartedAt(form) {
     let input = form.elements.namedItem("form_started_at");
 
@@ -123,8 +132,8 @@
     return payload;
   }
 
-  function initializePriorityForm() {
-    const form = document.querySelector("#priority-form");
+  function initializeConsultationForm() {
+    const form = document.querySelector("#consultation-form");
     if (!form) return;
 
     let status = document.querySelector("#form-status");
@@ -210,7 +219,7 @@
       setSubmitting(true);
 
       try {
-        const response = await fetch("/api/priority", {
+        const response = await fetch(form.getAttribute("action") || "/api/founding-consultation", {
           method: "POST",
           credentials: "same-origin",
           headers: {
@@ -232,7 +241,7 @@
           if (response.status === 429) {
             showStatus("error", "Please wait a moment before trying again.");
           } else if (response.status >= 400 && response.status < 500) {
-            showStatus("error", "Please review your information and try again.");
+            showStatus("error", result?.message || "Please review your information and try again.");
           } else {
             showStatus("error", "We couldn’t save your request right now. Please try again shortly.");
           }
@@ -242,10 +251,14 @@
         form.reset();
         clearFieldErrors();
         ensureStartedAt(form);
+        const successMessage = payload.accessibility_request
+          ? "Thank you. Apex received your website or accessibility-support request."
+          : form.dataset.successMessage;
         showStatus(
           "success",
-          result?.message || "Thank you. Your priority-list request was received."
+          successMessage || result?.message || "Thank you. Apex received your consultation request."
         );
+        document.dispatchEvent(new CustomEvent("consultation:success"));
       } catch {
         showStatus("error", "We couldn’t save your request right now. Please try again shortly.");
       } finally {
@@ -261,9 +274,53 @@
     });
   }
 
+  function initializeMobileConversionCta() {
+    const cta = document.querySelector(".mobile-conversion-cta");
+    const formRegion = document.querySelector("#consultation-request");
+    const footer = document.querySelector(".site-footer");
+    if (!cta || !formRegion) return;
+
+    let submitted = false;
+    const visibleTargets = new Set();
+    const updateVisibility = () => {
+      cta.classList.toggle("is-hidden", submitted || visibleTargets.size > 0);
+    };
+
+    cta.classList.add("is-ready");
+    document.body.classList.add("has-mobile-conversion-cta");
+
+    if ("IntersectionObserver" in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            visibleTargets.add(entry.target);
+          } else {
+            visibleTargets.delete(entry.target);
+          }
+        });
+        updateVisibility();
+      }, { threshold: 0.08 });
+
+      observer.observe(formRegion);
+      if (footer) observer.observe(footer);
+    }
+
+    cta.addEventListener("click", () => {
+      window.setTimeout(() => formRegion.focus({ preventScroll: true }), 0);
+    });
+
+    document.addEventListener("consultation:success", () => {
+      submitted = true;
+      document.body.classList.remove("has-mobile-conversion-cta");
+      updateVisibility();
+    }, { once: true });
+  }
+
   function initialize() {
+    if (redirectLegacyPriorityFragment()) return;
     initializeNavigation();
-    initializePriorityForm();
+    initializeConsultationForm();
+    initializeMobileConversionCta();
   }
 
   if (document.readyState === "loading") {

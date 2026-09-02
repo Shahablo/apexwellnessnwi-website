@@ -214,6 +214,7 @@ test("includes hardened security headers on API success and error responses", as
     assert.equal(response.headers.get("Content-Security-Policy"), "default-src 'none'; frame-ancestors 'none'");
     assert.equal(response.headers.get("Permissions-Policy"), "camera=(), geolocation=(), microphone=()");
     assert.equal(response.headers.get("Referrer-Policy"), "no-referrer");
+    assert.equal(response.headers.get("Strict-Transport-Security"), "max-age=15552000; includeSubDomains");
     assert.equal(response.headers.get("X-Content-Type-Options"), "nosniff");
     assert.equal(response.headers.get("X-Frame-Options"), "DENY");
   }

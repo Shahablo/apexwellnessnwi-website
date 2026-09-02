@@ -32,6 +32,7 @@ test("returns a hardened JSON 404 for unknown API routes", async () => {
   assert.equal(response.status, 404);
   assert.equal(response.headers.get("Content-Type"), "application/json; charset=utf-8");
   assert.equal(response.headers.get("Cache-Control"), "no-store");
+  assert.equal(response.headers.get("Strict-Transport-Security"), "max-age=15552000; includeSubDomains");
   assert.equal(response.headers.get("X-Content-Type-Options"), "nosniff");
   assert.match(response.headers.get("Content-Security-Policy"), /default-src 'none'/);
   assert.deepEqual(await response.json(), {

@@ -58,7 +58,17 @@ async function fetchWithTimeout(url, init = {}) {
 }
 
 function titleText(html) {
-  return html.match(/<title\b[^>]*>([\s\S]*?)<\/title>/i)?.[1]?.trim() || "";
+  const value = html.match(/<title\b[^>]*>([\s\S]*?)<\/title>/i)?.[1]?.trim() || "";
+  return value
+    .replace(/&#x([\da-f]+);/gi, (_, hex) => String.fromCodePoint(Number.parseInt(hex, 16)))
+    .replace(/&#(\d+);/g, (_, decimal) => String.fromCodePoint(Number.parseInt(decimal, 10)))
+    .replace(/&(amp|apos|gt|lt|quot);/gi, (_, name) => ({
+      amp: "&",
+      apos: "'",
+      gt: ">",
+      lt: "<",
+      quot: '"',
+    })[name.toLowerCase()]);
 }
 
 function canonicalHref(html) {
@@ -98,7 +108,7 @@ async function checkRoutes() {
       const html = await response.text();
       check(response.status === 200, `${label}: expected 200, received ${response.status}`);
       check(response.headers.get("content-type")?.includes("text/html"), `${label}: expected HTML content type`);
-      check(titleText(html).replaceAll("&amp;", "&") === page.title, `${label}: unexpected title`);
+      check(titleText(html) === page.title, `${label}: unexpected title`);
       check(canonicalHref(html) === new URL(page.slug, site.canonicalUrl).href, `${label}: unexpected canonical URL`);
       checkSecurityHeaders(response, label);
     } catch (error) {

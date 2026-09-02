@@ -79,6 +79,7 @@ function responseHeaders(origin, extra = {}) {
     "Content-Type": "application/json; charset=utf-8",
     "Permissions-Policy": "camera=(), geolocation=(), microphone=()",
     "Referrer-Policy": "no-referrer",
+    "Strict-Transport-Security": "max-age=15552000; includeSubDomains",
     "X-Content-Type-Options": "nosniff",
     "X-Frame-Options": "DENY",
     ...extra,

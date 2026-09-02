@@ -146,17 +146,85 @@ async function checkCanonicalRedirects() {
   }
 }
 
+async function checkFunnelRedirects() {
+  const redirectCases = [
+    ["/priority", "/founding-patients/"],
+    ["/priority/", "/founding-patients/"],
+    ["/priority-list", "/founding-patients/"],
+    ["/priority-list/", "/founding-patients/"],
+    ["/founding-patients", "/founding-patients/"],
+  ];
+
+  for (const [source, destination] of redirectCases) {
+    const label = `funnel redirect ${source}`;
+    try {
+      const initial = await fetchWithTimeout(routeUrl(baseOrigin, source), { redirect: "manual" });
+      check([301, 302, 307, 308].includes(initial.status), `${label}: expected redirect, received ${initial.status}`);
+      check(Boolean(initial.headers.get("location")), `${label}: redirect is missing Location`);
+
+      const final = await fetchWithTimeout(routeUrl(baseOrigin, source), { redirect: "follow" });
+      const finalUrl = new URL(final.url);
+      check(final.status === 200, `${label}: final response was ${final.status}`);
+      check(finalUrl.pathname === destination, `${label}: final path is ${finalUrl.pathname}`);
+      const html = await final.text();
+      check(
+        canonicalHref(html) === new URL(destination, site.canonicalUrl).href,
+        `${label}: final page has an unexpected canonical URL`,
+      );
+    } catch (error) {
+      check(false, `${label}: ${error instanceof Error ? error.message : String(error)}`);
+    }
+  }
+}
+
 async function checkApi() {
+  try {
+    const response = await fetchWithTimeout(routeUrl(baseOrigin, "/api/founding-consultation"), {
+      method: "GET",
+      headers: { Accept: "application/json", Origin: canonicalOrigin },
+    });
+    const body = await response.json().catch(() => null);
+    const allow = response.headers.get("allow") || "";
+    check(response.status === 405, `/api/founding-consultation GET: expected 405, received ${response.status}`);
+    check(allow.includes("POST"), "/api/founding-consultation GET: Allow must include POST");
+    check(allow.includes("OPTIONS"), "/api/founding-consultation GET: Allow must include OPTIONS");
+    check(response.headers.get("content-type")?.includes("application/json"), "/api/founding-consultation GET: expected JSON");
+    check(response.headers.get("cache-control") === "no-store", "/api/founding-consultation GET: expected no-store");
+    check(body?.ok === false, "/api/founding-consultation GET: expected generic error JSON");
+    checkSecurityHeaders(response, "/api/founding-consultation GET");
+  } catch (error) {
+    check(false, `/api/founding-consultation GET: ${error instanceof Error ? error.message : String(error)}`);
+  }
+
+  try {
+    const response = await fetchWithTimeout(routeUrl(baseOrigin, "/api/founding-consultation"), {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Origin: canonicalOrigin,
+      },
+      body: JSON.stringify({}),
+    });
+    const body = await response.json().catch(() => null);
+    check(response.status === 422, `/api/founding-consultation invalid POST: expected 422, received ${response.status}`);
+    check(response.headers.get("cache-control") === "no-store", "/api/founding-consultation invalid POST: expected no-store");
+    check(Array.isArray(body?.fields), "/api/founding-consultation invalid POST: expected validation fields");
+    checkSecurityHeaders(response, "/api/founding-consultation invalid POST");
+  } catch (error) {
+    check(false, `/api/founding-consultation invalid POST: ${error instanceof Error ? error.message : String(error)}`);
+  }
+
   try {
     const response = await fetchWithTimeout(routeUrl(baseOrigin, "/api/priority"), {
       method: "GET",
       headers: { Accept: "application/json", Origin: canonicalOrigin },
     });
     const body = await response.json().catch(() => null);
-    check(response.status === 405, `/api/priority GET: expected 405, received ${response.status}`);
-    check((response.headers.get("allow") || "").includes("POST"), "/api/priority GET: Allow must include POST");
+    check(response.status === 410, `/api/priority GET: expected 410, received ${response.status}`);
     check(response.headers.get("content-type")?.includes("application/json"), "/api/priority GET: expected JSON");
-    check(body?.ok === false, "/api/priority GET: expected generic error JSON");
+    check(response.headers.get("cache-control") === "no-store", "/api/priority GET: expected no-store");
+    check(body?.ok === false, "/api/priority GET: expected retired-endpoint error JSON");
     checkSecurityHeaders(response, "/api/priority GET");
   } catch (error) {
     check(false, `/api/priority GET: ${error instanceof Error ? error.message : String(error)}`);
@@ -227,6 +295,7 @@ async function checkSensitivePaths() {
 console.log(`Smoke testing ${baseOrigin}`);
 await checkRoutes();
 await checkCanonicalRedirects();
+await checkFunnelRedirects();
 await checkApi();
 await checkLegalPages();
 await checkSensitivePaths();

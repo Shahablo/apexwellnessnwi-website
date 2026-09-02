@@ -1,6 +1,6 @@
 const priorityListCta = Object.freeze({
-  label: 'Join the Priority List',
-  href: '/priority-list/'
+  label: 'Request a Consultation',
+  href: '/founding-patients/'
 });
 
 const effectiveDate = 'September 2, 2026';
@@ -9,7 +9,7 @@ const emergencyNotice =
   'Apex Wellness does not provide urgent or emergency care. If you are experiencing a medical emergency, call 911 or go to the nearest emergency department.';
 
 const prelaunchNotice =
-  'Apex Wellness is in prelaunch. Appointments, treatment, prescriptions, and payments are not currently available through this website.';
+  'Apex Wellness is preparing to open. You may request future contact about opening-month consultation availability; appointments, treatment, prescriptions, and payments are not currently available through this website.';
 
 export const site = Object.freeze({
   name: 'Apex Wellness',
@@ -20,7 +20,7 @@ export const site = Object.freeze({
   description:
     'Apex Wellness is preparing a physician-managed weight, metabolic, and hormone care practice for adults in Northwest Indiana.',
   announcement:
-    'Opening in Northwest Indiana. Join the priority list for launch updates and appointment availability.',
+    'Preparing to open in Northwest Indiana. Founding Patient consultation requests are now open.',
   cta: priorityListCta,
   navigation: [
     { label: 'Home', href: '/' },
@@ -38,13 +38,6 @@ export const site = Object.freeze({
     { label: 'Communications Consent', href: '/communications-consent/' },
     { label: 'Accessibility Statement', href: '/accessibility/' },
     { label: 'Cancellation and Refunds', href: '/cancellation-refunds/' }
-  ],
-  careInterests: [
-    { label: 'Medical weight and metabolic care', value: 'weight_management' },
-    { label: "Men's hormone health", value: 'mens_hormone_health' },
-    { label: "Women's midlife hormone and metabolic care", value: 'womens_midlife_care' },
-    { label: 'Not sure yet', value: 'not_sure' },
-    { label: 'Website or accessibility help', value: 'website_or_accessibility' }
   ],
   representativeImageryNotice:
     'Representative imagery. People and spaces shown are illustrative and are not identified as Apex Wellness clinicians, patients, or facilities.',
@@ -69,30 +62,28 @@ export const pages = Object.freeze({
   home: {
     slug: '/',
     navLabel: 'Home',
-    title: 'Physician-Managed Weight and Hormone Care | Apex Wellness',
+    title: 'Opening Soon: Physician-Managed Weight and Hormone Care | Apex Wellness',
     description:
-      'Explore Apex Wellness, a prelaunch physician-managed weight, metabolic, and hormone care practice for adults in Northwest Indiana.',
-    eyebrow: 'Medical wellness · Northwest Indiana',
-    h1: 'Weight and hormone care, managed by a physician.',
+      'Request future contact about opening-month consultations for planned physician-managed weight, metabolic, and hormone care in Northwest Indiana.',
+    eyebrow: 'Opening soon · Northwest Indiana',
+    h1: 'Physician-managed weight and hormone care, opening soon.',
     intro:
-      'Apex Wellness is being built around a clear standard: a physician reviews the evaluation, appropriate testing, and the written plan, then remains responsible for clinical decisions and follow-up.',
+      'Apex Wellness is preparing focused care for adults in Northwest Indiana. Request future contact now, and Apex may email you when verified opening details and consultation availability are ready.',
     cta: priorityListCta,
+    secondaryCta: {
+      label: 'Explore care options',
+      href: '/weight-management/'
+    },
+    ctaNote: 'Free to request · No payment · No appointment or treatment guarantee',
     sections: [
       {
         type: 'trustPoints',
         items: [
-          'Physician-reviewed evaluation and plan',
-          'Testing interpreted in clinical context, not by one threshold',
-          'Transparent cash-pay options before care begins',
-          'Focused service for adults across Northwest Indiana'
+          'Opening-month requests now open',
+          'No fee or payment to submit',
+          'No medical information collected here',
+          'Verified details before any booking decision'
         ]
-      },
-      {
-        type: 'statement',
-        eyebrow: 'Our approach',
-        heading: 'The plan starts with the person, not a product.',
-        body:
-          'Apex is preparing a care model in which history, concerns, goals, risks, and appropriate testing are considered before a plan is written. Medication is discussed only when clinically appropriate, and outcomes are never guaranteed.'
       },
       {
         type: 'cards',
@@ -120,27 +111,42 @@ export const pages = Object.freeze({
         ]
       },
       {
+        type: 'prelaunch',
+        eyebrow: 'Founding Patient requests',
+        heading: 'Ask to be contacted as opening details become available.',
+        body:
+          'Submit only your name and email. Apex may contact you when verified clinician, pricing, location, and opening-month consultation details are available. A request is not an appointment, reservation, acceptance as a patient, or guarantee of treatment.',
+        cta: priorityListCta
+      },
+      {
         type: 'steps',
-        eyebrow: 'How it works',
-        heading: 'Nothing clinical begins before the case is reviewed.',
+        eyebrow: 'From request to possible appointment',
+        heading: 'Know what happens before you submit.',
         items: [
           {
-            title: 'Choose your care area.',
-            body: 'Review the service that most closely matches your concern.'
+            title: 'Send a contact request.',
+            body: 'Share only your name and email. Do not submit symptoms, diagnoses, medications, laboratory values, or insurance information.'
           },
           {
-            title: 'Complete an evaluation.',
-            body: 'Discuss your history, concerns, goals, and risks through the secure clinical process available after launch.'
+            title: 'Review verified launch details.',
+            body: 'Apex may email you when clinician, location or visit modality, pricing, policies, and consultation availability are confirmed.'
           },
           {
-            title: 'Complete appropriate testing.',
-            body: 'Labs or measurements are considered only when clinically indicated and are interpreted in context.'
+            title: 'Decide whether to schedule.',
+            body: 'If an appropriate time is available, you can decide whether to book after reviewing the applicable details and terms.'
           },
           {
-            title: 'Review your written plan.',
-            body: 'Understand the findings, options, costs, follow-up, and referral criteria before deciding whether to begin care.'
+            title: 'Use the secure clinical process.',
+            body: 'Clinical history and medical information will be collected only through the appropriate intake process after an appointment is confirmed.'
           }
         ]
+      },
+      {
+        type: 'statement',
+        eyebrow: 'Our approach',
+        heading: 'The plan starts with the person, not a product.',
+        body:
+          'Apex is preparing a care model in which history, concerns, goals, risks, and appropriate testing are considered before a plan is written. Medication is discussed only when clinically appropriate, and outcomes are never guaranteed.'
       },
       {
         type: 'featureList',
@@ -157,9 +163,9 @@ export const pages = Object.freeze({
       {
         type: 'prelaunch',
         eyebrow: 'Opening in Northwest Indiana',
-        heading: 'Launch details will be published before scheduling opens.',
+        heading: 'Review the real details before deciding whether to book.',
         body:
-          'Verified clinician names and credentials, the practice location, contact information, hours, final pricing, appointment availability, and reservation terms are still being finalized. Joining the priority list is free and does not create a clinician-patient relationship or guarantee treatment.',
+          'Verified clinician names and credentials, the practice location, contact information, hours, final pricing, appointment availability, and reservation terms are still being finalized. Submitting a consultation request is free and does not create a clinician-patient relationship or guarantee an appointment or treatment.',
         cta: priorityListCta
       },
       {
@@ -476,7 +482,7 @@ export const pages = Object.freeze({
           {
             title: 'Choose your care area.',
             body:
-              'Review medical weight and metabolic care, men’s hormone health, or women’s midlife care. Select “Not sure yet” on the priority-list form if you do not know which area fits.'
+              'Review medical weight and metabolic care, men’s hormone health, or women’s midlife care. You do not need to disclose a care area on the pre-opening contact form.'
           },
           {
             title: 'Complete an evaluation.',
@@ -511,7 +517,7 @@ export const pages = Object.freeze({
         type: 'prelaunch',
         heading: 'What is available today',
         body:
-          'The website currently accepts priority-list requests only. It does not provide clinical intake, appointments, medical advice, prescriptions, or payment. Verified staffing, visit modality, response times, follow-up cadence, and launch availability will be published before scheduling opens.',
+          'The website currently accepts requests for future contact about opening-month consultation availability. It does not book or confirm appointments or provide clinical intake, medical advice, prescriptions, or payment. Verified staffing, visit modality, response times, follow-up cadence, and launch availability will be published before scheduling opens.',
         cta: priorityListCta
       }
     ]
@@ -533,7 +539,7 @@ export const pages = Object.freeze({
         type: 'status',
         heading: 'Final pricing is not yet published.',
         body:
-          'Apex is not accepting payment during prelaunch. Pricing will be posted only after clinical offerings, vendor terms, and operating details are confirmed. Joining the priority list is free.'
+          'Apex is not accepting payment during prelaunch. Pricing will be posted only after clinical offerings, vendor terms, and operating details are confirmed. Submitting a consultation request is free.'
       },
       {
         type: 'pricingPrinciples',
@@ -584,7 +590,7 @@ export const pages = Object.freeze({
           {
             question: 'Can I pay or reserve an appointment now?',
             answer:
-              'No. The current website does not accept payment or appointment reservations. The priority list is free and is only for updates and future availability.'
+              'No. The current website does not accept payment or reserve appointments. You may submit a free request for future contact about opening-month consultation availability.'
           },
           {
             question: 'Can I cancel or receive a refund?',
@@ -677,7 +683,7 @@ export const pages = Object.freeze({
           {
             question: 'Is Apex Wellness open?',
             answer:
-              'Not yet. This website currently provides information and accepts priority-list requests. It does not provide appointments, clinical intake, treatment, prescriptions, or payment.'
+              'Not yet. This website currently provides information and accepts requests for future contact about consultation availability. It does not book appointments or provide clinical intake, treatment, prescriptions, or payment.'
           },
           {
             question: 'Where is Apex located?',
@@ -687,10 +693,10 @@ export const pages = Object.freeze({
           {
             question: 'When will appointments open?',
             answer:
-              'A launch date has not been published. Priority-list members may receive updates and notice when appointment availability is announced.'
+              'A launch date has not been published. People who submit the Founding Patient form may receive verified opening details and notice when consultation availability is announced.'
           },
           {
-            question: 'Does joining the list reserve an appointment?',
+            question: 'Does submitting a consultation request reserve an appointment?',
             answer:
               'No. It is a free request for updates and future availability, not a reservation or guarantee of an appointment, prescription, treatment, or outcome.'
           }
@@ -716,9 +722,9 @@ export const pages = Object.freeze({
               'No. Apex is intended as focused care within a defined scope and will not replace routine primary care, recommended screening, urgent or emergency care, or specialist services when those are appropriate.'
           },
           {
-            question: 'Can I send symptoms, diagnoses, medications, or lab values through the priority-list form?',
+            question: 'Can I send symptoms, diagnoses, medications, or lab values through the consultation form?',
             answer:
-              'No. The priority-list form is not clinical intake. Please do not submit medical or other sensitive information there.'
+              'No. The consultation form is not clinical intake. Please do not submit medical or other sensitive information there.'
           }
         ]
       },
@@ -744,7 +750,7 @@ export const pages = Object.freeze({
           {
             question: 'How will clinical information and messages be handled?',
             answer:
-              'The marketing form collects only basic contact information and care interest. Details about secure clinical intake, record handling, response times, and patient communications will be published before care opens.'
+              'The pre-opening form collects only a name, email address, consent record, and an optional website-accessibility flag. Details about secure clinical intake, record handling, response times, and patient communications will be published before care opens.'
           }
         ]
       },
@@ -756,77 +762,129 @@ export const pages = Object.freeze({
     ]
   },
 
-  'priority-list': {
-    slug: '/priority-list/',
-    navLabel: 'Priority List',
-    title: 'Join the Priority List | Apex Wellness',
+  'founding-patients': {
+    slug: '/founding-patients/',
+    navLabel: 'Founding Patient Consultation',
+    title: 'Request a Founding Patient Consultation | Apex Wellness',
     description:
-      'Join the Apex Wellness priority list for prelaunch updates and future appointment availability in Northwest Indiana.',
-    eyebrow: 'Prelaunch priority list',
-    h1: 'Join the priority list.',
+      'Ask Apex Wellness to contact you when verified Founding Patient consultation details and opening-month availability are ready in Northwest Indiana.',
+    eyebrow: 'Founding Patient requests · Northwest Indiana',
+    h1: 'Request an opening-month consultation.',
     intro:
-      'Receive launch updates and notice when appointment availability is announced. Joining is free and does not reserve an appointment or guarantee treatment.',
-    cta: priorityListCta,
+      'Share your name and email so Apex Wellness may contact you when verified consultation details and opening-month availability are ready. This is a request for future contact—not an appointment, reservation, or clinical intake.',
+    cta: {
+      label: 'Go to the request form',
+      href: '#consultation-request'
+    },
+    secondaryCta: {
+      label: 'Explore the full site',
+      href: '/'
+    },
+    ctaNote: 'Free to request · No payment · No medical information',
+    landing: true,
+    form: {
+      action: '/api/founding-consultation',
+      method: 'post',
+      heading: 'Request future consultation contact',
+      submitLabel: 'Submit Consultation Request',
+      consentVersion: 'founding-consultation-2026-09',
+      consentLabel:
+        'I ask Apex Wellness to email me about this request. For a consultation request, emails may include verified opening information and future consultation availability. I understand that this form does not confirm an appointment or establish care. I may unsubscribe from promotional email at any time, and I acknowledge the Privacy Policy and Communications Consent.',
+      accessibilityLabel: 'This request is about website or accessibility support.',
+      privacyNote:
+        'Enter only your name and email. Do not submit symptoms, diagnoses, medications, laboratory values, insurance details, or other sensitive medical information. This form is not monitored for medical concerns.',
+      successMessage:
+        'Thank you. Apex received your consultation request. This is not an appointment confirmation or acceptance as a patient.'
+    },
     sections: [
       {
-        type: 'expectations',
-        heading: 'What to expect',
+        type: 'trustPoints',
         items: [
-          'Apex may email you about launch progress and future appointment availability after you give consent.',
-          'Final clinicians, credentials, location, hours, pricing, care terms, and availability will be published before scheduling opens.',
-          'Clinical history will not be collected through this marketing form.',
-          'Joining the list does not create a clinician-patient relationship or guarantee eligibility, treatment, a prescription, an outcome, or a place in a future schedule.'
+          'No payment to submit',
+          'No medical details requested',
+          'Verified information before booking',
+          'Focused on Northwest Indiana adults'
         ]
       },
       {
-        type: 'form',
-        action: '/api/priority',
-        method: 'post',
-        submitLabel: 'Join the Priority List',
-        fields: [
+        type: 'detail',
+        eyebrow: 'What Founding Patient means',
+        heading: 'A pre-opening request pathway—not a promise.',
+        body:
+          '“Founding Patient” identifies this pre-opening consultation-request pathway. It does not mean you have been accepted as a patient or promised priority, a discount, a specific service, or an appointment. A clinician-patient relationship begins only through the appropriate clinical process after the practice opens.'
+      },
+      {
+        type: 'cards',
+        eyebrow: 'Planned care areas',
+        heading: 'Explore whether Apex may fit what you are looking for.',
+        cards: [
           {
-            name: 'full_name',
-            label: 'Name',
-            type: 'text',
-            autocomplete: 'name',
-            required: true
+            title: 'Medical Weight and Metabolic Care',
+            body: 'A planned physician-managed approach to evaluation, meaningful measurements, sustainable habits, and medication only when clinically indicated.',
+            href: '/weight-management/'
           },
           {
-            name: 'email',
-            label: 'Email',
-            type: 'email',
-            autocomplete: 'email',
-            inputmode: 'email',
-            required: true
+            title: "Men's Hormone Health",
+            body: 'A planned risk-aware evaluation of symptoms and appropriate testing before any treatment decision.',
+            href: '/mens-hormone-health/'
           },
           {
-            name: 'care_interest',
-            label: 'Care interest',
-            type: 'select',
-            autocomplete: 'off',
-            required: true,
-            options: site.careInterests
+            title: "Women's Midlife Hormone and Metabolic Care",
+            body: 'A planned individualized discussion of perimenopause, menopause, weight, sleep, and metabolic concerns.',
+            href: '/womens-midlife-care/'
           }
-        ],
-        consent: {
-          name: 'consent',
-          required: true,
-          label:
-            'I agree to receive email from Apex Wellness about launch updates and appointment availability, and I acknowledge the Privacy Policy and Communications Consent. I may unsubscribe at any time.'
-        },
-        privacyNote:
-          'Please do not include symptoms, diagnoses, medications, laboratory values, insurance details, or other sensitive medical information. This is a marketing and availability form, not clinical intake.',
-        successHeading: 'Your request was received.',
-        successMessage: 'Thank you. We received your priority-list request.',
-        errorHeading: 'We could not submit the form.',
-        errorMessage:
-          'Please review the highlighted fields and try again. If the problem continues, return later; a separate contact channel is not yet published.'
+        ]
+      },
+      {
+        type: 'steps',
+        eyebrow: 'What happens next',
+        heading: 'The request comes first. A booking decision comes later.',
+        items: [
+          {
+            title: 'Submit your request.',
+            body: 'Apex records your contact request and communication consent. No appointment is booked automatically.'
+          },
+          {
+            title: 'Receive verified details.',
+            body: 'Apex may email you when clinician identity and credentials, location or modality, pricing, policies, and availability are confirmed.'
+          },
+          {
+            title: 'Choose whether to book.',
+            body: 'If consultation availability is offered, review the details and decide whether an available time fits.'
+          },
+          {
+            title: 'Complete secure intake after confirmation.',
+            body: 'Only a confirmed clinical workflow should collect medical history or other sensitive information.'
+          }
+        ]
       },
       {
         type: 'notice',
-        heading: 'No payment or clinical care through this form',
+        heading: 'No appointment or treatment is guaranteed.',
         body:
-          'Apex does not accept payment or clinical information through the priority list. Medical questions cannot be evaluated here. For urgent or emergency needs, seek appropriate immediate care.'
+          'Submitting this form does not reserve a time, establish a clinician-patient relationship, confirm eligibility, promise a prescription, or guarantee any result. Medical questions cannot be evaluated here. For urgent or emergency needs, seek appropriate immediate care.'
+      },
+      {
+        type: 'faq',
+        heading: 'Before you submit',
+        items: [
+          {
+            question: 'Does this request reserve an appointment?',
+            answer: 'No. It requests future contact only and does not guarantee availability, acceptance, treatment, or a prescription.'
+          },
+          {
+            question: 'Does it cost anything to submit?',
+            answer: 'No. The request is free, and this website does not currently accept payment.'
+          },
+          {
+            question: 'Should I include medical information?',
+            answer: 'No. Submit only your name and email. Medical information belongs in the appropriate secure clinical intake process after an appointment is confirmed.'
+          },
+          {
+            question: 'When will Apex contact me?',
+            answer: 'A response time is not yet published. Apex may contact you when verified opening information and future consultation availability are ready.'
+          }
+        ]
       }
     ]
   },
@@ -836,11 +894,11 @@ export const pages = Object.freeze({
     navLabel: 'Privacy Policy',
     title: 'Privacy Policy | Apex Wellness',
     description:
-      'Read how the Apex Wellness prelaunch website collects, uses, protects, and retains priority-list information.',
+      'Read how the Apex Wellness prelaunch website collects, uses, protects, and retains consultation-request information.',
     eyebrow: `Effective ${effectiveDate}`,
     h1: 'Privacy Policy',
     intro:
-      'This prelaunch policy explains the limited information collected through the Apex Wellness website and priority list. It may be updated as clinical services and secure patient systems are introduced.',
+      'This prelaunch policy explains the limited information collected through the Apex Wellness website and Founding Patient contact form. It may be updated as clinical services and secure patient systems are introduced.',
     cta: priorityListCta,
     effectiveDate,
     sections: [
@@ -848,16 +906,17 @@ export const pages = Object.freeze({
         type: 'policySection',
         heading: 'Information we collect',
         paragraphs: [
-          'The priority-list form asks for your name, email address, and care interest. Please do not submit symptoms, diagnoses, medications, laboratory values, insurance information, or other sensitive medical details.',
-          'For security, reliability, and consent records, the site may also record the submission time, policy or consent version, referring page, browser or device information, and whether the submission passed anti-spam checks. The raw IP address is not retained. Only a one-way salted hash derived from it is retained for abuse prevention and rate limiting.'
+          'The Founding Patient form asks for your name and email address. You may optionally identify the request as website or accessibility support. The form does not ask which care area interests you. Please do not submit symptoms, diagnoses, medications, laboratory values, insurance information, or other sensitive medical details.',
+          'For security, reliability, and consent records, the site may also record the submission time, consent version, source domain, browser or device information, and whether the submission passed anti-spam checks. The raw IP address is not retained. Only a one-way salted hash derived from it is retained for abuse prevention and rate limiting.',
+          'Earlier priority-list records remain associated with the consent provided when they were submitted. They are not silently converted into consultation requests.'
         ]
       },
       {
         type: 'policySection',
         heading: 'How information is used',
         bullets: [
-          'To confirm and administer your priority-list request.',
-          'To send launch updates and future appointment-availability information you requested.',
+          'To record, review, and respond to your contact request.',
+          'To send verified opening information and future consultation-availability information you requested.',
           'To answer a website or accessibility help request submitted through the form.',
           'To protect the form and website from abuse, fraud, spam, and security threats.',
           'To maintain a record of consent and honor unsubscribe or deletion requests where applicable.'
@@ -867,7 +926,7 @@ export const pages = Object.freeze({
         type: 'policySection',
         heading: 'Sharing and service providers',
         paragraphs: [
-          'Apex does not sell priority-list information. Information may be handled by service providers that support website hosting, form delivery, email, security, or data storage, but only for those services and subject to applicable safeguards.',
+          'Apex does not sell consultation-request information. Information may be handled by service providers that support website hosting, form delivery, email, security, or data storage, but only for those services and subject to applicable safeguards.',
           'Information may also be disclosed when reasonably necessary to comply with law, respond to valid legal process, protect rights or safety, or address suspected misuse. The marketing form is not intended to receive protected health information or create a clinical record.'
         ]
       },
@@ -876,14 +935,14 @@ export const pages = Object.freeze({
         heading: 'Security and retention',
         paragraphs: [
           'Apex uses administrative, technical, and organizational safeguards intended to protect submitted information. No website, transmission, or storage method can be guaranteed completely secure.',
-          'Priority-list information and related consent records are retained only as long as reasonably needed for the purposes described here, to honor communication preferences, resolve disputes, meet applicable obligations, and protect the service. Records are deleted or de-identified when no longer reasonably needed, subject to legal or security requirements.'
+          'Consultation-request information, earlier priority-list information, and related consent records are retained only as long as reasonably needed for their stated purposes, to honor communication preferences, resolve disputes, meet applicable obligations, and protect the service. Records are deleted or de-identified when no longer reasonably needed, subject to legal or security requirements.'
         ]
       },
       {
         type: 'policySection',
         heading: 'Your choices',
         paragraphs: [
-          'You may unsubscribe using the link in an email. You may also use the priority-list form and choose “Website or accessibility help” to request access, correction, or deletion of your prelaunch contact information. Do not include medical details in that request.',
+          'You may unsubscribe using the link in an email. You may also use the Founding Patient form, check the website or accessibility support option, and request access, correction, or deletion of your prelaunch contact information. Do not include medical details in that request.',
           'Browser privacy controls may limit cookies or similar technologies. Essential security and form-protection functions may still be required for the site to operate.'
         ]
       },
@@ -891,7 +950,7 @@ export const pages = Object.freeze({
         type: 'policySection',
         heading: 'Children and policy changes',
         paragraphs: [
-          'The priority list is intended for adults and is not knowingly directed to children. If information from a child is discovered, Apex will take reasonable steps to delete it.',
+          'The consultation-request pathway is intended for adults and is not knowingly directed to children. If information from a child is discovered, Apex will take reasonable steps to delete it.',
           'The effective date at the top identifies this version. Material changes will be reflected on this page before the updated policy applies to new submissions.'
         ]
       }
@@ -903,11 +962,11 @@ export const pages = Object.freeze({
     navLabel: 'Terms of Use',
     title: 'Terms of Use | Apex Wellness',
     description:
-      'Read the terms governing use of the prelaunch Apex Wellness website and priority list.',
+      'Read the terms governing use of the prelaunch Apex Wellness website and consultation-request form.',
     eyebrow: `Effective ${effectiveDate}`,
     h1: 'Terms of Use',
     intro:
-      'These terms apply to the prelaunch Apex Wellness website. The site currently provides general information and a priority list; it does not provide appointments, payment, clinical intake, or medical care.',
+      'These terms apply to the prelaunch Apex Wellness website. The site currently provides general information and a request for future consultation contact; it does not book appointments or provide payment, clinical intake, or medical care.',
     cta: priorityListCta,
     effectiveDate,
     sections: [
@@ -916,7 +975,7 @@ export const pages = Object.freeze({
         heading: 'Educational information only',
         paragraphs: [
           'Website content is general educational information and is not medical advice, diagnosis, treatment, or a substitute for care from a qualified professional who knows your circumstances.',
-          'Using the site, joining the priority list, or receiving an email does not create a clinician-patient relationship and does not guarantee an appointment, eligibility, treatment, prescription, or result.'
+          'Using the site, submitting a consultation request, or receiving an email does not create a clinician-patient relationship and does not guarantee an appointment, eligibility, treatment, prescription, or result.'
         ]
       },
       {
@@ -936,7 +995,7 @@ export const pages = Object.freeze({
         type: 'policySection',
         heading: 'Acceptable use',
         bullets: [
-          'Provide accurate information when submitting the priority-list form.',
+          'Provide accurate information when submitting the consultation-request form.',
           'Do not submit clinical, payment, insurance, or other sensitive information through the marketing form.',
           'Do not interfere with site operation, bypass security measures, submit spam, impersonate another person, or use the site unlawfully.',
           'Do not copy, modify, or exploit site content in a way that infringes intellectual-property or other rights.'
@@ -955,7 +1014,7 @@ export const pages = Object.freeze({
         heading: 'Changes and questions',
         paragraphs: [
           'The effective date at the top identifies this version. Updated terms will be posted here before they govern new use of the site.',
-          'Until a dedicated contact channel is published, use the priority-list form and select “Website or accessibility help” for a website-related question. Do not include medical information.'
+          'Until a dedicated contact channel is published, use the Founding Patient form and check the website or accessibility support option for a website-related question. Do not include medical information.'
         ]
       }
     ]
@@ -970,7 +1029,7 @@ export const pages = Object.freeze({
     eyebrow: `Effective ${effectiveDate}`,
     h1: 'Communications Consent',
     intro:
-      'This consent applies to prelaunch email requested through the priority-list form. Apex does not currently request a phone number or permission for marketing texts or calls.',
+      'This consent applies to prelaunch email requested through the Founding Patient contact form. Apex does not currently request a phone number or permission for marketing texts or calls.',
     cta: priorityListCta,
     effectiveDate,
     sections: [
@@ -978,15 +1037,15 @@ export const pages = Object.freeze({
         type: 'policySection',
         heading: 'What you agree to receive',
         paragraphs: [
-          'By checking the consent box and submitting the form, you ask Apex Wellness to email you about launch progress, priority-list administration, and future appointment availability.',
-          'These messages are informational and promotional. They are not medical advice, clinical messages, appointment confirmations, or emergency communications.'
+          'By checking the consent box and submitting the form, you ask Apex Wellness to email you about your request. If your request concerns a consultation, emails may include verified opening information and future consultation availability.',
+          'If you check the website or accessibility support option, Apex may email you to respond to that request; it will not treat that selection as a consultation-marketing request. Consultation-related messages may be informational and promotional. Messages are not medical advice, clinical messages, appointment confirmations, or emergency communications.'
         ]
       },
       {
         type: 'policySection',
         heading: 'Consent is optional and revocable',
         paragraphs: [
-          'Joining the priority list is optional. Consent to prelaunch email is not a condition of receiving medical care or making a purchase, neither of which is currently available through the site.',
+          'Submitting a consultation request is optional. Consent to prelaunch email is not a condition of receiving medical care or making a purchase, neither of which is currently available through the site.',
           'You may unsubscribe at any time using the link in an email. Apex may retain a limited suppression record so that the unsubscribe request continues to be honored.'
         ]
       },
@@ -994,7 +1053,8 @@ export const pages = Object.freeze({
         type: 'policySection',
         heading: 'Consent records',
         paragraphs: [
-          'Apex may record the email address, submission time, selected care interest, consent language and version, source page, and technical information reasonably needed to document the request and protect the form from abuse. The raw IP address is not retained. Only a one-way salted hash derived from it is retained for abuse prevention and rate limiting.',
+          'Apex may record the email address, submission time, optional website-accessibility flag, consent language and version, source domain, and technical information reasonably needed to document the request and protect the form from abuse. The raw IP address is not retained. Only a one-way salted hash derived from it is retained for abuse prevention and rate limiting.',
+          'Earlier priority-list consent remains limited to the purpose and language presented when that consent was collected; it is not reclassified as a consultation request.',
           'Consent records are protected and retained as described in the Privacy Policy.'
         ]
       },
@@ -1034,7 +1094,7 @@ export const pages = Object.freeze({
         type: 'policySection',
         heading: 'Request help or report a barrier',
         paragraphs: [
-          'Until a dedicated accessibility contact is published, use the priority-list form and select “Website or accessibility help.” Provide only the minimum information needed to describe the page, feature, assistive technology, or alternative format involved.',
+          'Until a dedicated accessibility contact is published, use the Founding Patient form and check the website or accessibility support option. Provide only your name and email through the form; Apex can request the minimum additional information needed when responding.',
           'Do not include medical or other sensitive information. Apex will use the email address you provide to respond and work toward a reasonable accessible alternative.'
         ]
       },
@@ -1071,9 +1131,9 @@ export const pages = Object.freeze({
     sections: [
       {
         type: 'policySection',
-        heading: 'Priority-list requests',
+        heading: 'Pre-opening consultation requests',
         paragraphs: [
-          'Joining the priority list is free. It is not an appointment, reservation, membership, deposit, or promise of treatment.',
+          'Submitting a Founding Patient consultation request is free. It is not an appointment, reservation, membership, deposit, or promise of treatment.',
           'You may unsubscribe from email using the link in any message. You may request deletion of your prelaunch contact information as described in the Privacy Policy.'
         ]
       },
@@ -1082,7 +1142,7 @@ export const pages = Object.freeze({
         heading: 'Terms before future payment',
         paragraphs: [
           'Before Apex accepts any payment, the applicable price, services included and excluded, billing cadence, rescheduling deadline, late-cancellation or missed-visit rule, pause and termination process, refund eligibility, and any evaluation-fee credit will be shown in plain language.',
-          'You will have an opportunity to review and accept those terms before completing payment. Terms may differ by service and will not be applied retroactively to a prelaunch priority-list request.'
+          'You will have an opportunity to review and accept those terms before completing payment. Terms may differ by service and will not be applied retroactively to a free prelaunch consultation request.'
         ]
       },
       {
@@ -1097,7 +1157,7 @@ export const pages = Object.freeze({
         type: 'policySection',
         heading: 'Questions',
         paragraphs: [
-          'A dedicated billing contact is not yet published. During prelaunch, use the priority-list form and select “Website or accessibility help” for a website-policy question. Do not submit payment details or medical information.'
+          'A dedicated billing contact is not yet published. During prelaunch, use the Founding Patient form and check the website or accessibility support option for a website-policy question. Do not submit payment details or medical information.'
         ]
       }
     ]

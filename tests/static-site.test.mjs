@@ -159,7 +159,7 @@ test("build emits every content page with unique, route-specific metadata", () =
   }
 });
 
-test("generated pages contain no fragment routing or editor-only controls", () => {
+test("generated pages use crawlable routes and contain no editor-only controls", () => {
   const forbiddenMarkup = /<(?:image-slot|sc-[\w-]+|x-dc)\b|\bdata-dc-[\w-]+\b|type=["']__bundler\//i;
   const editorControl = /<(?:button|a)\b[^>]*(?:aria-label|title)=["'][^"']*\b(?:replace|edit)\b[^"']*["']/i;
 
@@ -169,16 +169,18 @@ test("generated pages contain no fragment routing or editor-only controls", () =
     assert.doesNotMatch(html, /\bcontenteditable(?:\s*=|\s|>)/i, `${page.slug} includes contenteditable`);
     assert.doesNotMatch(html, editorControl, `${page.slug} includes an editor control`);
     const currentLinks = startTags(html, "a").filter(({ attrs }) => attrs["aria-current"] === "page");
-    assert.ok(
-      currentLinks.some(({ attrs }) => attrs.href === page.slug),
-      `${page.slug} needs an aria-current link in site navigation`,
-    );
+    if (!page.landing) {
+      assert.ok(
+        currentLinks.some(({ attrs }) => attrs.href === page.slug),
+        `${page.slug} needs an aria-current link in site navigation`,
+      );
+    }
 
     for (const { attrs } of startTags(html, "a")) {
       const href = attrs.href || "";
       if (!href.startsWith("#")) continue;
-      assert.equal(href, "#main-content", `${page.slug} contains fragment navigation ${href}`);
-      assert.ok(findElementWithId(html, "main-content"), `${page.slug} skip-link target is missing`);
+      assert.notEqual(href, "#", `${page.slug} contains an empty fragment link`);
+      assert.ok(findElementWithId(html, href.slice(1)), `${page.slug} has unresolved in-page link ${href}`);
     }
   }
 });
@@ -211,12 +213,43 @@ test("every internal href resolves to a generated page or public asset", async (
   }
 });
 
-test("priority form matches the API contract and exposes accessible validation semantics", () => {
-  const html = htmlBySlug.get("/priority-list/");
-  const formMatch = html.match(/<form\b([^>]*)>([\s\S]*?)<\/form>/i);
-  assert.ok(formMatch, "priority form is missing");
-  const formAttrs = attributes(formMatch[1]);
-  const formHtml = formMatch[2];
+test("legacy priority-list routes redirect to the canonical founding-patients funnel", async () => {
+  const redirectsPath = join(publicRoot, "_redirects");
+  assert.ok(existsSync(redirectsPath), "public/_redirects is missing");
+  const redirects = await readFile(redirectsPath, "utf8");
+  const entries = new Map(
+    redirects
+      .split(/\r?\n/)
+      .map((line) => line.trim())
+      .filter((line) => line && !line.startsWith("#"))
+      .map((line) => line.split(/\s+/))
+      .filter((parts) => parts.length >= 3)
+      .map(([source, destination, status]) => [source, { destination, status }]),
+  );
+
+  for (const source of ["/priority", "/priority/", "/priority-list", "/priority-list/"]) {
+    assert.deepEqual(
+      entries.get(source),
+      { destination: "/founding-patients/", status: "301" },
+      `${source} must redirect permanently to the canonical consultation funnel`,
+    );
+  }
+  assert.deepEqual(
+    entries.get("/founding-patients"),
+    { destination: "/founding-patients/", status: "301" },
+    "the canonical funnel needs an explicit trailing-slash redirect",
+  );
+  assert.ok(!existsSync(join(publicRoot, "priority-list", "index.html")), "retired priority-list page must not be generated");
+});
+
+test("founding consultation form matches the minimal API contract and accessible validation semantics", async () => {
+  const html = htmlBySlug.get("/founding-patients/");
+  assert.ok(html, "the canonical /founding-patients/ page is missing");
+
+  const formMatches = [...html.matchAll(/<form\b([^>]*)>([\s\S]*?)<\/form>/gi)];
+  assert.equal(formMatches.length, 1, "founding-patients page must contain exactly one form");
+  const formAttrs = attributes(formMatches[0][1]);
+  const formHtml = formMatches[0][2];
   const inputs = startTags(formHtml, "input");
   const selects = startTags(formHtml, "select");
   const controls = [...inputs, ...selects];
@@ -225,25 +258,31 @@ test("priority form matches the API contract and exposes accessible validation s
   const allowedNames = new Set([
     "full_name",
     "email",
-    "care_interest",
-    "consent",
+    "contact_consent",
+    "consent_version",
     "website",
     "form_started_at",
-    "consent_version",
+    "accessibility_request",
     "turnstile_token",
   ]);
   const requiredStaticNames = [
     "full_name",
     "email",
-    "care_interest",
-    "consent",
+    "contact_consent",
+    "consent_version",
     "website",
     "form_started_at",
-    "consent_version",
+    "accessibility_request",
   ];
 
-  assert.equal(formAttrs.action, "/api/priority");
+  assert.equal(formAttrs.id, "consultation-form");
+  assert.equal(formAttrs.action, "/api/founding-consultation");
   assert.equal(formAttrs.method?.toLowerCase(), "post");
+  assert.ok(findElementWithId(html, "consultation-request"), "consultation request anchor target is missing");
+  assert.ok(
+    startTags(html, "a").some(({ attrs }) => attrs.href === "#consultation-request"),
+    "founding-patients page needs an in-page link to the request form",
+  );
   assert.ok(formAttrs["aria-labelledby"] || formAttrs["aria-label"], "form needs an accessible name");
   if (formAttrs["aria-labelledby"]) {
     assert.ok(findElementWithId(html, formAttrs["aria-labelledby"]), "form aria-labelledby target is missing");
@@ -252,36 +291,51 @@ test("priority form matches the API contract and exposes accessible validation s
   for (const name of requiredStaticNames) assert.ok(controlsByName.has(name), `missing ${name} control`);
   for (const name of controlsByName.keys()) assert.ok(allowedNames.has(name), `unexpected API field ${name}`);
   assert.equal(namedControls.length, controlsByName.size, "API field names must not be duplicated");
-  assert.equal(startTags(formHtml, "textarea").length, 0, "priority form must not accept free text or PHI");
+  assert.equal(startTags(formHtml, "textarea").length, 0, "consultation form must not accept free text or PHI");
+  assert.equal(selects.length, 0, "consultation form must not collect care interest or other selections");
 
   const fullName = controlsByName.get("full_name").attrs;
   const email = controlsByName.get("email").attrs;
-  const careInterest = controlsByName.get("care_interest").attrs;
-  const consent = controlsByName.get("consent").attrs;
+  const consent = controlsByName.get("contact_consent").attrs;
+  const accessibilityRequest = controlsByName.get("accessibility_request")?.attrs;
   const honeypot = controlsByName.get("website").attrs;
   const startedAt = controlsByName.get("form_started_at").attrs;
   const consentVersion = controlsByName.get("consent_version").attrs;
 
   assert.equal(fullName.type?.toLowerCase(), "text");
   assert.equal(fullName.autocomplete, "name");
+  assert.equal(fullName.minlength, "2");
+  assert.equal(fullName.maxlength, "100");
   assert.ok("required" in fullName);
   assert.equal(email.type?.toLowerCase(), "email");
   assert.equal(email.autocomplete, "email");
   assert.equal(email.inputmode, "email");
+  assert.equal(email.maxlength, "254");
   assert.ok("required" in email);
-  assert.equal(careInterest.autocomplete, "off");
-  assert.ok("required" in careInterest);
   assert.equal(consent.type?.toLowerCase(), "checkbox");
+  assert.equal(consent.value, "true");
   assert.ok("required" in consent);
+  if (accessibilityRequest) {
+    assert.equal(accessibilityRequest.type?.toLowerCase(), "checkbox");
+    assert.equal(accessibilityRequest.value, "true");
+    assert.ok(!("required" in accessibilityRequest), "accessibility_request must remain optional");
+  }
   assert.equal(honeypot.autocomplete, "off");
   assert.equal(honeypot.tabindex, "-1");
   assert.equal(honeypot["aria-hidden"], "true");
   assert.equal(honeypot.maxlength, "200");
   assert.equal(startedAt.type?.toLowerCase(), "hidden");
+  assert.ok(!startedAt.value, "form_started_at must be initialized at runtime");
   assert.equal(consentVersion.type?.toLowerCase(), "hidden");
-  assert.equal(consentVersion.value, "priority-2026-09", "consent_version needs the reviewed policy version");
+  assert.equal(
+    consentVersion.value,
+    "founding-consultation-2026-09",
+    "consent_version needs the reviewed founding-consultation policy version",
+  );
 
-  for (const name of ["full_name", "email", "care_interest", "consent"]) {
+  const visibleNames = ["full_name", "email", "contact_consent"];
+  if (accessibilityRequest) visibleNames.push("accessibility_request");
+  for (const name of visibleNames) {
     const control = controlsByName.get(name).attrs;
     assert.ok(control.id, `${name} needs an id`);
     assert.match(formHtml, new RegExp(`<label\\b[^>]*\\bfor=(?:"${control.id}"|'${control.id}')`, "i"), `${name} needs an associated label`);
@@ -291,19 +345,28 @@ test("priority form matches the API contract and exposes accessible validation s
     }
   }
 
-  const careSelectMatch = formHtml.match(/<select\b[^>]*\bname=["']care_interest["'][^>]*>([\s\S]*?)<\/select>/i);
-  assert.ok(careSelectMatch, "care_interest must be a native select");
-  const careValues = startTags(careSelectMatch[1], "option")
-    .map(({ attrs }) => attrs.value)
-    .filter(Boolean)
-    .sort();
-  assert.deepEqual(careValues, site.careInterests.map(({ value }) => value).sort());
-
   const submitButtons = startTags(formHtml, "button").filter(({ attrs }) => (attrs.type || "submit").toLowerCase() === "submit");
-  assert.equal(submitButtons.length, 1, "priority form needs one submit button");
+  assert.equal(submitButtons.length, 1, "consultation form needs one submit button");
   assert.match(formHtml, /<[a-z][^>]*\baria-live=["']polite["'][^>]*>/i,
-    "priority form needs a polite live region");
-  assert.doesNotMatch([...controlsByName.keys()].join(" "), /phone|zip|symptom|diagnosis|medication|medical|notes?/i);
+    "consultation form needs a polite live region");
+
+  const fieldNames = [...controlsByName.keys()].join(" ");
+  assert.doesNotMatch(fieldNames, /care_interest|phone|zip|symptom|diagnosis|medication|medical|message|notes?|request_kind|utm/i);
+
+  const siteJs = await readFile(join(publicRoot, "assets", "site.js"), "utf8");
+  assert.match(
+    siteJs,
+    /fetch\(\s*(?:form\.(?:action|getAttribute\(\s*["']action["']\s*\))|["']\/api\/founding-consultation["'])/,
+    "enhanced form submission must use the founding-consultation endpoint",
+  );
+  assert.doesNotMatch(siteJs, /["']\/api\/priority["']/, "client JavaScript must not submit to the retired endpoint");
+  assert.match(siteJs, /String\(Date\.now\(\)\)/, "form_started_at must be initialized from the current epoch time");
+  assert.match(siteJs, /Number\(payload\.form_started_at\)/, "form_started_at must be sent as a number");
+  assert.match(
+    siteJs,
+    /payload\[checkbox\.name\]\s*=\s*checkbox\.checked/,
+    "checkbox fields must be serialized as JSON booleans",
+  );
 });
 
 test("photographs use real img elements, reserve dimensions, and label representative imagery", () => {

@@ -81,7 +81,7 @@ const heroImages = Object.freeze({
   pricing: imageCatalog.architectural,
   about: imageCatalog.clinic,
   faq: imageCatalog.shoreline,
-  "priority-list": imageCatalog.consultation,
+  "founding-patients": imageCatalog.consultation,
 });
 
 const careCardImages = Object.freeze({
@@ -267,45 +267,39 @@ function pricingMarkup(items) {
   </div>`;
 }
 
-function priorityFormMarkup(section) {
-  const interests = [
-    ["", "Choose an option"],
-    ...site.careInterests.map((interest) => [interest.value, interest.label]),
-  ];
-
-  return `<div class="form-card">
-    <h2 id="priority-form-heading">Join the Priority List</h2>
-    <p id="form-guidance">${escapeHtml(section.privacyNote)}</p>
-    <form id="priority-form" action="/api/priority" method="post" aria-labelledby="priority-form-heading" aria-describedby="form-guidance">
+function foundingConsultationFormMarkup(form) {
+  return `<div class="form-card conversion-form-card" id="consultation-request" tabindex="-1">
+    <p class="eyebrow">Private contact request</p>
+    <h2 id="consultation-form-heading">${escapeHtml(form.heading)}</h2>
+    <p id="form-guidance">${escapeHtml(form.privacyNote)}</p>
+    <form id="consultation-form" action="${escapeHtml(form.action)}" method="${escapeHtml(form.method)}" aria-labelledby="consultation-form-heading" aria-describedby="form-guidance" data-success-message="${escapeHtml(form.successMessage)}">
       <div class="field field-full">
         <label for="full-name">Name</label>
         <input id="full-name" name="full_name" type="text" autocomplete="name" minlength="2" maxlength="100" aria-describedby="full-name-help" required>
-        <p id="full-name-help" class="field-help">Enter the name you use for email updates.</p>
+        <p id="full-name-help" class="field-help">Enter the name you would like Apex to use when contacting you.</p>
       </div>
       <div class="field field-full">
         <label for="email">Email</label>
         <input id="email" name="email" type="email" autocomplete="email" inputmode="email" maxlength="254" aria-describedby="email-help" required>
         <p id="email-help" class="field-help">We will use this address only as described in the Privacy Policy.</p>
       </div>
-      <div class="field field-full">
-        <label for="care-interest">Care interest</label>
-        <select id="care-interest" name="care_interest" autocomplete="off" aria-describedby="care-interest-help" required>
-          ${interests.map(([value, label], index) => `<option value="${escapeHtml(value)}"${index === 0 ? " disabled selected" : ""}>${escapeHtml(label)}</option>`).join("\n")}
-        </select>
-        <p id="care-interest-help" class="field-help">Choose the care area or website-help option that best fits your request.</p>
-      </div>
       <div class="field-honeypot" aria-hidden="true">
         <label for="website">Leave this field blank</label>
         <input id="website" name="website" type="text" tabindex="-1" autocomplete="off" maxlength="200" aria-hidden="true">
       </div>
-      <input name="consent_version" type="hidden" value="priority-2026-09">
+      <input name="consent_version" type="hidden" value="${escapeHtml(form.consentVersion)}">
       <input name="form_started_at" type="hidden">
-      <label class="consent field-full" for="communications-consent">
-        <input id="communications-consent" name="consent" type="checkbox" value="true" aria-describedby="consent-help" required>
-        <span id="consent-help">I agree to receive email from Apex Wellness about launch updates and appointment availability, and I acknowledge the <a href="/privacy/">Privacy Policy</a> and <a href="/communications-consent/">Communications Consent</a>. I may unsubscribe at any time.</span>
+      <label class="consent field-full consent-optional" for="accessibility-request">
+        <input id="accessibility-request" name="accessibility_request" type="checkbox" value="true" aria-describedby="accessibility-request-help">
+        <span id="accessibility-request-help">${escapeHtml(form.accessibilityLabel)}</span>
       </label>
-      <button class="button" type="submit" data-loading-label="Submitting…">${escapeHtml(section.submitLabel)}</button>
+      <label class="consent field-full" for="contact-consent">
+        <input id="contact-consent" name="contact_consent" type="checkbox" value="true" aria-describedby="contact-consent-help" required>
+        <span id="contact-consent-help">I ask Apex Wellness to email me about this request. For a consultation request, emails may include verified opening information and future consultation availability. I understand that this form does not confirm an appointment or establish care. I may unsubscribe from promotional email at any time, and I acknowledge the <a href="/privacy/">Privacy Policy</a> and <a href="/communications-consent/">Communications Consent</a>.</span>
+      </label>
+      <button class="button" type="submit" data-loading-label="Submitting…">${escapeHtml(form.submitLabel)}</button>
       <p id="form-status" class="form-status" role="status" aria-live="polite" aria-atomic="true" tabindex="-1"></p>
+      <noscript><p class="form-status is-visible is-error">JavaScript is required to submit this secure contact request.</p></noscript>
     </form>
   </div>`;
 }
@@ -396,9 +390,6 @@ function renderSection(section, index) {
         ${headingMarkup(section, id)}<ul class="feature-list">${section.items.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul>
       </div></section>`;
 
-    case "form":
-      return `<section class="section${alternatingClass}" aria-label="Priority list form"><div class="container section-narrow">${priorityFormMarkup(section)}</div></section>`;
-
     default:
       throw new Error(`Unsupported content section type: ${section.type}`);
   }
@@ -420,9 +411,24 @@ function renderHero(pageKey, page) {
       <p class="eyebrow">${escapeHtml(page.eyebrow)}</p>
       <h1 id="page-title">${escapeHtml(page.h1)}</h1>
       <p>${escapeHtml(page.intro)}</p>
-      ${page.slug === "/priority-list/" ? "" : `<div class="hero-actions">${buttonMarkup(page.cta)}</div>`}
+      <div class="hero-actions">${buttonMarkup(page.cta)}${page.secondaryCta ? buttonMarkup(page.secondaryCta, true) : ""}</div>
+      ${page.ctaNote ? `<p class="cta-note">${escapeHtml(page.ctaNote)}</p>` : ""}
     </div>
     <div class="hero-media">${imageMarkup(image, { hero: true })}</div>
+  </div></section>`;
+}
+
+function renderConversionHero(page) {
+  return `<section class="hero conversion-hero" aria-labelledby="page-title"><div class="container conversion-grid">
+    <div class="hero-copy conversion-copy">
+      <p class="eyebrow">${escapeHtml(page.eyebrow)}</p>
+      <h1 id="page-title">${escapeHtml(page.h1)}</h1>
+      <p>${escapeHtml(page.intro)}</p>
+      <div class="hero-actions">${buttonMarkup(page.cta)}${buttonMarkup(page.secondaryCta, true)}</div>
+      <p class="cta-note">${escapeHtml(page.ctaNote)}</p>
+    </div>
+    ${foundingConsultationFormMarkup(page.form)}
+    <div class="conversion-image">${imageMarkup(imageCatalog.consultation, { compactCaption: true })}</div>
   </div></section>`;
 }
 
@@ -439,7 +445,7 @@ function renderMain(pageKey, page) {
   }
 
   return `<main id="main-content" class="page" tabindex="-1">
-    ${renderHero(pageKey, page)}
+    ${page.landing ? renderConversionHero(page) : renderHero(pageKey, page)}
     ${page.sections.map(renderSection).join("\n")}
   </main>`;
 }
@@ -459,6 +465,18 @@ function renderNavigation(page) {
       <nav id="primary-navigation" class="site-nav" aria-label="Primary navigation">
         <ul>${links}</ul>
         <a class="nav-cta" href="${escapeHtml(site.cta.href)}"${site.cta.href === page.slug ? ' aria-current="page"' : ""}>${escapeHtml(site.cta.label)}</a>
+      </nav>
+    </div>
+  </header>`;
+}
+
+function renderLandingNavigation() {
+  return `<header class="site-header landing-header">
+    <div class="container site-header-inner">
+      <a class="brand" href="/" aria-label="Apex Wellness home">Apex Wellness</a>
+      <nav class="landing-nav" aria-label="Founding Patient page navigation">
+        <a href="/">Explore full site</a>
+        <a class="nav-cta" href="#consultation-request">Request consultation</a>
       </nav>
     </div>
   </header>`;
@@ -517,12 +535,13 @@ function renderDocument(pageKey, page, jsonLd, { noIndex = false, mainOverride =
   <script type="application/ld+json">${jsonLd}</script>
   <script src="${escapeHtml(assetUrl("site.js"))}" defer></script>
 </head>
-<body>
+<body${page.landing ? ' class="landing-page"' : ""}>
   <a class="skip-link" href="#main-content">Skip to main content</a>
-  <div class="announcement" role="status">${escapeHtml(site.announcement)} <a href="${escapeHtml(site.cta.href)}">${escapeHtml(site.cta.label)}</a></div>
-  ${renderNavigation(page)}
+  <div class="announcement" role="status">${escapeHtml(site.announcement)} <a href="${page.landing ? "#consultation-request" : escapeHtml(site.cta.href)}">${escapeHtml(site.cta.label)}</a></div>
+  ${page.landing ? renderLandingNavigation() : renderNavigation(page)}
   ${mainOverride || renderMain(pageKey, page)}
   ${renderFooter(page)}
+  ${page.landing ? '<a class="mobile-conversion-cta" href="#consultation-request">Request consultation</a>' : ""}
 </body>
 </html>
 `;
@@ -626,8 +645,11 @@ function buildRedirects() {
 /womens-midlife-care /womens-midlife-care/ 301
 /how /how-it-works/ 301
 /how-it-works /how-it-works/ 301
-/priority /priority-list/ 301
-/priority-list /priority-list/ 301
+/priority /founding-patients/ 301
+/priority/ /founding-patients/ 301
+/priority-list /founding-patients/ 301
+/priority-list/ /founding-patients/ 301
+/founding-patients /founding-patients/ 301
 `;
 }
 
@@ -707,7 +729,7 @@ async function build() {
   };
   const notFoundJsonLd = pageJsonLd(notFoundPage);
   documents.push(notFoundJsonLd);
-  const notFoundMain = `<main id="main-content" class="page" tabindex="-1"><section class="hero" aria-labelledby="page-title"><div class="container section-narrow"><p class="eyebrow">${escapeHtml(notFoundPage.eyebrow)}</p><h1 id="page-title">${escapeHtml(notFoundPage.h1)}</h1><p>${escapeHtml(notFoundPage.intro)}</p><div class="button-row"><a class="button" href="/">Return home</a><a class="button-secondary" href="/priority-list/">Join the Priority List</a></div></div></section></main>`;
+  const notFoundMain = `<main id="main-content" class="page" tabindex="-1"><section class="hero" aria-labelledby="page-title"><div class="container section-narrow"><p class="eyebrow">${escapeHtml(notFoundPage.eyebrow)}</p><h1 id="page-title">${escapeHtml(notFoundPage.h1)}</h1><p>${escapeHtml(notFoundPage.intro)}</p><div class="button-row"><a class="button" href="/">Return home</a><a class="button-secondary" href="/founding-patients/">Request a Consultation</a></div></div></section></main>`;
   await writeOutput(join(publicDirectory, "404.html"), renderDocument("404", notFoundPage, notFoundJsonLd, { noIndex: true, mainOverride: notFoundMain }));
 
   await Promise.all([

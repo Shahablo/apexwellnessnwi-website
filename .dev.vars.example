@@ -1,2 +1,6 @@
 # Copy to .dev.vars for local development. Never commit the real value.
 IP_HASH_SALT=replace-with-a-random-secret-of-at-least-16-characters
+FOUNDING_CONSENT_VERSION=founding-consultation-2026-09
+
+# Optional: enable only when the frontend also sends a valid Turnstile token.
+# TURNSTILE_SECRET_KEY=replace-with-your-turnstile-secret

@@ -1,5 +1,5 @@
 /*
-  Content-Security-Policy: default-src 'self'; base-uri 'self'; connect-src 'self'; font-src 'self'; form-action 'self'; frame-ancestors 'none'; frame-src 'none'; img-src 'self' data:; manifest-src 'self'; media-src 'self'; object-src 'none'; script-src 'self' 'sha256-TfbBxf8Fn/VydmJHst8TQVi8NE98+qMGyshfBab71ME=' 'sha256-adiT+aPFS1MojOeS78mdEObDDjfFiwMccPss6gmXY/I=' 'sha256-qjFM1SS+2oZw3g80h3/uJ1EZzuOmpqgxFDsJWOSkoM4=' 'sha256-jSthHaTY62i7F9TsG6RSCe5ckEwLQebvzC8o/jhJnhA=' 'sha256-pcKaRlPMDkMegkfPLmbsXmpEhcKbGJDNLhfWmO8d/J8=' 'sha256-md7ovBn8nKok8g0tXzk0iuEKds2kehvGzU+F9zt04qw=' 'sha256-ftJfA0nna8J2KA2asg4Hp2ye6jH5GqIoVal4vj4eRak=' 'sha256-Gwk75wi2w7/MDyXj3qUeI/rNv3Pb3cDI7YHfM3sZ+Po=' 'sha256-XkU96KSCw98CLih7h5DQbZ23tGsR8t2L2us/U039g2E=' 'sha256-iJ9pLWJKP4fbVlKQx/6OSUrOdtvHVCAp4iuIR22BqVE=' 'sha256-meNV+JjsHif0q17aLUKCvZSl8Ryebhi6npW6JPvC+L0=' 'sha256-DMbV97+y89yeTx5yBaIkW722P1E/1yOV+Jvh5pFY0No=' 'sha256-xCdjcRvbk7deNsjewzWj9WnNKimdEFMlE1w5bdN+M9E=' 'sha256-+0cKzlh+4OjnJIS8o5o6asu+0U/UjiAnUbd38f896vw=' 'sha256-ssGj24/NDxi1clBSYyT3IVF1Hgs8sTp11hKbXttSjbQ='; style-src 'self'; upgrade-insecure-requests
+  Content-Security-Policy: default-src 'self'; base-uri 'self'; connect-src 'self'; font-src 'self'; form-action 'self'; frame-ancestors 'none'; frame-src 'none'; img-src 'self' data:; manifest-src 'self'; media-src 'self'; object-src 'none'; script-src 'self' 'sha256-RU8uF4mBsGX21CZ9n/sUF9e1OGhzCtLu1e/xBhgmc/A=' 'sha256-adiT+aPFS1MojOeS78mdEObDDjfFiwMccPss6gmXY/I=' 'sha256-qjFM1SS+2oZw3g80h3/uJ1EZzuOmpqgxFDsJWOSkoM4=' 'sha256-jSthHaTY62i7F9TsG6RSCe5ckEwLQebvzC8o/jhJnhA=' 'sha256-pcKaRlPMDkMegkfPLmbsXmpEhcKbGJDNLhfWmO8d/J8=' 'sha256-md7ovBn8nKok8g0tXzk0iuEKds2kehvGzU+F9zt04qw=' 'sha256-ftJfA0nna8J2KA2asg4Hp2ye6jH5GqIoVal4vj4eRak=' 'sha256-Gwk75wi2w7/MDyXj3qUeI/rNv3Pb3cDI7YHfM3sZ+Po=' 'sha256-EqjH/JtF7fJyF0F7AArOdn5BCpcAuczjd+YNam/vC0E=' 'sha256-3AAOO3S4IjrtOhWjgWQVWYA53SPFSOjCCRj7ag5GIDA=' 'sha256-Px/DyReCfvnlgXtd3TooIgedwusyFtZUfHcAZtyN2Is=' 'sha256-DMbV97+y89yeTx5yBaIkW722P1E/1yOV+Jvh5pFY0No=' 'sha256-xCdjcRvbk7deNsjewzWj9WnNKimdEFMlE1w5bdN+M9E=' 'sha256-+0cKzlh+4OjnJIS8o5o6asu+0U/UjiAnUbd38f896vw=' 'sha256-ssGj24/NDxi1clBSYyT3IVF1Hgs8sTp11hKbXttSjbQ='; style-src 'self'; upgrade-insecure-requests
   Cross-Origin-Opener-Policy: same-origin
   Cross-Origin-Resource-Policy: same-origin
   Permissions-Policy: accelerometer=(), autoplay=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()
@@ -59,10 +59,10 @@
 /faq/index.html
   Cache-Control: no-cache, max-age=0, must-revalidate
 
-/priority-list/
+/founding-patients/
   Cache-Control: no-cache, max-age=0, must-revalidate
 
-/priority-list/index.html
+/founding-patients/index.html
   Cache-Control: no-cache, max-age=0, must-revalidate
 
 /privacy/

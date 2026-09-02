@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Request a Founding Patient Consultation | Apex Wellness</title>
+  <meta name="description" content="Ask Apex Wellness to contact you when verified Founding Patient consultation details and opening-month availability are ready in Northwest Indiana.">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <link rel="canonical" href="https://apexwellnessnwi.com/founding-patients/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#173633">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:site_name" content="Apex Wellness">
+  <meta property="og:title" content="Request a Founding Patient Consultation | Apex Wellness">
+  <meta property="og:description" content="Ask Apex Wellness to contact you when verified Founding Patient consultation details and opening-month availability are ready in Northwest Indiana.">
+  <meta property="og:url" content="https://apexwellnessnwi.com/founding-patients/">
+  <meta property="og:image" content="https://apexwellnessnwi.com/assets/images/apex-hero-consultation.webp?v=464529fdf411">
+  <meta property="og:image:width" content="1199">
+  <meta property="og:image:height" content="1312">
+  <meta property="og:image:alt" content="A physician having a thoughtful conversation with an adult patient.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Request a Founding Patient Consultation | Apex Wellness">
+  <meta name="twitter:description" content="Ask Apex Wellness to contact you when verified Founding Patient consultation details and opening-month availability are ready in Northwest Indiana.">
+  <meta name="twitter:image" content="https://apexwellnessnwi.com/assets/images/apex-hero-consultation.webp?v=464529fdf411">
+  <meta name="twitter:image:alt" content="A physician having a thoughtful conversation with an adult patient.">
+  <link rel="stylesheet" href="/assets/site.css?v=aa64003b61e2">
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://apexwellnessnwi.com/#organization","name":"Apex Wellness","url":"https://apexwellnessnwi.com/","description":"Apex Wellness is preparing a physician-managed weight, metabolic, and hormone care practice for adults in Northwest Indiana.","areaServed":{"@type":"AdministrativeArea","name":"Northwest Indiana"}},{"@type":"WebSite","@id":"https://apexwellnessnwi.com/#website","url":"https://apexwellnessnwi.com/","name":"Apex Wellness","description":"Apex Wellness is preparing a physician-managed weight, metabolic, and hormone care practice for adults in Northwest Indiana.","publisher":{"@id":"https://apexwellnessnwi.com/#organization"},"inLanguage":"en-US"},{"@type":"WebPage","@id":"https://apexwellnessnwi.com/founding-patients/#webpage","url":"https://apexwellnessnwi.com/founding-patients/","name":"Request a Founding Patient Consultation | Apex Wellness","description":"Ask Apex Wellness to contact you when verified Founding Patient consultation details and opening-month availability are ready in Northwest Indiana.","isPartOf":{"@id":"https://apexwellnessnwi.com/#website"},"about":{"@id":"https://apexwellnessnwi.com/#organization"},"inLanguage":"en-US"},{"@type":"BreadcrumbList","@id":"https://apexwellnessnwi.com/founding-patients/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://apexwellnessnwi.com/"},{"@type":"ListItem","position":2,"name":"Founding Patient Consultation","item":"https://apexwellnessnwi.com/founding-patients/"}]}]}</script>
+  <script src="/assets/site.js?v=70750bd67abe" defer></script>
+</head>
+<body class="landing-page">
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <div class="announcement" role="status">Preparing to open in Northwest Indiana. Founding Patient consultation requests are now open. <a href="#consultation-request">Request a Consultation</a></div>
+  <header class="site-header landing-header">
+    <div class="container site-header-inner">
+      <a class="brand" href="/" aria-label="Apex Wellness home">Apex Wellness</a>
+      <nav class="landing-nav" aria-label="Founding Patient page navigation">
+        <a href="/">Explore full site</a>
+        <a class="nav-cta" href="#consultation-request">Request consultation</a>
+      </nav>
+    </div>
+  </header>
+  <main id="main-content" class="page" tabindex="-1">
+    <section class="hero conversion-hero" aria-labelledby="page-title"><div class="container conversion-grid">
+    <div class="hero-copy conversion-copy">
+      <p class="eyebrow">Founding Patient requests · Northwest Indiana</p>
+      <h1 id="page-title">Request an opening-month consultation.</h1>
+      <p>Share your name and email so Apex Wellness may contact you when verified consultation details and opening-month availability are ready. This is a request for future contact—not an appointment, reservation, or clinical intake.</p>
+      <div class="hero-actions"><a class="button" href="#consultation-request">Go to the request form</a><a class="button-secondary" href="/">Explore the full site</a></div>
+      <p class="cta-note">Free to request · No payment · No medical information</p>
+    </div>
+    <div class="form-card conversion-form-card" id="consultation-request" tabindex="-1">
+    <p class="eyebrow">Private contact request</p>
+    <h2 id="consultation-form-heading">Request future consultation contact</h2>
+    <p id="form-guidance">Enter only your name and email. Do not submit symptoms, diagnoses, medications, laboratory values, insurance details, or other sensitive medical information. This form is not monitored for medical concerns.</p>
+    <form id="consultation-form" action="/api/founding-consultation" method="post" aria-labelledby="consultation-form-heading" aria-describedby="form-guidance" data-success-message="Thank you. Apex received your consultation request. This is not an appointment confirmation or acceptance as a patient.">
+      <div class="field field-full">
+        <label for="full-name">Name</label>
+        <input id="full-name" name="full_name" type="text" autocomplete="name" minlength="2" maxlength="100" aria-describedby="full-name-help" required>
+        <p id="full-name-help" class="field-help">Enter the name you would like Apex to use when contacting you.</p>
+      </div>
+      <div class="field field-full">
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" autocomplete="email" inputmode="email" maxlength="254" aria-describedby="email-help" required>
+        <p id="email-help" class="field-help">We will use this address only as described in the Privacy Policy.</p>
+      </div>
+      <div class="field-honeypot" aria-hidden="true">
+        <label for="website">Leave this field blank</label>
+        <input id="website" name="website" type="text" tabindex="-1" autocomplete="off" maxlength="200" aria-hidden="true">
+      </div>
+      <input name="consent_version" type="hidden" value="founding-consultation-2026-09">
+      <input name="form_started_at" type="hidden">
+      <label class="consent field-full consent-optional" for="accessibility-request">
+        <input id="accessibility-request" name="accessibility_request" type="checkbox" value="true" aria-describedby="accessibility-request-help">
+        <span id="accessibility-request-help">This request is about website or accessibility support.</span>
+      </label>
+      <label class="consent field-full" for="contact-consent">
+        <input id="contact-consent" name="contact_consent" type="checkbox" value="true" aria-describedby="contact-consent-help" required>
+        <span id="contact-consent-help">I ask Apex Wellness to email me about this request. For a consultation request, emails may include verified opening information and future consultation availability. I understand that this form does not confirm an appointment or establish care. I may unsubscribe from promotional email at any time, and I acknowledge the <a href="/privacy/">Privacy Policy</a> and <a href="/communications-consent/">Communications Consent</a>.</span>
+      </label>
+      <button class="button" type="submit" data-loading-label="Submitting…">Submit Consultation Request</button>
+      <p id="form-status" class="form-status" role="status" aria-live="polite" aria-atomic="true" tabindex="-1"></p>
+      <noscript><p class="form-status is-visible is-error">JavaScript is required to submit this secure contact request.</p></noscript>
+    </form>
+  </div>
+    <div class="conversion-image"><figure class="representative">
+    <img src="/assets/images/apex-hero-consultation.webp?v=464529fdf411" width="1199" height="1312" alt="A physician having a thoughtful conversation with an adult patient." loading="lazy" decoding="async">
+    <figcaption class="representative-caption">Representative imagery</figcaption>
+  </figure></div>
+  </div></section>
+    <aside class="trust-strip" aria-label="Apex Wellness care standards">
+        <ul class="container trust-strip-list"><li><strong>No payment to submit</strong></li><li><strong>No medical details requested</strong></li><li><strong>Verified information before booking</strong></li><li><strong>Focused on Northwest Indiana adults</strong></li></ul>
+      </aside>
+<section class="section section-alt" aria-labelledby="a-pre-opening-request-pathway-not-a-promise-2"><div class="container section-narrow">
+        <div class="section-heading">
+    <p class="eyebrow">What Founding Patient means</p>
+    <h2 id="a-pre-opening-request-pathway-not-a-promise-2">A pre-opening request pathway—not a promise.</h2>
+  </div><p>“Founding Patient” identifies this pre-opening consultation-request pathway. It does not mean you have been accepted as a patient or promised priority, a discount, a specific service, or an appointment. A clinician-patient relationship begins only through the appropriate clinical process after the practice opens.</p>
+      </div></section>
+<section class="section" aria-labelledby="explore-whether-apex-may-fit-what-you-are-looking-for-3"><div class="container">
+        <div class="section-heading">
+    <p class="eyebrow">Planned care areas</p>
+    <h2 id="explore-whether-apex-may-fit-what-you-are-looking-for-3">Explore whether Apex may fit what you are looking for.</h2>
+  </div><div class="care-cards">
+    <figure class="care-card representative">
+        <img src="/assets/images/apex-weight-care.webp?v=6d32489432ad" width="1577" height="997" alt="An adult patient discussing a weight and metabolic care plan." loading="lazy" decoding="async">
+        <span class="care-card-overlay" aria-hidden="true"></span>
+        <figcaption class="care-card-body">
+          <p class="representative-caption">Representative imagery</p>
+          <h3>Medical Weight and Metabolic Care</h3>
+          <p>A planned physician-managed approach to evaluation, meaningful measurements, sustainable habits, and medication only when clinically indicated.</p>
+          <a href="/weight-management/">Explore this care area</a>
+        </figcaption>
+      </figure>
+<figure class="care-card representative">
+        <img src="/assets/images/apex-mens-care.webp?v=073a0b5adb85" width="1713" height="918" alt="An adult man discussing health goals during a medical consultation." loading="lazy" decoding="async">
+        <span class="care-card-overlay" aria-hidden="true"></span>
+        <figcaption class="care-card-body">
+          <p class="representative-caption">Representative imagery</p>
+          <h3>Men&#39;s Hormone Health</h3>
+          <p>A planned risk-aware evaluation of symptoms and appropriate testing before any treatment decision.</p>
+          <a href="/mens-hormone-health/">Explore this care area</a>
+        </figcaption>
+      </figure>
+<figure class="care-card representative">
+        <img src="/assets/images/apex-womens-care.webp?v=d7f46a9d49ac" width="1729" height="910" alt="An adult woman speaking with a clinician about midlife health concerns." loading="lazy" decoding="async">
+        <span class="care-card-overlay" aria-hidden="true"></span>
+        <figcaption class="care-card-body">
+          <p class="representative-caption">Representative imagery</p>
+          <h3>Women&#39;s Midlife Hormone and Metabolic Care</h3>
+          <p>A planned individualized discussion of perimenopause, menopause, weight, sleep, and metabolic concerns.</p>
+          <a href="/womens-midlife-care/">Explore this care area</a>
+        </figcaption>
+      </figure>
+  </div>
+      </div></section>
+<section class="section section-alt" aria-labelledby="the-request-comes-first-a-booking-decision-comes-later-4"><div class="container">
+        <div class="section-heading">
+    <p class="eyebrow">What happens next</p>
+    <h2 id="the-request-comes-first-a-booking-decision-comes-later-4">The request comes first. A booking decision comes later.</h2>
+  </div>
+        <ol class="steps"><li class="step"><h3>Submit your request.</h3><p>Apex records your contact request and communication consent. No appointment is booked automatically.</p></li>
+<li class="step"><h3>Receive verified details.</h3><p>Apex may email you when clinician identity and credentials, location or modality, pricing, policies, and availability are confirmed.</p></li>
+<li class="step"><h3>Choose whether to book.</h3><p>If consultation availability is offered, review the details and decide whether an available time fits.</p></li>
+<li class="step"><h3>Complete secure intake after confirmation.</h3><p>Only a confirmed clinical workflow should collect medical history or other sensitive information.</p></li></ol>
+      </div></section>
+<section class="section" aria-labelledby="no-appointment-or-treatment-is-guaranteed-5"><div class="container section-narrow">
+        <div class="section-heading">
+
+    <h2 id="no-appointment-or-treatment-is-guaranteed-5">No appointment or treatment is guaranteed.</h2>
+  </div><p>Submitting this form does not reserve a time, establish a clinician-patient relationship, confirm eligibility, promise a prescription, or guarantee any result. Medical questions cannot be evaluated here. For urgent or emergency needs, seek appropriate immediate care.</p>
+      </div></section>
+<section class="section section-alt" aria-labelledby="before-you-submit-6"><div class="container">
+        <div class="section-heading">
+
+    <h2 id="before-you-submit-6">Before you submit</h2>
+  </div><div class="faq-list">
+    <details>
+      <summary>Does this request reserve an appointment?</summary>
+      <p>No. It requests future contact only and does not guarantee availability, acceptance, treatment, or a prescription.</p>
+    </details>
+<details>
+      <summary>Does it cost anything to submit?</summary>
+      <p>No. The request is free, and this website does not currently accept payment.</p>
+    </details>
+<details>
+      <summary>Should I include medical information?</summary>
+      <p>No. Submit only your name and email. Medical information belongs in the appropriate secure clinical intake process after an appointment is confirmed.</p>
+    </details>
+<details>
+      <summary>When will Apex contact me?</summary>
+      <p>A response time is not yet published. Apex may contact you when verified opening information and future consultation availability are ready.</p>
+    </details>
+  </div>
+      </div></section>
+  </main>
+  <footer class="site-footer"><div class="container">
+    <div class="footer-grid">
+      <div><a class="brand" href="/">Apex Wellness</a><p>A physician-managed approach to weight, metabolic, and hormone care for adults in Northwest Indiana.</p><p>Opening in Northwest Indiana. A confirmed address, contact channels, office hours, and availability will be published before scheduling opens.</p></div>
+      <nav aria-label="Care areas"><h2>Care areas</h2><ul><li><a href="/weight-management/">Weight &amp; Metabolic</a></li><li><a href="/mens-hormone-health/">Men&#39;s Hormone Health</a></li><li><a href="/womens-midlife-care/">Women&#39;s Midlife Care</a></li></ul></nav>
+      <nav aria-label="Site information"><h2>Information</h2><ul><li><a href="/how-it-works/">How It Works</a></li><li><a href="/pricing/">Pricing</a></li><li><a href="/about/">About</a></li><li><a href="/faq/">FAQ</a></li></ul></nav>
+      <nav aria-label="Policies"><h2>Policies</h2><ul><li><a href="/privacy/">Privacy Policy</a></li><li><a href="/terms/">Terms of Use</a></li><li><a href="/communications-consent/">Communications Consent</a></li><li><a href="/accessibility/">Accessibility Statement</a></li><li><a href="/cancellation-refunds/">Cancellation and Refunds</a></li></ul></nav>
+    </div>
+    <div class="footer-meta"><p>Apex Wellness is preparing to open. You may request future contact about opening-month consultation availability; appointments, treatment, prescriptions, and payments are not currently available through this website.</p><p>Website information is educational and is not medical advice, diagnosis, or treatment. Using this website does not create a clinician-patient relationship.</p><p>Apex Wellness does not provide urgent or emergency care. If you are experiencing a medical emergency, call 911 or go to the nearest emergency department.</p><p>© 2026 Apex Wellness.</p></div>
+  </div></footer>
+  <a class="mobile-conversion-cta" href="#consultation-request">Request consultation</a>
+</body>
+</html>

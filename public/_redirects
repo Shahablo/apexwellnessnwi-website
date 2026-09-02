@@ -1,0 +1,13 @@
+# Host-level HTTPS and www canonicalization are configured as Cloudflare zone rules.
+# Workers Static Assets _redirects supports path redirects, not domain-level rules.
+/index.html / 301
+/weight /weight-management/ 301
+/weight-management /weight-management/ 301
+/mens-hormone /mens-hormone-health/ 301
+/mens-hormone-health /mens-hormone-health/ 301
+/womens-midlife /womens-midlife-care/ 301
+/womens-midlife-care /womens-midlife-care/ 301
+/how /how-it-works/ 301
+/how-it-works /how-it-works/ 301
+/priority /priority-list/ 301
+/priority-list /priority-list/ 301

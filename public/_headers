@@ -1,0 +1,105 @@
+/*
+  Content-Security-Policy: default-src 'self'; base-uri 'self'; connect-src 'self'; font-src 'self'; form-action 'self'; frame-ancestors 'none'; frame-src 'none'; img-src 'self' data:; manifest-src 'self'; media-src 'self'; object-src 'none'; script-src 'self' 'sha256-TfbBxf8Fn/VydmJHst8TQVi8NE98+qMGyshfBab71ME=' 'sha256-adiT+aPFS1MojOeS78mdEObDDjfFiwMccPss6gmXY/I=' 'sha256-qjFM1SS+2oZw3g80h3/uJ1EZzuOmpqgxFDsJWOSkoM4=' 'sha256-jSthHaTY62i7F9TsG6RSCe5ckEwLQebvzC8o/jhJnhA=' 'sha256-pcKaRlPMDkMegkfPLmbsXmpEhcKbGJDNLhfWmO8d/J8=' 'sha256-md7ovBn8nKok8g0tXzk0iuEKds2kehvGzU+F9zt04qw=' 'sha256-ftJfA0nna8J2KA2asg4Hp2ye6jH5GqIoVal4vj4eRak=' 'sha256-Gwk75wi2w7/MDyXj3qUeI/rNv3Pb3cDI7YHfM3sZ+Po=' 'sha256-XkU96KSCw98CLih7h5DQbZ23tGsR8t2L2us/U039g2E=' 'sha256-iJ9pLWJKP4fbVlKQx/6OSUrOdtvHVCAp4iuIR22BqVE=' 'sha256-meNV+JjsHif0q17aLUKCvZSl8Ryebhi6npW6JPvC+L0=' 'sha256-DMbV97+y89yeTx5yBaIkW722P1E/1yOV+Jvh5pFY0No=' 'sha256-xCdjcRvbk7deNsjewzWj9WnNKimdEFMlE1w5bdN+M9E=' 'sha256-+0cKzlh+4OjnJIS8o5o6asu+0U/UjiAnUbd38f896vw=' 'sha256-ssGj24/NDxi1clBSYyT3IVF1Hgs8sTp11hKbXttSjbQ='; style-src 'self'; upgrade-insecure-requests
+  Cross-Origin-Opener-Policy: same-origin
+  Cross-Origin-Resource-Policy: same-origin
+  Permissions-Policy: accelerometer=(), autoplay=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()
+  Referrer-Policy: strict-origin-when-cross-origin
+  Strict-Transport-Security: max-age=15552000; includeSubDomains
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+
+/
+  Cache-Control: no-cache, max-age=0, must-revalidate
+
+/index.html
+  Cache-Control: no-cache, max-age=0, must-revalidate
+
+/404.html
+  Cache-Control: no-cache, max-age=0, must-revalidate
+
+/weight-management/
+  Cache-Control: no-cache, max-age=0, must-revalidate
+
+/weight-management/index.html
+  Cache-Control: no-cache, max-age=0, must-revalidate
+
+/mens-hormone-health/
+  Cache-Control: no-cache, max-age=0, must-revalidate
+
+/mens-hormone-health/index.html
+  Cache-Control: no-cache, max-age=0, must-revalidate
+
+/womens-midlife-care/
+  Cache-Control: no-cache, max-age=0, must-revalidate
+
+/womens-midlife-care/index.html
+  Cache-Control: no-cache, max-age=0, must-revalidate
+
+/how-it-works/
+  Cache-Control: no-cache, max-age=0, must-revalidate
+
+/how-it-works/index.html
+  Cache-Control: no-cache, max-age=0, must-revalidate
+
+/pricing/
+  Cache-Control: no-cache, max-age=0, must-revalidate
+
+/pricing/index.html
+  Cache-Control: no-cache, max-age=0, must-revalidate
+
+/about/
+  Cache-Control: no-cache, max-age=0, must-revalidate
+
+/about/index.html
+  Cache-Control: no-cache, max-age=0, must-revalidate
+
+/faq/
+  Cache-Control: no-cache, max-age=0, must-revalidate
+
+/faq/index.html
+  Cache-Control: no-cache, max-age=0, must-revalidate
+
+/priority-list/
+  Cache-Control: no-cache, max-age=0, must-revalidate
+
+/priority-list/index.html
+  Cache-Control: no-cache, max-age=0, must-revalidate
+
+/privacy/
+  Cache-Control: no-cache, max-age=0, must-revalidate
+
+/privacy/index.html
+  Cache-Control: no-cache, max-age=0, must-revalidate
+
+/terms/
+  Cache-Control: no-cache, max-age=0, must-revalidate
+
+/terms/index.html
+  Cache-Control: no-cache, max-age=0, must-revalidate
+
+/communications-consent/
+  Cache-Control: no-cache, max-age=0, must-revalidate
+
+/communications-consent/index.html
+  Cache-Control: no-cache, max-age=0, must-revalidate
+
+/accessibility/
+  Cache-Control: no-cache, max-age=0, must-revalidate
+
+/accessibility/index.html
+  Cache-Control: no-cache, max-age=0, must-revalidate
+
+/cancellation-refunds/
+  Cache-Control: no-cache, max-age=0, must-revalidate
+
+/cancellation-refunds/index.html
+  Cache-Control: no-cache, max-age=0, must-revalidate
+
+/assets/*
+  Cache-Control: public, max-age=86400, must-revalidate
+
+/favicon.svg
+  Cache-Control: public, max-age=86400, must-revalidate
+
+/site.webmanifest
+  Cache-Control: public, max-age=86400

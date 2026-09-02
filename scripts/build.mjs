@@ -487,7 +487,7 @@ function renderDocument(pageKey, page, jsonLd, { noIndex = false, mainOverride =
   const socialImage = `${site.canonicalUrl}${assetUrl(`images/${heroImage.file}`)}`;
 
   return `<!doctype html>
-<html lang="en-US" class="no-js">
+<html lang="en-US">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">

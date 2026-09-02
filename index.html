@@ -438,6 +438,112 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
       });
 
+      const routeSectionClasses = Object.freeze({
+        Home: [
+          'apex-home-hero',
+          'apex-home-proof',
+          'apex-home-approach',
+          'apex-home-care',
+          'apex-home-process',
+          'apex-home-why',
+          'apex-home-founding',
+          'apex-home-final'
+        ],
+        'Care page': ['apex-care-hero', 'apex-care-body'],
+        'How It Works': ['apex-how-hero', 'apex-how-steps', 'apex-how-expectations', 'apex-how-final'],
+        Pricing: ['apex-pricing-hero', 'apex-pricing-table', 'apex-pricing-faq', 'apex-pricing-final'],
+        About: ['apex-about-hero', 'apex-about-standards', 'apex-about-team', 'apex-about-location'],
+        FAQ: ['apex-faq-layout'],
+        'Priority List': ['apex-priority-layout']
+      });
+
+      function setMenuOpen(header, open, returnFocus = false) {
+        if (!header) return;
+        const button = header.querySelector('.apex-menu-toggle');
+        const panel = header.querySelector('.apex-mobile-panel');
+        if (!button || !panel) return;
+        header.classList.toggle('apex-menu-open', open);
+        button.setAttribute('aria-expanded', String(open));
+        button.setAttribute('aria-label', open ? 'Close main menu' : 'Open main menu');
+        panel.hidden = !open;
+        panel.setAttribute('aria-hidden', String(!open));
+        if (returnFocus) button.focus();
+      }
+
+      function ensureResponsiveChrome() {
+        const header = document.querySelector('#dc-root header');
+        if (!header) return;
+
+        const shell = header.parentElement;
+        const announcement = header.previousElementSibling;
+        const desktopNav = header.querySelector(':scope > nav');
+        const desktopCta = header.querySelector(':scope > a[href="#priority"]');
+        const footer = shell?.querySelector(':scope > footer') || document.querySelector('#dc-root footer');
+
+        shell?.classList.add('apex-shell');
+        announcement?.classList.add('apex-announcement');
+        header.classList.add('apex-header');
+        desktopNav?.classList.add('apex-desktop-nav');
+        desktopCta?.classList.add('apex-header-cta');
+        footer?.classList.add('apex-footer');
+
+        if (desktopNav && !header.querySelector('.apex-menu-toggle')) {
+          const button = document.createElement('button');
+          button.type = 'button';
+          button.className = 'apex-menu-toggle';
+          button.setAttribute('aria-controls', 'apex-mobile-nav');
+          button.setAttribute('aria-expanded', 'false');
+          button.setAttribute('aria-label', 'Open main menu');
+          button.innerHTML = '<span>Menu</span><span class="apex-menu-icon" aria-hidden="true"><i></i><i></i><i></i></span>';
+
+          const panel = document.createElement('nav');
+          panel.id = 'apex-mobile-nav';
+          panel.className = 'apex-mobile-panel';
+          panel.setAttribute('aria-label', 'Mobile navigation');
+          panel.setAttribute('aria-hidden', 'true');
+          panel.hidden = true;
+
+          for (const link of desktopNav.querySelectorAll('a[href]')) {
+            const mobileLink = link.cloneNode(true);
+            mobileLink.classList.add('apex-mobile-link');
+            panel.appendChild(mobileLink);
+          }
+
+          if (desktopCta) {
+            const mobileCta = desktopCta.cloneNode(true);
+            mobileCta.className = 'apex-mobile-cta';
+            panel.appendChild(mobileCta);
+          }
+
+          header.insertBefore(button, desktopNav);
+          header.appendChild(panel);
+
+          button.addEventListener('click', () => {
+            setMenuOpen(header, button.getAttribute('aria-expanded') !== 'true');
+          });
+          panel.addEventListener('click', event => {
+            if (event.target.closest('a[href]')) setMenuOpen(header, false);
+          });
+        }
+
+        const route = window.location.hash || '#home';
+        for (const link of header.querySelectorAll('nav a[href]')) {
+          const href = link.getAttribute('href');
+          if (href === route) link.setAttribute('aria-current', 'page');
+          else link.removeAttribute('aria-current');
+        }
+
+        const main = shell?.querySelector(':scope > main[data-screen-label]') || document.querySelector('#dc-root main[data-screen-label]');
+        if (main) {
+          main.classList.add('apex-main');
+          const names = routeSectionClasses[main.getAttribute('data-screen-label')] || [];
+          Array.from(main.children).forEach((section, index) => {
+            section.classList.add('apex-section');
+            if (names[index]) section.classList.add(names[index]);
+          });
+        }
+      }
+
       function applyEnhancements() {
         for (const slot of document.querySelectorAll('image-slot[id]')) {
           const image = images[slot.id];
@@ -449,14 +555,32 @@ document.addEventListener('DOMContentLoaded', async function() {
           }
         }
 
+        ensureResponsiveChrome();
+
         if (document.head && !document.getElementById('apex-warm-theme')) {
           const style = document.createElement('style');
           style.id = 'apex-warm-theme';
           style.textContent = `
-            body { background:#F3EEE6 !important; }
-            #dc-root > div { background:#FBF8F3 !important; }
+            html, body { max-width:100%; }
+            body { margin:0; overflow-x:clip; background:#F3EEE6 !important; }
+            #dc-root, #dc-root > .sc-host, .apex-shell { min-width:0; max-width:100%; }
+            .apex-shell {
+              width:100% !important;
+              max-width:1440px !important;
+              margin:0 auto !important;
+              background:#FBF8F3 !important;
+            }
+            .apex-shell *, .apex-shell *::before, .apex-shell *::after { box-sizing:border-box; }
+            .apex-main, .apex-section, .apex-section > * { min-width:0; }
+            .apex-main h1[tabindex="-1"]:focus { outline:none !important; }
+            .apex-announcement > :first-child, .apex-announcement > :last-child { white-space:nowrap; }
             [data-screen-label] { background-color:#FBF8F3; }
-            [style*="background:#F6F9FC"] {
+            .apex-home-process,
+            .apex-home-founding > div:last-child,
+            .apex-how-expectations,
+            .apex-pricing-faq,
+            .apex-about-standards,
+            .apex-footer {
               background-color:#F4EFE7 !important;
               background-image:
                 linear-gradient(rgba(251,248,243,.90),rgba(244,239,231,.92)),
@@ -465,11 +589,336 @@ document.addEventListener('DOMContentLoaded', async function() {
               background-size:cover !important;
             }
             header { background:rgba(251,248,243,.94) !important; }
-            image-slot { box-shadow:0 18px 48px rgba(11,31,58,.12); }
+            image-slot {
+              display:block;
+              width:100%;
+              height:100%;
+              box-shadow:0 18px 48px rgba(11,31,58,.12);
+            }
             main[data-screen-label="Home"] > section:first-of-type > div:first-child {
               background:
                 radial-gradient(1000px 520px at 88% 8%,rgba(46,139,130,.28),transparent 60%),
                 radial-gradient(800px 420px at 0% 100%,rgba(197,151,94,.20),transparent 62%) !important;
+            }
+            a, button, input, select, textarea, summary { -webkit-tap-highlight-color:transparent; }
+            a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible,
+            textarea:focus-visible, summary:focus-visible {
+              outline:3px solid #2E8B82 !important;
+              outline-offset:3px !important;
+            }
+            .apex-menu-toggle, .apex-mobile-panel { display:none; }
+            .apex-menu-toggle {
+              min-width:72px;
+              min-height:44px;
+              align-items:center;
+              justify-content:center;
+              gap:9px;
+              border:1px solid #C7D0D9;
+              border-radius:6px;
+              color:#0B1F3A;
+              background:#FFFFFF;
+              font:700 13px/1 system-ui,-apple-system,"Segoe UI",sans-serif;
+              cursor:pointer;
+            }
+            .apex-menu-icon { display:grid; gap:3px; width:16px; }
+            .apex-menu-icon i { display:block; width:16px; height:2px; background:currentColor; border-radius:2px; transition:transform .18s ease,opacity .18s ease; }
+            .apex-menu-open .apex-menu-icon i:nth-child(1) { transform:translateY(5px) rotate(45deg); }
+            .apex-menu-open .apex-menu-icon i:nth-child(2) { opacity:0; }
+            .apex-menu-open .apex-menu-icon i:nth-child(3) { transform:translateY(-5px) rotate(-45deg); }
+            .apex-mobile-panel[hidden] { display:none !important; }
+            .apex-mobile-panel a[aria-current="page"],
+            .apex-desktop-nav a[aria-current="page"] { color:#176E68 !important; text-decoration-color:#2E8B82 !important; }
+            .apex-priority-layout form { grid-template-columns:repeat(2,minmax(0,1fr)) !important; }
+            .apex-priority-layout form > * { min-width:0; max-width:100%; }
+            .apex-priority-layout input:not([type="checkbox"]), .apex-priority-layout select,
+            .apex-priority-layout textarea, .apex-priority-layout button { width:100% !important; max-width:100%; }
+
+            @media (max-width:1199px) {
+              main[data-screen-label="Care page"] > .apex-care-hero {
+                padding:64px 56px 52px !important;
+                grid-template-columns:minmax(0,1.1fr) minmax(340px,.9fr) !important;
+                gap:40px !important;
+              }
+              main[data-screen-label="Care page"] > .apex-care-hero > div { min-width:0 !important; }
+              main[data-screen-label="Care page"] > .apex-care-hero h1 { font-size:48px !important; line-height:1.06 !important; }
+              main[data-screen-label="Care page"] > .apex-care-body {
+                padding:0 56px !important;
+                grid-template-columns:220px minmax(0,1fr) !important;
+              }
+              main[data-screen-label="Care page"] > .apex-care-body > aside { padding-right:24px !important; }
+              main[data-screen-label="Care page"] > .apex-care-body > div:last-child {
+                max-width:none !important;
+                min-width:0 !important;
+                padding-left:40px !important;
+              }
+            }
+
+            @media (max-width:1200px) {
+              .apex-announcement { padding:9px 40px !important; }
+              .apex-header { padding:0 40px !important; }
+              .apex-desktop-nav, .apex-header-cta { display:none !important; }
+              .apex-menu-toggle { display:inline-flex; margin-left:auto; }
+              .apex-header.apex-menu-open .apex-mobile-panel {
+                display:flex;
+                position:absolute;
+                z-index:1000;
+                top:100%;
+                left:0;
+                right:0;
+                flex-direction:column;
+                align-items:stretch;
+                gap:2px;
+                max-height:calc(100vh - 64px);
+                overflow-y:auto;
+                padding:12px 40px 24px;
+                border-top:1px solid #D8DFE5;
+                border-bottom:1px solid #D8DFE5;
+                background:rgba(251,248,243,.99);
+                box-shadow:0 18px 40px rgba(11,31,58,.15);
+              }
+              .apex-mobile-panel .apex-mobile-link,
+              .apex-mobile-panel .apex-mobile-cta {
+                display:flex !important;
+                width:100% !important;
+                min-height:48px;
+                align-items:center;
+                justify-content:flex-start;
+                padding:12px 4px !important;
+                border:0 !important;
+                background:transparent !important;
+                color:#0B1F3A !important;
+                font-size:16px !important;
+                text-decoration:none !important;
+              }
+              .apex-mobile-panel .apex-mobile-cta {
+                justify-content:center;
+                margin-top:10px;
+                padding:14px 18px !important;
+                border-radius:5px !important;
+                background:#0B1F3A !important;
+                color:#FFFFFF !important;
+                font-weight:700 !important;
+              }
+              .apex-footer { padding:48px 40px 32px !important; }
+              .apex-footer > div:first-child { grid-template-columns:1.4fr 1fr !important; gap:36px 48px !important; }
+
+              .apex-home-hero > div:nth-child(3) { padding:72px 56px 80px !important; gap:40px !important; }
+              .apex-home-hero h1 { font-size:48px !important; line-height:1.06 !important; }
+              .apex-home-proof { padding:0 56px !important; }
+              .apex-home-approach { padding:80px 56px !important; grid-template-columns:260px minmax(0,1fr) !important; gap:40px !important; }
+              .apex-home-care { padding:0 56px 80px !important; }
+              .apex-home-care > div:last-child { grid-template-columns:repeat(2,minmax(0,1fr)) !important; gap:16px !important; border:0 !important; overflow:visible !important; }
+              .apex-home-care > div:last-child > * { min-width:0; border:1px solid #D5DCE5 !important; border-radius:7px !important; }
+              .apex-home-care > div:last-child > *:last-child { grid-column:1 / -1; }
+              .apex-home-process { padding:80px 56px !important; }
+              .apex-home-process ol { grid-template-columns:repeat(2,minmax(0,1fr)) !important; gap:32px 24px !important; }
+              .apex-home-process ol > li { min-width:0; padding:24px 0 0 !important; border-left:0 !important; border-top:1px solid #B8C4CD !important; }
+              .apex-home-process ol > li::before { left:0 !important; }
+              .apex-home-process ol > li > span:first-child { left:0 !important; }
+              .apex-home-why { padding:80px 56px !important; gap:40px !important; }
+              .apex-home-founding { margin:0 56px !important; }
+              .apex-home-final { padding:80px 56px !important; }
+
+              .apex-priority-layout {
+                grid-template-columns:minmax(0,1fr) !important;
+                gap:48px !important;
+                padding:64px 40px 80px !important;
+              }
+              .apex-priority-layout > div:first-child { position:static !important; top:auto !important; }
+            }
+
+            @media (max-width:900px) {
+              .apex-main { width:100% !important; max-width:100% !important; }
+              .apex-main h1 { font-size:clamp(40px,7vw,52px) !important; line-height:1.06 !important; letter-spacing:-.035em !important; }
+              .apex-main h2 { font-size:clamp(28px,4.5vw,38px) !important; line-height:1.12 !important; }
+              .apex-section img, .apex-section image-slot { max-width:100%; }
+
+              .apex-home-hero > div:nth-child(3) {
+                grid-template-columns:minmax(0,1fr) !important;
+                gap:40px !important;
+                padding:72px 40px 80px !important;
+              }
+              .apex-home-hero > div:nth-child(3) > div:last-child { height:460px !important; }
+              .apex-home-proof { grid-template-columns:repeat(2,minmax(0,1fr)) !important; padding:0 40px !important; }
+              .apex-home-proof > * { min-width:0; }
+              .apex-home-proof > *:nth-child(odd) { border-left:0 !important; }
+              .apex-home-proof > *:nth-child(n+3) { border-top:1px solid #D5DCE5 !important; }
+              .apex-home-approach { grid-template-columns:minmax(0,1fr) !important; gap:24px !important; padding:80px 40px !important; }
+              .apex-home-care { padding:0 40px 80px !important; }
+              .apex-home-care > div:first-child { flex-direction:column !important; align-items:flex-start !important; gap:18px !important; }
+              .apex-home-care > div:last-child { grid-template-columns:repeat(2,minmax(0,1fr)) !important; gap:16px !important; border:0 !important; overflow:visible !important; }
+              .apex-home-care > div:last-child > * { border:1px solid #D5DCE5 !important; border-radius:7px !important; min-width:0; }
+              .apex-home-care > div:last-child > *:last-child { grid-column:1 / -1; }
+              .apex-home-process { padding:80px 40px !important; }
+              .apex-home-process > div:first-child { flex-direction:column !important; align-items:flex-start !important; gap:18px !important; }
+              .apex-home-process ol { grid-template-columns:repeat(2,minmax(0,1fr)) !important; gap:32px 24px !important; }
+              .apex-home-process ol > li { min-width:0; padding:24px 0 0 !important; border-left:0 !important; border-top:1px solid #B8C4CD !important; }
+              .apex-home-process ol > li::before { left:0 !important; }
+              .apex-home-why { grid-template-columns:minmax(0,1fr) !important; gap:40px !important; padding:80px 40px !important; }
+              .apex-home-why > div:last-child { height:420px !important; }
+              .apex-home-founding { grid-template-columns:minmax(0,1fr) !important; margin:0 40px !important; }
+              .apex-home-founding > div { padding:36px !important; }
+              .apex-home-founding > div:first-child { border-right:0 !important; border-bottom:1px solid #D5DCE5 !important; }
+              .apex-home-final { padding:80px 40px !important; }
+
+              main[data-screen-label="Care page"] > .apex-care-hero {
+                grid-template-columns:minmax(0,1fr) !important;
+                align-items:stretch !important;
+                gap:32px !important;
+                padding:48px 32px 40px !important;
+              }
+              main[data-screen-label="Care page"] > .apex-care-hero h1 { font-size:clamp(40px,6vw,48px) !important; }
+              main[data-screen-label="Care page"] > .apex-care-hero > div:last-child { height:clamp(320px,55vw,420px) !important; }
+              main[data-screen-label="Care page"] > .apex-care-body { display:block !important; padding:0 32px !important; }
+              main[data-screen-label="Care page"] > .apex-care-body > aside { display:none !important; }
+              main[data-screen-label="Care page"] > .apex-care-body > div:last-child {
+                max-width:none !important;
+                min-width:0 !important;
+                padding:48px 0 72px !important;
+                gap:48px !important;
+              }
+              main[data-screen-label="Care page"] h2 { font-size:26px !important; line-height:1.15 !important; }
+
+              .apex-how-hero, .apex-pricing-hero { padding:64px 40px 40px !important; }
+              .apex-how-steps, .apex-pricing-table { padding:0 40px 72px !important; }
+              .apex-how-steps > div { grid-template-columns:80px minmax(0,1fr) !important; gap:18px 24px !important; }
+              .apex-how-steps > div > *:last-child { grid-column:2; }
+              .apex-how-expectations { grid-template-columns:minmax(0,1fr) !important; gap:32px !important; padding:64px 40px !important; }
+              .apex-how-final, .apex-pricing-final { padding:72px 40px !important; }
+              .apex-pricing-faq { grid-template-columns:minmax(0,1fr) !important; gap:32px !important; padding:64px 40px !important; }
+              .apex-pricing-table > div > div:first-child { display:none !important; }
+              .apex-pricing-table > div > div:not(:first-child) {
+                display:grid !important;
+                grid-template-columns:minmax(0,1fr) !important;
+                gap:18px !important;
+                margin-bottom:14px;
+                padding:24px !important;
+                border:1px solid #D5DCE5 !important;
+                border-radius:7px;
+                background:rgba(255,255,255,.72);
+              }
+              .apex-pricing-table > div > div:not(:first-child) > * {
+                display:block;
+                min-width:0;
+                padding:0 !important;
+                overflow-wrap:anywhere;
+              }
+              .apex-pricing-table > div > div:not(:first-child) > *::before {
+                display:block;
+                margin-bottom:5px;
+                color:#176E68;
+                font:700 11px/1.3 system-ui,-apple-system,"Segoe UI",sans-serif;
+                letter-spacing:.08em;
+                text-transform:uppercase;
+              }
+              .apex-pricing-table > div > div:not(:first-child) > *:nth-child(1)::before { content:'Offer'; }
+              .apex-pricing-table > div > div:not(:first-child) > *:nth-child(2)::before { content:'Included'; }
+              .apex-pricing-table > div > div:not(:first-child) > *:nth-child(3)::before { content:'Billed separately'; }
+              .apex-pricing-table > div > div:not(:first-child) > *:nth-child(4)::before { content:'Price'; }
+
+              .apex-about-hero, .apex-about-location { grid-template-columns:minmax(0,1fr) !important; gap:36px !important; padding:64px 40px !important; }
+              .apex-about-hero > div:last-child, .apex-about-location > div:last-child { width:100% !important; max-width:100% !important; height:auto !important; min-height:340px; aspect-ratio:3 / 2; }
+              .apex-about-standards { grid-template-columns:minmax(0,1fr) !important; gap:32px !important; padding:64px 40px !important; }
+              .apex-about-team { padding:64px 40px !important; }
+              .apex-about-team > div:last-child { grid-template-columns:repeat(2,minmax(0,1fr)) !important; }
+
+              .apex-faq-layout { grid-template-columns:minmax(0,1fr) !important; gap:40px !important; padding:64px 40px 80px !important; }
+              .apex-faq-layout > div:first-child { position:static !important; top:auto !important; }
+              .apex-faq-layout summary { min-height:44px; }
+            }
+
+            @media (max-width:720px) {
+              .apex-priority-layout form { grid-template-columns:minmax(0,1fr) !important; }
+              .apex-priority-layout form > * { min-width:0; max-width:100%; grid-column:auto !important; }
+              .apex-priority-layout input, .apex-priority-layout select, .apex-priority-layout textarea,
+              .apex-priority-layout button { width:100% !important; max-width:100%; font-size:16px !important; }
+              .apex-priority-layout input[type="checkbox"] { width:20px !important; min-width:20px; min-height:20px; flex:0 0 20px; }
+            }
+
+            @media (max-width:640px) {
+              .apex-announcement {
+                padding:8px 20px !important;
+                flex-wrap:wrap !important;
+                gap:4px 12px !important;
+                line-height:1.35 !important;
+              }
+              .apex-announcement > span:nth-child(2) { order:3; flex:1 0 100%; }
+              .apex-header { padding:0 20px !important; }
+              .apex-header.apex-menu-open .apex-mobile-panel { padding:10px 20px 22px; }
+              .apex-menu-toggle { min-width:44px; padding:0 11px; }
+              .apex-menu-toggle > span:first-child { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
+              .apex-main h1 { font-size:clamp(34px,10.5vw,42px) !important; }
+              .apex-main h2 { font-size:clamp(27px,8vw,34px) !important; }
+
+              .apex-home-hero > div:nth-child(3) { gap:32px !important; padding:56px 20px 64px !important; }
+              .apex-home-hero > div:nth-child(3) p { font-size:17px !important; }
+              .apex-home-hero > div:nth-child(3) > div:last-child { height:clamp(340px,105vw,410px) !important; }
+              .apex-home-hero > div:nth-child(3) > div:first-child > div:last-child { flex-direction:column !important; align-items:stretch !important; gap:12px !important; }
+              .apex-home-hero > div:nth-child(3) a { width:100% !important; justify-content:center !important; text-align:center !important; }
+              .apex-home-proof { grid-template-columns:minmax(0,1fr) !important; padding:0 20px !important; }
+              .apex-home-proof > * { padding:16px 0 !important; border-left:0 !important; border-top:1px solid #D5DCE5 !important; }
+              .apex-home-proof > *:first-child { border-top:0 !important; }
+              .apex-home-approach { padding:64px 20px !important; }
+              .apex-home-care { padding:0 20px 64px !important; }
+              .apex-home-care > div:last-child { grid-template-columns:minmax(0,1fr) !important; }
+              .apex-home-care > div:last-child > *:last-child { grid-column:auto; }
+              .apex-home-process { padding:64px 20px !important; }
+              .apex-home-process ol { grid-template-columns:minmax(0,1fr) !important; }
+              .apex-home-why { gap:30px !important; padding:64px 20px !important; }
+              .apex-home-why > div:last-child { height:min(82vw,340px) !important; }
+              .apex-home-founding { margin:0 20px !important; }
+              .apex-home-founding > div { padding:28px !important; }
+              .apex-home-final { padding:72px 20px !important; }
+              .apex-home-final a { width:100% !important; max-width:360px; justify-content:center !important; }
+
+              main[data-screen-label="Care page"] > .apex-care-hero { gap:24px !important; padding:36px 20px 32px !important; }
+              main[data-screen-label="Care page"] > .apex-care-hero > div:first-child { gap:16px !important; }
+              main[data-screen-label="Care page"] > .apex-care-hero h1 { font-size:clamp(34px,10vw,40px) !important; }
+              main[data-screen-label="Care page"] > .apex-care-hero p { font-size:16px !important; line-height:1.55 !important; }
+              main[data-screen-label="Care page"] [data-dc-tpl="154"] { flex-direction:column !important; align-items:stretch !important; gap:10px !important; }
+              main[data-screen-label="Care page"] [data-dc-tpl="154"] > a { display:flex !important; width:100% !important; justify-content:center !important; text-align:center !important; }
+              main[data-screen-label="Care page"] [data-dc-tpl="154"] > span { font-size:12.5px !important; line-height:1.45 !important; }
+              main[data-screen-label="Care page"] > .apex-care-hero > div:last-child { height:clamp(240px,68vw,320px) !important; }
+              main[data-screen-label="Care page"] > .apex-care-body { padding:0 20px !important; }
+              main[data-screen-label="Care page"] > .apex-care-body > div:last-child { padding:40px 0 64px !important; gap:40px !important; }
+              main[data-screen-label="Care page"] ul[data-dc-tpl="183"] { grid-template-columns:minmax(0,1fr) !important; }
+              main[data-screen-label="Care page"] ul[data-dc-tpl="183"] > li { min-width:0 !important; padding:16px !important; }
+              main[data-screen-label="Care page"] [data-dc-tpl="192"] { padding:22px 18px !important; }
+              main[data-screen-label="Care page"] [data-dc-tpl="193"] { flex-direction:column !important; align-items:flex-start !important; gap:6px !important; }
+              main[data-screen-label="Care page"] [data-dc-tpl="196"] { grid-template-columns:minmax(0,1fr) !important; gap:0 !important; }
+              main[data-screen-label="Care page"] [data-dc-tpl="196"] > div { min-width:0 !important; padding:14px 0 !important; border-top:1px solid #D5DCE5; }
+              main[data-screen-label="Care page"] [data-dc-tpl="211"] details { padding:14px 0 !important; }
+              main[data-screen-label="Care page"] [data-dc-tpl="215"] { min-height:44px; align-items:flex-start !important; gap:14px !important; font-size:16px !important; }
+              main[data-screen-label="Care page"] [data-dc-tpl="218"] { flex-direction:column !important; align-items:stretch !important; gap:16px !important; padding-top:24px !important; }
+              main[data-screen-label="Care page"] [data-dc-tpl="218"] > a { display:flex !important; width:100% !important; justify-content:center !important; text-align:center !important; }
+
+              .apex-how-hero, .apex-pricing-hero { padding:48px 20px 36px !important; }
+              .apex-how-steps, .apex-pricing-table { padding:0 20px 56px !important; }
+              .apex-how-steps > div { grid-template-columns:minmax(0,1fr) !important; gap:10px !important; padding:24px 0 !important; }
+              .apex-how-steps > div > *:last-child { grid-column:auto; }
+              .apex-how-expectations, .apex-pricing-faq { gap:24px !important; padding:56px 20px !important; }
+              .apex-how-final, .apex-pricing-final { padding:56px 20px !important; }
+              .apex-how-final > div, .apex-pricing-final > div { flex-direction:column !important; align-items:stretch !important; gap:18px !important; }
+              .apex-how-final a, .apex-pricing-final a { width:100% !important; justify-content:center !important; text-align:center !important; }
+
+              .apex-about-hero, .apex-about-standards, .apex-about-team, .apex-about-location { padding:56px 20px !important; }
+              .apex-about-hero, .apex-about-location { gap:28px !important; }
+              .apex-about-hero > div:last-child, .apex-about-location > div:last-child { min-height:250px; }
+              .apex-about-standards > div:last-child { grid-template-columns:minmax(0,1fr) !important; }
+              .apex-about-team > div:last-child { grid-template-columns:minmax(0,1fr) !important; }
+
+              .apex-faq-layout, .apex-priority-layout { gap:36px !important; padding:48px 20px 64px !important; }
+              .apex-faq-layout details { padding:14px 0 !important; }
+              .apex-faq-layout summary { min-height:48px; align-items:flex-start !important; gap:14px !important; }
+              .apex-priority-layout form { grid-template-columns:minmax(0,1fr) !important; padding:24px 18px !important; }
+              .apex-priority-layout form > * { min-width:0; grid-column:auto !important; }
+              .apex-priority-layout input, .apex-priority-layout select, .apex-priority-layout textarea,
+              .apex-priority-layout button { width:100% !important; max-width:100%; min-height:48px; font-size:16px !important; }
+              .apex-priority-layout input[type="checkbox"] { width:20px !important; min-height:20px; }
+
+              .apex-footer { padding:48px 20px 32px !important; }
+              .apex-footer > div:first-child { grid-template-columns:minmax(0,1fr) !important; gap:30px !important; }
+              .apex-footer a { display:inline-flex; min-height:36px; align-items:center; overflow-wrap:anywhere; }
             }
           `;
           document.head.appendChild(style);
@@ -483,7 +932,34 @@ document.addEventListener('DOMContentLoaded', async function() {
         attributes: true,
         attributeFilter: ['id']
       });
-      window.addEventListener('hashchange', () => requestAnimationFrame(applyEnhancements));
+      if (!window.__apexResponsiveHandlers) {
+        window.__apexResponsiveHandlers = true;
+        document.addEventListener('click', event => {
+          const openHeader = document.querySelector('.apex-header.apex-menu-open');
+          if (openHeader && !openHeader.contains(event.target)) setMenuOpen(openHeader, false);
+        });
+        document.addEventListener('keydown', event => {
+          if (event.key === 'Escape') {
+            const openHeader = document.querySelector('.apex-header.apex-menu-open');
+            if (openHeader) setMenuOpen(openHeader, false, true);
+          }
+        });
+        window.addEventListener('resize', () => {
+          if (window.innerWidth > 1200) setMenuOpen(document.querySelector('.apex-header'), false);
+        });
+      }
+      window.addEventListener('hashchange', () => {
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+          applyEnhancements();
+          setMenuOpen(document.querySelector('.apex-header'), false);
+          window.scrollTo({ top:0, left:0, behavior:'auto' });
+          const heading = document.querySelector('.apex-main h1');
+          if (heading) {
+            heading.setAttribute('tabindex', '-1');
+            heading.focus({ preventScroll:true });
+          }
+        }));
+      });
       applyEnhancements();
     })();
   </script>

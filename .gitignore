@@ -1,0 +1,18 @@
+# Dependencies and Cloudflare local state
+node_modules/
+.wrangler/
+
+# Runtime secrets: commit the example only
+.dev.vars*
+!.dev.vars.example
+.env*
+!.env.example
+
+# Test and editor output
+coverage/
+*.log
+*.map
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

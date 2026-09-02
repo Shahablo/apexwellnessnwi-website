@@ -1,0 +1,41 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "apexwellnessnwi-website",
+  "main": "./src/worker.mjs",
+  "compatibility_date": "2026-09-02",
+  "workers_dev": false,
+  "preview_urls": true,
+  "routes": [
+    {
+      "pattern": "apexwellnessnwi.com",
+      "custom_domain": true
+    },
+    {
+      "pattern": "www.apexwellnessnwi.com",
+      "custom_domain": true
+    }
+  ],
+  "assets": {
+    "directory": "./public/",
+    "binding": "ASSETS",
+    "not_found_handling": "404-page",
+    "html_handling": "auto-trailing-slash",
+    "run_worker_first": [
+      "/api/*"
+    ]
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "apexwellness-priority",
+      "database_id": "a6ba6c22-70f0-4eff-abe3-75dce9d97701",
+      "migrations_dir": "./migrations"
+    }
+  ],
+  "vars": {
+    "CONSENT_VERSION": "priority-2026-09"
+  },
+  "observability": {
+    "enabled": true
+  }
+}

@@ -944,6 +944,200 @@ div.pricing-table {
   font-size: 0.9rem;
 }
 
+.blog-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.35rem;
+}
+
+.blog-card {
+  display: flex;
+  min-height: 100%;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+  transition: border-color 150ms ease, box-shadow 150ms ease, transform 150ms ease;
+}
+
+.blog-card:hover {
+  border-color: rgba(23, 74, 70, 0.5);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-0.18rem);
+}
+
+.blog-card-image {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+.blog-card-image .representative img {
+  aspect-ratio: 16 / 9;
+  border-radius: 0;
+  box-shadow: none;
+  object-fit: cover;
+}
+
+.blog-card-image .representative-caption {
+  margin: 0;
+  padding: 0.45rem 1.25rem 0;
+  font-size: 0.74rem;
+}
+
+.blog-card-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 1.25rem;
+}
+
+.blog-card-body h2 {
+  margin: 0 0 0.75rem;
+  color: var(--color-ink);
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 600;
+  line-height: 1.12;
+}
+
+.blog-card-body h2 a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.blog-card-body h2 a:hover {
+  color: var(--color-accent);
+  text-decoration: underline;
+}
+
+.blog-card-body > p:not(.article-kicker):not(.article-card-meta) {
+  margin: 0 0 1rem;
+  color: var(--color-muted);
+}
+
+.article-kicker {
+  margin: 0 0 0.55rem;
+  color: var(--color-accent);
+  font-size: 0.75rem;
+  font-weight: 820;
+  letter-spacing: 0.1em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.article-card-meta,
+.article-meta {
+  color: var(--color-muted);
+  font-size: 0.83rem;
+  line-height: 1.5;
+}
+
+.article-card-meta {
+  margin: auto 0 0;
+  padding-top: 0.4rem;
+}
+
+.article-shell {
+  width: min(calc(100% - (2 * var(--gutter))), 64rem);
+  margin-inline: auto;
+  padding-block: clamp(3rem, 7vw, 6rem);
+}
+
+.article-header {
+  max-width: 58rem;
+  margin-inline: auto;
+}
+
+.article-header h1 {
+  max-width: 18ch;
+  margin: 0.5rem 0 1.1rem;
+  color: var(--color-ink);
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 7vw, 4.75rem);
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  line-height: 1;
+}
+
+.article-deck {
+  max-width: 44rem;
+  margin: 0 0 1rem;
+  color: var(--color-copy);
+  font-size: clamp(1.08rem, 2.2vw, 1.3rem);
+  line-height: 1.55;
+}
+
+.article-header .article-meta {
+  margin: 0 0 2rem;
+}
+
+.article-header .representative img {
+  aspect-ratio: 16 / 9;
+}
+
+.article-body {
+  width: min(100%, var(--reading-width));
+  margin: clamp(2.75rem, 6vw, 5rem) auto 0;
+}
+
+.article-body > section {
+  margin-top: 2.5rem;
+}
+
+.article-body h2 {
+  margin: 0 0 0.8rem;
+  color: var(--color-ink);
+  font-family: var(--font-display);
+  font-size: clamp(1.7rem, 4vw, 2.45rem);
+  font-weight: 550;
+  letter-spacing: -0.02em;
+  line-height: 1.12;
+}
+
+.article-body p,
+.article-body li {
+  max-width: 72ch;
+}
+
+.article-body li + li {
+  margin-top: 0.45rem;
+}
+
+.medical-note,
+.article-cta {
+  margin-top: 3rem;
+  padding: clamp(1.35rem, 4vw, 2rem);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-alt);
+}
+
+.medical-note h2,
+.article-cta h2 {
+  font-size: clamp(1.45rem, 3vw, 2rem);
+}
+
+.article-sources {
+  padding-top: 2rem;
+  border-top: 1px solid var(--color-border);
+}
+
+.article-sources li {
+  overflow-wrap: anywhere;
+}
+
+.article-sources a {
+  font-size: 0.92rem;
+}
+
+.article-cta {
+  background: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+}
+
 .form-card {
   width: 100%;
   padding: clamp(1.25rem, 4vw, 2.25rem);
@@ -1161,7 +1355,8 @@ div.pricing-table {
 
 @media (min-width: 42rem) {
   .cards,
-  .care-cards {
+  .care-cards,
+  .blog-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -1248,7 +1443,8 @@ div.pricing-table {
 
 @media (min-width: 64rem) {
   .cards,
-  .care-cards {
+  .care-cards,
+  .blog-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 

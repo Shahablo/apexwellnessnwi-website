@@ -4,6 +4,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { pages, site } from "../src/content.mjs";
+import { blogPosts } from "../src/blog-posts.mjs";
 
 const rootDirectory = fileURLToPath(new URL("../", import.meta.url));
 const publicDirectory = join(rootDirectory, "public");
@@ -14,6 +15,9 @@ const publicImagesDirectory = join(publicAssetsDirectory, "images");
 const buildDate = process.env.SOURCE_DATE_EPOCH
   ? new Date(Number(process.env.SOURCE_DATE_EPOCH) * 1000).toISOString().slice(0, 10)
   : new Date().toISOString().slice(0, 10);
+const publishedBlogPosts = blogPosts
+  .filter((post) => post.published <= buildDate && post.status !== "draft")
+  .sort((a, b) => b.published.localeCompare(a.published));
 
 const imageCatalog = Object.freeze({
   consultation: {
@@ -117,6 +121,19 @@ function canonicalUrl(slug) {
   return `${site.canonicalUrl}${slug === "/" ? "/" : slug}`;
 }
 
+function imageForPage(pageKey, page) {
+  return imageCatalog[page.heroImage] || heroImages[pageKey] || imageCatalog.shoreline;
+}
+
+function formatDate(value) {
+  return new Intl.DateTimeFormat("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    timeZone: "UTC",
+  }).format(new Date(`${value}T00:00:00Z`));
+}
+
 function assetUrl(path) {
   const normalized = path.replaceAll("\\", "/");
   const version = assetVersions.get(normalized);
@@ -166,23 +183,57 @@ function pageJsonLd(page) {
   ];
 
   if (page.slug !== "/") {
+    const itemListElement = [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: `${site.canonicalUrl}/`,
+      },
+    ];
+
+    if (page.kind === "blogPost") {
+      itemListElement.push({
+        "@type": "ListItem",
+        position: 2,
+        name: "Blog",
+        item: `${site.canonicalUrl}/blog/`,
+      });
+    }
+
+    itemListElement.push({
+      "@type": "ListItem",
+      position: itemListElement.length + 1,
+      name: page.navLabel || page.h1,
+      item: url,
+    });
+
     graph.push({
       "@type": "BreadcrumbList",
       "@id": `${url}#breadcrumb`,
-      itemListElement: [
-        {
-          "@type": "ListItem",
-          position: 1,
-          name: "Home",
-          item: `${site.canonicalUrl}/`,
-        },
-        {
-          "@type": "ListItem",
-          position: 2,
-          name: page.navLabel || page.h1,
-          item: url,
-        },
-      ],
+      itemListElement,
+    });
+  }
+
+  if (page.kind === "blogPost") {
+    const heroImage = imageForPage("blog-post", page);
+    graph.push({
+      "@type": "BlogPosting",
+      "@id": `${url}#article`,
+      headline: page.h1,
+      description: page.description,
+      image: `${site.canonicalUrl}${assetUrl(`images/${heroImage.file}`)}`,
+      datePublished: page.published,
+      dateModified: page.modified,
+      author: {
+        "@type": "Organization",
+        name: page.author,
+        url: `${site.canonicalUrl}/about/`,
+      },
+      publisher: { "@id": `${site.canonicalUrl}/#organization` },
+      mainEntityOfPage: { "@id": `${url}#webpage` },
+      articleSection: page.category,
+      inLanguage: "en-US",
     });
   }
 
@@ -405,7 +456,7 @@ function renderPolicySection(section, index) {
 }
 
 function renderHero(pageKey, page) {
-  const image = heroImages[pageKey] || imageCatalog.shoreline;
+  const image = imageForPage(pageKey, page);
   return `<section class="hero" aria-labelledby="page-title"><div class="container hero-grid">
     <div class="hero-copy">
       <p class="eyebrow">${escapeHtml(page.eyebrow)}</p>
@@ -416,6 +467,62 @@ function renderHero(pageKey, page) {
     </div>
     <div class="hero-media">${imageMarkup(image, { hero: true })}</div>
   </div></section>`;
+}
+
+function renderBlogIndex(page) {
+  const articleCards = publishedBlogPosts.map((post) => {
+    const image = imageForPage("blog-post", post);
+    return `<article class="blog-card">
+      <a class="blog-card-image" href="${escapeHtml(post.slug)}" aria-label="Read ${escapeHtml(post.h1)}">${imageMarkup(image)}</a>
+      <div class="blog-card-body">
+        <p class="article-kicker">${escapeHtml(post.category)}</p>
+        <h2><a href="${escapeHtml(post.slug)}">${escapeHtml(post.h1)}</a></h2>
+        <p>${escapeHtml(post.excerpt)}</p>
+        <p class="article-card-meta"><time datetime="${escapeHtml(post.published)}">${escapeHtml(formatDate(post.published))}</time> · ${escapeHtml(post.readTime || "8 minute read")}</p>
+      </div>
+    </article>`;
+  }).join("\n");
+
+  return `<main id="main-content" class="page" tabindex="-1">
+    ${renderHero("blog", page)}
+    <section class="section" aria-labelledby="latest-articles"><div class="container">
+      <div class="section-heading"><p class="eyebrow">Latest articles</p><h2 id="latest-articles">Start with the question already on your mind.</h2><p>Every article is written for education, sourced from credible medical references, and clear about what still belongs in a real clinical conversation.</p></div>
+      <div class="blog-grid">${articleCards}</div>
+    </div></section>
+  </main>`;
+}
+
+function renderBlogPost(page) {
+  const image = imageForPage("blog-post", page);
+  const introParagraphs = page.intro.split(/\n\s*\n/).map((paragraph) => `<p class="article-deck">${escapeHtml(paragraph)}</p>`).join("\n");
+  const sourceList = page.sources.map((source) => `<li><a href="${escapeHtml(source.href)}">${escapeHtml(source.label)}</a></li>`).join("\n");
+  const articleSections = page.sections.map((section, index) => {
+    const id = `${identifier(section.heading)}-${index + 1}`;
+    return `<section aria-labelledby="${id}">
+      <h2 id="${id}">${escapeHtml(section.heading)}</h2>
+      ${(section.paragraphs || []).map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join("\n")}
+      ${section.bullets ? `<ul>${section.bullets.map((item) => `<li>${escapeHtml(item)}</li>`).join("\n")}</ul>` : ""}
+    </section>`;
+  }).join("\n");
+  const disclaimer = page.disclaimer || "This article is for general education and is not medical advice, diagnosis, or treatment. Talk with a qualified healthcare professional who knows your circumstances before changing your care. For a medical emergency, call 911 or go to the nearest emergency department.";
+
+  return `<main id="main-content" class="page" tabindex="-1">
+    <article class="article-shell">
+      <header class="article-header">
+        <p class="article-kicker">${escapeHtml(page.category)}</p>
+        <h1 id="page-title">${escapeHtml(page.h1)}</h1>
+        ${introParagraphs}
+        <p class="article-meta">By ${escapeHtml(page.author)} · <time datetime="${escapeHtml(page.published)}">Published ${escapeHtml(formatDate(page.published))}</time>${page.modified !== page.published ? ` · <time datetime="${escapeHtml(page.modified)}">Updated ${escapeHtml(formatDate(page.modified))}</time>` : ""}</p>
+        ${imageMarkup(image, { hero: true })}
+      </header>
+      <div class="article-body">
+        ${articleSections}
+        <aside class="medical-note" aria-labelledby="medical-disclaimer"><h2 id="medical-disclaimer">A quick medical note</h2><p>${escapeHtml(disclaimer)}</p></aside>
+        <section class="article-sources" aria-labelledby="sources-reviewed"><h2 id="sources-reviewed">Sources reviewed</h2><ul>${sourceList}</ul></section>
+        <section class="article-cta" aria-labelledby="keep-exploring"><p class="eyebrow">Keep exploring</p><h2 id="keep-exploring">Useful information is a start. Individual care is the next step.</h2><p>Apex Wellness is preparing to open in Northwest Indiana. A consultation request is free and does not book an appointment, establish care, or guarantee treatment.</p><div class="button-row">${buttonMarkup(page.relatedService, true)}${buttonMarkup(site.cta)}</div></section>
+      </div>
+    </article>
+  </main>`;
 }
 
 function renderConversionHero(page) {
@@ -433,6 +540,9 @@ function renderConversionHero(page) {
 }
 
 function renderMain(pageKey, page) {
+  if (page.kind === "blogIndex") return renderBlogIndex(page);
+  if (page.kind === "blogPost") return renderBlogPost(page);
+
   if (page.effectiveDate) {
     return `<main id="main-content" class="page" tabindex="-1">
       <article class="policy">
@@ -452,7 +562,7 @@ function renderMain(pageKey, page) {
 
 function renderNavigation(page) {
   const links = site.navigation.map((item) => {
-    const current = item.href === page.slug ? ' aria-current="page"' : "";
+    const current = item.href === page.slug || (page.kind === "blogPost" && item.href === "/blog/") ? ' aria-current="page"' : "";
     return `<li><a href="${escapeHtml(item.href)}"${current}>${escapeHtml(item.label)}</a></li>`;
   }).join("\n");
 
@@ -483,7 +593,7 @@ function renderLandingNavigation() {
 }
 
 function renderFooter(page) {
-  const footerLink = (item) => `<li><a href="${escapeHtml(item.href)}"${item.href === page.slug ? ' aria-current="page"' : ""}>${escapeHtml(item.label)}</a></li>`;
+  const footerLink = (item) => `<li><a href="${escapeHtml(item.href)}"${item.href === page.slug || (page.kind === "blogPost" && item.href === "/blog/") ? ' aria-current="page"' : ""}>${escapeHtml(item.label)}</a></li>`;
   const careLinks = site.navigation.slice(1, 4).map(footerLink).join("");
   const infoLinks = site.navigation.slice(4).map(footerLink).join("");
   const policyLinks = site.policyNavigation.map(footerLink).join("");
@@ -501,7 +611,7 @@ function renderFooter(page) {
 
 function renderDocument(pageKey, page, jsonLd, { noIndex = false, mainOverride = "" } = {}) {
   const canonical = canonicalUrl(page.slug);
-  const heroImage = heroImages[pageKey] || imageCatalog.shoreline;
+  const heroImage = imageForPage(pageKey, page);
   const socialImage = `${site.canonicalUrl}${assetUrl(`images/${heroImage.file}`)}`;
 
   return `<!doctype html>
@@ -516,7 +626,7 @@ function renderDocument(pageKey, page, jsonLd, { noIndex = false, mainOverride =
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="manifest" href="/site.webmanifest">
   <meta name="theme-color" content="#173633">
-  <meta property="og:type" content="website">
+  <meta property="og:type" content="${page.kind === "blogPost" ? "article" : "website"}">
   <meta property="og:locale" content="en_US">
   <meta property="og:site_name" content="${escapeHtml(site.name)}">
   <meta property="og:title" content="${escapeHtml(page.title)}">
@@ -531,6 +641,10 @@ function renderDocument(pageKey, page, jsonLd, { noIndex = false, mainOverride =
   <meta name="twitter:description" content="${escapeHtml(page.description)}">
   <meta name="twitter:image" content="${escapeHtml(socialImage)}">
   <meta name="twitter:image:alt" content="${escapeHtml(heroImage.alt)}">
+  ${page.kind === "blogPost" ? `<meta property="article:published_time" content="${escapeHtml(page.published)}">
+  <meta property="article:modified_time" content="${escapeHtml(page.modified)}">
+  <meta property="article:section" content="${escapeHtml(page.category)}">` : ""}
+  <link rel="alternate" type="application/rss+xml" title="Apex Wellness Blog" href="/blog/feed.xml">
   <link rel="stylesheet" href="${escapeHtml(assetUrl("site.css"))}">
   <script type="application/ld+json">${jsonLd}</script>
   <script src="${escapeHtml(assetUrl("site.js"))}" defer></script>
@@ -616,6 +730,7 @@ function buildHeaders(jsonLdDocuments) {
       page.slug,
       `${page.slug}index.html`,
     ]),
+    ...publishedBlogPosts.flatMap((post) => [post.slug, `${post.slug}index.html`]),
   ];
   const cacheRules = htmlPaths.map((path) => `${path}\n  Cache-Control: no-cache, max-age=0, must-revalidate`).join("\n\n");
 
@@ -630,6 +745,9 @@ ${cacheRules}
 
 /site.webmanifest
   Cache-Control: public, max-age=86400
+
+/blog/feed.xml
+  Cache-Control: public, max-age=3600, must-revalidate
 `;
 }
 
@@ -654,11 +772,39 @@ function buildRedirects() {
 }
 
 function buildSitemap() {
-  const entries = Object.values(pages).map((page) => `  <url><loc>${escapeXml(canonicalUrl(page.slug))}</loc><lastmod>${buildDate}</lastmod></url>`).join("\n");
+  const entries = [...Object.values(pages), ...publishedBlogPosts]
+    .map((page) => `  <url><loc>${escapeXml(canonicalUrl(page.slug))}</loc><lastmod>${escapeXml(page.modified || "2026-09-11")}</lastmod></url>`)
+    .join("\n");
   return `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${entries}
 </urlset>
+`;
+}
+
+function buildRssFeed() {
+  const items = [...publishedBlogPosts]
+    .sort((a, b) => b.published.localeCompare(a.published))
+    .map((post) => `<item>
+      <title>${escapeXml(post.h1)}</title>
+      <link>${escapeXml(canonicalUrl(post.slug))}</link>
+      <guid isPermaLink="true">${escapeXml(canonicalUrl(post.slug))}</guid>
+      <pubDate>${new Date(`${post.published}T12:00:00Z`).toUTCString()}</pubDate>
+      <description>${escapeXml(post.excerpt)}</description>
+      <category>${escapeXml(post.category)}</category>
+    </item>`)
+    .join("\n");
+
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>Apex Wellness Blog</title>
+    <link>${escapeXml(`${site.canonicalUrl}/blog/`)}</link>
+    <description>${escapeXml(pages.blog.description)}</description>
+    <language>en-us</language>
+    ${items}
+  </channel>
+</rss>
 `;
 }
 
@@ -704,6 +850,29 @@ function validateContent() {
     titles.add(page.title);
     descriptions.add(page.description);
   }
+
+  for (const [index, post] of blogPosts.entries()) {
+    const key = `blogPosts[${index}]`;
+    for (const field of ["slug", "title", "description", "h1", "intro", "excerpt", "published", "modified", "category", "author", "heroImage"]) {
+      if (!post[field]) throw new Error(`${key} is missing ${field}.`);
+    }
+    if (!post.slug.startsWith("/blog/") || !post.slug.endsWith("/")) {
+      throw new Error(`${key} must use a trailing-slash route under /blog/.`);
+    }
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(post.published) || !/^\d{4}-\d{2}-\d{2}$/.test(post.modified)) {
+      throw new Error(`${key} must use YYYY-MM-DD publication dates.`);
+    }
+    if (!post.sections?.length) throw new Error(`${key} needs article sections.`);
+    if (!post.sources?.length) throw new Error(`${key} needs reviewed sources.`);
+    if (!post.relatedService?.href || !post.relatedService?.label) throw new Error(`${key} needs a related service link.`);
+    if (!imageCatalog[post.heroImage]) throw new Error(`${key} uses an unknown hero image.`);
+    if (slugs.has(post.slug)) throw new Error(`Duplicate page slug: ${post.slug}`);
+    if (titles.has(post.title)) throw new Error(`Duplicate page title: ${post.title}`);
+    if (descriptions.has(post.description)) throw new Error(`Duplicate page description: ${post.description}`);
+    slugs.add(post.slug);
+    titles.add(post.title);
+    descriptions.add(post.description);
+  }
 }
 
 async function build() {
@@ -716,6 +885,13 @@ async function build() {
     const jsonLd = pageJsonLd(page);
     documents.push(jsonLd);
     await writeOutput(outputPathForSlug(page.slug), renderDocument(pageKey, page, jsonLd));
+  }
+
+  for (const post of publishedBlogPosts) {
+    const page = { ...post, kind: "blogPost", navLabel: "Blog" };
+    const jsonLd = pageJsonLd(page);
+    documents.push(jsonLd);
+    await writeOutput(outputPathForSlug(page.slug), renderDocument("blog-post", page, jsonLd));
   }
 
   const notFoundPage = {
@@ -735,6 +911,7 @@ async function build() {
   await Promise.all([
     writeOutput(join(publicDirectory, "robots.txt"), `User-agent: *\nAllow: /\nDisallow: /api/\nSitemap: ${site.canonicalUrl}/sitemap.xml\n`),
     writeOutput(join(publicDirectory, "sitemap.xml"), buildSitemap()),
+    writeOutput(join(publicDirectory, "blog", "feed.xml"), buildRssFeed()),
     writeOutput(join(publicDirectory, ".assetsignore"), `.git\n.git/**\n**/.git\n**/.git/**\n.*\n**/.*\n*.map\n**/*.map\n*.log\n**/*.log\n**/*.md\n**/*.mjs\n**/*.cjs\n**/*.ts\n**/*.tsx\n**/*.jsx\n**/*.test.*\n**/*.spec.*\n`),
     writeOutput(join(publicDirectory, "_headers"), buildHeaders(documents)),
     writeOutput(join(publicDirectory, "_redirects"), buildRedirects()),
@@ -742,7 +919,7 @@ async function build() {
     writeOutput(join(publicDirectory, "site.webmanifest"), buildManifest()),
   ]);
 
-  console.log(`Built ${Object.keys(pages).length} pages plus 404 into ${publicDirectory}`);
+  console.log(`Built ${Object.keys(pages).length + publishedBlogPosts.length} pages plus 404 into ${publicDirectory}`);
 }
 
 await build();

@@ -6,10 +6,19 @@ import { fileURLToPath } from "node:url";
 import test from "node:test";
 
 import { pages, site } from "../src/content.mjs";
+import { blogPosts } from "../src/blog-posts.mjs";
 
 const projectRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const publicRoot = join(projectRoot, "public");
-const pageList = Object.values(pages);
+const buildDate = process.env.SOURCE_DATE_EPOCH
+  ? new Date(Number(process.env.SOURCE_DATE_EPOCH) * 1000).toISOString().slice(0, 10)
+  : new Date().toISOString().slice(0, 10);
+const publishedBlogPosts = blogPosts.filter((post) => post.published <= buildDate && post.status !== "draft");
+const unpublishedBlogPosts = blogPosts.filter((post) => post.published > buildDate || post.status === "draft");
+const pageList = [
+  ...Object.values(pages),
+  ...publishedBlogPosts.map((post) => ({ ...post, kind: "blogPost", navLabel: "Blog" })),
+];
 
 function pageOutputPath(slug) {
   if (slug === "/") return join(publicRoot, "index.html");
@@ -170,8 +179,9 @@ test("generated pages use crawlable routes and contain no editor-only controls",
     assert.doesNotMatch(html, editorControl, `${page.slug} includes an editor control`);
     const currentLinks = startTags(html, "a").filter(({ attrs }) => attrs["aria-current"] === "page");
     if (!page.landing) {
+      const expectedCurrentHref = page.kind === "blogPost" ? "/blog/" : page.slug;
       assert.ok(
-        currentLinks.some(({ attrs }) => attrs.href === page.slug),
+        currentLinks.some(({ attrs }) => attrs.href === expectedCurrentHref),
         `${page.slug} needs an aria-current link in site navigation`,
       );
     }
@@ -467,4 +477,49 @@ test("sitemap, robots, and custom 404 cover the complete crawlable site", async 
   assert.match(metaContent(notFound, "robots") || "", /noindex/i);
   assert.ok(startTags(notFound, "a").some(({ attrs }) => attrs.href === "/"), "404 needs a home link");
   assert.doesNotMatch(notFound, /<(?:image-slot|sc-[\w-]+|x-dc)\b|type=["']__bundler\//i);
+});
+
+test("blog pages expose article semantics, dates, sources, and a valid RSS feed", async () => {
+  const blogIndex = htmlBySlug.get("/blog/");
+  assert.ok(blogIndex, "blog index is missing");
+
+  for (const post of publishedBlogPosts) {
+    assert.match(blogIndex, new RegExp(`href=["']${post.slug.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}["']`), `blog index must link ${post.slug}`);
+    const html = htmlBySlug.get(post.slug);
+    assert.ok(html, `${post.slug} is missing`);
+    assert.match(html, /<article\b[^>]*class=["'][^"']*article-shell/i, `${post.slug} needs an article landmark`);
+    assert.match(html, new RegExp(`<time\\b[^>]*datetime=["']${post.published}["']`, "i"), `${post.slug} needs a visible publication date`);
+    assert.match(html, /Sources reviewed/i, `${post.slug} needs a visible source list`);
+
+    const jsonLdScripts = [...html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)]
+      .filter(([, rawAttrs]) => attributes(rawAttrs).type?.toLowerCase() === "application/ld+json")
+      .map(([, , body]) => JSON.parse(body));
+    const graph = jsonLdScripts.flatMap((document) => document["@graph"] || []);
+    const article = graph.find((node) => node["@type"] === "BlogPosting");
+    assert.ok(article, `${post.slug} needs BlogPosting JSON-LD`);
+    assert.equal(article.datePublished, post.published);
+    assert.equal(article.dateModified, post.modified);
+    assert.equal(article.headline, post.h1);
+  }
+
+  const feedPath = join(publicRoot, "blog", "feed.xml");
+  assert.ok(existsSync(feedPath), "blog RSS feed is missing");
+  const feed = await readFile(feedPath, "utf8");
+  assert.match(feed, /<rss\b[^>]*version="2\.0"/i);
+  for (const post of publishedBlogPosts) {
+    assert.match(feed, new RegExp(canonicalFor(post).replace(/[.*+?^${}()|[\]\\]/g, "\\$&")), `RSS feed must include ${post.slug}`);
+  }
+});
+
+test("future-dated blog posts stay out of public pages, the sitemap, and the feed", async () => {
+  const blogIndex = htmlBySlug.get("/blog/");
+  const sitemap = await readFile(join(publicRoot, "sitemap.xml"), "utf8");
+  const feed = await readFile(join(publicRoot, "blog", "feed.xml"), "utf8");
+
+  for (const post of unpublishedBlogPosts) {
+    assert.ok(!existsSync(pageOutputPath(post.slug)), `${post.slug} must not be generated before ${post.published}`);
+    assert.doesNotMatch(blogIndex, new RegExp(post.slug.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")), `${post.slug} must not be listed early`);
+    assert.doesNotMatch(sitemap, new RegExp(canonicalFor(post).replace(/[.*+?^${}()|[\]\\]/g, "\\$&")), `${post.slug} must not enter the sitemap early`);
+    assert.doesNotMatch(feed, new RegExp(canonicalFor(post).replace(/[.*+?^${}()|[\]\\]/g, "\\$&")), `${post.slug} must not enter the feed early`);
+  }
 });

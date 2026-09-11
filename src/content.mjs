@@ -30,6 +30,7 @@ export const site = Object.freeze({
     { label: 'How It Works', href: '/how-it-works/' },
     { label: 'Pricing', href: '/pricing/' },
     { label: 'About', href: '/about/' },
+    { label: 'Blog', href: '/blog/' },
     { label: 'FAQ', href: '/faq/' }
   ],
   policyNavigation: [
@@ -1161,5 +1162,21 @@ export const pages = Object.freeze({
         ]
       }
     ]
+  },
+
+  blog: {
+    slug: '/blog/',
+    navLabel: 'Blog',
+    title: 'Weight, Metabolic & Hormone Health Articles | Apex Wellness',
+    description:
+      'Plain-language articles about weight, metabolic, and hormone health for adults in Northwest Indiana from Apex Wellness.',
+    eyebrow: 'Apex Wellness field notes',
+    h1: 'Useful health information, minus the wellness fog machine.',
+    intro:
+      'Evidence-aware explanations for real life: clear enough to use, candid about uncertainty, and never written like a pharmaceutical brochure.',
+    cta: priorityListCta,
+    kind: 'blogIndex',
+    modified: '2026-09-11',
+    sections: []
   }
 });

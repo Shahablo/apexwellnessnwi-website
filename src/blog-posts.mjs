@@ -183,6 +183,7 @@ export const blogPosts = Object.freeze([
   },
   {
     slug: "/blog/glp-1-weight-loss-expectations-side-effects/",
+    status: "draft",
     title: "GLP-1 Weight Loss: Expectations & Side Effects | Apex",
     description:
       "Considering GLP-1 weight loss? Learn realistic timelines, common side effects, warning signs, and why physician follow-up matters in Northwest Indiana.",
@@ -360,6 +361,7 @@ export const blogPosts = Object.freeze([
   },
   {
     slug: "/blog/weight-loss-plateau-what-to-track/",
+    status: "draft",
     title: "Weight Loss Plateau: What to Track Instead | Apex",
     description:
       "A weight loss plateau does not always mean failure. Learn what adults in Northwest Indiana can track beyond the scale—and when to review the plan.",

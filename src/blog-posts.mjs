@@ -26,6 +26,8 @@ export const blogPosts = Object.freeze([
         paragraphs: [
           "A number on the scale matters, but it cannot take a medical history.",
           "A useful initial evaluation may review:",
+        ],
+        paragraphsAfterBullets: [
           "BMI and waist circumference can help screen for health risk, but neither replaces clinical judgment. Laboratory testing is often useful to assess obesity-related conditions and treatment safety. Commonly considered tests include A1c, kidney and liver measures, lipids, and TSH, with pregnancy testing when relevant; the final panel should be individualized. An untargeted “everything” panel is not automatically better care.",
           "Hormonal or other medical contributors should be considered when the clinical picture supports them. At the same time, not every weight concern is caused by a thyroid, cortisol, or sex-hormone problem. Thoughtful evaluation avoids both extremes.",
         ],
@@ -83,6 +85,8 @@ export const blogPosts = Object.freeze([
         paragraphs: [
           "The first plan is a hypothesis. Follow-up tells us whether it is working.",
           "Depending on the treatment, follow-up may review:",
+        ],
+        paragraphsAfterBullets: [
           "For medication, “more” is not automatically “better.” The appropriate dose is the one supported by the product instructions, response, tolerability, and clinical judgment. Side effects should not be treated as proof that a medicine is working.",
         ],
         bullets: [
@@ -99,6 +103,8 @@ export const blogPosts = Object.freeze([
         heading: "What responsible medical weight management should not promise",
         paragraphs: [
           "Be cautious if a program promises:",
+        ],
+        paragraphsAfterBullets: [
           "The FDA does not review compounded drugs for safety, effectiveness, or quality before they are marketed. Compounding can have a legitimate role for a patient whose medical need cannot be met by an available FDA-approved drug, but it requires a specific clinical and pharmacy discussion—not a casual substitution.",
         ],
         bullets: [
@@ -114,6 +120,8 @@ export const blogPosts = Object.freeze([
         heading: "What a useful first conversation sounds like",
         paragraphs: [
           "You do not need to arrive with perfect food logs or an apology. Helpful questions include:",
+        ],
+        paragraphsAfterBullets: [
           "Those questions turn weight care from a transaction into a clinical relationship.",
         ],
         bullets: [
@@ -222,6 +230,8 @@ export const blogPosts = Object.freeze([
         heading: "Expectation 3: stomach and bowel symptoms are common",
         paragraphs: [
           "The most common adverse effects are gastrointestinal. Depending on the medicine, they may include:",
+        ],
+        paragraphsAfterBullets: [
           "Gastrointestinal effects are common, and many occur during dose escalation. Most trial events were not severe, but severe gastrointestinal reactions can occur. “Common” does not mean “ignore them,” and severe symptoms are not a badge of treatment success.",
           "Fatigue, headache, injection-site reactions, or hair loss may also occur with particular products. The relevant prescribing information should be reviewed before treatment.",
         ],
@@ -238,6 +248,8 @@ export const blogPosts = Object.freeze([
         heading: "Practical habits to discuss with your clinician",
         paragraphs: [
           "The right side-effect plan is individualized, but several practical topics are worth discussing:",
+        ],
+        paragraphsAfterBullets: [
           "Persistent symptoms may call for slower escalation, staying at a lower dose, changing the plan, or stopping treatment. That decision belongs in a clinical conversation.",
         ],
         bullets: [
@@ -262,6 +274,8 @@ export const blogPosts = Object.freeze([
         heading: "Know when a side effect needs prompt attention",
         paragraphs: [
           "Contact the prescribing clinician promptly for symptoms such as:",
+        ],
+        paragraphsAfterBullets: [
           "Seek emergency help for trouble breathing or swallowing, swelling of the face, mouth, tongue, or throat, fainting, or other signs of a serious allergic reaction.",
           "This is not an exhaustive list. Each medication has its own label and Medication Guide.",
         ],
@@ -372,6 +386,8 @@ export const blogPosts = Object.freeze([
           "Body weight can change from day to day because of water, glycogen, sodium, bowel contents, menstrual-cycle effects, travel, and the timing of meals. A single reading can be accurate and still be a poor summary of what is happening.",
           "There is no universal number of days that defines a plateau. A short run of flat readings—especially after travel, constipation, menstrual-cycle effects, a strength-training change, or higher sodium intake—usually needs context and a longer trend before it is called a plateau.",
           "If weighing is appropriate for you, make the measurements more comparable:",
+        ],
+        paragraphsAfterBullets: [
           "Frequent weighing is not right for everyone, particularly when it worsens anxiety, compulsive behavior, or eating-disorder symptoms. In that situation, clinician-measured weight at agreed intervals—or other health measures—may be better.",
         ],
         bullets: [
@@ -443,6 +459,8 @@ export const blogPosts = Object.freeze([
         heading: "4. Strength and physical function",
         paragraphs: [
           "Track practical outcomes such as:",
+        ],
+        paragraphsAfterBullets: [
           "Improved function can be a meaningful health win even during a flat scale month.",
         ],
         bullets: [
@@ -456,6 +474,8 @@ export const blogPosts = Object.freeze([
         heading: "5. Behaviors that drive the plan",
         paragraphs: [
           "Select a few behaviors you can act on, such as:",
+        ],
+        paragraphsAfterBullets: [
           "Behavior measures help distinguish “the plan is not working” from “the plan became difficult to carry out.” Those require different solutions.",
         ],
         bullets: [
@@ -484,6 +504,8 @@ export const blogPosts = Object.freeze([
         heading: "What not to do when progress slows",
         paragraphs: [
           "Do not automatically:",
+        ],
+        paragraphsAfterBullets: [
           "A plateau review should look at the trend, current intake and activity, sleep, symptoms, medications, side effects, health changes, and the original goal. The answer might be a small adjustment, more support, a different treatment, a referral—or time.",
         ],
         bullets: [

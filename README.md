@@ -6,6 +6,8 @@ Production website for [apexwellnessnwi.com](https://apexwellnessnwi.com), deplo
 
 - `src/content.mjs` is the reviewed page and policy content.
 - `src/assets/` contains the shared responsive CSS and progressive-enhancement JavaScript.
+- `src/assets/site-design.css` defines the editorial visual system: Instrument Serif, Manrope, warm mineral surfaces, and deep green. Licensed fonts are self-hosted; no third-party font request is made.
+- `src/assets/site-help.mjs` and `site-assistant.mjs` compile to a local website guide. Questions are not stored, sent to a server, or answered by a generative model. Keep future analytics and session replay away from this input and the signup form.
 - `scripts/build.mjs` generates conventional, crawlable pages in `public/`.
 - `src/worker.mjs` handles only `/api/*`; static requests are served directly from `public/`.
 - `functions/api/founding-consultation.js` validates and stores Founding Patient consultation requests in Cloudflare D1.
@@ -16,6 +18,8 @@ Production website for [apexwellnessnwi.com](https://apexwellnessnwi.com), deplo
 The repository root is never a public asset directory. `public/.assetsignore` adds a second safeguard against dotfiles, repository metadata, source maps, and development files.
 
 The canonical conversion page is `/founding-patients/`. Legacy `/priority` and `/priority-list` page URLs redirect permanently to it. The form submits JSON to `POST /api/founding-consultation`; `GET` is not allowed, and the retired `/api/priority` endpoint returns `410 Gone`.
+
+The current endpoint stores requests and consent records in D1; it does not send automatic emails or notify the clinic. An operational review and follow-up process must be in place before promising delivery or response times. The website guide is not a clinical messaging channel.
 
 The public form is intentionally minimal. It collects name, email, explicit contact consent, consent version, anti-spam timing/honeypot values, and an optional boolean website-accessibility flag. It does not collect a phone number, care interest, free text, or protected health information. `accessibility_request` is converted server-side to a request kind rather than accepting a client-supplied request kind.
 

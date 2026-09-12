@@ -256,8 +256,9 @@ test("founding consultation form matches the minimal API contract and accessible
   const html = htmlBySlug.get("/founding-patients/");
   assert.ok(html, "the canonical /founding-patients/ page is missing");
 
-  const formMatches = [...html.matchAll(/<form\b([^>]*)>([\s\S]*?)<\/form>/gi)];
-  assert.equal(formMatches.length, 1, "founding-patients page must contain exactly one form");
+  const formMatches = [...html.matchAll(/<form\b([^>]*)>([\s\S]*?)<\/form>/gi)]
+    .filter((match) => attributes(match[1]).id === 'consultation-form');
+  assert.equal(formMatches.length, 1, "founding-patients page must contain exactly one consultation form");
   const formAttrs = attributes(formMatches[0][1]);
   const formHtml = formMatches[0][2];
   const inputs = startTags(formHtml, "input");
@@ -521,5 +522,68 @@ test("future-dated blog posts stay out of public pages, the sitemap, and the fee
     assert.doesNotMatch(blogIndex, new RegExp(post.slug.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")), `${post.slug} must not be listed early`);
     assert.doesNotMatch(sitemap, new RegExp(canonicalFor(post).replace(/[.*+?^${}()|[\]\\]/g, "\\$&")), `${post.slug} must not enter the sitemap early`);
     assert.doesNotMatch(feed, new RegExp(canonicalFor(post).replace(/[.*+?^${}()|[\]\\]/g, "\\$&")), `${post.slug} must not enter the feed early`);
+  }
+});
+
+test('all runtime scripts exist as deployable assets and the site guide stays local', async () => {
+  for (const [slug, html] of htmlBySlug) {
+    for (const { attrs } of startTags(html, 'script').filter(({attrs}) => attrs.src)) {
+      const path = new URL(attrs.src, site.canonicalUrl).pathname;
+      assert.equal(extname(path), '.js', `${slug} script must use deployable .js output`);
+      assert.ok(existsSync(outputTargetForPath(path)), `${slug} missing script ${path}`);
+    }
+    assert.match(html, /id="help-toggle"[^>]*hidden/);
+    const helpForm = [...html.matchAll(/<form\b([^>]*)>([\s\S]*?)<\/form>/gi)].find((match) => attributes(match[1]).id === 'site-help-form');
+    assert.ok(helpForm);
+    assert.ok(!attributes(helpForm[1]).action, 'local guide must not post questions');
+    assert.ok(startTags(helpForm[2], 'input').every(({attrs}) => !attrs.name), 'questions must not become native form data');
+  }
+  const assistant = await readFile(join(publicRoot, 'assets', 'site-assistant.js'), 'utf8');
+  assert.doesNotMatch(assistant, /\bfetch\s*\(|XMLHttpRequest|sendBeacon|WebSocket|\beval\s*\(/);
+  assert.doesNotMatch(assistant, /^import\s|^export\s/m);
+  assert.match(assistant, /answerWebsiteQuestion/);
+});
+
+test('article breadcrumbs end in the article title, with contents and complete list order', () => {
+  for (const post of publishedBlogPosts) {
+    const html = htmlBySlug.get(post.slug);
+    const document = JSON.parse([...html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)].find((match) => attributes(match[1]).type === 'application/ld+json')[2]);
+    const breadcrumb = document['@graph'].find((item) => item['@type'] === 'BreadcrumbList');
+    assert.equal(breadcrumb.itemListElement.at(-1).name, post.h1);
+    assert.ok(html.includes(`<span aria-current="page">${escapeForTest(post.h1)}</span>`), 'visible breadcrumb must name the article');
+    assert.match(html, /aria-label="In this article"/);
+    for (const section of post.sections.filter((section) => section.paragraphsAfterBullets)) {
+      assert.ok(html.indexOf(escapeForTest(section.bullets.at(-1))) < html.indexOf(escapeForTest(section.paragraphsAfterBullets[0])));
+    }
+  }
+});
+function escapeForTest(value) {
+  return value.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#39;');
+}
+
+test('editorial redesign preserves key content, semantic headings, and navigation fallbacks', () => {
+  const home = htmlBySlug.get('/');
+  for (const phrase of ['Wajeeh Bakhsh', 'Atif Muhammad', 'Northwest Indiana', 'No appointment booked', site.launch.label]) {
+    assert.ok(home.includes(phrase), `homepage must retain ${phrase}`);
+  }
+  for (const [slug, html] of htmlBySlug) {
+    assert.equal(startTags(html, 'h1').length, 1, `${slug} must have one H1`);
+    const ids = [...html.matchAll(/\bid="([^"]+)"/g)].map((match) => match[1]);
+    assert.equal(new Set(ids).size, ids.length, `${slug} duplicate IDs`);
+    if (slug !== '/founding-patients/') assert.match(html, /<noscript><nav[^>]*aria-label="Navigation without JavaScript"/);
+  }
+});
+
+test('all CSS assets and self-hosted fonts resolve without third-party runtime calls', async () => {
+  for (const name of ['site.css', 'site-design.css']) {
+    const css = await readFile(join(publicRoot, 'assets', name), 'utf8');
+    for (const [, raw] of css.matchAll(/url\(\s*['"]?([^'"\s)]+)['"]?\s*\)/g)) {
+      const url = new URL(raw, `${site.canonicalUrl}/assets/${name}`);
+      assert.equal(url.origin, site.canonicalUrl, `${name} should not load external assets`);
+      assert.ok(existsSync(outputTargetForPath(url.pathname)), `${name}: missing ${raw}`);
+    }
+  }
+  for (const name of ['instrument-serif-license.txt', 'manrope-license.txt']) {
+    assert.ok(existsSync(join(publicRoot, 'assets', 'fonts', name)), `font license ${name}`);
   }
 });

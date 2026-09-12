@@ -1,0 +1,22 @@
+# Team biographies and portraits
+
+Updated September 12, 2026 UTC (September 11 in Northwest Indiana).
+
+The practice owner explicitly requested the About-page biographies and approved using his and Wajeeh Bakhsh's photographs from LinkedIn or https://medcodepro.ai/#team. The MedCode Pro portraits were selected as a consistent pair. No generative editing or facial retouching was performed. Shahab's original JPEG was converted to WebP at its original dimensions for web delivery; Wajeeh's small JPEG was retained.
+
+## Public source URLs
+
+- Shahab portrait: https://medcodepro.ai/assets/team-shahab.jpg
+- Wajeeh portrait: https://medcodepro.ai/assets/team-wajeeh.jpg
+- Professional-background and identity cross-check: https://medcodepro.ai/#team
+- Wajeeh professional profile, supplied by the owner: https://www.linkedin.com/in/wajeeh-bakhsh-6a8b1817/
+
+## Owner-supplied facts
+
+- Shahab Siddique grew up wrestling, actively lifts weights, enjoys Brazilian jiu-jitsu, Muay Thai and boxing, and became interested in the practice through wanting to continue these activities as he ages.
+- Wajeeh Bakhsh, MD, is an active lifter and orthopaedic surgeon. His experience seeing patients with established limitations motivates an interest in earlier attention to health and function.
+- Atif Muhammad, MD, actively lifts weights, enjoys travel and is passionate about fitness. His photo has not yet been supplied.
+
+## Boundaries
+
+Shahab's health-technology background is supported by the supplied MedCode Pro page. No clinical degree or unconfirmed Apex executive title is assigned to him. MedCode Pro executive titles are not transferred to Apex. No specialty, board certification, license status, or training history is invented for Atif. The biographies contain editorial humor, not attributed quotations. The prevention message does not promise to prevent injury or surgery, or portray Apex's weight/metabolic/hormone services as orthopaedic treatment. Named profile portraits are clearly distinguished from representative stock/conceptual images. No placeholder face is used for Atif.

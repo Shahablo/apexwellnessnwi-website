@@ -630,15 +630,63 @@ export const pages = Object.freeze({
   about: {
     slug: '/about/',
     navLabel: 'About',
-    title: 'About Apex Wellness | Northwest Indiana',
+    title: 'Meet the Team | Apex Wellness Northwest Indiana',
     description:
-      'Learn the standards guiding Apex Wellness as it prepares a physician-managed weight, metabolic, and hormone care practice in Northwest Indiana.',
-    eyebrow: 'About Apex',
-    h1: 'Physician-led care. Built around you.',
+      'Meet Shahab Siddique, Wajeeh Bakhsh, MD, and Atif Muhammad, MD—the people and personal motivations behind Apex Wellness in Northwest Indiana.',
+    eyebrow: 'The people behind Apex',
+    h1: 'Different backgrounds. One shared motivation.',
     intro:
-      'Apex Wellness is preparing a focused weight, metabolic, and hormone care practice for adults in Northwest Indiana. The intended model emphasizes physician review, understandable options, transparent costs, and dependable follow-through.',
+      'Staying strong, capable, and involved in the things we love. Our reasons for building Apex are personal—and your reasons for seeking care should matter just as much.',
     cta: priorityListCta,
     sections: [
+      {
+        type: 'teamProfiles',
+        eyebrow: 'Meet the team',
+        heading: 'People first. In the practice, too.',
+        intro: 'A shared enthusiasm for fitness brought us to the same question: how can thoughtful, physician-led care support the life someone wants to keep living? You do not need to be an athlete to belong here. Your goals set the context.',
+        profiles: [
+          {
+            id: 'shahab-siddique',
+            name: 'Shahab Siddique',
+            context: 'Health technology · A personal reason to build Apex',
+            headline: 'More years doing the things you love.',
+            image: { file: 'shahab-siddique.webp', width: 1254, height: 1254 },
+            paragraphs: [
+              'Shahab grew up wrestling and remains an active weightlifter who enjoys Brazilian jiu-jitsu, Muay Thai, and boxing. His interest in wellness starts with a question that gets more relevant with every birthday: how do you keep doing the things you love as you get older?',
+              'His professional background is in health technology and clinical workflows. His motivation for Apex is more personal: helping build a physician-led practice that takes long-term strength, function, and individual ambitions seriously.',
+              'For Shahab, health is about more than a number on a scale. It is about another round on the mats, time under the bar, and staying engaged in a life that feels like yours.'
+            ],
+            aside: 'Birthdays can stay. Automatically retiring your favorite hobbies? Less appealing.'
+          },
+          {
+            id: 'wajeeh-bakhsh',
+            name: 'Wajeeh Bakhsh, MD',
+            context: 'Physician leadership · Orthopaedic surgeon',
+            headline: 'A surgical perspective. An earlier conversation.',
+            image: { file: 'wajeeh-bakhsh.jpg', width: 400, height: 400 },
+            profileUrl: 'https://www.linkedin.com/in/wajeeh-bakhsh-6a8b1817/',
+            paragraphs: [
+              'Dr. Wajeeh Bakhsh is an orthopaedic surgeon and an active weightlifter. He understands the value of movement both professionally and personally—and knows that losing the ability to do something you love can change much more than a workout.',
+              'In his surgical practice, he sees people whose pain and loss of function have already begun to reshape their lives. That perspective informs his interest in earlier conversations about health, strength, and the activities people want to keep doing.',
+              'At Apex, that interest sits alongside careful evaluation, realistic expectations, and individualized decisions. Earlier attention does not make every problem preventable, but it gives people’s goals a place in the conversation before limitations take over.'
+            ],
+            aside: 'Bodies do not come with a lifetime warranty. They are still worth looking after.'
+          },
+          {
+            id: 'atif-muhammad',
+            name: 'Atif Muhammad, MD',
+            context: 'Physician leadership · Fitness enthusiast · Traveler',
+            headline: 'Fitness for a life beyond the gym.',
+            paragraphs: [
+              'Dr. Atif Muhammad is an active weightlifter, enjoys traveling, and is passionate about fitness. Those interests connect with a simple idea behind Apex: health matters not only in the gym, but in the life you want to enjoy beyond it.',
+              'That might mean pursuing a training goal, feeling capable while exploring somewhere new, or continuing the everyday routines that matter to you. Different people have different priorities, and that personal context deserves a place in a clinical conversation.',
+              'Atif’s enthusiasm for fitness fits Apex’s focus on thoughtful, physician-led care rather than one definition of success. The point is not to make everyone’s goals look the same. It is to understand what being well means to each person.'
+            ],
+            aside: 'There is a world beyond the weight room. Conveniently, Atif is interested in both.'
+          }
+        ],
+        note: 'Our shared interest in fitness shapes the practice’s perspective; it is not a promise of a particular result. Apex’s planned services focus on weight, metabolic, and hormone care. They do not replace orthopaedic evaluation or guarantee that injury or surgery can be prevented.'
+      },
       {
         type: 'values',
         eyebrow: 'Our standards',
@@ -667,15 +715,6 @@ export const pages = Object.freeze({
         ]
       },
       {
-        type: 'teamCards',
-        eyebrow: 'Our physician leadership',
-        heading: 'Meet the physicians behind Apex.',
-        cards: [
-          { title: 'Wajeeh Bakhsh, MD', body: 'Physician leadership at Apex Wellness. Our planned approach puts individual evaluation, thoughtful treatment decisions, and follow-up at the center of care.' },
-          { title: 'Atif Muhammad, MD', body: 'Physician leadership at Apex Wellness. Detailed biographies, clinical responsibilities, and appointment availability will be shared as we prepare to open.' }
-        ]
-      },
-      {
         type: 'verificationStatus',
         eyebrow: 'Location and access',
         heading: 'Operational details are still being finalized.',
@@ -683,10 +722,10 @@ export const pages = Object.freeze({
           'A confirmed street address, phone number, email address, office hours, opening timeline, visit modality, accessibility details, parking information, and response times will be published before scheduling opens.'
       },
       {
-        type: 'imageryNotice',
+        type: 'notice',
         eyebrow: 'Photography',
-        heading: 'Images are representative during prelaunch.',
-        body: site.representativeImageryNotice
+        heading: 'Real people. Clearly labeled photography.',
+        body: 'The portraits on this page show Shahab Siddique and Wajeeh Bakhsh. Atif Muhammad’s portrait will be added when available. Other photographs across the website are labeled as representative imagery when they do not show the named Apex team members, actual patients, or the practice’s facilities.'
       }
     ]
   },

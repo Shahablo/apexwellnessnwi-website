@@ -407,7 +407,9 @@ test("photographs use real img elements, reserve dimensions, and label represent
     }
 
     const captions = [...html.matchAll(/<(?:figcaption|p)\b[^>]*\bclass=["'][^"']*representative-caption[^"']*["'][^>]*>[\s\S]*?Representative imagery[\s\S]*?<\/(?:figcaption|p)>/gi)];
-    assert.ok(captions.length >= images.length, `${page.slug} every photograph needs a visible representative-imagery caption`);
+    const representativeImages = images.filter(({attrs}) => attrs['data-photo-kind'] === 'representative');
+    assert.ok(captions.length >= representativeImages.length, `${page.slug} every representative photograph needs a visible disclosure`);
+    for (const {attrs} of images) assert.ok(['representative', 'portrait'].includes(attrs['data-photo-kind']), `${page.slug} photograph kind must be explicit`);
   }
 
   assert.ok(totalImages > 0, "the generated site contains no real images");
@@ -478,6 +480,18 @@ test("sitemap, robots, and custom 404 cover the complete crawlable site", async 
   assert.match(metaContent(notFound, "robots") || "", /noindex/i);
   assert.ok(startTags(notFound, "a").some(({ attrs }) => attrs.href === "/"), "404 needs a home link");
   assert.doesNotMatch(notFound, /<(?:image-slot|sc-[\w-]+|x-dc)\b|type=["']__bundler\//i);
+});
+
+test('the About page distinguishes real team portraits, supplied interests, and physician credentials', () => {
+  const html = htmlBySlug.get('/about/');
+  const portraits = startTags(html, 'img').filter(({attrs}) => attrs['data-photo-kind'] === 'portrait');
+  assert.deepEqual(portraits.map(({attrs}) => attrs.alt), ['Shahab Siddique', 'Wajeeh Bakhsh, MD']);
+  assert.ok(portraits.every(({attrs}) => attrs.loading === 'lazy'));
+  assert.match(html, /Atif Muhammad, MD/);
+  assert.match(html, /Portrait coming soon/);
+  for (const interest of ['wrestling', 'Brazilian jiu-jitsu', 'Muay Thai', 'boxing', 'weightlifter', 'traveling']) assert.ok(html.includes(interest));
+  assert.doesNotMatch(html, /Shahab Siddique, MD|Dr\. Shahab/);
+  assert.match(html, /do not replace orthopaedic evaluation or guarantee that injury or surgery can be prevented/);
 });
 
 test("blog pages expose article semantics, dates, sources, and a valid RSS feed", async () => {

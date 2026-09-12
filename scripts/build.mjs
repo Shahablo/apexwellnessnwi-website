@@ -249,7 +249,7 @@ function imageMarkup(image, { hero = false, compactCaption = false } = {}) {
   const caption = compactCaption ? "Representative imagery" : site.representativeImageryNotice;
 
   return `<figure class="representative">
-    <img src="${escapeHtml(assetUrl(`images/${image.file}`))}" width="${image.width}" height="${image.height}" alt="${escapeHtml(image.alt)}" ${loading} decoding="async">
+    <img data-photo-kind="representative" src="${escapeHtml(assetUrl(`images/${image.file}`))}" width="${image.width}" height="${image.height}" alt="${escapeHtml(image.alt)}" ${loading} decoding="async">
     <figcaption class="representative-caption">${escapeHtml(caption)}</figcaption>
   </figure>`;
 }
@@ -376,6 +376,16 @@ function renderSection(section, index) {
         ${headingMarkup(section, id)}${cardsMarkup(section.cards)}
       </div></section>`;
 
+    case 'teamProfiles':
+      return `<section class="section people-section" aria-labelledby="${id}"><div class="container">
+        <div class="people-introduction">${headingMarkup(section, id)}<p>${escapeHtml(section.intro)}</p></div>
+        <div class="team-profiles">${section.profiles.map((person) => `<article class="team-profile${person.image ? '' : ' team-profile-text'}" id="${escapeHtml(person.id)}" aria-labelledby="${escapeHtml(person.id)}-name">
+          ${person.image ? `<figure class="team-portrait"><img data-photo-kind="portrait" src="${escapeHtml(assetUrl(`images/${person.image.file}`))}" width="${person.image.width}" height="${person.image.height}" alt="${escapeHtml(person.name)}" loading="lazy" decoding="async"><figcaption>${escapeHtml(person.name)}</figcaption></figure>` : `<div class="portrait-pending" aria-label="Atif Muhammad’s portrait is coming soon"><span aria-hidden="true">AM</span><p>Portrait coming soon</p></div>`}
+          <div class="team-biography"><p class="eyebrow">${escapeHtml(person.context)}</p><h3 id="${escapeHtml(person.id)}-name">${escapeHtml(person.name)}</h3><p class="team-headline">${escapeHtml(person.headline)}</p>${person.paragraphs.map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join('')}<p class="team-aside">${escapeHtml(person.aside)}</p>${person.profileUrl ? `<a class="text-link" href="${escapeHtml(person.profileUrl)}" target="_blank" rel="noreferrer">Professional profile<span aria-hidden="true">↗</span><span class="visually-hidden"> (opens a new tab)</span></a>` : ''}</div>
+        </article>`).join('')}</div>
+        <p class="team-care-note">${escapeHtml(section.note)}</p>
+      </div></section>`;
+
     case "cards":
       return `<section class="section${alternatingClass}" aria-labelledby="${id}"><div class="container">
         ${headingMarkup(section, id)}${careCardsMarkup(section.cards)}
@@ -461,6 +471,7 @@ function renderPolicySection(section, index) {
 }
 
 function renderHero(pageKey, page) {
+  if (pageKey === 'about') return `<header class="journal-header about-header"><div class="container"><div><p class="eyebrow">${escapeHtml(page.eyebrow)}</p><h1 id="page-title">${escapeHtml(page.h1)}</h1></div><div class="about-deck"><p>${escapeHtml(page.intro)}</p><a class="text-link" href="#shahab-siddique">Meet the people behind the practice <span aria-hidden="true">↓</span></a></div></div></header>`;
   if (pageKey === 'home') return `<section class="signature-hero" aria-labelledby="page-title">
     <div class="signature-image">${imageMarkup(imageCatalog.shoreline, { hero: true, compactCaption: true })}</div>
     <div class="container signature-content"><p class="eyebrow">Physician-led wellness · Northwest Indiana</p>

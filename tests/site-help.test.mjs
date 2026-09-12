@@ -1,6 +1,13 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { answerWebsiteQuestion } from '../src/assets/site-help.mjs';
+import { site } from '../src/content.mjs';
+
+test('the guide gives the owner-confirmed address while preserving prelaunch status', () => {
+  const answer = answerWebsiteQuestion('Where is your clinic?');
+  assert.ok(answer.text.includes(site.address.label));
+  assert.match(answer.text, /Appointments are not yet available/);
+});
 
 test('site guide answers known questions using bounded local information', () => {
   for (const [question, path] of [

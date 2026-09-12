@@ -494,6 +494,19 @@ test('the About page distinguishes real team portraits, supplied interests, and 
   assert.match(html, /do not replace orthopaedic evaluation or guarantee that injury or surgery can be prevented/);
 });
 
+test('the confirmed clinic address and LinkedIn Page appear consistently in visible copy and schema', () => {
+  for (const [slug, html] of htmlBySlug) {
+    assert.ok(html.includes(site.address.label), `${slug} needs the confirmed address`);
+    const jsonLd = [...html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)]
+      .find((match) => attributes(match[1]).type === 'application/ld+json');
+    const organization = JSON.parse(jsonLd[2])['@graph'].find((node) => node['@type'] === 'Organization');
+    assert.equal(organization.address.streetAddress, '8560 Broadway');
+    assert.equal(organization.address.postalCode, '46410');
+    assert.ok(organization.sameAs.includes('https://www.linkedin.com/company/apex-wellness-nwi/'));
+    assert.doesNotMatch(html, /A confirmed street address|The confirmed clinic address|A confirmed address and visit-modality details/);
+  }
+});
+
 test("blog pages expose article semantics, dates, sources, and a valid RSS feed", async () => {
   const blogIndex = htmlBySlug.get("/blog/");
   assert.ok(blogIndex, "blog index is missing");

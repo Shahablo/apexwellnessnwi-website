@@ -26,10 +26,10 @@ function answerWebsiteQuestion(input, launchLabel = 'November 1, 2026') {
     return result('Joining the launch list is free. The planned care model is cash-pay; final fees, what is included, and any separate medication or testing costs will be published before scheduling or payment opens. No insurance coverage or reimbursement is promised.', 'Pricing and what to expect', '/pricing/');
   }
   if (/\b(where|location|address|merrillville|hours|parking|phone|email|contact|telehealth|virtual)\b/.test(question)) {
-    return result('Apex is preparing to serve adults in Northwest Indiana. The confirmed clinic address, contact channels, hours, parking, and visit format will be published before scheduling opens. The website form currently accepts requests for future contact only.', 'Location and practice details', '/about/');
+    return result('Apex is preparing to open at 8560 Broadway, Merrillville, IN 46410. Appointments are not yet available. Contact channels, hours, parking, accessibility details, and visit arrangements will be published before scheduling opens. The website form currently accepts requests for future contact only.', 'Location and practice details', '/about/');
   }
   if (/\b(who|physician|doctor|team|bakhsh|muhammad|founder)\b/.test(question)) {
-    return result('Apex is physician-led by Wajeeh Bakhsh, MD, and Atif Muhammad, MD. Detailed biographies, clinical responsibilities, and individual appointment availability will be shared as opening preparations continue.', 'Meet our physician leadership', '/about/');
+    return result('Apex is physician-led by Wajeeh Bakhsh, MD, and Atif Muhammad, MD. Meet them and Shahab Siddique on the About page. Detailed clinical responsibilities and individual appointment availability will be shared as opening preparations continue.', 'Meet the people behind Apex', '/about/');
   }
   if (/\b(menopause|perimenopause|women|woman|midlife)\b/.test(question)) {
     return result('Planned women’s midlife care includes individualized discussion of perimenopause, menopause, and metabolic concerns. This guide cannot determine whether any particular treatment is appropriate or available for you.', 'Explore women’s midlife care', '/womens-midlife-care/');

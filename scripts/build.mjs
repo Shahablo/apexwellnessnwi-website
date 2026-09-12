@@ -156,7 +156,15 @@ function pageJsonLd(page) {
       name: site.name,
       url: `${site.canonicalUrl}/`,
       description: site.description,
-      sameAs: site.social.slice(0, 2).map((profile) => profile.href),
+      sameAs: site.social.filter((profile) => !profile.href.includes('facebook.com/groups/')).map((profile) => profile.href),
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: site.address.streetAddress,
+        addressLocality: site.address.addressLocality,
+        addressRegion: site.address.addressRegion,
+        postalCode: site.address.postalCode,
+        addressCountry: site.address.addressCountry,
+      },
       logo: `${site.canonicalUrl}/assets/images/apex-brand-mark.png`,
       areaServed: {
         "@type": "AdministrativeArea",

@@ -3,7 +3,9 @@ const priorityListCta = Object.freeze({
   href: '/founding-patients/'
 });
 
-const effectiveDate = 'September 11, 2026';
+const effectiveDate = 'September 12, 2026';
+
+const clinicAddress = '8560 Broadway, Merrillville, IN 46410';
 
 const emergencyNotice =
   'Apex Wellness does not provide urgent or emergency care. If you are experiencing a medical emergency, call 911 or go to the nearest emergency department.';
@@ -15,13 +17,15 @@ export const site = Object.freeze({
   name: 'Apex Wellness',
   canonicalUrl: 'https://apexwellnessnwi.com',
   region: 'Northwest Indiana',
+  address: { streetAddress: '8560 Broadway', addressLocality: 'Merrillville', addressRegion: 'IN', postalCode: '46410', addressCountry: 'US', label: clinicAddress },
   status: 'Prelaunch',
   tagline: 'Physician-led care. Built around you.',
-  contentUpdated: '2026-09-11',
+  contentUpdated: '2026-09-12',
   launch: { date: '2026-11-01', label: 'November 1, 2026', status: 'Planned launch' },
   social: [
     { label: 'Instagram', href: 'https://www.instagram.com/apexwellnessnwi/' },
     { label: 'Facebook', href: 'https://www.facebook.com/profile.php?id=61593954582564' },
+    { label: 'LinkedIn', href: 'https://www.linkedin.com/company/apex-wellness-nwi/' },
     { label: 'NWI wellness community', href: 'https://www.facebook.com/groups/1778107663214102/' }
   ],
   description:
@@ -61,7 +65,7 @@ export const site = Object.freeze({
     summary:
       'A physician-managed approach to weight, metabolic, and hormone care for adults in Northwest Indiana.',
     location:
-      'Opening in Northwest Indiana. A confirmed address, contact channels, office hours, and availability will be published before scheduling opens.',
+      `Coming soon to ${clinicAddress}. Contact channels, office hours, and appointment availability will be published before scheduling opens.`,
     copyright: '© 2026 Apex Wellness.'
   }
 });
@@ -96,7 +100,7 @@ export const pages = Object.freeze({
       processHeading: 'A simple first step.\nSpace to decide.',
       process: [
         { title: 'Stay in the know.', body: 'Join the launch list with your name and email. No medical history, payment, or commitment.' },
-        { title: 'Get the details.', body: 'Receive opening updates and future consultation information as location, pricing, and availability are confirmed.' },
+        { title: 'Get the details.', body: 'Receive opening updates and future consultation information as visit details, pricing, and availability are confirmed.' },
         { title: 'Choose your next step.', body: 'Review the details, ask questions, and decide whether to request an available appointment when scheduling opens.' }
       ]
     },
@@ -140,7 +144,7 @@ export const pages = Object.freeze({
         eyebrow: 'Stay in the know',
         heading: 'Your next step starts with clear information.',
         body:
-          'Submit only your name and email. Apex may contact you when verified clinician, pricing, location, and opening-month consultation details are available. A request is not an appointment, reservation, acceptance as a patient, or guarantee of treatment.',
+          'Submit only your name and email. Apex may contact you when verified clinician availability, pricing, visit arrangements, and opening-month consultation details are available. A request is not an appointment, reservation, acceptance as a patient, or guarantee of treatment.',
         cta: priorityListCta
       },
       {
@@ -154,7 +158,7 @@ export const pages = Object.freeze({
           },
           {
             title: 'Review verified launch details.',
-            body: 'Apex may email you when clinician, location or visit modality, pricing, policies, and consultation availability are confirmed.'
+            body: 'Apex may email you when clinician availability, visit modality, pricing, policies, and consultation availability are confirmed.'
           },
           {
             title: 'Decide whether to schedule.',
@@ -190,7 +194,7 @@ export const pages = Object.freeze({
         eyebrow: 'Opening in Northwest Indiana',
         heading: 'Review the real details before deciding whether to book.',
         body:
-          'November 1, 2026 is our planned launch, not a guarantee of appointment availability. Location, contact information, hours, final pricing, and individual clinician availability will be shared before scheduling opens. Joining the launch list does not establish care or guarantee treatment.',
+          `November 1, 2026 is our planned launch at ${clinicAddress}, not a guarantee of appointment availability. Contact information, hours, final pricing, and individual clinician availability will be shared before scheduling opens. Joining the launch list does not establish care or guarantee treatment.`,
         cta: priorityListCta
       },
       {
@@ -198,7 +202,7 @@ export const pages = Object.freeze({
         eyebrow: 'Region served',
         heading: 'Northwest Indiana',
         body:
-          'Apex Wellness is being developed for adults in Merrillville, Crown Point, Schererville, Munster, Dyer, St. John, Highland, Hobart, and surrounding communities. A confirmed address and visit-modality details will be published before opening.'
+          `Apex Wellness is preparing to open at ${clinicAddress}, for adults in Merrillville, Crown Point, Schererville, Munster, Dyer, St. John, Highland, Hobart, and surrounding communities. Visit arrangements and appointment availability will be published before scheduling opens.`
       }
     ]
   },
@@ -719,7 +723,7 @@ export const pages = Object.freeze({
         eyebrow: 'Location and access',
         heading: 'Operational details are still being finalized.',
         body:
-          'A confirmed street address, phone number, email address, office hours, opening timeline, visit modality, accessibility details, parking information, and response times will be published before scheduling opens.'
+          `Our location is ${clinicAddress}. Apex is preparing to open; appointments are not yet available. Phone, email, office hours, visit modality, accessibility details, parking information, and response times will be published before scheduling opens.`
       },
       {
         type: 'notice',
@@ -754,7 +758,7 @@ export const pages = Object.freeze({
           {
             question: 'Where is Apex located?',
             answer:
-              'Apex is being developed for Northwest Indiana. The confirmed address, parking, accessibility details, phone, email, hours, and visit modality will be published before scheduling opens.'
+              `Apex is preparing to open at ${clinicAddress}. Parking, accessibility details, phone, email, hours, and visit arrangements will be published before scheduling opens. The address does not mean the practice is currently open for visits.`
           },
           {
             question: 'When will appointments open?',
@@ -912,7 +916,7 @@ export const pages = Object.freeze({
           },
           {
             title: 'Receive verified details.',
-            body: 'Apex may email you when clinician identity and credentials, location or modality, pricing, policies, and availability are confirmed.'
+            body: 'Apex may email you when clinician availability, visit modality, pricing, policies, and consultation availability are confirmed.'
           },
           {
             title: 'Choose whether to book.',
@@ -1062,7 +1066,7 @@ export const pages = Object.freeze({
         heading: 'Prelaunch limitations',
         paragraphs: [
           'Descriptions of the planned practice, services, workflows, pricing structure, visit modalities, and availability may change before launch. Only information identified as finalized at the time scheduling opens should be relied upon for a care or payment decision.',
-          'Physician leadership and a planned launch date are identified on the site. Detailed clinical responsibilities, licensure information, legal practice details, location, contact channels, hours, pricing, and appointment availability are still being finalized.'
+          `Physician leadership, our location at ${clinicAddress}, and a planned launch date are identified on the site. Detailed clinical responsibilities, licensure information, legal practice details, contact channels, hours, pricing, and appointment availability are still being finalized.`
         ]
       },
       {
@@ -1177,7 +1181,7 @@ export const pages = Object.freeze({
         heading: 'Representative imagery and plain-language content',
         paragraphs: [
           'Prelaunch photographs are representative imagery and do not identify Apex clinicians, patients, or facilities. Important information is intended to remain available in text rather than relying on an image alone.',
-          'Verified address, parking, physical-access details, visit modality, and other accommodation information will be published before scheduling opens.'
+          `Our location is ${clinicAddress}. Parking, physical-access details, visit modality, and other accommodation information will be published before scheduling opens. Please do not assume specific access features are available until those details are confirmed.`
         ]
       },
       {

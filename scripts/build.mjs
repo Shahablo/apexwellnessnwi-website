@@ -250,15 +250,13 @@ function pageJsonLd(page) {
   return jsonForScript({ "@context": "https://schema.org", "@graph": graph });
 }
 
-function imageMarkup(image, { hero = false, compactCaption = false } = {}) {
+function imageMarkup(image, { hero = false } = {}) {
   const loading = hero
     ? 'loading="eager" fetchpriority="high"'
     : 'loading="lazy"';
-  const caption = compactCaption ? "Representative imagery" : site.representativeImageryNotice;
 
   return `<figure class="representative">
     <img data-photo-kind="representative" src="${escapeHtml(assetUrl(`images/${image.file}`))}" width="${image.width}" height="${image.height}" alt="${escapeHtml(image.alt)}" ${loading} decoding="async">
-    <figcaption class="representative-caption">${escapeHtml(caption)}</figcaption>
   </figure>`;
 }
 
@@ -297,7 +295,7 @@ function careCardsMarkup(items) {
     ${items.map((item) => {
       const image = careCardImages[item.href];
       return `<article class="care-card">
-        ${image ? imageMarkup(image, { compactCaption: true }) : ""}
+        ${image ? imageMarkup(image) : ""}
         <div class="care-card-body">
           <h3>${escapeHtml(item.title)}</h3>
           <p>${escapeHtml(item.body)}</p>
@@ -481,7 +479,7 @@ function renderPolicySection(section, index) {
 function renderHero(pageKey, page) {
   if (pageKey === 'about') return `<header class="journal-header about-header"><div class="container"><div><p class="eyebrow">${escapeHtml(page.eyebrow)}</p><h1 id="page-title">${escapeHtml(page.h1)}</h1></div><div class="about-deck"><p>${escapeHtml(page.intro)}</p><a class="text-link" href="#shahab-siddique">Meet the people behind the practice <span aria-hidden="true">↓</span></a></div></div></header>`;
   if (pageKey === 'home') return `<section class="signature-hero" aria-labelledby="page-title">
-    <div class="signature-image">${imageMarkup(imageCatalog.shoreline, { hero: true, compactCaption: true })}</div>
+    <div class="signature-image">${imageMarkup(imageCatalog.shoreline, { hero: true })}</div>
     <div class="container signature-content"><p class="eyebrow">Physician-led wellness · Northwest Indiana</p>
       <h1 id="page-title">A thoughtful<br>approach to<br><em>feeling well.</em></h1>
       <div class="signature-bottom"><div><p>Weight, metabolic, and hormone care.<br>Built around the person. Built around you.</p><div class="hero-actions">${buttonMarkup(site.cta)}<a class="hero-explore" href="#care-areas">Discover our approach <span aria-hidden="true">↗</span></a></div></div><p class="signature-launch"><span class="launch-dot" aria-hidden="true"></span>Planned launch<br><strong>${escapeHtml(site.launch.label)}</strong></p></div>
@@ -550,7 +548,7 @@ function renderHome(page) {
     </div></section>
     ${latest ? `<section class="section home-journal" aria-labelledby="journal-heading"><div class="container">
       <div class="section-heading heading-with-aside"><div><p class="eyebrow">The Apex journal</p><h2 id="journal-heading">A little more understanding.</h2></div><a class="text-link" href="/blog/">Explore the blog <span aria-hidden="true">↗</span></a></div>
-      <article class="journal-feature"><a class="journal-feature-image" href="${escapeHtml(latest.slug)}" aria-label="Read ${escapeHtml(latest.h1)}">${imageMarkup(imageForPage('blog-post', latest), { compactCaption: true })}</a><div><p class="eyebrow">${escapeHtml(latest.category)} · ${escapeHtml(latest.readTime || '8 minute read')}</p><h3><a href="${escapeHtml(latest.slug)}">${escapeHtml(latest.h1)}</a></h3><p>${escapeHtml(latest.excerpt)}</p><a class="text-link" href="${escapeHtml(latest.slug)}">Read the article <span aria-hidden="true">↗</span></a><p class="quiet-note">General education. Your own care starts with a clinical conversation.</p></div></article>
+      <article class="journal-feature"><a class="journal-feature-image" href="${escapeHtml(latest.slug)}" aria-label="Read ${escapeHtml(latest.h1)}">${imageMarkup(imageForPage('blog-post', latest))}</a><div><p class="eyebrow">${escapeHtml(latest.category)} · ${escapeHtml(latest.readTime || '8 minute read')}</p><h3><a href="${escapeHtml(latest.slug)}">${escapeHtml(latest.h1)}</a></h3><p>${escapeHtml(latest.excerpt)}</p><a class="text-link" href="${escapeHtml(latest.slug)}">Read the article <span aria-hidden="true">↗</span></a><p class="quiet-note">General education. Your own care starts with a clinical conversation.</p></div></article>
     </div></section>` : ''}
     <section class="section local-section" aria-labelledby="local-heading"><div class="container editorial-row"><div><p class="eyebrow">Rooted in our region</p><h2 id="local-heading">For life in<br>Northwest Indiana.</h2></div><div class="editorial-copy"><p>${escapeHtml(local.body)}</p><a class="text-link" href="/faq/">Opening & location questions <span aria-hidden="true">↗</span></a></div></div></section>
     ${renderLaunchCta()}
@@ -607,7 +605,7 @@ function renderConversionHero(page) {
       <p class="cta-note">${escapeHtml(page.ctaNote)}</p>
     </div>
     ${foundingConsultationFormMarkup(page.form)}
-    <div class="conversion-image">${imageMarkup(imageCatalog.consultation, { compactCaption: true })}</div>
+    <div class="conversion-image">${imageMarkup(imageCatalog.consultation)}</div>
   </div></section>`;
 }
 

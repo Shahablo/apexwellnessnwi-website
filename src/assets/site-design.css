@@ -21,7 +21,6 @@ h1,h2,h3{font-family:var(--font-display);font-weight:400;letter-spacing:-.035em;
 .signature-hero{position:relative;min-height:45rem;height:calc(100svh - 8.6rem);max-height:62rem;color:#fff;isolation:isolate;overflow:hidden}
 .signature-image{position:absolute;inset:0;z-index:-2}.signature-image figure{height:100%;margin:0}.signature-image img{height:100%;width:100%;object-fit:cover;object-position:center 62%;border-radius:0}
 .signature-hero::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(13,35,28,.72),rgba(13,35,28,.25) 70%),linear-gradient(0deg,rgba(13,35,28,.45),transparent 55%);z-index:-1}
-.signature-image .representative-caption{position:absolute;right:1rem;bottom:.8rem;color:#fff;background:transparent;font-size:.58rem;opacity:.8;padding:0;max-width:none}
 .signature-content{height:100%;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;padding-top:3.6rem;padding-bottom:4rem}
 .signature-content>.eyebrow{color:#f0dfbd;font-size:.66rem;letter-spacing:.17em;margin:0 0 1.5rem}
 .signature-content h1{font-size:clamp(5rem,8.4vw,9.6rem);line-height:.89;letter-spacing:-.035em;color:#fff;margin:1.7rem 0 2.8rem;max-width:12ch}
@@ -79,12 +78,9 @@ body{overflow-x:clip}
 .signature-content>.eyebrow{font-size:.75rem}
 .signature-bottom p{font-size:1rem}
 .signature-bottom .signature-launch{font-size:.75rem}
-.signature-image .representative-caption{font-size:.7rem}
-.signature-image .representative-caption{opacity:1;background:#183d36d9;padding:.4rem .6rem;right:auto;left:1rem}
 .signature-hero::before{display:none}
 .signature-image figure{position:relative}
 .signature-image figure::before{content:'';position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,rgba(13,35,28,.72),rgba(13,35,28,.25) 70%),linear-gradient(0deg,rgba(13,35,28,.45),transparent 55%);pointer-events:none}
-.signature-image .representative-caption{z-index:2}
 .no-js-navigation{display:flex;flex-wrap:wrap;gap:.6rem 1.5rem;padding-block:1rem}
 .no-js-navigation a{font-size:.85rem;min-height:2rem}
 .hero-explore{font-size:.85rem}
@@ -96,13 +92,11 @@ body{overflow-x:clip}
 .hero-copy>p:not(.eyebrow):not(.cta-note){font-size:1rem;line-height:1.8;max-width:43ch}
 .hero p.eyebrow{font-size:.72rem;color:var(--color-accent);line-height:1.7;margin:0 0 1.7rem;max-width:38ch}
 .hero-media .representative img{aspect-ratio:4/4.4;border-radius:0;box-shadow:none}
-.hero-media .representative-caption{font-size:.73rem;line-height:1.6;padding-top:.5rem}
 .section-alt{background:var(--color-surface-alt);border:0}
 .section-heading{max-width:none;margin-bottom:3rem}
 .section .section-heading h2{font-weight:400;font-size:clamp(2.8rem,4.3vw,5rem);line-height:1.03;max-width:20ch}
 .section h3{font-weight:400;font-size:2rem;line-height:1.12}
 .representative img{border-radius:0;box-shadow:none}
-.representative-caption{font-size:.73rem;font-style:normal}
 .text-link{display:inline-flex;align-items:center;justify-content:space-between;gap:2.3rem;padding:.7rem 0;border-bottom:1px solid currentColor;text-decoration:none;font-size:.84rem;font-weight:600;line-height:1.5}
 .text-link span{font-size:1.25rem;font-weight:400}
 .quiet-note{font-size:.8rem;line-height:1.7;color:var(--color-muted)}
@@ -121,7 +115,6 @@ body{overflow-x:clip}
 .care-card{display:block;min-height:0;padding:0;border:0;border-radius:0;box-shadow:none;background:transparent;overflow:visible}
 .care-card:has(a):hover{box-shadow:none}
 .care-card .representative img{aspect-ratio:4/4.25;object-fit:cover}
-.care-card .representative-caption{padding-top:.2rem;color:var(--color-muted)}
 .care-card-body{margin:0;padding:1.1rem 0 0}
 .care-card .care-card-body h3{font-size:clamp(2rem,2.4vw,3rem);color:var(--color-ink);max-width:18ch}
 .care-card .care-card-body p{color:var(--color-copy);font-size:.92rem;line-height:1.85;min-height:6.8rem}
@@ -132,7 +125,6 @@ body{overflow-x:clip}
 .physician-image{position:relative;min-height:40rem}
 .physician-image figure{height:100%}
 .physician-image img{height:100%;object-fit:cover;aspect-ratio:auto}
-.physician-image .representative-caption{position:absolute;bottom:.7rem;left:1rem;right:1rem;padding:.6rem .8rem;background:#f6f4ede8;color:#183d36;font-size:.7rem}
 .physician-content{padding:clamp(3rem,5.7vw,7rem)}
 .physician-content>.eyebrow{color:#dfd6b9}
 .physician-content h2{font-size:clamp(3.5rem,5.2vw,6.5rem);font-weight:400;color:#f6f4ed;margin:0 0 2rem}

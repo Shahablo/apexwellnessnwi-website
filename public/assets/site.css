@@ -707,8 +707,7 @@ button:disabled {
 .care-card .care-card-body h2,
 .care-card .care-card-body h3,
 .care-card .care-card-body p,
-.care-card .care-card-body a,
-.care-card .care-card-body .representative-caption {
+.care-card .care-card-body a {
   color: #ffffff;
 }
 
@@ -777,14 +776,6 @@ button:disabled {
   border-radius: var(--radius-lg);
   object-fit: cover;
   box-shadow: var(--shadow-sm);
-}
-
-.representative-caption {
-  margin-top: 0.55rem;
-  color: var(--color-muted);
-  font-size: 0.83rem;
-  font-style: italic;
-  line-height: 1.45;
 }
 
 .pricing-table {
@@ -1026,12 +1017,6 @@ div.pricing-table {
   border-radius: 0;
   box-shadow: none;
   object-fit: cover;
-}
-
-.blog-card-image .representative-caption {
-  margin: 0;
-  padding: 0.45rem 1.25rem 0;
-  font-size: 0.74rem;
 }
 
 .blog-card-body {

@@ -380,7 +380,7 @@ test("founding consultation form matches the minimal API contract and accessible
   );
 });
 
-test("photographs use real img elements, reserve dimensions, and label representative imagery", () => {
+test("photographs retain accessible image metadata without representative imagery captions", () => {
   let totalImages = 0;
 
   for (const page of pageList) {
@@ -406,9 +406,7 @@ test("photographs use real img elements, reserve dimensions, and label represent
       if (index > 0) assert.equal((attrs.loading || "").toLowerCase(), "lazy", `${page.slug} below-fold image must lazy-load`);
     }
 
-    const captions = [...html.matchAll(/<(?:figcaption|p)\b[^>]*\bclass=["'][^"']*representative-caption[^"']*["'][^>]*>[\s\S]*?Representative imagery[\s\S]*?<\/(?:figcaption|p)>/gi)];
-    const representativeImages = images.filter(({attrs}) => attrs['data-photo-kind'] === 'representative');
-    assert.ok(captions.length >= representativeImages.length, `${page.slug} every representative photograph needs a visible disclosure`);
+    assert.doesNotMatch(html, /<(?:figcaption|p)\b[^>]*\bclass=["'][^"']*representative-caption/i, `${page.slug} must not render representative imagery captions`);
     for (const {attrs} of images) assert.ok(['representative', 'portrait'].includes(attrs['data-photo-kind']), `${page.slug} photograph kind must be explicit`);
   }
 

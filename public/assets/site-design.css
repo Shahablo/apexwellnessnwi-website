@@ -58,6 +58,10 @@ body{overflow-x:clip}
 .signature-bottom .signature-launch{font-size:.75rem}
 .signature-image .representative-caption{font-size:.7rem}
 .signature-image .representative-caption{opacity:1;background:#183d36d9;padding:.4rem .6rem;right:auto;left:1rem}
+.signature-hero::before{display:none}
+.signature-image figure{position:relative}
+.signature-image figure::before{content:'';position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,rgba(13,35,28,.72),rgba(13,35,28,.25) 70%),linear-gradient(0deg,rgba(13,35,28,.45),transparent 55%);pointer-events:none}
+.signature-image .representative-caption{z-index:2}
 .no-js-navigation{display:flex;flex-wrap:wrap;gap:.6rem 1.5rem;padding-block:1rem}
 .no-js-navigation a{font-size:.85rem;min-height:2rem}
 .hero-explore{font-size:.85rem}

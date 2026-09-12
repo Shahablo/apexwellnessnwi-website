@@ -51,8 +51,6 @@ export const site = Object.freeze({
     { label: 'Accessibility Statement', href: '/accessibility/' },
     { label: 'Cancellation and Refunds', href: '/cancellation-refunds/' }
   ],
-  representativeImageryNotice:
-    'Representative imagery. People and spaces shown are illustrative and are not identified as Apex Wellness clinicians, patients, or facilities.',
   notices: {
     prelaunch: prelaunchNotice,
     emergency: emergencyNotice,
@@ -729,7 +727,7 @@ export const pages = Object.freeze({
         type: 'notice',
         eyebrow: 'Photography',
         heading: 'Real people. Clearly labeled photography.',
-        body: 'The portraits on this page show Shahab Siddique and Wajeeh Bakhsh. Atif Muhammad’s portrait will be added when available. Other photographs across the website are labeled as representative imagery when they do not show the named Apex team members, actual patients, or the practice’s facilities.'
+        body: 'The portraits on this page show Shahab Siddique and Wajeeh Bakhsh. Atif Muhammad’s portrait will be added when available. Other prelaunch photographs are illustrative and do not identify Apex team members, patients, or facilities.'
       }
     ]
   },

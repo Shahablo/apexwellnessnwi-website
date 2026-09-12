@@ -5,6 +5,7 @@ import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { pages, site } from "../src/content.mjs";
+import { blogPosts } from "../src/blog-posts.mjs";
 
 const input = process.argv[2];
 if (!input) {
@@ -101,7 +102,9 @@ function routeUrl(origin, slug) {
 }
 
 async function checkRoutes() {
-  await Promise.all(Object.values(pages).map(async (page) => {
+  const today = new Date().toISOString().slice(0, 10);
+  const publishedPosts = blogPosts.filter((post) => post.status !== 'draft' && post.published <= today);
+  await Promise.all([...Object.values(pages), ...publishedPosts].map(async (page) => {
     const label = `route ${page.slug}`;
     try {
       const response = await fetchWithTimeout(routeUrl(baseOrigin, page.slug));
@@ -114,6 +117,26 @@ async function checkRoutes() {
     } catch (error) {
       check(false, `${label}: ${error instanceof Error ? error.message : String(error)}`);
     }
+  }));
+}
+
+async function checkDesignAssets() {
+  const assets = [
+    ['/assets/site-design.css', 'text/css'],
+    ['/assets/site-assistant.js', 'javascript'],
+    ['/assets/fonts/instrument-serif-latin-400-normal.woff2', 'font/woff2'],
+    ['/assets/fonts/instrument-serif-latin-400-italic.woff2', 'font/woff2'],
+    ['/assets/fonts/manrope-latin-wght-normal.woff2', 'font/woff2'],
+    ['/assets/images/apex-social-preview.png', 'image/png'],
+    ['/blog/feed.xml', 'xml'],
+  ];
+  await Promise.all(assets.map(async ([path, type]) => {
+    try {
+      const response = await fetchWithTimeout(routeUrl(baseOrigin, path));
+      check(response.status === 200, `${path}: expected 200, received ${response.status}`);
+      check(response.headers.get('content-type')?.includes(type), `${path}: unexpected content type`);
+      check((await response.arrayBuffer()).byteLength > 0, `${path}: asset is empty`);
+    } catch (error) { check(false, `${path}: ${error.message}`); }
   }));
 }
 
@@ -294,6 +317,7 @@ async function checkSensitivePaths() {
 
 console.log(`Smoke testing ${baseOrigin}`);
 await checkRoutes();
+await checkDesignAssets();
 await checkCanonicalRedirects();
 await checkFunnelRedirects();
 await checkApi();

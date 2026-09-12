@@ -1,9 +1,9 @@
 const priorityListCta = Object.freeze({
-  label: 'Request a Consultation',
+  label: 'Join the Launch List',
   href: '/founding-patients/'
 });
 
-const effectiveDate = 'September 2, 2026';
+const effectiveDate = 'September 11, 2026';
 
 const emergencyNotice =
   'Apex Wellness does not provide urgent or emergency care. If you are experiencing a medical emergency, call 911 or go to the nearest emergency department.';
@@ -16,11 +16,18 @@ export const site = Object.freeze({
   canonicalUrl: 'https://apexwellnessnwi.com',
   region: 'Northwest Indiana',
   status: 'Prelaunch',
-  tagline: 'Weight and hormone care built around physician management.',
+  tagline: 'Physician-led care. Built around you.',
+  contentUpdated: '2026-09-11',
+  launch: { date: '2026-11-01', label: 'November 1, 2026', status: 'Planned launch' },
+  social: [
+    { label: 'Instagram', href: 'https://www.instagram.com/apexwellnessnwi/' },
+    { label: 'Facebook', href: 'https://www.facebook.com/profile.php?id=61593954582564' },
+    { label: 'NWI wellness community', href: 'https://www.facebook.com/groups/1778107663214102/' }
+  ],
   description:
     'Apex Wellness is preparing a physician-managed weight, metabolic, and hormone care practice for adults in Northwest Indiana.',
   announcement:
-    'Preparing to open in Northwest Indiana. Founding Patient consultation requests are now open.',
+    'Planned launch: November 1, 2026 · Northwest Indiana.',
   cta: priorityListCta,
   navigation: [
     { label: 'Home', href: '/' },
@@ -30,6 +37,7 @@ export const site = Object.freeze({
     { label: 'How It Works', href: '/how-it-works/' },
     { label: 'Pricing', href: '/pricing/' },
     { label: 'About', href: '/about/' },
+    { label: 'Blog', href: '/blog/' },
     { label: 'FAQ', href: '/faq/' }
   ],
   policyNavigation: [
@@ -62,27 +70,44 @@ export const pages = Object.freeze({
   home: {
     slug: '/',
     navLabel: 'Home',
-    title: 'Opening Soon: Physician-Managed Weight and Hormone Care | Apex Wellness',
+    title: 'Physician-Led Weight & Hormone Care in NWI | Apex Wellness',
     description:
       'Request future contact about opening-month consultations for planned physician-managed weight, metabolic, and hormone care in Northwest Indiana.',
-    eyebrow: 'Opening soon · Northwest Indiana',
-    h1: 'Physician-managed weight and hormone care, opening soon.',
+    eyebrow: 'Planned launch · November 1, 2026 · Northwest Indiana',
+    h1: 'A thoughtful approach to feeling well.',
     intro:
-      'Apex Wellness is preparing focused care for adults in Northwest Indiana. Request future contact now, and Apex may email you when verified opening details and consultation availability are ready.',
+      'Thoughtful weight, metabolic, and hormone care for adults in Northwest Indiana. Led by Wajeeh Bakhsh, MD, and Atif Muhammad, MD, Apex is preparing to open with an individualized approach—not a one-size-fits-all prescription.',
     cta: priorityListCta,
     secondaryCta: {
       label: 'Explore care options',
       href: '/weight-management/'
     },
-    ctaNote: 'Free to request · No payment · No appointment or treatment guarantee',
+    ctaNote: 'Opening updates + future consultation availability · Free to join · No appointment booked',
+    editorial: {
+      introduction: {
+        eyebrow: 'A different kind of starting point',
+        heading: 'Your health is personal. Your care should be, too.',
+        body: 'Apex Wellness is preparing a physician-led practice for adults in Northwest Indiana. Our focus is weight, metabolic health, and hormone care—considered together with your history, your goals, and the life you want to live.',
+        note: 'Thoughtful evaluation. Clear choices. A plan built around you.'
+      },
+      careHeading: 'Focused care.\nA fuller perspective.',
+      physicianHeading: 'Physician-led.\nPerson by person.',
+      physicianBody: 'Wajeeh Bakhsh, MD, and Atif Muhammad, MD, are the physicians behind Apex. We are building a practice around careful evaluation, clear conversations, and responsible treatment decisions.',
+      processHeading: 'A simple first step.\nSpace to decide.',
+      process: [
+        { title: 'Stay in the know.', body: 'Join the launch list with your name and email. No medical history, payment, or commitment.' },
+        { title: 'Get the details.', body: 'Receive opening updates and future consultation information as location, pricing, and availability are confirmed.' },
+        { title: 'Choose your next step.', body: 'Review the details, ask questions, and decide whether to request an available appointment when scheduling opens.' }
+      ]
+    },
     sections: [
       {
         type: 'trustPoints',
         items: [
-          'Opening-month requests now open',
-          'No fee or payment to submit',
-          'No medical information collected here',
-          'Verified details before any booking decision'
+          'Physician-led from the start',
+          'Three focused areas of care',
+          'Individual evaluation before treatment',
+          'Clear information before you book'
         ]
       },
       {
@@ -91,19 +116,19 @@ export const pages = Object.freeze({
         heading: 'Three focused lanes. One physician-managed standard.',
         cards: [
           {
-            title: 'Medical Weight and Metabolic Care',
+            title: 'Weight & metabolic care',
             body:
               'Evaluation, meaningful measurements, nutrition and muscle-preservation support, and medication only when clinically indicated.',
             href: '/weight-management/'
           },
           {
-            title: "Men's Hormone Health",
+            title: "Men’s hormone health",
             body:
               'A risk-aware evaluation of symptoms and appropriate testing, with treatment considered only after the full clinical picture is reviewed.',
             href: '/mens-hormone-health/'
           },
           {
-            title: "Women's Midlife Hormone and Metabolic Care",
+            title: 'Women’s midlife care',
             body:
               'Individualized discussion of perimenopause, menopause, weight, sleep, and metabolic concerns, including hormonal and non-hormonal options.',
             href: '/womens-midlife-care/'
@@ -112,8 +137,8 @@ export const pages = Object.freeze({
       },
       {
         type: 'prelaunch',
-        eyebrow: 'Founding Patient requests',
-        heading: 'Ask to be contacted as opening details become available.',
+        eyebrow: 'Stay in the know',
+        heading: 'Your next step starts with clear information.',
         body:
           'Submit only your name and email. Apex may contact you when verified clinician, pricing, location, and opening-month consultation details are available. A request is not an appointment, reservation, acceptance as a patient, or guarantee of treatment.',
         cta: priorityListCta
@@ -165,7 +190,7 @@ export const pages = Object.freeze({
         eyebrow: 'Opening in Northwest Indiana',
         heading: 'Review the real details before deciding whether to book.',
         body:
-          'Verified clinician names and credentials, the practice location, contact information, hours, final pricing, appointment availability, and reservation terms are still being finalized. Submitting a consultation request is free and does not create a clinician-patient relationship or guarantee an appointment or treatment.',
+          'November 1, 2026 is our planned launch, not a guarantee of appointment availability. Location, contact information, hours, final pricing, and individual clinician availability will be shared before scheduling opens. Joining the launch list does not establish care or guarantee treatment.',
         cta: priorityListCta
       },
       {
@@ -181,11 +206,11 @@ export const pages = Object.freeze({
   'weight-management': {
     slug: '/weight-management/',
     navLabel: 'Weight & Metabolic',
-    title: 'Medical Weight and Metabolic Care | Apex Wellness',
+    title: 'Medical Weight Management in Northwest Indiana | Apex Wellness',
     description:
       'Learn about the planned physician-managed approach to medical weight and metabolic care at Apex Wellness in Northwest Indiana.',
     eyebrow: 'Care area · Medical weight and metabolic care',
-    h1: 'Weight and metabolic care managed by a physician, not a menu.',
+    h1: 'Weight care, with the whole person in mind.',
     intro:
       'The planned care model begins with evaluation, risks, goals, and relevant measurements. Medication may be discussed when clinically indicated, but it is never the only lever and is never guaranteed.',
     cta: priorityListCta,
@@ -276,11 +301,11 @@ export const pages = Object.freeze({
   'mens-hormone-health': {
     slug: '/mens-hormone-health/',
     navLabel: "Men's Hormone Health",
-    title: "Men's Hormone Health | Apex Wellness",
+    title: "Men's Hormone Health in Northwest Indiana | Apex Wellness",
     description:
       "Learn about Apex Wellness's planned physician-managed evaluation of men's hormone concerns in Northwest Indiana.",
     eyebrow: "Care area · Men's hormone health",
-    h1: 'Hormone care built around context, safety, and follow-through.',
+    h1: 'A fuller picture of your hormone health.',
     intro:
       'Symptoms, repeat results when appropriate, health risks, fertility goals, and reasonable alternatives all matter. A single laboratory number does not decide the plan, and testosterone is never promised.',
     cta: priorityListCta,
@@ -371,11 +396,11 @@ export const pages = Object.freeze({
   'womens-midlife-care': {
     slug: '/womens-midlife-care/',
     navLabel: "Women's Midlife Care",
-    title: "Women's Midlife Hormone and Metabolic Care | Apex Wellness",
+    title: 'Menopause & Midlife Care in Northwest Indiana | Apex Wellness',
     description:
       'Learn about the planned physician-managed approach to perimenopause, menopause, weight, sleep, and metabolic concerns at Apex Wellness.',
     eyebrow: "Care area · Women's midlife hormone and metabolic care",
-    h1: 'Midlife care that starts with your history, risks, and goals.',
+    h1: 'Midlife care, built around your next chapter.',
     intro:
       'The planned approach is individualized rather than built around a generic “hormone balancing” promise. Hormonal and non-hormonal options may be discussed, and coordination or referral remains part of good care.',
     cta: priorityListCta,
@@ -470,7 +495,7 @@ export const pages = Object.freeze({
     description:
       'See the planned four-step Apex Wellness process, from choosing a care area through evaluation, appropriate testing, and a written plan.',
     eyebrow: 'How it works',
-    h1: 'Four steps, each built around physician review.',
+    h1: 'Thoughtful care, from the first conversation.',
     intro:
       'Apex is preparing a process in which evaluation, appropriate testing, clinical options, full costs, and follow-up expectations are reviewed before treatment begins.',
     cta: priorityListCta,
@@ -530,7 +555,7 @@ export const pages = Object.freeze({
     description:
       'Learn how Apex Wellness plans to present cash-pay fees and what pricing details remain pending before appointments open.',
     eyebrow: 'Pricing',
-    h1: 'Clear costs before any appointment or payment.',
+    h1: 'Clarity before commitment.',
     intro:
       'Apex plans to publish the evaluation fee, care-area fees, common outside costs, billing cadence, and cancellation terms together. Final amounts are still being confirmed, so no placeholder prices are displayed.',
     cta: priorityListCta,
@@ -609,7 +634,7 @@ export const pages = Object.freeze({
     description:
       'Learn the standards guiding Apex Wellness as it prepares a physician-managed weight, metabolic, and hormone care practice in Northwest Indiana.',
     eyebrow: 'About Apex',
-    h1: 'A practice being built for clearer, more accountable care.',
+    h1: 'Physician-led care. Built around you.',
     intro:
       'Apex Wellness is preparing a focused weight, metabolic, and hormone care practice for adults in Northwest Indiana. The intended model emphasizes physician review, understandable options, transparent costs, and dependable follow-through.',
     cta: priorityListCta,
@@ -642,11 +667,13 @@ export const pages = Object.freeze({
         ]
       },
       {
-        type: 'verificationStatus',
-        eyebrow: 'Clinical team',
-        heading: 'Verified people and roles will be published before care opens.',
-        body:
-          'The site does not yet identify a clinician, medical director, founder, or legal practice entity. Names, degrees, professional credentials, Indiana licensure information, responsibilities, and care philosophy will be added only after verification and authorization for publication.'
+        type: 'teamCards',
+        eyebrow: 'Our physician leadership',
+        heading: 'Meet the physicians behind Apex.',
+        cards: [
+          { title: 'Wajeeh Bakhsh, MD', body: 'Physician leadership at Apex Wellness. Our planned approach puts individual evaluation, thoughtful treatment decisions, and follow-up at the center of care.' },
+          { title: 'Atif Muhammad, MD', body: 'Physician leadership at Apex Wellness. Detailed biographies, clinical responsibilities, and appointment availability will be shared as we prepare to open.' }
+        ]
       },
       {
         type: 'verificationStatus',
@@ -693,7 +720,7 @@ export const pages = Object.freeze({
           {
             question: 'When will appointments open?',
             answer:
-              'A launch date has not been published. People who submit the Founding Patient form may receive verified opening details and notice when consultation availability is announced.'
+              'Our planned launch is November 1, 2026. Scheduling is not open yet, and the date may change. Join the launch list for opening updates and future consultation availability; joining does not reserve an appointment.'
           },
           {
             question: 'Does submitting a consultation request reserve an appointment?',
@@ -714,7 +741,7 @@ export const pages = Object.freeze({
           {
             question: 'Who will provide care?',
             answer:
-              'Verified names, credentials, Indiana licensure information, roles, and responsibilities are not yet published. They will be added before appointments open.'
+              'Apex is physician-led by Wajeeh Bakhsh, MD, and Atif Muhammad, MD. Detailed biographies, clinical responsibilities, and individual appointment availability will be published before scheduling opens.'
           },
           {
             question: 'Will Apex replace primary or specialist care?',
@@ -764,14 +791,14 @@ export const pages = Object.freeze({
 
   'founding-patients': {
     slug: '/founding-patients/',
-    navLabel: 'Founding Patient Consultation',
-    title: 'Request a Founding Patient Consultation | Apex Wellness',
+    navLabel: 'Launch List',
+    title: 'Join the Apex Wellness Launch List | Northwest Indiana',
     description:
-      'Ask Apex Wellness to contact you when verified Founding Patient consultation details and opening-month availability are ready in Northwest Indiana.',
-    eyebrow: 'Founding Patient requests · Northwest Indiana',
-    h1: 'Request an opening-month consultation.',
+      'Join the Apex Wellness launch list for opening updates and future consultation availability. Physician-led care is planned for Northwest Indiana.',
+    eyebrow: 'Planned launch · November 1, 2026',
+    h1: 'Be ready for what comes next.',
     intro:
-      'Share your name and email so Apex Wellness may contact you when verified consultation details and opening-month availability are ready. This is a request for future contact—not an appointment, reservation, or clinical intake.',
+      'Join the launch list for opening updates and future consultation availability. Share only your name and email. We will share the details you need before you decide whether to book. This is not an appointment or medical intake.',
     cta: {
       label: 'Go to the request form',
       href: '#consultation-request'
@@ -785,8 +812,8 @@ export const pages = Object.freeze({
     form: {
       action: '/api/founding-consultation',
       method: 'post',
-      heading: 'Request future consultation contact',
-      submitLabel: 'Submit Consultation Request',
+      heading: 'Join the launch list',
+      submitLabel: 'Join the Launch List',
       consentVersion: 'founding-consultation-2026-09',
       consentLabel:
         'I ask Apex Wellness to email me about this request. For a consultation request, emails may include verified opening information and future consultation availability. I understand that this form does not confirm an appointment or establish care. I may unsubscribe from promotional email at any time, and I acknowledge the Privacy Policy and Communications Consent.',
@@ -794,7 +821,7 @@ export const pages = Object.freeze({
       privacyNote:
         'Enter only your name and email. Do not submit symptoms, diagnoses, medications, laboratory values, insurance details, or other sensitive medical information. This form is not monitored for medical concerns.',
       successMessage:
-        'Thank you. Apex received your consultation request. This is not an appointment confirmation or acceptance as a patient.'
+        'You’re on the launch list. Apex received your request for opening updates and future consultation availability. This is not an appointment confirmation or acceptance as a patient.'
     },
     sections: [
       {
@@ -808,10 +835,10 @@ export const pages = Object.freeze({
       },
       {
         type: 'detail',
-        eyebrow: 'What Founding Patient means',
-        heading: 'A pre-opening request pathway—not a promise.',
+        eyebrow: 'What you are signing up for',
+        heading: 'Information first. A decision later.',
         body:
-          '“Founding Patient” identifies this pre-opening consultation-request pathway. It does not mean you have been accepted as a patient or promised priority, a discount, a specific service, or an appointment. A clinician-patient relationship begins only through the appropriate clinical process after the practice opens.'
+          'The launch list is our pre-opening contact pathway, previously called the Founding Patient consultation request. You are asking for opening information and future consultation availability—not enrolling in treatment. There is no deposit, guaranteed priority, discount, or appointment. The contact permission you provide has not changed.'
       },
       {
         type: 'cards',
@@ -924,6 +951,14 @@ export const pages = Object.freeze({
       },
       {
         type: 'policySection',
+        heading: 'Automated website guide',
+        paragraphs: [
+          'The Ask Apex guide uses fixed informational answers within your browser. Questions entered there are not sent to Apex or an external AI service, and the guide does not save conversation content. Please do not enter personal or medical information. Closing the guide clears its displayed answer.',
+          'A temporary session preference remembers if you dismiss the launch invitation. It does not contain your questions or contact details. The separate launch-list form records information only when you choose to submit it with contact consent.'
+        ]
+      },
+      {
+        type: 'policySection',
         heading: 'Sharing and service providers',
         paragraphs: [
           'Apex does not sell consultation-request information. Information may be handled by service providers that support website hosting, form delivery, email, security, or data storage, but only for those services and subject to applicable safeguards.',
@@ -988,7 +1023,7 @@ export const pages = Object.freeze({
         heading: 'Prelaunch limitations',
         paragraphs: [
           'Descriptions of the planned practice, services, workflows, pricing structure, visit modalities, and availability may change before launch. Only information identified as finalized at the time scheduling opens should be relied upon for a care or payment decision.',
-          'Final clinician identities, professional credentials, licensure information, legal practice details, location, contact channels, hours, pricing, and opening timeline have not yet been published.'
+          'Physician leadership and a planned launch date are identified on the site. Detailed clinical responsibilities, licensure information, legal practice details, location, contact channels, hours, pricing, and appointment availability are still being finalized.'
         ]
       },
       {
@@ -1161,5 +1196,21 @@ export const pages = Object.freeze({
         ]
       }
     ]
+  },
+
+  blog: {
+    slug: '/blog/',
+    navLabel: 'Blog',
+    title: 'Weight, Metabolic & Hormone Health Articles | Apex Wellness',
+    description:
+      'Plain-language articles about weight, metabolic, and hormone health for adults in Northwest Indiana from Apex Wellness.',
+    eyebrow: 'Apex Wellness field notes',
+    h1: 'Clear answers. Thoughtful care.',
+    intro:
+      'Practical explanations about weight, metabolic, and hormone health—with sources, honest limits, and questions worth bringing to a clinical visit.',
+    cta: priorityListCta,
+    kind: 'blogIndex',
+    modified: '2026-09-11',
+    sections: []
   }
 });

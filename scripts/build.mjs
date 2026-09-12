@@ -4,6 +4,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { pages, site } from "../src/content.mjs";
+import { blogPosts } from "../src/blog-posts.mjs";
 
 const rootDirectory = fileURLToPath(new URL("../", import.meta.url));
 const publicDirectory = join(rootDirectory, "public");
@@ -14,6 +15,9 @@ const publicImagesDirectory = join(publicAssetsDirectory, "images");
 const buildDate = process.env.SOURCE_DATE_EPOCH
   ? new Date(Number(process.env.SOURCE_DATE_EPOCH) * 1000).toISOString().slice(0, 10)
   : new Date().toISOString().slice(0, 10);
+const publishedBlogPosts = blogPosts
+  .filter((post) => post.published <= buildDate && post.status !== "draft")
+  .sort((a, b) => b.published.localeCompare(a.published));
 
 const imageCatalog = Object.freeze({
   consultation: {
@@ -62,7 +66,7 @@ const imageCatalog = Object.freeze({
     file: "background-option-architectural.webp",
     width: 1672,
     height: 941,
-    alt: "Warm modern architecture with natural light and understated landscaping.",
+    alt: "Warm stone, wood, and glass architectural details.",
   },
   mineral: {
     file: "background-option-warm-mineral.webp",
@@ -117,6 +121,19 @@ function canonicalUrl(slug) {
   return `${site.canonicalUrl}${slug === "/" ? "/" : slug}`;
 }
 
+function imageForPage(pageKey, page) {
+  return imageCatalog[page.heroImage] || heroImages[pageKey] || imageCatalog.shoreline;
+}
+
+function formatDate(value) {
+  return new Intl.DateTimeFormat("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    timeZone: "UTC",
+  }).format(new Date(`${value}T00:00:00Z`));
+}
+
 function assetUrl(path) {
   const normalized = path.replaceAll("\\", "/");
   const version = assetVersions.get(normalized);
@@ -139,6 +156,8 @@ function pageJsonLd(page) {
       name: site.name,
       url: `${site.canonicalUrl}/`,
       description: site.description,
+      sameAs: site.social.slice(0, 2).map((profile) => profile.href),
+      logo: `${site.canonicalUrl}/assets/images/apex-brand-mark.png`,
       areaServed: {
         "@type": "AdministrativeArea",
         name: site.region,
@@ -166,23 +185,57 @@ function pageJsonLd(page) {
   ];
 
   if (page.slug !== "/") {
+    const itemListElement = [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: `${site.canonicalUrl}/`,
+      },
+    ];
+
+    if (page.kind === "blogPost") {
+      itemListElement.push({
+        "@type": "ListItem",
+        position: 2,
+        name: "Blog",
+        item: `${site.canonicalUrl}/blog/`,
+      });
+    }
+
+    itemListElement.push({
+      "@type": "ListItem",
+      position: itemListElement.length + 1,
+      name: page.kind === 'blogPost' ? page.h1 : (page.navLabel || page.h1),
+      item: url,
+    });
+
     graph.push({
       "@type": "BreadcrumbList",
       "@id": `${url}#breadcrumb`,
-      itemListElement: [
-        {
-          "@type": "ListItem",
-          position: 1,
-          name: "Home",
-          item: `${site.canonicalUrl}/`,
-        },
-        {
-          "@type": "ListItem",
-          position: 2,
-          name: page.navLabel || page.h1,
-          item: url,
-        },
-      ],
+      itemListElement,
+    });
+  }
+
+  if (page.kind === "blogPost") {
+    const heroImage = imageForPage("blog-post", page);
+    graph.push({
+      "@type": "BlogPosting",
+      "@id": `${url}#article`,
+      headline: page.h1,
+      description: page.description,
+      image: `${site.canonicalUrl}${assetUrl(`images/${heroImage.file}`)}`,
+      datePublished: page.published,
+      dateModified: page.modified,
+      author: {
+        "@type": "Organization",
+        name: page.author,
+        url: `${site.canonicalUrl}/about/`,
+      },
+      publisher: { "@id": `${site.canonicalUrl}/#organization` },
+      mainEntityOfPage: { "@id": `${url}#webpage` },
+      articleSection: page.category,
+      inLanguage: "en-US",
     });
   }
 
@@ -232,19 +285,17 @@ function cardsMarkup(items, className = "cards") {
 }
 
 function careCardsMarkup(items) {
-  return `<div class="care-cards">
+  return `<div class="care-cards" id="care-areas">
     ${items.map((item) => {
       const image = careCardImages[item.href];
-      return `<figure class="care-card representative">
-        ${image ? `<img src="${escapeHtml(assetUrl(`images/${image.file}`))}" width="${image.width}" height="${image.height}" alt="${escapeHtml(image.alt)}" loading="lazy" decoding="async">` : ""}
-        <span class="care-card-overlay" aria-hidden="true"></span>
-        <figcaption class="care-card-body">
-          ${image ? '<p class="representative-caption">Representative imagery</p>' : ""}
+      return `<article class="care-card">
+        ${image ? imageMarkup(image, { compactCaption: true }) : ""}
+        <div class="care-card-body">
           <h3>${escapeHtml(item.title)}</h3>
           <p>${escapeHtml(item.body)}</p>
-          <a href="${escapeHtml(item.href)}">Explore this care area</a>
-        </figcaption>
-      </figure>`;
+          <a class="text-link" href="${escapeHtml(item.href)}" aria-label="Explore ${escapeHtml(item.title)}">Explore care <span aria-hidden="true">↗</span></a>
+        </div>
+      </article>`;
     }).join("\n")}
   </div>`;
 }
@@ -320,6 +371,11 @@ function renderSection(section, index) {
         ${imageMarkup(imageCatalog.review)}
       </div></section>`;
 
+    case "teamCards":
+      return `<section class="section team-section" aria-labelledby="${id}"><div class="container">
+        ${headingMarkup(section, id)}${cardsMarkup(section.cards)}
+      </div></section>`;
+
     case "cards":
       return `<section class="section${alternatingClass}" aria-labelledby="${id}"><div class="container">
         ${headingMarkup(section, id)}${careCardsMarkup(section.cards)}
@@ -328,7 +384,7 @@ function renderSection(section, index) {
     case "steps":
       return `<section class="section${alternatingClass}" aria-labelledby="${id}"><div class="container">
         ${headingMarkup(section, id)}
-        <ol class="steps">${section.items.map((item) => `<li class="step"><h3>${escapeHtml(item.title)}</h3><p>${escapeHtml(item.body)}</p></li>`).join("\n")}</ol>
+        <ol class="steps">${section.items.map((item, stepIndex) => `<li class="step"><span class="step-number" aria-hidden="true">${String(stepIndex + 1).padStart(2, '0')}</span><h3>${escapeHtml(item.title)}</h3><p>${escapeHtml(item.body)}</p></li>`).join("\n")}</ol>
       </div></section>`;
 
     case "featureList":
@@ -349,8 +405,8 @@ function renderSection(section, index) {
       </div></section>`;
 
     case "audience":
-      return `<section class="section${alternatingClass}" aria-labelledby="${id}"><div class="container section-narrow">
-        ${headingMarkup(section, id)}<p>${escapeHtml(section.body)}</p><p><strong>Good to know:</strong> ${escapeHtml(section.note)}</p>
+      return `<section class="section section-editorial audience-section" aria-labelledby="${id}"><div class="container editorial-row">
+        ${headingMarkup(section, id)}<div class="editorial-copy"><p>${escapeHtml(section.body)}</p><p class="quiet-note"><strong>Good to know:</strong> ${escapeHtml(section.note)}</p></div>
       </div></section>`;
 
     case "detail":
@@ -359,8 +415,8 @@ function renderSection(section, index) {
     case "status":
     case "notice":
     case "verificationStatus":
-      return `<section class="section${alternatingClass}" aria-labelledby="${id}"><div class="container section-narrow">
-        ${headingMarkup(section, id)}<p>${escapeHtml(section.body)}</p>
+      return `<section class="section section-editorial section-${section.type}" aria-labelledby="${id}"><div class="container editorial-row">
+        ${headingMarkup(section, id)}<div class="editorial-copy"><p>${escapeHtml(section.body)}</p></div>
       </div></section>`;
 
     case "options":
@@ -376,7 +432,7 @@ function renderSection(section, index) {
 
     case "faq":
     case "faqGroup":
-      return `<section class="section${alternatingClass}" aria-labelledby="${id}"><div class="container">
+      return `<section class="section faq-section" aria-labelledby="${id}"><div class="container editorial-row">
         ${headingMarkup(section, id)}${faqMarkup(section.items)}
       </div></section>`;
 
@@ -405,7 +461,14 @@ function renderPolicySection(section, index) {
 }
 
 function renderHero(pageKey, page) {
-  const image = heroImages[pageKey] || imageCatalog.shoreline;
+  if (pageKey === 'home') return `<section class="signature-hero" aria-labelledby="page-title">
+    <div class="signature-image">${imageMarkup(imageCatalog.shoreline, { hero: true, compactCaption: true })}</div>
+    <div class="container signature-content"><p class="eyebrow">Physician-led wellness · Northwest Indiana</p>
+      <h1 id="page-title">A thoughtful<br>approach to<br><em>feeling well.</em></h1>
+      <div class="signature-bottom"><div><p>Weight, metabolic, and hormone care.<br>Built around the person. Built around you.</p><div class="hero-actions">${buttonMarkup(site.cta)}<a class="hero-explore" href="#care-areas">Discover our approach <span aria-hidden="true">↗</span></a></div></div><p class="signature-launch"><span class="launch-dot" aria-hidden="true"></span>Planned launch<br><strong>${escapeHtml(site.launch.label)}</strong></p></div>
+    </div>
+  </section>`;
+  const image = imageForPage(pageKey, page);
   return `<section class="hero" aria-labelledby="page-title"><div class="container hero-grid">
     <div class="hero-copy">
       <p class="eyebrow">${escapeHtml(page.eyebrow)}</p>
@@ -416,6 +479,103 @@ function renderHero(pageKey, page) {
     </div>
     <div class="hero-media">${imageMarkup(image, { hero: true })}</div>
   </div></section>`;
+}
+
+function renderBlogIndex(page) {
+  const articleCards = publishedBlogPosts.map((post) => {
+    const image = imageForPage("blog-post", post);
+    return `<article class="blog-card">
+      <a class="blog-card-image" href="${escapeHtml(post.slug)}" aria-label="Read ${escapeHtml(post.h1)}">${imageMarkup(image)}</a>
+      <div class="blog-card-body">
+        <p class="article-kicker">${escapeHtml(post.category)}</p>
+        <h2><a href="${escapeHtml(post.slug)}">${escapeHtml(post.h1)}</a></h2>
+        <p>${escapeHtml(post.excerpt)}</p>
+        <p class="article-card-meta"><time datetime="${escapeHtml(post.published)}">${escapeHtml(formatDate(post.published))}</time> · ${escapeHtml(post.readTime || "8 minute read")}</p>
+      </div>
+    </article>`;
+  }).join("\n");
+
+  return `<main id="main-content" class="page" tabindex="-1">
+    <header class="journal-header"><div class="container"><div><p class="eyebrow">The Apex journal</p><h1 id="page-title">${escapeHtml(page.h1)}</h1></div><p class="journal-deck">${escapeHtml(page.intro)}</p></div></header>
+    <section class="section" aria-labelledby="latest-articles"><div class="container">
+      <div class="section-heading"><p class="eyebrow">Latest articles</p><h2 id="latest-articles">Start with the question already on your mind.</h2><p>Every article is written for education, sourced from credible medical references, and clear about what still belongs in a real clinical conversation.</p></div>
+      <div class="blog-grid">${articleCards}</div>
+    </div></section>
+  </main>`;
+}
+
+function renderHome(page) {
+  const editorial = page.editorial;
+  const intro = editorial.introduction;
+  const care = page.sections.find((section) => section.type === 'cards');
+  const local = page.sections.find((section) => section.type === 'serviceArea');
+  const latest = publishedBlogPosts[0];
+  const multiline = (text) => escapeHtml(text).replaceAll('\n', '<br>');
+  return `<main id="main-content" class="page" tabindex="-1">
+    ${renderHero('home', page)}
+    <section class="section introduction-section" aria-labelledby="apex-approach"><div class="container introduction-grid">
+      <p class="eyebrow">${escapeHtml(intro.eyebrow)}</p><div><h2 id="apex-approach">${escapeHtml(intro.heading)}</h2><div class="introduction-copy"><p>${escapeHtml(intro.body)}</p><p class="quiet-note">${escapeHtml(intro.note)}</p><a class="text-link" href="/about/">Meet Apex <span aria-hidden="true">↗</span></a></div></div>
+    </div></section>
+    <section class="section home-care-section" aria-labelledby="care-heading"><div class="container">
+      <div class="section-heading heading-with-aside"><div><p class="eyebrow">Three areas of care</p><h2 id="care-heading">${multiline(editorial.careHeading)}</h2></div><p>Individual evaluation comes first.<br>Treatment is a clinical decision,<br>never a one-size-fits-all promise.</p></div>
+      ${careCardsMarkup(care.cards)}
+    </div></section>
+    <section class="physician-section" aria-labelledby="physician-heading"><div class="physician-image">${imageMarkup(imageCatalog.architectural)}</div><div class="physician-content">
+      <p class="eyebrow">The people behind the practice</p><h2 id="physician-heading">${multiline(editorial.physicianHeading)}</h2><p>${escapeHtml(editorial.physicianBody)}</p>
+      <ul class="physician-names"><li>Wajeeh Bakhsh<span>MD</span></li><li>Atif Muhammad<span>MD</span></li></ul>
+      <a class="text-link" href="/about/">Our approach to care <span aria-hidden="true">↗</span></a>
+    </div></section>
+    <section class="section home-process" aria-labelledby="process-heading"><div class="container">
+      <div class="section-heading heading-with-aside"><div><p class="eyebrow">Your next step</p><h2 id="process-heading">${multiline(editorial.processHeading)}</h2></div><a class="text-link" href="/how-it-works/">How it works <span aria-hidden="true">↗</span></a></div>
+      <ol class="steps">${editorial.process.map((step, index) => `<li class="step"><span class="step-number" aria-hidden="true">0${index + 1}</span><h3>${escapeHtml(step.title)}</h3><p>${escapeHtml(step.body)}</p></li>`).join('')}</ol>
+    </div></section>
+    ${latest ? `<section class="section home-journal" aria-labelledby="journal-heading"><div class="container">
+      <div class="section-heading heading-with-aside"><div><p class="eyebrow">The Apex journal</p><h2 id="journal-heading">A little more understanding.</h2></div><a class="text-link" href="/blog/">Explore the blog <span aria-hidden="true">↗</span></a></div>
+      <article class="journal-feature"><a class="journal-feature-image" href="${escapeHtml(latest.slug)}" aria-label="Read ${escapeHtml(latest.h1)}">${imageMarkup(imageForPage('blog-post', latest), { compactCaption: true })}</a><div><p class="eyebrow">${escapeHtml(latest.category)} · ${escapeHtml(latest.readTime || '8 minute read')}</p><h3><a href="${escapeHtml(latest.slug)}">${escapeHtml(latest.h1)}</a></h3><p>${escapeHtml(latest.excerpt)}</p><a class="text-link" href="${escapeHtml(latest.slug)}">Read the article <span aria-hidden="true">↗</span></a><p class="quiet-note">General education. Your own care starts with a clinical conversation.</p></div></article>
+    </div></section>` : ''}
+    <section class="section local-section" aria-labelledby="local-heading"><div class="container editorial-row"><div><p class="eyebrow">Rooted in our region</p><h2 id="local-heading">For life in<br>Northwest Indiana.</h2></div><div class="editorial-copy"><p>${escapeHtml(local.body)}</p><a class="text-link" href="/faq/">Opening & location questions <span aria-hidden="true">↗</span></a></div></div></section>
+    ${renderLaunchCta()}
+  </main>`;
+}
+
+function renderLaunchCta() {
+  return `<section class="section launch-section" aria-labelledby="launch-heading"><div class="container launch-section-inner"><div><p class="eyebrow">${escapeHtml(site.launch.status)} · ${escapeHtml(site.launch.label)}</p><h2 id="launch-heading">Be part of<br><em>what comes next.</em></h2></div><div class="launch-section-copy"><p>Opening updates and future consultation availability, delivered to your inbox.</p>${buttonMarkup(site.cta)}<p class="quiet-note">Free to join. No appointment booked. Launch timing and availability may change.</p></div></div></section>`;
+}
+
+function renderBlogPost(page) {
+  const image = imageForPage("blog-post", page);
+  const introParagraphs = page.intro.split(/\n\s*\n/).map((paragraph) => `<p class="article-deck">${escapeHtml(paragraph)}</p>`).join("\n");
+  const sourceList = page.sources.map((source) => `<li><a href="${escapeHtml(source.href)}">${escapeHtml(source.label)}</a></li>`).join("\n");
+  const articleSections = page.sections.map((section, index) => {
+    const id = `${identifier(section.heading)}-${index + 1}`;
+    return `<section aria-labelledby="${id}">
+      <h2 id="${id}">${escapeHtml(section.heading)}</h2>
+      ${(section.paragraphs || []).map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join("\n")}
+      ${section.bullets ? `<ul>${section.bullets.map((item) => `<li>${escapeHtml(item)}</li>`).join("\n")}</ul>` : ""}
+      ${(section.paragraphsAfterBullets || []).map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join("\n")}
+    </section>`;
+  }).join("\n");
+  const disclaimer = page.disclaimer || "This article is for general education and is not medical advice, diagnosis, or treatment. Talk with a qualified healthcare professional who knows your circumstances before changing your care. For a medical emergency, call 911 or go to the nearest emergency department.";
+
+  return `<main id="main-content" class="page" tabindex="-1">
+    <article class="article-shell">
+      <header class="article-header">
+        <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/blog/">Blog</a><span aria-hidden="true">/</span><span aria-current="page">${escapeHtml(page.h1)}</span></nav>
+        <p class="article-kicker">${escapeHtml(page.category)}</p>
+        <h1 id="page-title">${escapeHtml(page.h1)}</h1>
+        ${introParagraphs}
+        <p class="article-meta">By ${escapeHtml(page.author)} · <time datetime="${escapeHtml(page.published)}">Published ${escapeHtml(formatDate(page.published))}</time>${page.modified !== page.published ? ` · <time datetime="${escapeHtml(page.modified)}">Updated ${escapeHtml(formatDate(page.modified))}</time>` : ""}</p>
+        ${imageMarkup(image, { hero: true })}
+      </header>
+      <div class="article-body">
+        <nav class="article-contents" aria-label="In this article"><h2>In this article</h2><ul>${page.sections.map((section, index) => `<li><a href="#${identifier(section.heading)}-${index + 1}">${escapeHtml(section.heading)}</a></li>`).join('')}</ul></nav>
+        ${articleSections}
+        <aside class="medical-note" aria-labelledby="medical-disclaimer"><h2 id="medical-disclaimer">A quick medical note</h2><p>${escapeHtml(disclaimer)}</p></aside>
+        <section class="article-sources" aria-labelledby="sources-reviewed"><h2 id="sources-reviewed">Sources reviewed</h2><ul>${sourceList}</ul><p class="editorial-note">Published by Apex Wellness for general education. No individual physician medical review is claimed unless a reviewer is explicitly named. Sources and publication dates are provided so you can evaluate the information; your own care requires a clinical conversation.</p></section>
+        <section class="article-cta" aria-labelledby="keep-exploring"><p class="eyebrow">Keep exploring</p><h2 id="keep-exploring">Useful information is a start. Individual care is the next step.</h2><p>Apex Wellness is preparing to open in Northwest Indiana. A consultation request is free and does not book an appointment, establish care, or guarantee treatment.</p><div class="button-row">${buttonMarkup(page.relatedService, true)}${buttonMarkup(site.cta)}</div></section>
+      </div>
+    </article>
+  </main>`;
 }
 
 function renderConversionHero(page) {
@@ -433,6 +593,10 @@ function renderConversionHero(page) {
 }
 
 function renderMain(pageKey, page) {
+  if (pageKey === 'home') return renderHome(page);
+  if (page.kind === "blogIndex") return renderBlogIndex(page);
+  if (page.kind === "blogPost") return renderBlogPost(page);
+
   if (page.effectiveDate) {
     return `<main id="main-content" class="page" tabindex="-1">
       <article class="policy">
@@ -447,50 +611,53 @@ function renderMain(pageKey, page) {
   return `<main id="main-content" class="page" tabindex="-1">
     ${page.landing ? renderConversionHero(page) : renderHero(pageKey, page)}
     ${page.sections.map(renderSection).join("\n")}
+    ${page.landing ? '' : renderLaunchCta()}
   </main>`;
 }
 
 function renderNavigation(page) {
-  const links = site.navigation.map((item) => {
-    const current = item.href === page.slug ? ' aria-current="page"' : "";
+  const visibleLinks = [site.navigation[6], site.navigation[4], site.navigation[5], site.navigation[7], site.navigation[8]];
+  const links = visibleLinks.map((item) => {
+    const current = item.href === page.slug || (page.kind === "blogPost" && item.href === "/blog/") ? ' aria-current="page"' : "";
     return `<li><a href="${escapeHtml(item.href)}"${current}>${escapeHtml(item.label)}</a></li>`;
   }).join("\n");
 
   return `<header class="site-header">
     <div class="container site-header-inner">
-      <a class="brand" href="/" aria-label="Apex Wellness home">Apex Wellness</a>
+      <a class="brand premium-brand" href="/" aria-label="Apex Wellness home"${page.slug === '/' ? ' aria-current="page"' : ''}><span>Apex</span><small>WELLNESS</small></a>
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation" aria-label="Open main menu">
         <span class="nav-toggle-label">Menu</span><span class="nav-toggle-icon" aria-hidden="true"></span>
       </button>
       <nav id="primary-navigation" class="site-nav" aria-label="Primary navigation">
-        <ul>${links}</ul>
+        <ul><li class="care-navigation"><details><summary>Our care</summary><div class="care-dropdown">${site.navigation.slice(1,4).map((item) => `<a href="${item.href}"${item.href === page.slug ? ' aria-current="page"' : ''}>${escapeHtml(item.label)}<span aria-hidden="true">↗</span></a>`).join('')}</div></details></li>${links}</ul>
         <a class="nav-cta" href="${escapeHtml(site.cta.href)}"${site.cta.href === page.slug ? ' aria-current="page"' : ""}>${escapeHtml(site.cta.label)}</a>
       </nav>
     </div>
-  </header>`;
+  </header><noscript><nav class="no-js-navigation container" aria-label="Navigation without JavaScript">${site.navigation.map((item) => `<a href="${escapeHtml(item.href)}">${escapeHtml(item.label)}</a>`).join('')}</nav></noscript>`;
 }
 
 function renderLandingNavigation() {
   return `<header class="site-header landing-header">
     <div class="container site-header-inner">
-      <a class="brand" href="/" aria-label="Apex Wellness home">Apex Wellness</a>
+      <a class="brand premium-brand" href="/" aria-label="Apex Wellness home"><span>Apex</span><small>WELLNESS</small></a>
       <nav class="landing-nav" aria-label="Founding Patient page navigation">
         <a href="/">Explore full site</a>
-        <a class="nav-cta" href="#consultation-request">Request consultation</a>
+        <a class="nav-cta" href="#consultation-request">Join the launch list</a>
       </nav>
     </div>
   </header>`;
 }
 
 function renderFooter(page) {
-  const footerLink = (item) => `<li><a href="${escapeHtml(item.href)}"${item.href === page.slug ? ' aria-current="page"' : ""}>${escapeHtml(item.label)}</a></li>`;
+  const footerLink = (item) => `<li><a href="${escapeHtml(item.href)}"${item.href === page.slug || (page.kind === "blogPost" && item.href === "/blog/") ? ' aria-current="page"' : ""}>${escapeHtml(item.label)}</a></li>`;
   const careLinks = site.navigation.slice(1, 4).map(footerLink).join("");
   const infoLinks = site.navigation.slice(4).map(footerLink).join("");
   const policyLinks = site.policyNavigation.map(footerLink).join("");
 
   return `<footer class="site-footer"><div class="container">
+    <div class="footer-signature"><a href="/" aria-label="Apex Wellness home">Apex Wellness<span aria-hidden="true">↗</span></a><p>${escapeHtml(site.tagline)}</p></div>
     <div class="footer-grid">
-      <div><a class="brand" href="/">Apex Wellness</a><p>${escapeHtml(site.footer.summary)}</p><p>${escapeHtml(site.footer.location)}</p></div>
+      <div><p class="eyebrow">Northwest Indiana</p><p>${escapeHtml(site.footer.summary)}</p><p>${escapeHtml(site.footer.location)}</p><nav class="social-links" aria-label="Apex social profiles">${site.social.map((profile) => `<a href="${escapeHtml(profile.href)}" rel="me noreferrer" target="_blank">${escapeHtml(profile.label)}<span class="visually-hidden"> (opens a new tab)</span></a>`).join('')}</nav></div>
       <nav aria-label="Care areas"><h2>Care areas</h2><ul>${careLinks}</ul></nav>
       <nav aria-label="Site information"><h2>Information</h2><ul>${infoLinks}</ul></nav>
       <nav aria-label="Policies"><h2>Policies</h2><ul>${policyLinks}</ul></nav>
@@ -499,9 +666,31 @@ function renderFooter(page) {
   </div></footer>`;
 }
 
+function renderSiteHelp(page) {
+  const launchPrompt = !page.landing && !page.effectiveDate ? `<aside class="launch-prompt" id="launch-prompt" aria-labelledby="launch-prompt-title" hidden>
+    <button class="widget-close" id="dismiss-launch" aria-label="Dismiss launch invitation" type="button">×</button>
+    <p class="eyebrow">${escapeHtml(site.launch.status)} · ${escapeHtml(site.launch.label)}</p>
+    <h2 id="launch-prompt-title">Be part of what comes next.</h2>
+    <p>Opening updates and future consultation availability. Just your name and email.</p>
+    ${buttonMarkup(site.cta)}<p class="widget-note">Free to join. No appointment booked.</p>
+  </aside>` : '';
+  return `${launchPrompt}
+  <div class="site-help" data-launch-label="${escapeHtml(site.launch.label)}">
+    <button id="help-toggle" class="help-toggle" type="button" aria-expanded="false" aria-controls="site-help-panel" hidden><span aria-hidden="true">✦</span> Ask Apex</button>
+    <section id="site-help-panel" class="help-panel" aria-labelledby="help-heading" hidden>
+      <header class="help-header"><div><p class="eyebrow">Website guide · Automated</p><h2 id="help-heading">How can I help you?</h2></div><button id="help-close" class="widget-close" type="button" aria-label="Close website guide">×</button></header>
+      <p class="help-disclosure" id="help-disclosure">Ask about the clinic, launch list, or website. This is not a person or medical advice. Please do not enter personal or medical information. Questions stay in this page and are not sent to Apex or an AI service.</p>
+      <div id="help-answer" class="help-answer" role="status" aria-live="polite" aria-atomic="true"><p>Try “When do you open?” or “How do I join the launch list?”</p></div>
+      <div class="help-topics" aria-label="Common questions"><button type="button" data-help-question="When do you open?">Opening</button><button type="button" data-help-question="What care do you offer?">Care areas</button><button type="button" data-help-question="What does care cost?">Pricing</button></div>
+      <form id="site-help-form" aria-label="Ask a website question"><label for="help-question">Your website question</label><div class="help-input-row"><input id="help-question" type="text" maxlength="500" autocomplete="off" placeholder="Type a question…" aria-describedby="help-disclosure" required><button type="submit">Ask</button></div></form>
+      <p class="widget-note">Not monitored. For a medical emergency, call 911. <a href="/faq/">All FAQs</a></p>
+    </section>
+  </div>`;
+}
+
 function renderDocument(pageKey, page, jsonLd, { noIndex = false, mainOverride = "" } = {}) {
   const canonical = canonicalUrl(page.slug);
-  const heroImage = heroImages[pageKey] || imageCatalog.shoreline;
+  const heroImage = page.kind === 'blogPost' ? imageForPage(pageKey, page) : { file: 'apex-social-preview.png', width: 1200, height: 630, alt: 'Apex Wellness — Physician-led care. Built around you. Northwest Indiana.' };
   const socialImage = `${site.canonicalUrl}${assetUrl(`images/${heroImage.file}`)}`;
 
   return `<!doctype html>
@@ -516,7 +705,7 @@ function renderDocument(pageKey, page, jsonLd, { noIndex = false, mainOverride =
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="manifest" href="/site.webmanifest">
   <meta name="theme-color" content="#173633">
-  <meta property="og:type" content="website">
+  <meta property="og:type" content="${page.kind === "blogPost" ? "article" : "website"}">
   <meta property="og:locale" content="en_US">
   <meta property="og:site_name" content="${escapeHtml(site.name)}">
   <meta property="og:title" content="${escapeHtml(page.title)}">
@@ -531,17 +720,26 @@ function renderDocument(pageKey, page, jsonLd, { noIndex = false, mainOverride =
   <meta name="twitter:description" content="${escapeHtml(page.description)}">
   <meta name="twitter:image" content="${escapeHtml(socialImage)}">
   <meta name="twitter:image:alt" content="${escapeHtml(heroImage.alt)}">
+  ${page.kind === "blogPost" ? `<meta property="article:published_time" content="${escapeHtml(page.published)}">
+  <meta property="article:modified_time" content="${escapeHtml(page.modified)}">
+  <meta property="article:section" content="${escapeHtml(page.category)}">` : ""}
+  <link rel="alternate" type="application/rss+xml" title="Apex Wellness Blog" href="/blog/feed.xml">
   <link rel="stylesheet" href="${escapeHtml(assetUrl("site.css"))}">
+  <link rel="stylesheet" href="${escapeHtml(assetUrl("site-design.css"))}">
+  <link rel="preload" as="font" href="/assets/fonts/instrument-serif-latin-400-normal.woff2" type="font/woff2" crossorigin>
+  <link rel="preload" as="font" href="/assets/fonts/manrope-latin-wght-normal.woff2" type="font/woff2" crossorigin>
   <script type="application/ld+json">${jsonLd}</script>
   <script src="${escapeHtml(assetUrl("site.js"))}" defer></script>
+  <script src="${escapeHtml(assetUrl("site-assistant.js"))}" defer></script>
 </head>
-<body${page.landing ? ' class="landing-page"' : ""}>
+<body class="page-${escapeHtml(pageKey)}${page.landing ? ' landing-page' : ''}">
   <a class="skip-link" href="#main-content">Skip to main content</a>
   <div class="announcement" role="status">${escapeHtml(site.announcement)} <a href="${page.landing ? "#consultation-request" : escapeHtml(site.cta.href)}">${escapeHtml(site.cta.label)}</a></div>
   ${page.landing ? renderLandingNavigation() : renderNavigation(page)}
   ${mainOverride || renderMain(pageKey, page)}
   ${renderFooter(page)}
-  ${page.landing ? '<a class="mobile-conversion-cta" href="#consultation-request">Request consultation</a>' : ""}
+  ${page.landing ? '<a class="mobile-conversion-cta" href="#consultation-request">Join the launch list</a>' : ""}
+  ${renderSiteHelp(page)}
 </body>
 </html>
 `;
@@ -566,10 +764,24 @@ async function prepareAssets() {
   await mkdir(publicAssetsDirectory, { recursive: true });
   await cp(join(sourceAssetsDirectory, "site.css"), join(publicAssetsDirectory, "site.css"));
   await cp(join(sourceAssetsDirectory, "site.js"), join(publicAssetsDirectory, "site.js"));
+  await cp(join(sourceAssetsDirectory, 'site-design.css'), join(publicAssetsDirectory, 'site-design.css'));
+  const fontDirectory = join(publicAssetsDirectory, 'fonts');
+  await mkdir(fontDirectory, { recursive: true });
+  for (const file of ['instrument-serif-latin-400-normal.woff2', 'instrument-serif-latin-400-italic.woff2']) {
+    await cp(join(rootDirectory, 'node_modules/@fontsource/instrument-serif/files', file), join(fontDirectory, file));
+  }
+  await cp(join(rootDirectory, 'node_modules/@fontsource-variable/manrope/files/manrope-latin-wght-normal.woff2'), join(fontDirectory, 'manrope-latin-wght-normal.woff2'));
+  await cp(join(rootDirectory, 'node_modules/@fontsource/instrument-serif/LICENSE'), join(fontDirectory, 'instrument-serif-license.txt'));
+  await cp(join(rootDirectory, 'node_modules/@fontsource-variable/manrope/LICENSE'), join(fontDirectory, 'manrope-license.txt'));
+  const helpEngine = (await readFile(join(sourceAssetsDirectory, "site-help.mjs"), 'utf8')).replace('export function', 'function');
+  const helpUi = (await readFile(join(sourceAssetsDirectory, "site-assistant.mjs"), 'utf8')).replace(/^import .*?;\r?\n/, '');
+  await writeOutput(join(publicAssetsDirectory, 'site-assistant.js'), `(() => {\n'use strict';\n${helpEngine}\n${helpUi}\n})();\n`);
   await cp(sourceImagesDirectory, publicImagesDirectory, { recursive: true });
 
   assetVersions.set("site.css", await fingerprint(join(sourceAssetsDirectory, "site.css")));
   assetVersions.set("site.js", await fingerprint(join(sourceAssetsDirectory, "site.js")));
+  assetVersions.set('site-design.css', await fingerprint(join(sourceAssetsDirectory, 'site-design.css')));
+  assetVersions.set('site-assistant.js', await fingerprint(join(publicAssetsDirectory, 'site-assistant.js')));
 
   const imageFiles = await readdir(sourceImagesDirectory, { withFileTypes: true });
   await Promise.all(imageFiles.filter((entry) => entry.isFile()).map(async (entry) => {
@@ -616,6 +828,7 @@ function buildHeaders(jsonLdDocuments) {
       page.slug,
       `${page.slug}index.html`,
     ]),
+    ...publishedBlogPosts.flatMap((post) => [post.slug, `${post.slug}index.html`]),
   ];
   const cacheRules = htmlPaths.map((path) => `${path}\n  Cache-Control: no-cache, max-age=0, must-revalidate`).join("\n\n");
 
@@ -630,6 +843,9 @@ ${cacheRules}
 
 /site.webmanifest
   Cache-Control: public, max-age=86400
+
+/blog/feed.xml
+  Cache-Control: public, max-age=3600, must-revalidate
 `;
 }
 
@@ -654,11 +870,39 @@ function buildRedirects() {
 }
 
 function buildSitemap() {
-  const entries = Object.values(pages).map((page) => `  <url><loc>${escapeXml(canonicalUrl(page.slug))}</loc><lastmod>${buildDate}</lastmod></url>`).join("\n");
+  const entries = [...Object.values(pages), ...publishedBlogPosts]
+    .map((page) => `  <url><loc>${escapeXml(canonicalUrl(page.slug))}</loc><lastmod>${escapeXml(page.modified || site.contentUpdated)}</lastmod></url>`)
+    .join("\n");
   return `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${entries}
 </urlset>
+`;
+}
+
+function buildRssFeed() {
+  const items = [...publishedBlogPosts]
+    .sort((a, b) => b.published.localeCompare(a.published))
+    .map((post) => `<item>
+      <title>${escapeXml(post.h1)}</title>
+      <link>${escapeXml(canonicalUrl(post.slug))}</link>
+      <guid isPermaLink="true">${escapeXml(canonicalUrl(post.slug))}</guid>
+      <pubDate>${new Date(`${post.published}T12:00:00Z`).toUTCString()}</pubDate>
+      <description>${escapeXml(post.excerpt)}</description>
+      <category>${escapeXml(post.category)}</category>
+    </item>`)
+    .join("\n");
+
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>Apex Wellness Blog</title>
+    <link>${escapeXml(`${site.canonicalUrl}/blog/`)}</link>
+    <description>${escapeXml(pages.blog.description)}</description>
+    <language>en-us</language>
+    ${items}
+  </channel>
+</rss>
 `;
 }
 
@@ -704,6 +948,29 @@ function validateContent() {
     titles.add(page.title);
     descriptions.add(page.description);
   }
+
+  for (const [index, post] of blogPosts.entries()) {
+    const key = `blogPosts[${index}]`;
+    for (const field of ["slug", "title", "description", "h1", "intro", "excerpt", "published", "modified", "category", "author", "heroImage"]) {
+      if (!post[field]) throw new Error(`${key} is missing ${field}.`);
+    }
+    if (!post.slug.startsWith("/blog/") || !post.slug.endsWith("/")) {
+      throw new Error(`${key} must use a trailing-slash route under /blog/.`);
+    }
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(post.published) || !/^\d{4}-\d{2}-\d{2}$/.test(post.modified)) {
+      throw new Error(`${key} must use YYYY-MM-DD publication dates.`);
+    }
+    if (!post.sections?.length) throw new Error(`${key} needs article sections.`);
+    if (!post.sources?.length) throw new Error(`${key} needs reviewed sources.`);
+    if (!post.relatedService?.href || !post.relatedService?.label) throw new Error(`${key} needs a related service link.`);
+    if (!imageCatalog[post.heroImage]) throw new Error(`${key} uses an unknown hero image.`);
+    if (slugs.has(post.slug)) throw new Error(`Duplicate page slug: ${post.slug}`);
+    if (titles.has(post.title)) throw new Error(`Duplicate page title: ${post.title}`);
+    if (descriptions.has(post.description)) throw new Error(`Duplicate page description: ${post.description}`);
+    slugs.add(post.slug);
+    titles.add(post.title);
+    descriptions.add(post.description);
+  }
 }
 
 async function build() {
@@ -716,6 +983,13 @@ async function build() {
     const jsonLd = pageJsonLd(page);
     documents.push(jsonLd);
     await writeOutput(outputPathForSlug(page.slug), renderDocument(pageKey, page, jsonLd));
+  }
+
+  for (const post of publishedBlogPosts) {
+    const page = { ...post, kind: "blogPost", navLabel: "Blog" };
+    const jsonLd = pageJsonLd(page);
+    documents.push(jsonLd);
+    await writeOutput(outputPathForSlug(page.slug), renderDocument("blog-post", page, jsonLd));
   }
 
   const notFoundPage = {
@@ -735,6 +1009,7 @@ async function build() {
   await Promise.all([
     writeOutput(join(publicDirectory, "robots.txt"), `User-agent: *\nAllow: /\nDisallow: /api/\nSitemap: ${site.canonicalUrl}/sitemap.xml\n`),
     writeOutput(join(publicDirectory, "sitemap.xml"), buildSitemap()),
+    writeOutput(join(publicDirectory, "blog", "feed.xml"), buildRssFeed()),
     writeOutput(join(publicDirectory, ".assetsignore"), `.git\n.git/**\n**/.git\n**/.git/**\n.*\n**/.*\n*.map\n**/*.map\n*.log\n**/*.log\n**/*.md\n**/*.mjs\n**/*.cjs\n**/*.ts\n**/*.tsx\n**/*.jsx\n**/*.test.*\n**/*.spec.*\n`),
     writeOutput(join(publicDirectory, "_headers"), buildHeaders(documents)),
     writeOutput(join(publicDirectory, "_redirects"), buildRedirects()),
@@ -742,7 +1017,7 @@ async function build() {
     writeOutput(join(publicDirectory, "site.webmanifest"), buildManifest()),
   ]);
 
-  console.log(`Built ${Object.keys(pages).length} pages plus 404 into ${publicDirectory}`);
+  console.log(`Built ${Object.keys(pages).length + publishedBlogPosts.length} pages plus 404 into ${publicDirectory}`);
 }
 
 await build();

@@ -6,10 +6,19 @@ import { fileURLToPath } from "node:url";
 import test from "node:test";
 
 import { pages, site } from "../src/content.mjs";
+import { blogPosts } from "../src/blog-posts.mjs";
 
 const projectRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const publicRoot = join(projectRoot, "public");
-const pageList = Object.values(pages);
+const buildDate = process.env.SOURCE_DATE_EPOCH
+  ? new Date(Number(process.env.SOURCE_DATE_EPOCH) * 1000).toISOString().slice(0, 10)
+  : new Date().toISOString().slice(0, 10);
+const publishedBlogPosts = blogPosts.filter((post) => post.published <= buildDate && post.status !== "draft");
+const unpublishedBlogPosts = blogPosts.filter((post) => post.published > buildDate || post.status === "draft");
+const pageList = [
+  ...Object.values(pages),
+  ...publishedBlogPosts.map((post) => ({ ...post, kind: "blogPost", navLabel: "Blog" })),
+];
 
 function pageOutputPath(slug) {
   if (slug === "/") return join(publicRoot, "index.html");
@@ -170,8 +179,9 @@ test("generated pages use crawlable routes and contain no editor-only controls",
     assert.doesNotMatch(html, editorControl, `${page.slug} includes an editor control`);
     const currentLinks = startTags(html, "a").filter(({ attrs }) => attrs["aria-current"] === "page");
     if (!page.landing) {
+      const expectedCurrentHref = page.kind === "blogPost" ? "/blog/" : page.slug;
       assert.ok(
-        currentLinks.some(({ attrs }) => attrs.href === page.slug),
+        currentLinks.some(({ attrs }) => attrs.href === expectedCurrentHref),
         `${page.slug} needs an aria-current link in site navigation`,
       );
     }
@@ -246,8 +256,9 @@ test("founding consultation form matches the minimal API contract and accessible
   const html = htmlBySlug.get("/founding-patients/");
   assert.ok(html, "the canonical /founding-patients/ page is missing");
 
-  const formMatches = [...html.matchAll(/<form\b([^>]*)>([\s\S]*?)<\/form>/gi)];
-  assert.equal(formMatches.length, 1, "founding-patients page must contain exactly one form");
+  const formMatches = [...html.matchAll(/<form\b([^>]*)>([\s\S]*?)<\/form>/gi)]
+    .filter((match) => attributes(match[1]).id === 'consultation-form');
+  assert.equal(formMatches.length, 1, "founding-patients page must contain exactly one consultation form");
   const formAttrs = attributes(formMatches[0][1]);
   const formHtml = formMatches[0][2];
   const inputs = startTags(formHtml, "input");
@@ -467,4 +478,112 @@ test("sitemap, robots, and custom 404 cover the complete crawlable site", async 
   assert.match(metaContent(notFound, "robots") || "", /noindex/i);
   assert.ok(startTags(notFound, "a").some(({ attrs }) => attrs.href === "/"), "404 needs a home link");
   assert.doesNotMatch(notFound, /<(?:image-slot|sc-[\w-]+|x-dc)\b|type=["']__bundler\//i);
+});
+
+test("blog pages expose article semantics, dates, sources, and a valid RSS feed", async () => {
+  const blogIndex = htmlBySlug.get("/blog/");
+  assert.ok(blogIndex, "blog index is missing");
+
+  for (const post of publishedBlogPosts) {
+    assert.match(blogIndex, new RegExp(`href=["']${post.slug.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}["']`), `blog index must link ${post.slug}`);
+    const html = htmlBySlug.get(post.slug);
+    assert.ok(html, `${post.slug} is missing`);
+    assert.match(html, /<article\b[^>]*class=["'][^"']*article-shell/i, `${post.slug} needs an article landmark`);
+    assert.match(html, new RegExp(`<time\\b[^>]*datetime=["']${post.published}["']`, "i"), `${post.slug} needs a visible publication date`);
+    assert.match(html, /Sources reviewed/i, `${post.slug} needs a visible source list`);
+
+    const jsonLdScripts = [...html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)]
+      .filter(([, rawAttrs]) => attributes(rawAttrs).type?.toLowerCase() === "application/ld+json")
+      .map(([, , body]) => JSON.parse(body));
+    const graph = jsonLdScripts.flatMap((document) => document["@graph"] || []);
+    const article = graph.find((node) => node["@type"] === "BlogPosting");
+    assert.ok(article, `${post.slug} needs BlogPosting JSON-LD`);
+    assert.equal(article.datePublished, post.published);
+    assert.equal(article.dateModified, post.modified);
+    assert.equal(article.headline, post.h1);
+  }
+
+  const feedPath = join(publicRoot, "blog", "feed.xml");
+  assert.ok(existsSync(feedPath), "blog RSS feed is missing");
+  const feed = await readFile(feedPath, "utf8");
+  assert.match(feed, /<rss\b[^>]*version="2\.0"/i);
+  for (const post of publishedBlogPosts) {
+    assert.match(feed, new RegExp(canonicalFor(post).replace(/[.*+?^${}()|[\]\\]/g, "\\$&")), `RSS feed must include ${post.slug}`);
+  }
+});
+
+test("future-dated blog posts stay out of public pages, the sitemap, and the feed", async () => {
+  const blogIndex = htmlBySlug.get("/blog/");
+  const sitemap = await readFile(join(publicRoot, "sitemap.xml"), "utf8");
+  const feed = await readFile(join(publicRoot, "blog", "feed.xml"), "utf8");
+
+  for (const post of unpublishedBlogPosts) {
+    assert.ok(!existsSync(pageOutputPath(post.slug)), `${post.slug} must not be generated before ${post.published}`);
+    assert.doesNotMatch(blogIndex, new RegExp(post.slug.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")), `${post.slug} must not be listed early`);
+    assert.doesNotMatch(sitemap, new RegExp(canonicalFor(post).replace(/[.*+?^${}()|[\]\\]/g, "\\$&")), `${post.slug} must not enter the sitemap early`);
+    assert.doesNotMatch(feed, new RegExp(canonicalFor(post).replace(/[.*+?^${}()|[\]\\]/g, "\\$&")), `${post.slug} must not enter the feed early`);
+  }
+});
+
+test('all runtime scripts exist as deployable assets and the site guide stays local', async () => {
+  for (const [slug, html] of htmlBySlug) {
+    for (const { attrs } of startTags(html, 'script').filter(({attrs}) => attrs.src)) {
+      const path = new URL(attrs.src, site.canonicalUrl).pathname;
+      assert.equal(extname(path), '.js', `${slug} script must use deployable .js output`);
+      assert.ok(existsSync(outputTargetForPath(path)), `${slug} missing script ${path}`);
+    }
+    assert.match(html, /id="help-toggle"[^>]*hidden/);
+    const helpForm = [...html.matchAll(/<form\b([^>]*)>([\s\S]*?)<\/form>/gi)].find((match) => attributes(match[1]).id === 'site-help-form');
+    assert.ok(helpForm);
+    assert.ok(!attributes(helpForm[1]).action, 'local guide must not post questions');
+    assert.ok(startTags(helpForm[2], 'input').every(({attrs}) => !attrs.name), 'questions must not become native form data');
+  }
+  const assistant = await readFile(join(publicRoot, 'assets', 'site-assistant.js'), 'utf8');
+  assert.doesNotMatch(assistant, /\bfetch\s*\(|XMLHttpRequest|sendBeacon|WebSocket|\beval\s*\(/);
+  assert.doesNotMatch(assistant, /^import\s|^export\s/m);
+  assert.match(assistant, /answerWebsiteQuestion/);
+});
+
+test('article breadcrumbs end in the article title, with contents and complete list order', () => {
+  for (const post of publishedBlogPosts) {
+    const html = htmlBySlug.get(post.slug);
+    const document = JSON.parse([...html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)].find((match) => attributes(match[1]).type === 'application/ld+json')[2]);
+    const breadcrumb = document['@graph'].find((item) => item['@type'] === 'BreadcrumbList');
+    assert.equal(breadcrumb.itemListElement.at(-1).name, post.h1);
+    assert.ok(html.includes(`<span aria-current="page">${escapeForTest(post.h1)}</span>`), 'visible breadcrumb must name the article');
+    assert.match(html, /aria-label="In this article"/);
+    for (const section of post.sections.filter((section) => section.paragraphsAfterBullets)) {
+      assert.ok(html.indexOf(escapeForTest(section.bullets.at(-1))) < html.indexOf(escapeForTest(section.paragraphsAfterBullets[0])));
+    }
+  }
+});
+function escapeForTest(value) {
+  return value.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#39;');
+}
+
+test('editorial redesign preserves key content, semantic headings, and navigation fallbacks', () => {
+  const home = htmlBySlug.get('/');
+  for (const phrase of ['Wajeeh Bakhsh', 'Atif Muhammad', 'Northwest Indiana', 'No appointment booked', site.launch.label]) {
+    assert.ok(home.includes(phrase), `homepage must retain ${phrase}`);
+  }
+  for (const [slug, html] of htmlBySlug) {
+    assert.equal(startTags(html, 'h1').length, 1, `${slug} must have one H1`);
+    const ids = [...html.matchAll(/\bid="([^"]+)"/g)].map((match) => match[1]);
+    assert.equal(new Set(ids).size, ids.length, `${slug} duplicate IDs`);
+    if (slug !== '/founding-patients/') assert.match(html, /<noscript><nav[^>]*aria-label="Navigation without JavaScript"/);
+  }
+});
+
+test('all CSS assets and self-hosted fonts resolve without third-party runtime calls', async () => {
+  for (const name of ['site.css', 'site-design.css']) {
+    const css = await readFile(join(publicRoot, 'assets', name), 'utf8');
+    for (const [, raw] of css.matchAll(/url\(\s*['"]?([^'"\s)]+)['"]?\s*\)/g)) {
+      const url = new URL(raw, `${site.canonicalUrl}/assets/${name}`);
+      assert.equal(url.origin, site.canonicalUrl, `${name} should not load external assets`);
+      assert.ok(existsSync(outputTargetForPath(url.pathname)), `${name}: missing ${raw}`);
+    }
+  }
+  for (const name of ['instrument-serif-license.txt', 'manrope-license.txt']) {
+    assert.ok(existsSync(join(publicRoot, 'assets', 'fonts', name)), `font license ${name}`);
+  }
 });

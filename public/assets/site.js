@@ -19,7 +19,7 @@
 
     nav.querySelectorAll("a[href]").forEach((link) => {
       const linkPath = normalizePath(link.href);
-      const isCurrent = Boolean(linkPath && linkPath === currentPath);
+      const isCurrent = Boolean(linkPath && (linkPath === currentPath || (linkPath === "/blog/" && currentPath.startsWith("/blog/"))));
 
       if (isCurrent) {
         link.setAttribute("aria-current", "page");
@@ -33,6 +33,7 @@
     const toggle = document.querySelector(".nav-toggle");
     const nav = document.querySelector(".site-nav");
     if (!toggle || !nav) return;
+    const careMenu = nav.querySelector('.care-navigation details');
 
     if (!nav.id) nav.id = "primary-navigation";
     toggle.setAttribute("aria-controls", nav.id);
@@ -59,6 +60,7 @@
     });
 
     document.addEventListener("click", (event) => {
+      if (careMenu?.open && !careMenu.contains(event.target)) careMenu.open = false;
       if (
         toggle.getAttribute("aria-expanded") === "true" &&
         !nav.contains(event.target) &&
@@ -69,6 +71,11 @@
     });
 
     document.addEventListener("keydown", (event) => {
+      if (event.key === 'Escape' && careMenu?.open) {
+        careMenu.open = false;
+        careMenu.querySelector('summary').focus();
+        return;
+      }
       if (event.key === "Escape" && toggle.getAttribute("aria-expanded") === "true") {
         setOpen(false, true);
       }

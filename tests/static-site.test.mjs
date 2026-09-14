@@ -599,6 +599,17 @@ test('editorial redesign preserves key content, semantic headings, and navigatio
   }
 });
 
+test('homepage replaces the generic introduction with one physician section immediately after the hero', () => {
+  const home = htmlBySlug.get('/');
+  const sectionLabels = [...home.matchAll(/<section\b[^>]*aria-labelledby="([^"]+)"/g)].map((match) => match[1]);
+  assert.deepEqual(sectionLabels.slice(0, 3), ['page-title', 'physician-heading', 'care-heading']);
+  assert.equal(sectionLabels.filter((label) => label === 'physician-heading').length, 1);
+  assert.doesNotMatch(home, /Your health is personal|Your care should be, too|class="section introduction-section"/);
+  assert.match(home, /class="physician-section" id="apex-approach"/);
+  assert.match(home, /Physician-led\.<br>Person by person\./);
+  assert.match(home, /href="\/about\/">Our approach to care/);
+});
+
 test('homepage leads with medical expertise and keeps launch actions readable on small screens', async () => {
   const home = htmlBySlug.get('/');
   assert.match(home, /<h1 id="page-title">Medical expertise\. <em>Focused on your goals\.<\/em><\/h1>/);

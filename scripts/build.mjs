@@ -523,24 +523,20 @@ function renderBlogIndex(page) {
 
 function renderHome(page) {
   const editorial = page.editorial;
-  const intro = editorial.introduction;
   const care = page.sections.find((section) => section.type === 'cards');
   const local = page.sections.find((section) => section.type === 'serviceArea');
   const latest = publishedBlogPosts[0];
   const multiline = (text) => escapeHtml(text).replaceAll('\n', '<br>');
   return `<main id="main-content" class="page" tabindex="-1">
     ${renderHero('home', page)}
-    <section class="section introduction-section" aria-labelledby="apex-approach"><div class="container introduction-grid">
-      <p class="eyebrow">${escapeHtml(intro.eyebrow)}</p><div><h2 id="apex-approach">${escapeHtml(intro.heading)}</h2><div class="introduction-copy"><p>${escapeHtml(intro.body)}</p><p class="quiet-note">${escapeHtml(intro.note)}</p><a class="text-link" href="/about/">Meet Apex <span aria-hidden="true">↗</span></a></div></div>
+    <section class="physician-section" id="apex-approach" aria-labelledby="physician-heading"><div class="physician-image">${imageMarkup(imageCatalog.architectural)}</div><div class="physician-content">
+      <p class="eyebrow">The people behind the practice</p><h2 id="physician-heading">${multiline(editorial.physicianHeading)}</h2><p>${escapeHtml(editorial.physicianBody)}</p>
+      <ul class="physician-names"><li>Wajeeh Bakhsh<span>MD</span></li><li>Atif Muhammad<span>MD</span></li></ul>
+      <a class="text-link" href="/about/">Our approach to care <span aria-hidden="true">↗</span></a>
     </div></section>
     <section class="section home-care-section" aria-labelledby="care-heading"><div class="container">
       <div class="section-heading heading-with-aside"><div><p class="eyebrow">Three areas of care</p><h2 id="care-heading">${multiline(editorial.careHeading)}</h2></div><p>Individual evaluation comes first.<br>Treatment is a clinical decision,<br>never a one-size-fits-all promise.</p></div>
       ${careCardsMarkup(care.cards)}
-    </div></section>
-    <section class="physician-section" aria-labelledby="physician-heading"><div class="physician-image">${imageMarkup(imageCatalog.architectural)}</div><div class="physician-content">
-      <p class="eyebrow">The people behind the practice</p><h2 id="physician-heading">${multiline(editorial.physicianHeading)}</h2><p>${escapeHtml(editorial.physicianBody)}</p>
-      <ul class="physician-names"><li>Wajeeh Bakhsh<span>MD</span></li><li>Atif Muhammad<span>MD</span></li></ul>
-      <a class="text-link" href="/about/">Our approach to care <span aria-hidden="true">↗</span></a>
     </div></section>
     <section class="section home-process" aria-labelledby="process-heading"><div class="container">
       <div class="section-heading heading-with-aside"><div><p class="eyebrow">Your next step</p><h2 id="process-heading">${multiline(editorial.processHeading)}</h2></div><a class="text-link" href="/how-it-works/">How it works <span aria-hidden="true">↗</span></a></div>

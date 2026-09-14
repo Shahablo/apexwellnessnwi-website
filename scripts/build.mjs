@@ -481,8 +481,8 @@ function renderHero(pageKey, page) {
   if (pageKey === 'home') return `<section class="signature-hero" aria-labelledby="page-title">
     <div class="signature-image">${imageMarkup(imageCatalog.shoreline, { hero: true })}</div>
     <div class="container signature-content"><p class="eyebrow">Physician-led wellness · Northwest Indiana</p>
-      <h1 id="page-title">A thoughtful<br>approach to<br><em>feeling well.</em></h1>
-      <div class="signature-bottom"><div><p>Weight, metabolic, and hormone care.<br>Built around the person. Built around you.</p><div class="hero-actions">${buttonMarkup(site.cta)}<a class="hero-explore" href="#care-areas">Discover our approach <span aria-hidden="true">↗</span></a></div></div><p class="signature-launch"><span class="launch-dot" aria-hidden="true"></span>Planned launch<br><strong>${escapeHtml(site.launch.label)}</strong></p></div>
+      <h1 id="page-title">${escapeHtml(page.headlineLead)} <em>${escapeHtml(page.headlineEmphasis)}</em></h1>
+      <div class="signature-bottom"><div><p>Weight, metabolic, and hormone care.<br>Built around your health history and the goals that matter to you.</p><div class="hero-actions">${buttonMarkup(site.cta)}<a class="hero-explore" href="#care-areas">Discover our approach <span aria-hidden="true">↗</span></a></div></div><p class="signature-launch"><span class="launch-dot" aria-hidden="true"></span>Planned launch<br><strong>${escapeHtml(site.launch.label)}</strong><span class="signature-launch-note">Coming soon · Subject to readiness</span></p></div>
     </div>
   </section>`;
   const image = imageForPage(pageKey, page);
@@ -751,7 +751,7 @@ function renderDocument(pageKey, page, jsonLd, { noIndex = false, mainOverride =
 </head>
 <body class="page-${escapeHtml(pageKey)}${page.landing ? ' landing-page' : ''}">
   <a class="skip-link" href="#main-content">Skip to main content</a>
-  <div class="announcement" role="status">${escapeHtml(site.announcement)} <a href="${page.landing ? "#consultation-request" : escapeHtml(site.cta.href)}">${escapeHtml(site.cta.label)}</a></div>
+  <div class="announcement" role="status"><span class="announcement-copy">${escapeHtml(site.announcement)}</span> <a class="announcement-cta" href="${page.landing ? "#consultation-request" : escapeHtml(site.cta.href)}">${escapeHtml(site.cta.label)} <span aria-hidden="true">↗</span></a></div>
   ${page.landing ? renderLandingNavigation() : renderNavigation(page)}
   ${mainOverride || renderMain(pageKey, page)}
   ${renderFooter(page)}

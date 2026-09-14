@@ -303,3 +303,51 @@ body{overflow-x:clip}
   .launch-prompt h2{font-size:1.65rem;line-height:1.1;margin:.4rem 0}.launch-prompt .eyebrow{font-size:.64rem;margin-bottom:.5rem}.launch-prompt p:not(.eyebrow){font-size:.77rem;line-height:1.55}.launch-prompt .button{min-height:2.75rem;padding:.65rem 1rem}
 }
 @media(forced-colors:active){.signature-hero::before{display:none}.signature-content{background:Canvas;color:CanvasText}.signature-content h1,.signature-content h1 em,.signature-content p,.hero-explore{color:CanvasText}.signature-bottom .button{background:ButtonFace;color:ButtonText;border:1px solid ButtonText}.physician-section,.team-section{background:Canvas;color:CanvasText}.physician-content h2,.physician-content p,.physician-content .text-link{color:CanvasText}}
+
+/* Readable launch information and confident, goal-focused hero. */
+.announcement{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:.75rem 1.5rem;padding:.9rem var(--gutter);font-size:1.0625rem;font-weight:600;line-height:1.6;letter-spacing:.015em}
+.announcement-copy{max-width:48ch;text-wrap:balance}
+.announcement .announcement-cta{display:inline-flex;align-items:center;justify-content:center;gap:1rem;min-height:3rem;margin:0;padding:.65rem 1.2rem;border:1px solid #f6f4ed;background:#f6f4ed;color:#183d36;font-size:1rem;font-weight:700;line-height:1.5;text-decoration:none}
+.announcement .announcement-cta:hover{background:#e4e6d4;border-color:#e4e6d4;color:#183d36}
+.announcement a:focus-visible,.signature-content a:focus-visible{outline:3px solid #fff;outline-offset:5px}
+.signature-content>.eyebrow{font-size:1.125rem;line-height:1.7;letter-spacing:.08em;max-width:none;color:#f6f4ed;text-transform:none}
+.signature-content h1{max-width:17ch;font-size:clamp(3.5rem,7.2vw,8rem);line-height:1.04;margin:1.25rem 0 2.5rem;overflow-wrap:break-word}
+.signature-content h1 em{display:block}
+.signature-bottom{align-items:flex-end;flex-wrap:wrap;gap:2rem 3rem}
+.signature-bottom>div{flex:1 1 30rem;min-width:0}
+.signature-bottom p{font-size:1.1875rem;line-height:1.8}
+.signature-bottom .button,.hero-explore{font-size:1.0625rem;min-height:3.5rem}
+.signature-bottom .signature-launch{display:block;flex:0 1 auto;max-width:100%;font-size:1.0625rem;line-height:1.65;letter-spacing:.025em;text-transform:none;padding:1.15rem 1.5rem;background:#183d36;border:1px solid #7f9789;border-left:3px solid #ede9ca;margin:0}
+.signature-launch strong{display:block;font-size:1.5rem;font-weight:650;line-height:1.4;letter-spacing:0;margin-top:.2rem}
+.signature-launch-note{display:block;font-size:1rem;line-height:1.6;letter-spacing:0;margin-top:.5rem;color:#f6f4ed}
+.launch-dot{width:.6rem;height:.6rem}
+.signature-image figure::before{background:linear-gradient(90deg,rgba(13,35,28,.85),rgba(13,35,28,.58)),linear-gradient(0deg,rgba(13,35,28,.35),transparent 65%)}
+.site-nav .nav-cta,.nav-cta{font-size:1rem;min-height:3rem}
+.launch-section .eyebrow,.launch-prompt .eyebrow{font-size:1rem;line-height:1.65;letter-spacing:.045em}
+.launch-section .button,.launch-prompt .button{font-size:1.0625rem;min-height:3.25rem}
+.launch-section-copy>.quiet-note,.launch-prompt p:not(.eyebrow){font-size:1rem;line-height:1.7}
+.launch-prompt{max-height:calc(100dvh - 7rem);overflow-y:auto}
+@media(max-width:48rem){
+  .signature-content{padding-block:3rem}
+  .signature-content>.eyebrow{font-size:1.0625rem;max-width:35ch;letter-spacing:.035em}
+  .signature-content h1{font-size:clamp(3.25rem,9vw,5.5rem);max-width:17ch;line-height:1.05}
+  .signature-bottom{align-items:stretch;gap:1.75rem}
+  .signature-bottom>div{flex-basis:100%}
+  .signature-bottom p{font-size:1.125rem}
+  .signature-bottom .signature-launch{width:100%;padding:1rem 1.2rem}
+  .announcement{font-size:1rem;padding:.9rem 1.25rem;gap:.7rem}
+}
+@media(max-width:30rem){
+  .announcement-copy{flex-basis:100%}
+  .announcement .announcement-cta{width:100%;max-width:22rem}
+  .signature-content h1{font-size:clamp(2.8rem,11vw,3.75rem);line-height:1.08}
+  .signature-bottom .hero-actions{align-items:stretch}
+  .signature-bottom .button{justify-content:space-between}
+  .signature-bottom .button::after{margin-left:.8rem}
+}
+@media(forced-colors:active){
+  .announcement{background:Canvas;color:CanvasText}
+  .announcement .announcement-cta,.signature-bottom .signature-launch{background:Canvas;color:CanvasText;border:1px solid CanvasText}
+  .signature-launch-note{color:CanvasText}
+  .announcement a:focus-visible,.signature-content a:focus-visible{outline-color:Highlight}
+}

@@ -76,7 +76,9 @@ export const pages = Object.freeze({
     description:
       'Request future contact about opening-month consultations for planned physician-managed weight, metabolic, and hormone care in Northwest Indiana.',
     eyebrow: 'Planned launch · November 1, 2026 · Northwest Indiana',
-    h1: 'A thoughtful approach to feeling well.',
+    h1: 'Medical expertise. Focused on your goals.',
+    headlineLead: 'Medical expertise.',
+    headlineEmphasis: 'Focused on your goals.',
     intro:
       'Thoughtful weight, metabolic, and hormone care for adults in Northwest Indiana. Led by Wajeeh Bakhsh, MD, and Atif Muhammad, MD, Apex is preparing to open with an individualized approach—not a one-size-fits-all prescription.',
     cta: priorityListCta,

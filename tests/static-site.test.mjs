@@ -599,6 +599,24 @@ test('editorial redesign preserves key content, semantic headings, and navigatio
   }
 });
 
+test('homepage leads with medical expertise and keeps launch actions readable on small screens', async () => {
+  const home = htmlBySlug.get('/');
+  assert.match(home, /<h1 id="page-title">Medical expertise\. <em>Focused on your goals\.<\/em><\/h1>/);
+  assert.doesNotMatch(home, /A thoughtful(?:<br>|\s)+approach to/);
+  assert.match(home, /class="signature-launch-note">Coming soon · Subject to readiness/);
+  for (const [slug, html] of htmlBySlug) {
+    assert.match(html, /class="announcement-copy">Planned launch:/, `${slug} retains planned status`);
+    assert.match(html, /class="announcement-cta" href="(?:\/founding-patients\/|#consultation-request)">Join the Launch List/, `${slug} retains a working launch-list action`);
+  }
+  const css = await readFile(join(publicRoot, 'assets', 'site-design.css'), 'utf8');
+  const readability = css.split('/* Readable launch information and confident, goal-focused hero. */')[1];
+  assert.ok(readability, 'readability rules must exist after legacy responsive rules');
+  assert.match(readability, /\.signature-content>\.eyebrow\{font-size:1\.125rem/);
+  assert.match(readability, /\.signature-bottom \.signature-launch\{display:block/);
+  assert.doesNotMatch(readability, /\.signature-launch\{[^}]*display:none/);
+  assert.match(readability, /\.announcement \.announcement-cta\{[^}]*min-height:3rem/);
+});
+
 test('all CSS assets and self-hosted fonts resolve without third-party runtime calls', async () => {
   for (const name of ['site.css', 'site-design.css']) {
     const css = await readFile(join(publicRoot, 'assets', name), 'utf8');

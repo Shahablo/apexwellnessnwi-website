@@ -88,12 +88,6 @@ export const pages = Object.freeze({
     },
     ctaNote: 'Opening updates + future consultation availability · Free to join · No appointment booked',
     editorial: {
-      introduction: {
-        eyebrow: 'A different kind of starting point',
-        heading: 'Your health is personal. Your care should be, too.',
-        body: 'Apex Wellness is preparing a physician-led practice for adults in Northwest Indiana. Our focus is weight, metabolic health, and hormone care—considered together with your history, your goals, and the life you want to live.',
-        note: 'Thoughtful evaluation. Clear choices. A plan built around you.'
-      },
       careHeading: 'Focused care.\nA fuller perspective.',
       physicianHeading: 'Physician-led.\nPerson by person.',
       physicianBody: 'Wajeeh Bakhsh, MD, and Atif Muhammad, MD, are the physicians behind Apex. We are building a practice around careful evaluation, clear conversations, and responsible treatment decisions.',

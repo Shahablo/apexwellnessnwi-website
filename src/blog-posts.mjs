@@ -1,5 +1,138 @@
 export const blogPosts = Object.freeze([
   {
+    slug: "/blog/apex-wellness-coming-soon-merrillville/",
+    title: "Apex Wellness Coming Soon to Merrillville | Launch Update",
+    description:
+      "Apex Wellness is coming soon to 8560 Broadway in Merrillville. See what is confirmed, what is still pending, and how to join the free launch list.",
+    eyebrow: "Apex Wellness updates",
+    readTime: "4 minute read",
+    h1: "Apex Wellness Is Coming Soon to Merrillville: What to Know Before We Open",
+    intro:
+      "“Coming soon” is a short phrase that carries a surprising number of questions. Where will Apex Wellness be? When is the planned opening? What kind of clinic is it? Can you book now?\n\nHere is the plain answer. Apex Wellness is preparing to open a physician-led clinic at 8560 Broadway in Merrillville, Indiana. The current planned launch date is November 1, 2026, subject to readiness. The clinic is not open for appointments today, and the website is not booking visits or accepting payment.\n\nThis update separates what is confirmed from what is still being finalized. Less guesswork is better for everyone.",
+    excerpt:
+      "“Coming soon” can leave a lot unanswered. Here is the clear version of our location, planned care areas, launch timing, and what the Apex Wellness launch list actually does.",
+    published: "2026-09-15",
+    modified: "2026-09-15",
+    category: "Apex Wellness Updates",
+    author: "Apex Wellness Editorial Team",
+    heroImage: "shoreline",
+    relatedService: {
+      label: "See how care is planned to work",
+      href: "/how-it-works/",
+    },
+    sections: [
+      {
+        heading: "What is confirmed today",
+        paragraphs: [
+          "Apex Wellness is being developed for adults in Northwest Indiana. The current plans include:",
+        ],
+        bullets: [
+          "A Merrillville location at 8560 Broadway, Merrillville, IN 46410",
+          "A planned launch date of November 1, 2026, subject to readiness",
+          "Planned weight and metabolic care",
+          "Planned men’s hormone health care",
+          "Planned women’s midlife care",
+          "A planned cash-pay model, with final fees still to be published",
+          "A free launch list for opening updates and future consultation availability",
+        ],
+        paragraphsAfterBullets: [
+          "These are prelaunch plans, not active services. Apex is not currently providing medical care, confirming appointments, accepting payment, or promising that any particular treatment will be available to an individual.",
+          "You also do not need to be an athlete to belong here. Apex is intended for Northwest Indiana adults with different backgrounds, schedules, priorities, and definitions of feeling well.",
+        ],
+      },
+      {
+        heading: "What is still being finalized",
+        paragraphs: [
+          "Several details matter too much to fill with placeholders. Before scheduling opens, Apex still needs to publish verified information about:",
+        ],
+        bullets: [
+          "Appointment and clinician availability",
+          "Office hours and response times",
+          "Public contact channels",
+          "Visit arrangements",
+          "Final fees, payment methods, and what each fee includes",
+          "Parking and physical-access details",
+          "Booking, cancellation, and refund terms",
+        ],
+        paragraphsAfterBullets: [
+          "Until those details are confirmed, “Coming soon” means exactly that. The address does not mean the clinic is open for visits, and November 1 remains a planned date rather than a guarantee of appointment availability.",
+          "A placeholder price might fill a box. It does not help anyone make a real budget. We will publish the practical details when they are ready to be relied upon.",
+        ],
+      },
+      {
+        heading: "What the launch list does",
+        paragraphs: [
+          "The Apex Wellness launch list is open now. Joining is free and requires only your name and email address. Apex may contact you when verified opening information and future consultation availability are ready.",
+          "Joining the list does not:",
+        ],
+        bullets: [
+          "Book or reserve an appointment",
+          "Guarantee priority access",
+          "Enroll you in treatment",
+          "Establish a clinician-patient relationship",
+          "Guarantee acceptance, treatment, or a prescription",
+          "Require a deposit or other payment",
+        ],
+        paragraphsAfterBullets: [
+          "Think of it as a notification list, not a reservation line.",
+          "The form is also not a medical intake form. Please do not submit symptoms, diagnoses, medications, laboratory results, insurance details, or other sensitive medical information.",
+        ],
+      },
+      {
+        heading: "What you can review before scheduling opens",
+        paragraphs: [
+          "You do not have to wait for opening day to learn how Apex is being planned. The website currently explains:",
+        ],
+        bullets: [
+          "The three planned care areas",
+          "How the care process is intended to work",
+          "The current pricing and prelaunch status",
+          "Answers to common opening, location, and availability questions",
+          "The people and motivations behind Apex Wellness",
+        ],
+        paragraphsAfterBullets: [
+          "Those pages distinguish plans from services that are available today. They will be updated as operating details are confirmed.",
+        ],
+      },
+      {
+        heading: "Built for Northwest Indiana",
+        paragraphs: [
+          "Apex Wellness is preparing to serve adults in Merrillville and surrounding Northwest Indiana communities, including Crown Point, Schererville, Munster, Dyer, St. John, Highland, Hobart, and nearby areas.",
+          "Local care should account for real commutes, workdays, family responsibilities, and the fact that most people have better things to do than solve a website scavenger hunt. Clear location, pricing, scheduling, and access information will be published before appointments become available.",
+        ],
+      },
+      {
+        heading: "What happens next",
+        paragraphs: [
+          "As verified details are finalized, the Apex Wellness website will be updated with current opening information, pricing, policies, and consultation availability.",
+          "If you would like those updates by email, join the free launch list. If you would rather check back on your own, the homepage and FAQ will continue to show the current prelaunch status.",
+          "We would rather publish a clear “not yet” than a confident answer that has not earned that confidence. Apex Wellness is coming soon to Merrillville, and we will keep the details as straightforward as the sign.",
+        ],
+      },
+    ],
+    sources: [
+      {
+        label: "Apex Wellness: Current prelaunch information",
+        href: "https://apexwellnessnwi.com/",
+      },
+      {
+        label: "Apex Wellness: Frequently asked questions",
+        href: "https://apexwellnessnwi.com/faq/",
+      },
+      {
+        label: "Apex Wellness: Pricing and prelaunch status",
+        href: "https://apexwellnessnwi.com/pricing/",
+      },
+      {
+        label: "Apex Wellness: Free launch list",
+        href: "https://apexwellnessnwi.com/founding-patients/",
+      },
+    ],
+    disclaimerHeading: "A quick launch note",
+    disclaimer:
+      "This article describes the Apex Wellness prelaunch status as of September 15, 2026. Plans, timing, pricing, availability, and operating details may change. Apex is not currently booking appointments, accepting payment, or providing medical care through this website.",
+  },
+  {
     slug: "/blog/medical-weight-management-what-it-means/",
     title: "Medical Weight Management in Northwest Indiana | Apex",
     description:

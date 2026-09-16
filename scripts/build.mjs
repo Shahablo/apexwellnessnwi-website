@@ -569,6 +569,7 @@ function renderBlogPost(page) {
     </section>`;
   }).join("\n");
   const disclaimer = page.disclaimer || "This article is for general education and is not medical advice, diagnosis, or treatment. Talk with a qualified healthcare professional who knows your circumstances before changing your care. For a medical emergency, call 911 or go to the nearest emergency department.";
+  const disclaimerHeading = page.disclaimerHeading || "A quick medical note";
 
   return `<main id="main-content" class="page" tabindex="-1">
     <article class="article-shell">
@@ -583,7 +584,7 @@ function renderBlogPost(page) {
       <div class="article-body">
         <nav class="article-contents" aria-label="In this article"><h2>In this article</h2><ul>${page.sections.map((section, index) => `<li><a href="#${identifier(section.heading)}-${index + 1}">${escapeHtml(section.heading)}</a></li>`).join('')}</ul></nav>
         ${articleSections}
-        <aside class="medical-note" aria-labelledby="medical-disclaimer"><h2 id="medical-disclaimer">A quick medical note</h2><p>${escapeHtml(disclaimer)}</p></aside>
+        <aside class="medical-note" aria-labelledby="medical-disclaimer"><h2 id="medical-disclaimer">${escapeHtml(disclaimerHeading)}</h2><p>${escapeHtml(disclaimer)}</p></aside>
         <section class="article-sources" aria-labelledby="sources-reviewed"><h2 id="sources-reviewed">Sources reviewed</h2><ul>${sourceList}</ul><p class="editorial-note">Published by Apex Wellness for general education. No individual physician medical review is claimed unless a reviewer is explicitly named. Sources and publication dates are provided so you can evaluate the information; your own care requires a clinical conversation.</p></section>
         <section class="article-cta" aria-labelledby="keep-exploring"><p class="eyebrow">Keep exploring</p><h2 id="keep-exploring">Useful information is a start. Individual care is the next step.</h2><p>Apex Wellness is preparing to open in Northwest Indiana. A consultation request is free and does not book an appointment, establish care, or guarantee treatment.</p><div class="button-row">${buttonMarkup(page.relatedService, true)}${buttonMarkup(site.cta)}</div></section>
       </div>

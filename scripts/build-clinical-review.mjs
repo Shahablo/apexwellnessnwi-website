@@ -50,6 +50,12 @@ function reviewerNames(assignment) {
   return assignment.reviewerIds.map((reviewerId) => clinicalReviewers[reviewerId].name);
 }
 
+function isReviewComplete(post, assignment) {
+  return assignment.status === "reviewed"
+    && assignment.reviewedOn
+    && assignment.contentHash === articleHash(post);
+}
+
 function markdownInline(value) {
   if (typeof value === "string") return value;
   if (!Array.isArray(value)) return String(value ?? "");
@@ -92,14 +98,19 @@ function reviewFileName(post) {
 function renderArticle(post) {
   const assignment = clinicalReviewAssignments[post.slug];
   const hash = articleHash(post);
+  const reviewComplete = isReviewComplete(post, assignment);
   const sources = post.sources
     .map((source) => `- [${source.label}](${source.href})`)
     .join("\n");
-  const status = post.status === "draft" ? "Draft, not public" : "Published article with a revised version pending review";
+  const status = post.status === "draft"
+    ? `${reviewComplete ? "Reviewed" : "Review-pending"} draft, not public`
+    : reviewComplete
+      ? "Published article with a reviewed revision prepared for deployment"
+      : "Published article with a revised version pending review";
 
   return `# ${post.h1}\n\n` +
-    `**Clinical-review status:** Pending. This file is prepared for review and is not evidence that review occurred.\n\n` +
-    `**Assigned reviewer${assignment.reviewerIds.length === 1 ? "" : "s"}:** ${reviewerNames(assignment).join(", ")}\n\n` +
+    `**Clinical-review status:** ${reviewComplete ? `Approved for this exact version on ${assignment.reviewedOn}` : "Pending. This file is prepared for review and is not evidence that review occurred."}\n\n` +
+    `**${reviewComplete ? "Reviewer" : "Assigned reviewer"}${assignment.reviewerIds.length === 1 ? "" : "s"}:** ${reviewerNames(assignment).join(", ")}\n\n` +
     `**Website path:** ${post.slug}\n\n` +
     `**Release status:** ${status}\n\n` +
     `**Exact article SHA-256:** \`${hash}\`\n\n` +
@@ -111,18 +122,25 @@ function renderArticle(post) {
     `## ${post.disclaimerHeading}\n\n${post.disclaimer}\n\n` +
     `## Sources\n\n${sources}\n\n` +
     `---\n\n` +
-    `To approve this exact version, record: “I, [reviewer name], reviewed **${post.h1}**, SHA-256 \`${hash}\`, and approve it for publication as medically accurate as of [date].” Requested corrections should be made before approval; any substantive edit creates a new hash and reopens review.\n`;
+    (reviewComplete
+      ? `Review is recorded for SHA-256 \`${hash}\` as of ${assignment.reviewedOn}. Any substantive edit creates a new hash and reopens review.\n`
+      : `To approve this exact version, record: “I, [reviewer name], reviewed **${post.h1}**, SHA-256 \`${hash}\`, and approve it for publication as medically accurate as of [date].” Requested corrections should be made before approval; any substantive edit creates a new hash and reopens review.\n`);
 }
 
 await mkdir(outputDirectory, { recursive: true });
 
 const indexRows = assignedPosts.map((post) => {
   const assignment = clinicalReviewAssignments[post.slug];
-  return `| [${post.h1}](./${reviewFileName(post)}) | ${reviewerNames(assignment).join(", ")} | \`${articleHash(post)}\` | Pending |`;
+  const status = isReviewComplete(post, assignment) ? `Approved ${assignment.reviewedOn}` : "Pending";
+  return `| [${post.h1}](./${reviewFileName(post)}) | ${reviewerNames(assignment).join(", ")} | \`${articleHash(post)}\` | ${status} |`;
 });
 
+const allReviewsComplete = assignedPosts.every(
+  (post) => isReviewComplete(post, clinicalReviewAssignments[post.slug]),
+);
+
 const index = `# Apex Wellness clinical article review packet\n\n` +
-  `**Status:** Prepared for physician review. No article in this packet should display a named medical-review credit until the assigned physician approves the exact hash below.\n\n` +
+  `**Status:** ${allReviewsComplete ? "Owner-confirmed physician review complete for every exact hash below." : "Prepared for physician review. No article in this packet should display a named medical-review credit until the assigned physician approves the exact hash below."}\n\n` +
   `**Prepared:** ${preparedAt}\n\n` +
   `## Assigned review\n\n` +
   `| Article | Assigned physician reviewer(s) | Exact SHA-256 | Status |\n` +
@@ -136,7 +154,7 @@ const index = `# Apex Wellness clinical article review packet\n\n` +
   `- Whether descriptions of Apex's planned care model are accurate\n` +
   `- Whether the writing is clear without implying diagnosis, a prescription, guaranteed eligibility, or guaranteed outcomes\n\n` +
   `## Publishing control\n\n` +
-  `The website source stores assignments as pending. A completed review must record the reviewer, review date, and exact article hash. The build rejects a reviewed article if later source edits change that hash. Visible review credit and structured-data review credit are generated from the same verified record.\n`;
+  `The website source stores each reviewer, review date, and exact article hash. The build rejects a reviewed article if later source edits change that hash. Visible review credit and structured-data review credit are generated from the same verified record.\n`;
 
 await writeFile(path.join(outputDirectory, "README.md"), index, "utf8");
 for (const post of assignedPosts) {

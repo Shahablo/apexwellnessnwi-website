@@ -5,6 +5,11 @@ import { fileURLToPath } from "node:url";
 
 import { pages, site } from "../src/content.mjs";
 import { blogPosts } from "../src/blog-posts.mjs";
+import {
+  clinicalReviewAssignments,
+  clinicalReviewers,
+  weightManagementCluster,
+} from "../src/editorial.mjs";
 
 const rootDirectory = fileURLToPath(new URL("../", import.meta.url));
 const publicDirectory = join(rootDirectory, "public");
@@ -18,6 +23,7 @@ const buildDate = process.env.SOURCE_DATE_EPOCH
 const publishedBlogPosts = blogPosts
   .filter((post) => post.published <= buildDate && post.status !== "draft")
   .sort((a, b) => b.published.localeCompare(a.published));
+const publishedBlogPostBySlug = new Map(publishedBlogPosts.map((post) => [post.slug, post]));
 
 const imageCatalog = Object.freeze({
   consultation: {
@@ -55,6 +61,33 @@ const imageCatalog = Object.freeze({
     width: 1577,
     height: 997,
     alt: "An adult patient discussing a weight and metabolic care plan.",
+    variants: [
+      "apex-weight-care-16x9.webp",
+      "apex-weight-care-4x3.webp",
+      "apex-weight-care-1x1.webp",
+    ],
+  },
+  glp1: {
+    file: "apex-glp1-plan.webp",
+    width: 1600,
+    height: 800,
+    alt: "An unbranded medication pen, water, notebook, and resistance band arranged for a gradual health plan.",
+    variants: [
+      "apex-glp1-plan-16x9.webp",
+      "apex-glp1-plan-4x3.webp",
+      "apex-glp1-plan-1x1.webp",
+    ],
+  },
+  plateau: {
+    file: "apex-plateau-dashboard.webp",
+    width: 1600,
+    height: 800,
+    alt: "A scale, measuring tape, notebook, and dumbbell representing several ways to track progress.",
+    variants: [
+      "apex-plateau-dashboard-16x9.webp",
+      "apex-plateau-dashboard-4x3.webp",
+      "apex-plateau-dashboard-1x1.webp",
+    ],
   },
   women: {
     file: "apex-womens-care.webp",
@@ -126,12 +159,37 @@ function imageForPage(pageKey, page) {
 }
 
 function formatDate(value) {
+  const normalized = /^\d{4}-\d{2}-\d{2}$/.test(value)
+    ? `${value}T12:00:00-05:00`
+    : value;
   return new Intl.DateTimeFormat("en-US", {
     year: "numeric",
     month: "long",
     day: "numeric",
-    timeZone: "UTC",
-  }).format(new Date(`${value}T00:00:00Z`));
+    timeZone: "America/Chicago",
+  }).format(new Date(normalized));
+}
+
+function dateTimeFor(page, field) {
+  return page[`${field}At`] || page[field];
+}
+
+function hashBlogPost(post) {
+  return createHash("sha256").update(JSON.stringify(post)).digest("hex");
+}
+
+function completedClinicalReview(page) {
+  const assignment = clinicalReviewAssignments[page.slug];
+  if (!assignment || assignment.status !== "reviewed") return null;
+  return {
+    ...assignment,
+    reviewers: assignment.reviewerIds.map((id) => clinicalReviewers[id]),
+  };
+}
+
+function articleImageUrls(image) {
+  const files = image.variants?.length ? image.variants : [image.file];
+  return files.map((file) => `${site.canonicalUrl}${assetUrl(`images/${file}`)}`);
 }
 
 function assetUrl(path) {
@@ -227,14 +285,27 @@ function pageJsonLd(page) {
 
   if (page.kind === "blogPost") {
     const heroImage = imageForPage("blog-post", page);
+    const review = completedClinicalReview(page);
+    if (review) {
+      graph.push(...review.reviewers.map((reviewer) => ({
+        "@type": "Person",
+        "@id": `${site.canonicalUrl}${reviewer.profileHref}`,
+        name: reviewer.name,
+        url: `${site.canonicalUrl}${reviewer.profileHref}`,
+        jobTitle: reviewer.role,
+        honorificSuffix: "MD",
+        memberOf: { "@id": `${site.canonicalUrl}/#organization` },
+        ...(reviewer.sameAs ? { sameAs: reviewer.sameAs } : {}),
+      })));
+    }
     graph.push({
       "@type": "BlogPosting",
       "@id": `${url}#article`,
       headline: page.h1,
       description: page.description,
-      image: `${site.canonicalUrl}${assetUrl(`images/${heroImage.file}`)}`,
-      datePublished: page.published,
-      dateModified: page.modified,
+      image: articleImageUrls(heroImage),
+      datePublished: dateTimeFor(page, "published"),
+      dateModified: dateTimeFor(page, "modified"),
       author: {
         "@type": "Organization",
         name: page.author,
@@ -244,6 +315,11 @@ function pageJsonLd(page) {
       mainEntityOfPage: { "@id": `${url}#webpage` },
       articleSection: page.category,
       inLanguage: "en-US",
+      ...(review ? {
+        reviewedBy: review.reviewers.map((reviewer) => ({
+          "@id": `${site.canonicalUrl}${reviewer.profileHref}`,
+        })),
+      } : {}),
     });
   }
 
@@ -288,6 +364,66 @@ function cardsMarkup(items, className = "cards") {
       ${item.href ? `<a href="${escapeHtml(item.href)}" aria-label="Learn more about ${escapeHtml(item.title)}">Learn more</a>` : ""}
     </article>`).join("\n")}
   </div>`;
+}
+
+function availableArticleGuides(slugs, currentSlug = null) {
+  return slugs
+    .filter((slug) => slug !== currentSlug)
+    .map((slug) => publishedBlogPostBySlug.get(slug))
+    .filter(Boolean);
+}
+
+function articleGuidesMarkup(slugs, { currentSlug = null } = {}) {
+  const posts = availableArticleGuides(slugs, currentSlug);
+  if (!posts.length) return "";
+
+  return `<div class="related-guide-list">
+    ${posts.map((post) => `<article class="related-guide">
+      <p class="article-kicker">${escapeHtml(post.category)}</p>
+      <h3><a href="${escapeHtml(post.slug)}">${escapeHtml(post.h1)}</a></h3>
+      <p>${escapeHtml(post.excerpt)}</p>
+      <a class="text-link" href="${escapeHtml(post.slug)}">Read the guide <span aria-hidden="true">↗</span></a>
+    </article>`).join("\n")}
+  </div>`;
+}
+
+function internalLinkIsAvailable(href) {
+  if (!href.startsWith("/blog/")) return true;
+  return publishedBlogPostBySlug.has(href);
+}
+
+function inlineArticleMarkup(value) {
+  if (!Array.isArray(value)) return escapeHtml(value);
+
+  return value.map((fragment) => {
+    if (typeof fragment === "string") return escapeHtml(fragment);
+    if (!fragment?.text || !fragment?.href) {
+      throw new Error("Article rich-text links need text and href.");
+    }
+    if (!internalLinkIsAvailable(fragment.href)) return escapeHtml(fragment.text);
+    return `<a href="${escapeHtml(fragment.href)}">${escapeHtml(fragment.text)}</a>`;
+  }).join("");
+}
+
+function articleParagraphsMarkup(paragraphs = []) {
+  return paragraphs.map((paragraph) => `<p>${inlineArticleMarkup(paragraph)}</p>`).join("\n");
+}
+
+function articleSectionMarkup(section, path) {
+  const id = `${identifier(section.heading)}-${path.join("-")}`;
+  const level = Math.min(path.length + 1, 6);
+  const headingTag = `h${level}`;
+  const subsections = (section.subsections || [])
+    .map((subsection, index) => articleSectionMarkup(subsection, [...path, index + 1]))
+    .join("\n");
+
+  return `<section aria-labelledby="${id}"${path.length > 1 ? ' class="article-subsection"' : ""}>
+    <${headingTag} id="${id}">${escapeHtml(section.heading)}</${headingTag}>
+    ${articleParagraphsMarkup(section.paragraphs)}
+    ${section.bullets ? `<ul>${section.bullets.map((item) => `<li>${inlineArticleMarkup(item)}</li>`).join("\n")}</ul>` : ""}
+    ${articleParagraphsMarkup(section.paragraphsAfterBullets)}
+    ${subsections}
+  </section>`;
 }
 
 function careCardsMarkup(items) {
@@ -441,6 +577,14 @@ function renderSection(section, index) {
         ${headingMarkup(section, id)}${cardsMarkup(section.items)}${section.note ? `<p class="section-narrow"><strong>Important:</strong> ${escapeHtml(section.note)}</p>` : ""}
       </div></section>`;
 
+    case "articleGuides": {
+      const guides = articleGuidesMarkup(section.articleSlugs || []);
+      if (!guides) return "";
+      return `<section class="section related-guides" aria-labelledby="${id}"><div class="container">
+        ${headingMarkup(section, id)}<p class="related-guides-intro">${escapeHtml(section.body)}</p>${guides}
+      </div></section>`;
+    }
+
     case "pricingPrinciples":
       return `<section class="section${alternatingClass}" aria-labelledby="${id}"><div class="container">
         ${headingMarkup(section, id)}${pricingMarkup(section.items)}
@@ -559,17 +703,24 @@ function renderBlogPost(page) {
   const image = imageForPage("blog-post", page);
   const introParagraphs = page.intro.split(/\n\s*\n/).map((paragraph) => `<p class="article-deck">${escapeHtml(paragraph)}</p>`).join("\n");
   const sourceList = page.sources.map((source) => `<li><a href="${escapeHtml(source.href)}">${escapeHtml(source.label)}</a></li>`).join("\n");
-  const articleSections = page.sections.map((section, index) => {
-    const id = `${identifier(section.heading)}-${index + 1}`;
-    return `<section aria-labelledby="${id}">
-      <h2 id="${id}">${escapeHtml(section.heading)}</h2>
-      ${(section.paragraphs || []).map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join("\n")}
-      ${section.bullets ? `<ul>${section.bullets.map((item) => `<li>${escapeHtml(item)}</li>`).join("\n")}</ul>` : ""}
-      ${(section.paragraphsAfterBullets || []).map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join("\n")}
-    </section>`;
-  }).join("\n");
+  const articleSections = page.sections.map((section, index) => articleSectionMarkup(section, [index + 1])).join("\n");
   const disclaimer = page.disclaimer || "This article is for general education and is not medical advice, diagnosis, or treatment. Talk with a qualified healthcare professional who knows your circumstances before changing your care. For a medical emergency, call 911 or go to the nearest emergency department.";
   const disclaimerHeading = page.disclaimerHeading || "A quick medical note";
+  const review = completedClinicalReview(page);
+  const reviewMarkup = review ? `<aside class="article-review" aria-label="Clinical review information">
+    <p class="eyebrow">Clinical review</p>
+    <p class="article-review-name">Reviewed for medical accuracy by ${review.reviewers.map((reviewer) => `<a href="${escapeHtml(reviewer.profileHref)}">${escapeHtml(reviewer.name)}</a>`).join(" and ")}</p>
+    <p>Exact-version review completed <time datetime="${escapeHtml(review.reviewedOn)}">${escapeHtml(formatDate(review.reviewedOn))}</time>.</p>
+  </aside>` : "";
+  const relatedGuides = articleGuidesMarkup(weightManagementCluster.articles, { currentSlug: page.slug });
+  const relatedMarkup = relatedGuides ? `<section class="article-related related-guides" aria-labelledby="related-guides-heading">
+    <p class="eyebrow">Keep learning</p>
+    <h2 id="related-guides-heading">Related weight-care guides</h2>
+    ${relatedGuides}
+  </section>` : "";
+  const editorialNote = review
+    ? `Written by ${page.author} and clinically reviewed by the named physician${review.reviewers.length > 1 ? "s" : ""} for the version dated ${formatDate(review.reviewedOn)}. Sources and dates are shown so you can evaluate the information; your own care requires a clinical conversation.`
+    : "Published by Apex Wellness for general education. No individual physician medical review is claimed unless a reviewer is explicitly named. Sources and publication dates are provided so you can evaluate the information; your own care requires a clinical conversation.";
 
   return `<main id="main-content" class="page" tabindex="-1">
     <article class="article-shell">
@@ -578,14 +729,16 @@ function renderBlogPost(page) {
         <p class="article-kicker">${escapeHtml(page.category)}</p>
         <h1 id="page-title">${escapeHtml(page.h1)}</h1>
         ${introParagraphs}
-        <p class="article-meta">By ${escapeHtml(page.author)} · <time datetime="${escapeHtml(page.published)}">Published ${escapeHtml(formatDate(page.published))}</time>${page.modified !== page.published ? ` · <time datetime="${escapeHtml(page.modified)}">Updated ${escapeHtml(formatDate(page.modified))}</time>` : ""}</p>
+        <p class="article-meta">Written by ${escapeHtml(page.author)} · <time datetime="${escapeHtml(dateTimeFor(page, "published"))}">Published ${escapeHtml(formatDate(page.published))}</time>${page.modified !== page.published ? ` · <time datetime="${escapeHtml(dateTimeFor(page, "modified"))}">Updated ${escapeHtml(formatDate(page.modified))}</time>` : ""}</p>
+        ${reviewMarkup}
         ${imageMarkup(image, { hero: true })}
       </header>
       <div class="article-body">
         <nav class="article-contents" aria-label="In this article"><h2>In this article</h2><ul>${page.sections.map((section, index) => `<li><a href="#${identifier(section.heading)}-${index + 1}">${escapeHtml(section.heading)}</a></li>`).join('')}</ul></nav>
         ${articleSections}
+        ${relatedMarkup}
         <aside class="medical-note" aria-labelledby="medical-disclaimer"><h2 id="medical-disclaimer">${escapeHtml(disclaimerHeading)}</h2><p>${escapeHtml(disclaimer)}</p></aside>
-        <section class="article-sources" aria-labelledby="sources-reviewed"><h2 id="sources-reviewed">Sources reviewed</h2><ul>${sourceList}</ul><p class="editorial-note">Published by Apex Wellness for general education. No individual physician medical review is claimed unless a reviewer is explicitly named. Sources and publication dates are provided so you can evaluate the information; your own care requires a clinical conversation.</p></section>
+        <section class="article-sources" aria-labelledby="sources-reviewed"><h2 id="sources-reviewed">Sources reviewed</h2><ul>${sourceList}</ul><p class="editorial-note">${escapeHtml(editorialNote)}</p><p class="editorial-note"><a href="/editorial-standards/">How Apex writes, reviews, updates, and corrects health information</a></p></section>
         <section class="article-cta" aria-labelledby="keep-exploring"><p class="eyebrow">Keep exploring</p><h2 id="keep-exploring">Useful information is a start. Individual care is the next step.</h2><p>Apex Wellness is preparing to open in Northwest Indiana. A consultation request is free and does not book an appointment, establish care, or guarantee treatment.</p><div class="button-row">${buttonMarkup(page.relatedService, true)}${buttonMarkup(site.cta)}</div></section>
       </div>
     </article>
@@ -734,8 +887,8 @@ function renderDocument(pageKey, page, jsonLd, { noIndex = false, mainOverride =
   <meta name="twitter:description" content="${escapeHtml(page.description)}">
   <meta name="twitter:image" content="${escapeHtml(socialImage)}">
   <meta name="twitter:image:alt" content="${escapeHtml(heroImage.alt)}">
-  ${page.kind === "blogPost" ? `<meta property="article:published_time" content="${escapeHtml(page.published)}">
-  <meta property="article:modified_time" content="${escapeHtml(page.modified)}">
+  ${page.kind === "blogPost" ? `<meta property="article:published_time" content="${escapeHtml(dateTimeFor(page, "published"))}">
+  <meta property="article:modified_time" content="${escapeHtml(dateTimeFor(page, "modified"))}">
   <meta property="article:section" content="${escapeHtml(page.category)}">` : ""}
   <link rel="alternate" type="application/rss+xml" title="Apex Wellness Blog" href="/blog/feed.xml">
   <link rel="stylesheet" href="${escapeHtml(assetUrl("site.css"))}">
@@ -884,8 +1037,26 @@ function buildRedirects() {
 }
 
 function buildSitemap() {
+  const newestPublishedDate = publishedBlogPosts
+    .flatMap((post) => [post.published, post.modified])
+    .sort()
+    .at(-1);
+  const newestClusterDate = availableArticleGuides(weightManagementCluster.articles)
+    .flatMap((post) => [post.published, post.modified])
+    .sort()
+    .at(-1);
+  const lastModifiedForPage = (page) => {
+    const ownDate = page.modified || site.contentUpdated;
+    if (page.slug === "/blog/" || page.slug === "/") {
+      return [ownDate, newestPublishedDate].filter(Boolean).sort().at(-1);
+    }
+    if (page.slug === weightManagementCluster.pillar) {
+      return [ownDate, newestClusterDate].filter(Boolean).sort().at(-1);
+    }
+    return ownDate;
+  };
   const entries = [...Object.values(pages), ...publishedBlogPosts]
-    .map((page) => `  <url><loc>${escapeXml(canonicalUrl(page.slug))}</loc><lastmod>${escapeXml(page.modified || site.contentUpdated)}</lastmod></url>`)
+    .map((page) => `  <url><loc>${escapeXml(canonicalUrl(page.slug))}</loc><lastmod>${escapeXml(lastModifiedForPage(page))}</lastmod></url>`)
     .join("\n");
   return `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
@@ -901,7 +1072,7 @@ function buildRssFeed() {
       <title>${escapeXml(post.h1)}</title>
       <link>${escapeXml(canonicalUrl(post.slug))}</link>
       <guid isPermaLink="true">${escapeXml(canonicalUrl(post.slug))}</guid>
-      <pubDate>${new Date(`${post.published}T12:00:00Z`).toUTCString()}</pubDate>
+      <pubDate>${new Date(post.publishedAt || `${post.published}T12:00:00-05:00`).toUTCString()}</pubDate>
       <description>${escapeXml(post.excerpt)}</description>
       <category>${escapeXml(post.category)}</category>
     </item>`)
@@ -947,6 +1118,8 @@ function validateContent() {
   const slugs = new Set();
   const titles = new Set();
   const descriptions = new Set();
+  const blogPostBySlug = new Map(blogPosts.map((post) => [post.slug, post]));
+  const isoDateTimeWithZone = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})$/;
 
   for (const [key, page] of Object.entries(pages)) {
     for (const field of ["slug", "title", "description", "eyebrow", "h1", "intro"]) {
@@ -974,6 +1147,11 @@ function validateContent() {
     if (!/^\d{4}-\d{2}-\d{2}$/.test(post.published) || !/^\d{4}-\d{2}-\d{2}$/.test(post.modified)) {
       throw new Error(`${key} must use YYYY-MM-DD publication dates.`);
     }
+    for (const field of ["publishedAt", "modifiedAt"]) {
+      if (post[field] && !isoDateTimeWithZone.test(post[field])) {
+        throw new Error(`${key}.${field} must be an ISO 8601 date-time with a timezone.`);
+      }
+    }
     if (!post.sections?.length) throw new Error(`${key} needs article sections.`);
     if (!post.sources?.length) throw new Error(`${key} needs reviewed sources.`);
     if (!post.relatedService?.href || !post.relatedService?.label) throw new Error(`${key} needs a related service link.`);
@@ -984,6 +1162,42 @@ function validateContent() {
     slugs.add(post.slug);
     titles.add(post.title);
     descriptions.add(post.description);
+  }
+
+  if (!pages["weight-management"] || pages["weight-management"].slug !== weightManagementCluster.pillar) {
+    throw new Error("The weight-management cluster pillar must match the weight-management page.");
+  }
+  for (const articleSlug of weightManagementCluster.articles) {
+    if (!blogPostBySlug.has(articleSlug)) {
+      throw new Error(`Weight-management cluster references an unknown article: ${articleSlug}`);
+    }
+  }
+
+  for (const [articleSlug, assignment] of Object.entries(clinicalReviewAssignments)) {
+    const post = blogPostBySlug.get(articleSlug);
+    if (!post) throw new Error(`Clinical review assignment references an unknown article: ${articleSlug}`);
+    if (!["pending", "reviewed"].includes(assignment.status)) {
+      throw new Error(`Clinical review assignment for ${articleSlug} has an unsupported status.`);
+    }
+    if (!assignment.reviewerIds?.length) {
+      throw new Error(`Clinical review assignment for ${articleSlug} needs at least one reviewer.`);
+    }
+    for (const reviewerId of assignment.reviewerIds) {
+      if (!clinicalReviewers[reviewerId]) {
+        throw new Error(`Clinical review assignment for ${articleSlug} references unknown reviewer ${reviewerId}.`);
+      }
+    }
+    if (assignment.status === "reviewed") {
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(assignment.reviewedOn || "")) {
+        throw new Error(`Completed clinical review for ${articleSlug} needs a YYYY-MM-DD review date.`);
+      }
+      if (!/^[a-f0-9]{64}$/.test(assignment.contentHash || "")) {
+        throw new Error(`Completed clinical review for ${articleSlug} needs a SHA-256 content hash.`);
+      }
+      if (assignment.contentHash !== hashBlogPost(post)) {
+        throw new Error(`Clinical review for ${articleSlug} does not match the current article version.`);
+      }
+    }
   }
 }
 

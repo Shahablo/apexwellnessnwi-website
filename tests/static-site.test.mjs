@@ -7,6 +7,11 @@ import test from "node:test";
 
 import { pages, site } from "../src/content.mjs";
 import { blogPosts } from "../src/blog-posts.mjs";
+import {
+  clinicalReviewAssignments,
+  clinicalReviewers,
+  weightManagementCluster,
+} from "../src/editorial.mjs";
 
 const projectRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const publicRoot = join(projectRoot, "public");
@@ -514,7 +519,8 @@ test("blog pages expose article semantics, dates, sources, and a valid RSS feed"
     const html = htmlBySlug.get(post.slug);
     assert.ok(html, `${post.slug} is missing`);
     assert.match(html, /<article\b[^>]*class=["'][^"']*article-shell/i, `${post.slug} needs an article landmark`);
-    assert.match(html, new RegExp(`<time\\b[^>]*datetime=["']${post.published}["']`, "i"), `${post.slug} needs a visible publication date`);
+    const publishedDateTime = post.publishedAt || post.published;
+    assert.match(html, new RegExp(`<time\\b[^>]*datetime=["']${publishedDateTime.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}["']`, "i"), `${post.slug} needs a visible publication date`);
     assert.match(html, /Sources reviewed/i, `${post.slug} needs a visible source list`);
 
     const jsonLdScripts = [...html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)]
@@ -523,9 +529,10 @@ test("blog pages expose article semantics, dates, sources, and a valid RSS feed"
     const graph = jsonLdScripts.flatMap((document) => document["@graph"] || []);
     const article = graph.find((node) => node["@type"] === "BlogPosting");
     assert.ok(article, `${post.slug} needs BlogPosting JSON-LD`);
-    assert.equal(article.datePublished, post.published);
-    assert.equal(article.dateModified, post.modified);
+    assert.equal(article.datePublished, post.publishedAt || post.published);
+    assert.equal(article.dateModified, post.modifiedAt || post.modified);
     assert.equal(article.headline, post.h1);
+    assert.ok(Array.isArray(article.image) && article.image.length >= 1, `${post.slug} needs article image metadata`);
   }
 
   const feedPath = join(publicRoot, "blog", "feed.xml");
@@ -535,6 +542,73 @@ test("blog pages expose article semantics, dates, sources, and a valid RSS feed"
   for (const post of publishedBlogPosts) {
     assert.match(feed, new RegExp(canonicalFor(post).replace(/[.*+?^${}()|[\]\\]/g, "\\$&")), `RSS feed must include ${post.slug}`);
   }
+});
+
+test("weight-management guides form a bidirectional cluster without leaking drafts", () => {
+  const serviceHtml = htmlBySlug.get(weightManagementCluster.pillar);
+  const publishedClusterPosts = publishedBlogPosts.filter((post) => weightManagementCluster.articles.includes(post.slug));
+  const unpublishedClusterPosts = unpublishedBlogPosts.filter((post) => weightManagementCluster.articles.includes(post.slug));
+
+  for (const post of publishedClusterPosts) {
+    assert.match(serviceHtml, new RegExp(`href=["']${post.slug.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}["']`), `service page must link ${post.slug}`);
+    const articleHtml = htmlBySlug.get(post.slug);
+    assert.match(articleHtml, /href=["']\/weight-management\/["']/i, `${post.slug} must link the service pillar`);
+    for (const peer of publishedClusterPosts.filter((candidate) => candidate.slug !== post.slug)) {
+      assert.match(articleHtml, new RegExp(`href=["']${peer.slug.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}["']`), `${post.slug} must link published peer ${peer.slug}`);
+    }
+  }
+
+  for (const post of unpublishedClusterPosts) {
+    assert.doesNotMatch(serviceHtml, new RegExp(`href=["']${post.slug.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}["']`), `service page must not link draft ${post.slug}`);
+    for (const published of publishedClusterPosts) {
+      assert.doesNotMatch(htmlBySlug.get(published.slug), new RegExp(`href=["']${post.slug.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}["']`), `${published.slug} must not link draft ${post.slug}`);
+    }
+  }
+});
+
+test("clinical review credits are truthful, linked, and version-gated", () => {
+  const postsBySlug = new Map(blogPosts.map((post) => [post.slug, post]));
+  for (const [slug, assignment] of Object.entries(clinicalReviewAssignments)) {
+    assert.ok(postsBySlug.has(slug), `${slug} review assignment needs an article`);
+    assert.ok(assignment.reviewerIds.length > 0, `${slug} review assignment needs a reviewer`);
+    for (const reviewerId of assignment.reviewerIds) assert.ok(clinicalReviewers[reviewerId], `${slug} uses unknown reviewer ${reviewerId}`);
+
+    const html = htmlBySlug.get(slug);
+    if (!html) continue;
+    const graph = JSON.parse([...html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)].find((match) => attributes(match[1]).type === "application/ld+json")[2])["@graph"];
+    const article = graph.find((node) => node["@type"] === "BlogPosting");
+    if (assignment.status === "pending") {
+      assert.ok(!article.reviewedBy, `${slug} must not claim a pending review in schema`);
+      assert.doesNotMatch(html, /Reviewed for medical accuracy by/i, `${slug} must not claim a pending visible review`);
+    } else {
+      for (const reviewerId of assignment.reviewerIds) {
+        const reviewer = clinicalReviewers[reviewerId];
+        assert.ok(html.includes(reviewer.name));
+        assert.match(html, new RegExp(`href=["']${reviewer.profileHref.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}["']`));
+      }
+      assert.equal(article.reviewedBy.length, assignment.reviewerIds.length);
+    }
+  }
+});
+
+test("plateau dashboard uses nested H3-ready subsections and distinct article art", () => {
+  const plateau = blogPosts.find((post) => post.slug === "/blog/weight-loss-plateau-what-to-track/");
+  const dashboard = plateau.sections.find((section) => section.heading === "Build a dashboard, not a courtroom");
+  assert.equal(dashboard.subsections.length, 6);
+  assert.ok(dashboard.subsections.every((section, index) => section.heading.startsWith(`${index + 1}.`)));
+  assert.ok(!plateau.sections.some((section) => /^\d+\./.test(section.heading)), "dashboard items must not remain peer H2 sections");
+  const medicalPosts = blogPosts.filter((post) => weightManagementCluster.articles.includes(post.slug));
+  assert.equal(new Set(medicalPosts.map((post) => post.heroImage)).size, medicalPosts.length, "medical cluster articles need distinct hero images");
+});
+
+test("blog, homepage, and service sitemap dates track published article dependencies", async () => {
+  const sitemap = await readFile(join(publicRoot, "sitemap.xml"), "utf8");
+  const pairs = new Map([...sitemap.matchAll(/<url><loc>(.*?)<\/loc><lastmod>(.*?)<\/lastmod><\/url>/g)].map((match) => [decodeHtml(match[1]), decodeHtml(match[2])]));
+  const newestPublishedDate = publishedBlogPosts.flatMap((post) => [post.published, post.modified]).sort().at(-1);
+  const newestClusterDate = publishedBlogPosts.filter((post) => weightManagementCluster.articles.includes(post.slug)).flatMap((post) => [post.published, post.modified]).sort().at(-1);
+  assert.equal(pairs.get(`${site.canonicalUrl}/blog/`), [pages.blog.modified, newestPublishedDate].filter(Boolean).sort().at(-1));
+  assert.equal(pairs.get(`${site.canonicalUrl}/`), [site.contentUpdated, newestPublishedDate].filter(Boolean).sort().at(-1));
+  assert.equal(pairs.get(`${site.canonicalUrl}${weightManagementCluster.pillar}`), [pages["weight-management"].modified, newestClusterDate].filter(Boolean).sort().at(-1));
 });
 
 test("future-dated blog posts stay out of public pages, the sitemap, and the feed", async () => {

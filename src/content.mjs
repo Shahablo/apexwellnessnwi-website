@@ -20,7 +20,7 @@ export const site = Object.freeze({
   address: { streetAddress: '8560 Broadway', addressLocality: 'Merrillville', addressRegion: 'IN', postalCode: '46410', addressCountry: 'US', label: clinicAddress },
   status: 'Prelaunch',
   tagline: 'Physician-led care. Built around you.',
-  contentUpdated: '2026-09-12',
+  contentUpdated: '2026-09-15',
   launch: { date: '2026-11-01', label: 'November 1, 2026', status: 'Planned launch' },
   social: [
     { label: 'Instagram', href: 'https://www.instagram.com/apexwellnessnwi/' },
@@ -49,6 +49,7 @@ export const site = Object.freeze({
     { label: 'Terms of Use', href: '/terms/' },
     { label: 'Communications Consent', href: '/communications-consent/' },
     { label: 'Accessibility Statement', href: '/accessibility/' },
+    { label: 'Editorial Standards', href: '/editorial-standards/' },
     { label: 'Cancellation and Refunds', href: '/cancellation-refunds/' }
   ],
   notices: {
@@ -210,14 +211,15 @@ export const pages = Object.freeze({
     eyebrow: 'Care area · Medical weight and metabolic care',
     h1: 'Weight care, with the whole person in mind.',
     intro:
-      'The planned care model begins with evaluation, risks, goals, and relevant measurements. Medication may be discussed when clinically indicated, but it is never the only lever and is never guaranteed.',
+      'Weight care should do more than move a number. The planned Apex model starts with your health, your goals, and the life you want to keep living. Medication may be discussed when clinically appropriate, but it is one tool, never the whole plan and never guaranteed.',
+    modified: '2026-09-15',
     cta: priorityListCta,
     sections: [
       {
         type: 'audience',
         heading: 'Who this care may fit',
         body:
-          'Adults who want an evidence-informed plan that can include nutrition, protein and resistance-training support, appropriate measurements, careful medication consideration, side-effect review, plateau management, and maintenance planning.',
+          'For some people, the goal is easier movement. For others, it is steadier routines, stronger health markers, more strength, or less mental space handed to the scale. The intended plan can include nutrition, protein and resistance-training support, appropriate measurements, careful medication consideration, side-effect review, plateau management, and maintenance planning.',
         note:
           'This service is not designed for anyone seeking a guaranteed medication, a specific prescription without evaluation, or a promised amount of weight loss.'
       },
@@ -265,6 +267,18 @@ export const pages = Object.freeze({
         heading: 'Follow-up is part of responsible care.',
         body:
           'If care begins after launch, the written plan will define follow-up, relevant measurements, side-effect escalation, dose review when indicated, and criteria for maintaining, changing, stopping, or referring care.'
+      },
+      {
+        type: 'articleGuides',
+        eyebrow: 'Helpful guides',
+        heading: 'More clarity. Less internet whiplash.',
+        body:
+          'Weight care comes with no shortage of hot takes. Start with practical, source-backed guides designed to help you understand the options and ask better questions.',
+        articleSlugs: [
+          '/blog/medical-weight-management-what-it-means/',
+          '/blog/glp-1-weight-loss-expectations-side-effects/',
+          '/blog/weight-loss-plateau-what-to-track/'
+        ]
       },
       {
         type: 'referral',
@@ -1183,6 +1197,62 @@ export const pages = Object.freeze({
         heading: 'Feedback and updates',
         paragraphs: [
           'Accessibility feedback helps prioritize corrections. The effective date at the top identifies this version, and the statement will be updated as material improvements or contact channels change.'
+        ]
+      }
+    ]
+  },
+
+  'editorial-standards': {
+    slug: '/editorial-standards/',
+    navLabel: 'Editorial Standards',
+    title: 'Editorial Standards and Medical Review | Apex Wellness',
+    description:
+      'Learn how Apex Wellness writes, sources, clinically reviews, updates, and corrects educational health information.',
+    eyebrow: 'Effective September 15, 2026',
+    h1: 'Editorial Standards',
+    intro:
+      'Clear health information should show its work. These standards explain how Apex prepares educational articles, identifies medical review, handles updates, and separates general information from individual care.',
+    cta: priorityListCta,
+    effectiveDate: 'September 15, 2026',
+    sections: [
+      {
+        type: 'policySection',
+        heading: 'Useful before impressive',
+        paragraphs: [
+          'Apex articles are written to answer a real reader question in plain language. Search visibility matters, but a page should exist because it helps someone understand a decision, prepare a useful question, or recognize when individual clinical guidance is needed.',
+          'We do not publish thin city-swapped articles, promise outcomes, disguise advertising as education, or add length simply to make an article look comprehensive.'
+        ]
+      },
+      {
+        type: 'policySection',
+        heading: 'Sources and clinical boundaries',
+        paragraphs: [
+          'Medical articles prioritize current prescribing information, government health agencies, professional guidance, and peer-reviewed research relevant to the claims being made. Source links and publication dates are shown so readers can inspect the evidence.',
+          'Educational content cannot diagnose, prescribe, or replace care from a qualified professional who knows the reader’s circumstances. Medication instructions, warning signs, pregnancy considerations, and emergency guidance receive additional review.'
+        ]
+      },
+      {
+        type: 'policySection',
+        heading: 'What a named medical review means',
+        paragraphs: [
+          'When an article says it was clinically reviewed by a named physician, that physician reviewed the exact version identified by the review date. The reviewer’s name links to an Apex biography, and the page’s structured data mirrors the visible credit.',
+          'A substantive change to clinical claims, safety guidance, sources, or conclusions reopens review. Articles without a completed named review do not claim one.'
+        ]
+      },
+      {
+        type: 'policySection',
+        heading: 'Updates and corrections',
+        paragraphs: [
+          'Apex reviews medication-sensitive content when authoritative labeling or guidance changes and periodically checks durable educational pages for accuracy, broken links, and outdated prelaunch facts. Meaningful revisions receive an updated date.',
+          'If you notice a factual or accessibility problem, use the website-support option on the launch-list form. Do not include symptoms, diagnoses, medications, laboratory values, or other private medical information. A correction may update the article and its modification date; it does not create a clinician-patient relationship.'
+        ]
+      },
+      {
+        type: 'policySection',
+        heading: 'Images and people',
+        paragraphs: [
+          'Team portraits identify the actual named people. Other editorial and prelaunch images may be illustrative and do not identify Apex patients, staff, facilities, medications, or treatment results.',
+          'Illustrative images are chosen to support comprehension and tone. They are not before-and-after evidence and should not be read as a promise of a result.'
         ]
       }
     ]

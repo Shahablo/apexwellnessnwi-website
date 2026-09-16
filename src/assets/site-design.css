@@ -215,16 +215,23 @@ body{overflow-x:clip}
 .article-header h1{font-size:clamp(3.7rem,5.7vw,7rem);font-weight:400;line-height:1.04;max-width:22ch;margin:1.3rem 0 2rem}
 .article-header .article-deck{font-size:1.1rem;line-height:1.85;max-width:65ch}
 .article-header .article-meta{font-size:.79rem;line-height:1.8;margin:2rem 0 3rem}
+.article-review{border-left:2px solid #a89963;border-radius:0;background:#f1eee4;padding:1.2rem 1.4rem;margin:-1.5rem 0 3rem}
+.article-review .eyebrow{margin-bottom:.25rem}.article-review-name{font-size:.92rem}.article-review p:last-child{font-size:.79rem;color:var(--color-muted)}
 .article-header .representative img{aspect-ratio:2/1}
 .breadcrumbs{font-size:.74rem;line-height:1.8;gap:.7rem;margin-bottom:3rem}
 .article-body{max-width:44rem;font-size:1.06rem;line-height:1.95}
 .article-body>section{margin-top:3.5rem}
 .article-body h2{font-weight:400;font-size:clamp(2.3rem,3.2vw,3.4rem);line-height:1.1;margin-bottom:1.3rem;max-width:26ch}
+.article-body h3{font-weight:400;font-size:clamp(1.7rem,2.3vw,2.15rem);line-height:1.15;margin:2.5rem 0 .8rem;max-width:30ch}
+.article-subsection{border-left:1px solid var(--color-border);padding-left:clamp(1rem,3vw,2rem)}
 .article-contents{background:transparent;padding:1.8rem 0;border-block:1px solid var(--color-border);border-inline:0;border-radius:0}
 .article-contents h2{font:600 .77rem/1.8 var(--font-body);letter-spacing:.09em;text-transform:uppercase}
 .article-contents li{font-size:.95rem}
 .medical-note,.article-cta{border-radius:0;box-shadow:none;padding:clamp(1.5rem,4vw,3rem)}
 .medical-note p,.article-sources p{font-size:.88rem;line-height:1.85}
+.related-guides{background:#f1eee4}.related-guides-intro{font-size:1.02rem;line-height:1.85}.related-guide-list{gap:1px;background:var(--color-border)}
+.related-guide{border:0;border-radius:0;box-shadow:none;background:#f8f5ee;padding:clamp(1.5rem,3vw,2.2rem)}
+.related-guide h3{font-weight:400}.article-related{background:transparent}.article-related .related-guide-list{margin-top:1.8rem}
 .policy{max-width:49rem;padding-block:clamp(4rem,7vw,7rem)}
 .policy h1{font-size:clamp(3.8rem,6vw,6rem);font-weight:400;line-height:1.05;margin:1rem 0 2rem}
 .policy h2{font-size:2.3rem;font-weight:400;margin:2.5rem 0 1rem}

@@ -8,6 +8,7 @@
   },
   "scripts": {
     "build": "node scripts/build.mjs",
+    "review:clinical": "node scripts/build-clinical-review.mjs",
     "test": "npm run build && node --test \"tests/*.test.mjs\"",
     "preview": "npm run build && wrangler dev",
     "deploy": "npm run build && wrangler deploy",

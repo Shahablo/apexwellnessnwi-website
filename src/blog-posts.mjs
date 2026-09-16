@@ -12,7 +12,9 @@ export const blogPosts = Object.freeze([
     excerpt:
       "“Coming soon” can leave a lot unanswered. Here is the clear version of our location, planned care areas, launch timing, and what the Apex Wellness launch list actually does.",
     published: "2026-09-15",
+    publishedAt: "2026-09-15T22:11:13-05:00",
     modified: "2026-09-15",
+    modifiedAt: "2026-09-15T22:11:13-05:00",
     category: "Apex Wellness Updates",
     author: "Apex Wellness Editorial Team",
     heroImage: "shoreline",
@@ -134,18 +136,20 @@ export const blogPosts = Object.freeze([
   },
   {
     slug: "/blog/medical-weight-management-what-it-means/",
-    title: "Medical Weight Management in Northwest Indiana | Apex",
+    title: "What Medical Weight Management Includes | Apex Wellness",
     description:
-      "Learn what clinician-led medical weight management includes—from evaluation and habits to medication, monitoring, and referrals—in Northwest Indiana.",
-    eyebrow: "Medical weight management",
-    readTime: "6 minute read",
-    h1: "Medical Weight Management Is More Than a Prescription—Here’s What It Actually Means",
+      "Medical weight management is more than a prescription. Learn how evaluation, nutrition, movement, medication, follow-up, and maintenance fit together.",
+    eyebrow: "A better weight-care conversation",
+    readTime: "7 minute read",
+    h1: "Medical Weight Management Is More Than a Prescription",
     intro:
-      "Medical weight management has developed a strange reputation. Depending on which corner of the internet you visit, it is either a stern lecture about willpower or a drive-through window for a prescription.\n\nResponsible care should be neither.\n\nObesity is a complex chronic disease influenced by biology, health conditions, medications, sleep, stress, behavior, and environment. That does not mean every person needs medication. It does mean that “try harder” is not a complete treatment plan.\n\nMedical weight management is a clinical process: understand the person, assess health risks, choose appropriate tools, monitor what happens, and adjust the plan over time.",
+      "Medical weight management has developed a strange reputation. In one corner of the internet, it is a lecture about willpower. In another, it is a drive-through window for a prescription.\n\nResponsible care should be neither.\n\nObesity is a complex chronic disease influenced by biology, health conditions, medications, sleep, stress, behavior, and environment. That does not mean every person needs medication. It means “try harder” is not a complete treatment plan.\n\nFor many people, the real goal is not a perfect number. It is easier movement, more confidence in a plan, stronger health markers, or more freedom to take part in the life they care about. Medical weight management should connect the clinical details to that real-life goal.",
     excerpt:
-      "If a weight-management program begins and ends with a prescription, it is missing much of the “medical” part. Here is what a thoughtful, clinician-led approach should include.",
+      "A prescription may be one tool. Thoughtful weight care also asks better questions, builds a realistic plan, and checks whether that plan is actually helping.",
     published: "2026-09-11",
-    modified: "2026-09-11",
+    publishedAt: "2026-09-11T23:40:35-05:00",
+    modified: "2026-09-15",
+    modifiedAt: "2026-09-15T22:45:13-05:00",
     category: "Weight & Metabolic Care",
     author: "Apex Wellness Editorial Team",
     heroImage: "weight",
@@ -155,13 +159,13 @@ export const blogPosts = Object.freeze([
     },
     sections: [
       {
-        heading: "Medical weight management starts with the whole picture",
+        heading: "Start with the whole picture",
         paragraphs: [
           "A number on the scale matters, but it cannot take a medical history.",
           "A useful initial evaluation may review:",
         ],
         paragraphsAfterBullets: [
-          "BMI and waist circumference can help screen for health risk, but neither replaces clinical judgment. Laboratory testing is often useful to assess obesity-related conditions and treatment safety. Commonly considered tests include A1c, kidney and liver measures, lipids, and TSH, with pregnancy testing when relevant; the final panel should be individualized. An untargeted “everything” panel is not automatically better care.",
+          "BMI and waist circumference can help screen for health risk, but neither replaces clinical judgment. Depending on the history and proposed treatment, useful testing may include A1c, kidney or liver measures, lipids, TSH, or pregnancy testing when relevant. The final panel should be individualized. An untargeted “everything” panel is not automatically better care.",
           "Hormonal or other medical contributors should be considered when the clinical picture supports them. At the same time, not every weight concern is caused by a thyroid, cortisol, or sex-hormone problem. Thoughtful evaluation avoids both extremes.",
         ],
         bullets: [
@@ -176,47 +180,57 @@ export const blogPosts = Object.freeze([
         ],
       },
       {
-        heading: "A real plan uses more than one lever",
+        heading: "Build a plan that can survive a Tuesday",
         paragraphs: [
           "Medical weight management is not code for “medication only.” It can include several evidence-based tools, selected for the individual.",
         ],
       },
       {
-        heading: "Nutrition that can survive a Tuesday",
+        heading: "Food that fits real life",
         paragraphs: [
           "An eating plan should support health, preserve nutrition, and fit real life. Depending on the person, that may include a reasonable energy target, adequate protein, fiber-rich foods, meal structure, and strategies for restaurants, shift work, family meals, or travel.",
           "The best plan is not necessarily the one with the most rules. It is the one a person can follow long enough to learn from it.",
         ],
       },
       {
-        heading: "Movement with a purpose",
+        heading: "Movement that builds capability",
         paragraphs: [
-          "Aerobic activity supports cardiovascular health and can help with weight management. Resistance exercise is also important because weight loss can include loss of lean tissue as well as fat. The right starting point could be a gym program, chair-supported movements, short walks, or physical therapy—not a punishment workout assembled by an overcaffeinated algorithm.",
+          "Aerobic activity supports cardiovascular health and can help with weight management. Resistance exercise is also important because weight loss can include loss of lean tissue as well as fat. The right starting point could be a gym program, chair-supported movements, short walks, or physical therapy, not a punishment workout assembled by an overcaffeinated algorithm.",
         ],
       },
       {
-        heading: "Sleep, stress, and barriers",
+        heading: "Sleep, stress, and barriers count",
         paragraphs: [
           "Sleep, stress, pain, caregiving, finances, and the local food and activity environment can all influence weight-related behaviors and health. They are not excuses; they are variables. A plan that ignores them is likely to look excellent on paper and lonely in practice.",
         ],
       },
       {
-        heading: "Medication when it is clinically appropriate",
+        heading: "Medication is one tool, not the whole toolbox",
         paragraphs: [
-          "Prescription weight-management medication can help some adults. BMI thresholds of 30, or 27 with a weight-related condition, remain commonly used by insurers and in some clinical guidance, but they are a starting point rather than a universal rule. Current product labeling, obesity-related health conditions, body-fat distribution, contraindications, pregnancy considerations, and individual goals all affect whether medication is appropriate.",
+          "Prescription weight-management medication can help some adults. BMI thresholds of 30, or 27 with a weight-related condition, appear in current federal patient guidance, but they are a starting point rather than a universal rule. Current product labeling, obesity-related health conditions, body-fat distribution, contraindications, pregnancy considerations, and individual goals all affect whether medication is appropriate.",
           "Meeting a BMI threshold does not guarantee that a medication is safe, appropriate, covered, affordable, or preferred. It opens a clinical conversation.",
+          [
+            "For a closer look at timing, common side effects, and warning signs, read our guide to ",
+            { text: "starting a GLP-1 for weight loss", href: "/blog/glp-1-weight-loss-expectations-side-effects/" },
+            ".",
+          ],
         ],
       },
       {
-        heading: "Referral when another service is the better fit",
+        heading: "A referral can be excellent care",
         paragraphs: [
           "Good care includes knowing when to coordinate with primary care, a registered dietitian, behavioral health, sleep medicine, endocrinology, cardiology, physical therapy, or a bariatric-surgery program. A referral is not a failure. Sometimes it is the most medically responsible part of the plan.",
         ],
       },
       {
-        heading: "Follow-up is part of the treatment—not an optional sequel",
+        heading: "Follow-up is where the plan gets smarter",
         paragraphs: [
           "The first plan is a hypothesis. Follow-up tells us whether it is working.",
+          [
+            "When the scale slows, a ",
+            { text: "plateau review", href: "/blog/weight-loss-plateau-what-to-track/" },
+            " should look beyond one weigh-in and ask what the wider trend is saying.",
+          ],
           "Depending on the treatment, follow-up may review:",
         ],
         paragraphsAfterBullets: [
@@ -233,12 +247,12 @@ export const blogPosts = Object.freeze([
         ],
       },
       {
-        heading: "What responsible medical weight management should not promise",
+        heading: "Red flags in weight-loss marketing",
         paragraphs: [
           "Be cautious if a program promises:",
         ],
         paragraphsAfterBullets: [
-          "The FDA does not review compounded drugs for safety, effectiveness, or quality before they are marketed. Compounding can have a legitimate role for a patient whose medical need cannot be met by an available FDA-approved drug, but it requires a specific clinical and pharmacy discussion—not a casual substitution.",
+          "The FDA does not review compounded drugs for safety, effectiveness, or quality before they are marketed. Compounding can have a legitimate role for a patient whose medical need cannot be met by an available FDA-approved drug, but it requires a specific clinical and pharmacy discussion. It is not a casual substitution.",
         ],
         bullets: [
           "A particular prescription before evaluating you",
@@ -250,9 +264,9 @@ export const blogPosts = Object.freeze([
         ],
       },
       {
-        heading: "What a useful first conversation sounds like",
+        heading: "A first conversation without the apology tour",
         paragraphs: [
-          "You do not need to arrive with perfect food logs or an apology. Helpful questions include:",
+          "You do not need perfect logs, a flawless week, or an apology. You need an honest starting point. Helpful questions include:",
         ],
         paragraphsAfterBullets: [
           "Those questions turn weight care from a transaction into a clinical relationship.",
@@ -268,10 +282,15 @@ export const blogPosts = Object.freeze([
         ],
       },
       {
-        heading: "Medical weight management for Northwest Indiana adults",
+        heading: "Planned medical weight management in Northwest Indiana",
         paragraphs: [
           "For adults in Merrillville, Crown Point, Schererville, Munster, Dyer, St. John, Highland, Hobart, Valparaiso, and nearby communities, good care should be practical enough to work around real commutes, schedules, family obligations, and local resources.",
-          "Apex Wellness is preparing a clinician-led approach to weight and metabolic care in Northwest Indiana. The intended model begins with evaluation and a written plan, uses medication only when clinically appropriate, and includes follow-up, side-effect review, muscle-preservation support, and referral when another clinician is the better destination.",
+          [
+            "Apex Wellness is preparing ",
+            { text: "clinician-led weight and metabolic care", href: "/weight-management/" },
+            " in Northwest Indiana. The intended model begins with evaluation and a written plan, uses medication only when clinically appropriate, and includes follow-up, side-effect review, muscle-preservation support, and referral when another clinician is the better destination.",
+          ],
+          "The number is data. The life behind it is the point.",
         ],
       },
       {
@@ -317,35 +336,40 @@ export const blogPosts = Object.freeze([
   {
     slug: "/blog/glp-1-weight-loss-expectations-side-effects/",
     status: "draft",
-    title: "GLP-1 Weight Loss: Expectations & Side Effects | Apex",
+    title: "GLP-1 Weight Loss: What to Expect and Side Effects | Apex",
     description:
-      "Considering GLP-1 weight loss? Learn realistic timelines, common side effects, warning signs, and why physician follow-up matters in Northwest Indiana.",
-    eyebrow: "GLP-1 weight loss",
-    readTime: "7 minute read",
-    h1: "Starting a GLP-1? The First Few Months Are a Ramp, Not a Race",
+      "Considering a GLP-1 for weight loss? Learn about titration, common side effects, warning signs, muscle preservation, and long-term planning.",
+    eyebrow: "GLP-1 weight-loss guide",
+    readTime: "8 minute read",
+    h1: "Starting a GLP-1 for Weight Loss: A Ramp, Not a Race",
     intro:
-      "Online, GLP-1 medications are often presented as either magic or a horror movie. Neither version makes for useful informed consent.\n\nIf you are considering GLP-1 weight loss treatment, these medicines can be effective tools for some people with obesity or overweight plus weight-related health conditions. They also have contraindications, side effects, costs, and monitoring needs. The first few months are usually about learning how a specific person responds—not winning a race to the highest dose.",
+      "Online, GLP-1 medications are often presented as either magic or a horror movie. Neither version makes for useful informed consent.\n\nFor the right person, these medicines can be effective tools for obesity or overweight with weight-related health conditions. They also come with contraindications, side effects, costs, and monitoring needs.\n\nThe goal is not to chase the highest dose or the fastest drop. It is to learn whether a specific treatment can support better health while protecting nutrition, strength, function, and the life you are trying to live.",
     excerpt:
-      "GLP-1 treatment is neither magic nor a gastrointestinal endurance contest. Here is a grounded guide to timing, titration, side effects, safety, and long-term planning.",
-    published: "2026-09-14",
-    modified: "2026-09-14",
+      "A GLP-1 is a tool, not a personality test or a gastrointestinal endurance contest. Here is what the first months can involve and why follow-up matters.",
+    published: "2026-09-17",
+    modified: "2026-09-15",
     category: "Weight & Metabolic Care",
     author: "Apex Wellness Editorial Team",
-    heroImage: "weight",
+    heroImage: "glp1",
     relatedService: {
       label: "Explore planned weight and metabolic care",
       href: "/weight-management/",
     },
     sections: [
       {
-        heading: "First, “GLP-1” is convenient shorthand",
+        heading: "GLP-1 is convenient shorthand. Details still matter.",
         paragraphs: [
           "GLP-1 receptor agonists mimic a hormone involved in appetite, food intake, glucose regulation, and digestion. Semaglutide is one example. Tirzepatide acts at both GIP and GLP-1 receptors, although it is often included in everyday conversations about “GLP-1s.”",
-          "Brand, indication, formulation, and dose matter. A drug approved for diabetes under one brand is not automatically interchangeable with a product approved for chronic weight management under another. The prescribing information—not a social-media dosing chart—sets the starting point.",
+          "Brand, indication, formulation, and dose matter. Instructions can differ between products and between oral and injectable formulations. A drug approved for diabetes under one brand is not automatically interchangeable with a product approved for chronic weight management under another. The prescribing information, not a social-media dosing chart, sets the starting point.",
+          [
+            "Medication is only one possible part of ",
+            { text: "medical weight management", href: "/blog/medical-weight-management-what-it-means/" },
+            ". Evaluation, nutrition, movement, monitoring, and maintenance still matter.",
+          ],
         ],
       },
       {
-        heading: "Expectation 1: starting low is intentional",
+        heading: "Start low on purpose",
         paragraphs: [
           "Common weight-management products use gradual dose escalation. Starter doses give the body time to adjust and help the clinician assess tolerability. They are not a test of patience invented by the pharmacy gods.",
           "Do not increase a dose early, repeat a dose, combine similar drugs, or convert milligrams into syringe “units” without clear product-specific instructions. This is particularly important with multi-dose compounded vials, where the FDA has received reports of dosing errors and hospitalizations.",
@@ -353,15 +377,19 @@ export const blogPosts = Object.freeze([
         ],
       },
       {
-        heading: "Expectation 2: progress is measured in months, not Thursdays",
+        heading: "Think in months, not Thursdays",
         paragraphs: [
           "Some people notice less hunger, earlier fullness, or fewer food cravings before they see a major scale change. Others notice little at first. Two pivotal trials often cited for once-weekly injectable semaglutide 2.4 mg and tirzepatide measured outcomes at 68 and 72 weeks, respectively, and included lifestyle support. Their averages do not predict an individual result.",
-          "Weight loss is rarely a straight line. Fluid shifts, constipation, menstrual-cycle changes, travel, sodium, carbohydrate intake, and the amount of food moving through the digestive tract can temporarily hide a longer-term trend.",
+          [
+            "Weight loss is rarely a straight line. Fluid shifts, constipation, menstrual-cycle changes, travel, sodium, carbohydrate intake, and the amount of food moving through the digestive tract can temporarily hide a ",
+            { text: "longer-term trend", href: "/blog/weight-loss-plateau-what-to-track/" },
+            ".",
+          ],
           "The better question is not, “Did I lose this week?” It is, “Over enough time, are the benefits, risks, tolerability, and cost making sense for me?”",
         ],
       },
       {
-        heading: "Expectation 3: stomach and bowel symptoms are common",
+        heading: "Common side effects deserve a real plan",
         paragraphs: [
           "The most common adverse effects are gastrointestinal. Depending on the medicine, they may include:",
         ],
@@ -379,7 +407,7 @@ export const blogPosts = Object.freeze([
         ],
       },
       {
-        heading: "Practical habits to discuss with your clinician",
+        heading: "Make symptoms easier to understand",
         paragraphs: [
           "The right side-effect plan is individualized, but several practical topics are worth discussing:",
         ],
@@ -400,12 +428,12 @@ export const blogPosts = Object.freeze([
         heading: "Protect nutrition, muscle, and function",
         paragraphs: [
           "A smaller appetite can make it easier to eat less. It can also make it easier to under-eat protein, fiber, fluids, and micronutrients.",
-          "A GLP-1 plan should include attention to food quality and adequate nutrition, not simply the smallest possible calorie total. Resistance exercise, adapted to the person’s ability and health, can help preserve strength and lean tissue during weight loss. Track what your body can do—not only what it weighs.",
+          "A GLP-1 plan should include attention to food quality and adequate nutrition, not simply the smallest possible calorie total. Resistance exercise, adapted to the person’s ability and health, can help preserve strength and lean tissue during weight loss. Track what your body can do, not only what it weighs.",
           "Rapid or excessive loss, weakness, dizziness, inability to meet basic nutrition or hydration needs, or a major decline in function deserves review.",
         ],
       },
       {
-        heading: "Know when a side effect needs prompt attention",
+        heading: "Know when to call",
         paragraphs: [
           "Contact the prescribing clinician promptly for symptoms such as:",
         ],
@@ -424,7 +452,7 @@ export const blogPosts = Object.freeze([
         ],
       },
       {
-        heading: "Your history matters before the first dose",
+        heading: "Your history belongs in the decision",
         paragraphs: [
           "Semaglutide and tirzepatide weight-management products carry boxed warnings about thyroid C-cell tumors observed in rodents; whether this risk applies to humans is unknown. They are contraindicated for people with a personal or family history of medullary thyroid carcinoma or Multiple Endocrine Neoplasia syndrome type 2.",
           "Weight-loss treatment is not recommended during pregnancy. For weight reduction, Wegovy and Zepbound should be stopped when pregnancy is recognized. The Wegovy label advises stopping semaglutide at least two months before a planned pregnancy. Zepbound may reduce the effectiveness of oral hormonal contraceptives; its label advises switching to a non-oral contraceptive method or adding a barrier method for four weeks after starting Zepbound and for four weeks after each dose increase. Discuss pregnancy plans, contraception, and breastfeeding before treatment.",
@@ -432,16 +460,21 @@ export const blogPosts = Object.freeze([
         ],
       },
       {
-        heading: "Expectation 4: maintenance deserves a plan from day one",
+        heading: "Plan for maintenance before you need it",
         paragraphs: [
           "Weight-management medicines are generally used as part of long-term care when they remain effective, tolerable, and appropriate. Studies of semaglutide and tirzepatide withdrawal found that many participants regained weight after treatment stopped. That is not proof of weak character; it is one reason obesity is treated as a chronic disease.",
           "Before starting, discuss what happens if the medicine works, does not work, becomes unaffordable, causes side effects, or must be stopped. A maintenance plan is not pessimism. It is planning.",
         ],
       },
       {
-        heading: "Clinician-led GLP-1 care in Northwest Indiana",
+        heading: "Planned GLP-1 care in Northwest Indiana",
         paragraphs: [
-          "Apex Wellness is preparing a clinician-led weight and metabolic care practice for adults in Northwest Indiana. Medication may be discussed after an appropriate evaluation, but no drug or result is promised. If treatment is clinically appropriate after opening, the intended approach includes product-specific education, gradual titration when indicated, side-effect review, nutrition and muscle-preservation support, and a written follow-up plan.",
+          [
+            "Apex Wellness is preparing ",
+            { text: "clinician-led weight and metabolic care", href: "/weight-management/" },
+            " for adults in Northwest Indiana. Medication may be discussed after an appropriate evaluation, but no drug or result is promised. If treatment is clinically appropriate after opening, the intended approach includes product-specific education, gradual titration when indicated, side-effect review, nutrition and muscle-preservation support, and a written follow-up plan.",
+          ],
+          "The goal is not to make your life orbit weight care. It is to build a plan that supports more of the life you want to live.",
         ],
       },
       {
@@ -488,6 +521,10 @@ export const blogPosts = Object.freeze([
         label: "SURMOUNT-4 randomized withdrawal trial",
         href: "https://pmc.ncbi.nlm.nih.gov/articles/PMC10714284/",
       },
+      {
+        label: "Physical Activity Guidelines for Americans, 2nd edition",
+        href: "https://odphp.health.gov/sites/default/files/2019-09/Physical_Activity_Guidelines_2nd_edition.pdf",
+      },
     ],
     disclaimer:
       "This article is general education, not medical advice, diagnosis, or treatment. Do not start, stop, combine, or change a prescription medicine without instructions from a qualified healthcare professional who knows your circumstances. For a medical emergency, call 911 or go to the nearest emergency department.",
@@ -495,35 +532,35 @@ export const blogPosts = Object.freeze([
   {
     slug: "/blog/weight-loss-plateau-what-to-track/",
     status: "draft",
-    title: "Weight Loss Plateau: What to Track Instead | Apex",
+    title: "Weight Loss Plateau: What to Track When the Scale Stalls | Apex",
     description:
-      "A weight loss plateau does not always mean failure. Learn what adults in Northwest Indiana can track beyond the scale—and when to review the plan.",
-    eyebrow: "Weight loss plateau",
-    readTime: "6 minute read",
-    h1: "The Scale Stalled. Your Progress May Not Have.",
+      "A weight loss plateau is not always failure. Learn what to track beyond the scale, when to adjust the plan, and when a clinical review may help.",
+    eyebrow: "Weight-loss plateau guide",
+    readTime: "7 minute read",
+    h1: "Weight Loss Plateau: What to Track When the Scale Stalls",
     intro:
-      "You followed the plan. The scale moved. Then it stopped with the dramatic timing of a season-finale cliffhanger.\n\nA weight loss plateau can be frustrating, but it is not automatically proof that treatment failed—or that you did. It may reflect normal short-term variation, a change in energy needs, an adherence barrier, a medication issue, a shift in body composition, or a health factor worth reviewing.\n\nThe useful response is not panic. It is better data.",
+      "You followed the plan. The scale moved. Then it stopped with the dramatic timing of a season-finale cliffhanger.\n\nFrustrating? Absolutely. Proof that treatment failed, or that you did? Not necessarily.\n\nA plateau can reflect normal short-term variation, lower energy needs after weight loss, a routine that became hard to sustain, a medication issue, a body-composition shift, or a health factor worth reviewing.\n\nThe goal is not to win a daily argument with the scale. It is to understand whether the plan is moving your health and your life in a useful direction. The next step is not panic. It is better data.",
     excerpt:
-      "Before declaring your metabolism broken or your bathroom scale your sworn enemy, zoom out. A plateau may be real, temporary, or hiding progress in places the scale cannot see.",
-    published: "2026-09-16",
-    modified: "2026-09-16",
+      "Before declaring your metabolism broken or your bathroom scale your sworn enemy, zoom out. A plateau may be temporary, real, or hiding progress the scale cannot see.",
+    published: "2026-09-19",
+    modified: "2026-09-15",
     category: "Weight & Metabolic Care",
     author: "Apex Wellness Editorial Team",
-    heroImage: "weight",
+    heroImage: "plateau",
     relatedService: {
       label: "Explore planned weight and metabolic care",
       href: "/weight-management/",
     },
     sections: [
       {
-        heading: "First ask: is this a plateau or ordinary scale noise?",
+        heading: "Is this a plateau or ordinary scale noise?",
         paragraphs: [
           "Body weight can change from day to day because of water, glycogen, sodium, bowel contents, menstrual-cycle effects, travel, and the timing of meals. A single reading can be accurate and still be a poor summary of what is happening.",
-          "There is no universal number of days that defines a plateau. A short run of flat readings—especially after travel, constipation, menstrual-cycle effects, a strength-training change, or higher sodium intake—usually needs context and a longer trend before it is called a plateau.",
+          "There is no universal number of days that defines a plateau. A short run of flat readings, especially after travel, constipation, menstrual-cycle effects, a strength-training change, or higher sodium intake, usually needs context and a longer trend before it is called a plateau.",
           "If weighing is appropriate for you, make the measurements more comparable:",
         ],
         paragraphsAfterBullets: [
-          "Frequent weighing is not right for everyone, particularly when it worsens anxiety, compulsive behavior, or eating-disorder symptoms. In that situation, clinician-measured weight at agreed intervals—or other health measures—may be better.",
+          "Frequent weighing is not right for everyone, particularly when it worsens anxiety, compulsive behavior, or eating-disorder symptoms. In that situation, clinician-measured weight at agreed intervals or other health measures may be better.",
         ],
         bullets: [
           "Use the same reliable scale on a firm surface.",
@@ -533,23 +570,30 @@ export const blogPosts = Object.freeze([
         ],
       },
       {
-        heading: "Why weight loss often slows",
-        paragraphs: ["Several things can be true at the same time."],
+        heading: "Why progress often slows",
+        paragraphs: [
+          "Several things can be true at the same time.",
+          [
+            "A useful ",
+            { text: "medical weight-management plan", href: "/blog/medical-weight-management-what-it-means/" },
+            " treats a plateau as information to investigate, not a verdict on the person.",
+          ],
+        ],
       },
       {
-        heading: "A smaller body generally needs less energy",
+        heading: "A smaller body usually needs less energy",
         paragraphs: [
           "As weight decreases, the body typically uses less energy to maintain and move itself. Research also describes adaptive changes in energy expenditure during and after weight loss. This is not a “broken metabolism.” It is physiology, and its size differs between people.",
         ],
       },
       {
-        heading: "Hunger, routine, and portions can drift",
+        heading: "Routines drift. Data help.",
         paragraphs: [
           "Appetite may change, old routines may gradually return, or small portions may become less small. That is not a confession; it is something to measure. Honest data are much more useful than perfect-looking data.",
         ],
       },
       {
-        heading: "Water can hide tissue change",
+        heading: "Water can blur the picture",
         paragraphs: [
           "Changes in sodium, carbohydrate intake, muscle soreness, constipation, and hormonal patterns can shift water weight. Fat loss and scale loss do not always show up on the same morning.",
         ],
@@ -558,90 +602,98 @@ export const blogPosts = Object.freeze([
         heading: "Health and medication factors can change",
         paragraphs: [
           "Sleep disruption, pain, stress, a new medicine, dose tolerance, a medical condition, or a hormonal transition may affect weight, appetite, activity, or fluid balance. New or concerning symptoms deserve clinical review rather than internet detective work.",
+          [
+            "If you use a GLP-1 medication, review ",
+            { text: "timing, side effects, and follow-up", href: "/blog/glp-1-weight-loss-expectations-side-effects/" },
+            " with the prescribing clinician rather than changing the dose on your own.",
+          ],
         ],
       },
       {
-        heading: "Body composition may be improving",
+        heading: "Strength can improve while the scale rests",
         paragraphs: [
           "Resistance exercise can help preserve fat-free mass and improve strength during weight loss. A person may lose fat, maintain or gain some lean tissue, and see less dramatic movement on the scale. That is one reason scale weight should not be the only outcome.",
         ],
       },
       {
-        heading: "Build a progress dashboard, not a scale courtroom",
+        heading: "Build a dashboard, not a courtroom",
         paragraphs: [
           "Choose measures that connect to your health goals. More tracking is not always better; consistent, interpretable tracking is.",
         ],
-      },
-      {
-        heading: "1. Weight trend",
-        paragraphs: [
-          "Keep the scale as one signal if it is helpful, but use a rolling trend or regular clinician measurements. The question is what has happened across several weeks, not whether Tuesday defeated Monday by 0.8 pounds.",
+        subsections: [
+          {
+            heading: "1. Weight trend",
+            paragraphs: [
+              "Keep the scale as one signal if it is helpful, but use a rolling trend or regular clinician measurements. The question is what has happened across several weeks, not whether Tuesday defeated Monday by 0.8 pounds.",
+            ],
+          },
+          {
+            heading: "2. Waist circumference",
+            paragraphs: [
+              "Waist circumference adds information about abdominal fat and health risk that BMI alone does not provide. Measure at a consistent interval using the same anatomical location and technique, or have a clinician standardize the measurement. Small short-term differences can reflect measurement variation, so interpret the trend rather than one reading.",
+            ],
+          },
+          {
+            heading: "3. Blood pressure and relevant laboratory markers",
+            paragraphs: [
+              "Depending on your health history, progress may include blood pressure, glucose or A1c, triglycerides, cholesterol, or liver-related markers. These should be interpreted in context, and testing should be ordered because it is clinically useful, not because every dashboard needs more gauges.",
+            ],
+          },
+          {
+            heading: "4. Strength and physical function",
+            paragraphs: [
+              "Track practical outcomes such as:",
+            ],
+            paragraphsAfterBullets: [
+              "Improved function can be a meaningful health win even during a flat scale month.",
+              "Progress can look like carrying groceries more easily, returning to a favorite walk, keeping up with family, or feeling stronger on the stairs. Those changes do not make the scale irrelevant. They make it one part of a larger story.",
+            ],
+            bullets: [
+              "Repetitions or resistance used for a familiar exercise",
+              "Ease of climbing stairs or rising from a chair",
+              "Walking distance, pace, or recovery",
+              "Ability to carry groceries, garden, play with children, or work with less limitation",
+            ],
+          },
+          {
+            heading: "5. Behaviors that drive the plan",
+            paragraphs: [
+              "Select a few behaviors you can act on, such as:",
+            ],
+            paragraphsAfterBullets: [
+              "Behavior measures help distinguish “the plan is not working” from “the plan became difficult to carry out.” Those require different solutions.",
+            ],
+            bullets: [
+              "Planned meals or protein-containing meals completed",
+              "Fiber and fluid intake, if medically appropriate",
+              "Resistance-training sessions",
+              "Walking or other activity",
+              "Sleep duration and consistency",
+              "Medication adherence and side-effect pattern",
+            ],
+          },
+          {
+            heading: "6. Hunger, symptoms, and quality of life",
+            paragraphs: [
+              "Notice changes in hunger, fullness, cravings, energy, sleep, joint discomfort, mood, digestive symptoms, and how clothing fits. These are not substitutes for medical assessment, but they can make a follow-up visit much more informative.",
+            ],
+          },
         ],
       },
       {
-        heading: "2. Waist circumference",
-        paragraphs: [
-          "Waist circumference adds information about abdominal fat and health risk that BMI alone does not provide. Measure at a consistent interval using the same anatomical location and technique, or have a clinician standardize the measurement. Small short-term differences can reflect measurement variation, so interpret the trend rather than one reading.",
-        ],
-      },
-      {
-        heading: "3. Blood pressure and relevant laboratory markers",
-        paragraphs: [
-          "Depending on your health history, progress may include blood pressure, glucose or A1c, triglycerides, cholesterol, or liver-related markers. These should be interpreted in context, and testing should be ordered because it is clinically useful—not because every dashboard needs more gauges.",
-        ],
-      },
-      {
-        heading: "4. Strength and physical function",
-        paragraphs: [
-          "Track practical outcomes such as:",
-        ],
-        paragraphsAfterBullets: [
-          "Improved function can be a meaningful health win even during a flat scale month.",
-        ],
-        bullets: [
-          "Repetitions or resistance used for a familiar exercise",
-          "Ease of climbing stairs or rising from a chair",
-          "Walking distance, pace, or recovery",
-          "Ability to carry groceries, garden, play with children, or work with less limitation",
-        ],
-      },
-      {
-        heading: "5. Behaviors that drive the plan",
-        paragraphs: [
-          "Select a few behaviors you can act on, such as:",
-        ],
-        paragraphsAfterBullets: [
-          "Behavior measures help distinguish “the plan is not working” from “the plan became difficult to carry out.” Those require different solutions.",
-        ],
-        bullets: [
-          "Planned meals or protein-containing meals completed",
-          "Fiber and fluid intake, if medically appropriate",
-          "Resistance-training sessions",
-          "Walking or other activity",
-          "Sleep duration and consistency",
-          "Medication adherence and side-effect pattern",
-        ],
-      },
-      {
-        heading: "6. Hunger, symptoms, and quality of life",
-        paragraphs: [
-          "Notice changes in hunger, fullness, cravings, energy, sleep, joint discomfort, mood, digestive symptoms, and how clothing fits. These are not substitutes for medical assessment, but they can make a follow-up visit much more informative.",
-        ],
-      },
-      {
-        heading: "When the scale is flat but treatment may still be helping",
+        heading: "Same scale. Very different story.",
         paragraphs: [
           "Imagine that weight is unchanged for three weeks, but waist measurement is lower, blood pressure has improved, strength is up, and meals feel more manageable. That is a different clinical story from unchanged weight plus worsening hunger, missed doses, severe constipation, poor sleep, and declining activity.",
           "The scale is identical. The plan is not.",
         ],
       },
       {
-        heading: "What not to do when progress slows",
+        heading: "Do not declare war on the plateau",
         paragraphs: [
           "Do not automatically:",
         ],
         paragraphsAfterBullets: [
-          "A plateau review should look at the trend, current intake and activity, sleep, symptoms, medications, side effects, health changes, and the original goal. The answer might be a small adjustment, more support, a different treatment, a referral—or time.",
+          "A plateau review should look at the trend, current intake and activity, sleep, symptoms, medications, side effects, health changes, and the original goal. The answer might be a small adjustment, more support, a different treatment, a referral, or time.",
         ],
         bullets: [
           "Slash calories to an unsustainably low level",
@@ -653,16 +705,21 @@ export const blogPosts = Object.freeze([
         ],
       },
       {
-        heading: "Maintenance is not a failed plateau",
+        heading: "Maintenance is still progress",
         paragraphs: [
           "If you have lost clinically meaningful weight and are holding steady, stability may be an important phase of treatment. Maintenance gives you time to practice routines, protect strength, and decide what is sustainable.",
           "Not every flat line needs to be attacked. Sometimes the body is not “stuck”; it is maintaining an achievement.",
         ],
       },
       {
-        heading: "Weight loss plateau support in Northwest Indiana",
+        heading: "Planned plateau support in Northwest Indiana",
         paragraphs: [
-          "Apex Wellness is preparing clinician-led weight and metabolic care for adults in Northwest Indiana. The intended model looks beyond a single scale reading to relevant symptoms, measurements, function, laboratory data when useful, adherence, side effects, and maintenance planning.",
+          [
+            "Apex Wellness is preparing ",
+            { text: "clinician-led weight and metabolic care", href: "/weight-management/" },
+            " for adults in Northwest Indiana. The intended model looks beyond a single scale reading to relevant symptoms, measurements, function, laboratory data when useful, adherence, side effects, and maintenance planning.",
+          ],
+          "The number is data. The life behind it is the point.",
         ],
       },
       {
@@ -682,7 +739,7 @@ export const blogPosts = Object.freeze([
         href: "https://www.niddk.nih.gov/health-information/weight-management/adult-overweight-obesity/treatment",
       },
       {
-        label: "CDC: Healthy Weight—BMI and Waist Circumference",
+        label: "CDC: Healthy Weight, BMI and Waist Circumference",
         href: "https://www.cdc.gov/diabetes/living-with/healthy-weight.html",
       },
       {

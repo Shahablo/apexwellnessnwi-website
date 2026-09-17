@@ -80,7 +80,7 @@ export const pages = Object.freeze({
     headlineLead: 'Medical expertise.',
     headlineEmphasis: 'Focused on your goals.',
     intro:
-      'Thoughtful weight, metabolic, and hormone care for adults in Northwest Indiana. Led by Wajeeh Bakhsh, MD, and Atif Muhammad, MD, Apex is preparing to open with an individualized approach—not a one-size-fits-all prescription.',
+      'Thoughtful weight, metabolic, and hormone care for adults in Northwest Indiana. Led by Atif Muhammad, MD, Apex is preparing to open with an individualized approach, built around the person seeking care.',
     cta: priorityListCta,
     secondaryCta: {
       label: 'Explore care options',
@@ -90,7 +90,7 @@ export const pages = Object.freeze({
     editorial: {
       careHeading: 'Focused care.\nA fuller perspective.',
       physicianHeading: 'Physician-led.\nPerson by person.',
-      physicianBody: 'Wajeeh Bakhsh, MD, and Atif Muhammad, MD, are the physicians behind Apex. We are building a practice around careful evaluation, clear conversations, and responsible treatment decisions.',
+      physicianBody: 'Atif Muhammad, MD, brings a physician’s perspective to Apex. We are building a practice around careful evaluation, clear conversations, and responsible treatment decisions.',
       processHeading: 'A simple first step.\nSpace to decide.',
       process: [
         { title: 'Stay in the know.', body: 'Join the launch list with your name and email. No medical history, payment, or commitment.' },
@@ -630,7 +630,7 @@ export const pages = Object.freeze({
     navLabel: 'About',
     title: 'Meet the Team | Apex Wellness Northwest Indiana',
     description:
-      'Meet Shahab Siddique, Wajeeh Bakhsh, MD, and Atif Muhammad, MD—the people and personal motivations behind Apex Wellness in Northwest Indiana.',
+      'Meet Shahab Siddique and Atif Muhammad, MD, and learn about the personal motivations behind Apex Wellness in Northwest Indiana.',
     eyebrow: 'The people behind Apex',
     h1: 'Different backgrounds. One shared motivation.',
     intro:
@@ -657,20 +657,6 @@ export const pages = Object.freeze({
             aside: 'Birthdays can stay. Automatically retiring your favorite hobbies? Less appealing.'
           },
           {
-            id: 'wajeeh-bakhsh',
-            name: 'Wajeeh Bakhsh, MD',
-            context: 'Physician leadership · Orthopaedic surgeon',
-            headline: 'A surgical perspective. An earlier conversation.',
-            image: { file: 'wajeeh-bakhsh.jpg', width: 400, height: 400 },
-            profileUrl: 'https://www.linkedin.com/in/wajeeh-bakhsh-6a8b1817/',
-            paragraphs: [
-              'Dr. Wajeeh Bakhsh is an orthopaedic surgeon and an active weightlifter. He understands the value of movement both professionally and personally—and knows that losing the ability to do something you love can change much more than a workout.',
-              'In his surgical practice, he sees people whose pain and loss of function have already begun to reshape their lives. That perspective informs his interest in earlier conversations about health, strength, and the activities people want to keep doing.',
-              'At Apex, that interest sits alongside careful evaluation, realistic expectations, and individualized decisions. Earlier attention does not make every problem preventable, but it gives people’s goals a place in the conversation before limitations take over.'
-            ],
-            aside: 'Bodies do not come with a lifetime warranty. They are still worth looking after.'
-          },
-          {
             id: 'atif-muhammad',
             name: 'Atif Muhammad, MD',
             context: 'Physician leadership · Fitness enthusiast · Traveler',
@@ -683,7 +669,7 @@ export const pages = Object.freeze({
             aside: 'There is a world beyond the weight room. Conveniently, Atif is interested in both.'
           }
         ],
-        note: 'Our shared interest in fitness shapes the practice’s perspective; it is not a promise of a particular result. Apex’s planned services focus on weight, metabolic, and hormone care. They do not replace orthopaedic evaluation or guarantee that injury or surgery can be prevented.'
+        note: 'Our shared interest in fitness shapes the practice’s perspective; it is not a promise of a particular result. Apex’s planned services focus on weight, metabolic, and hormone care. They do not replace primary or specialist care or guarantee a particular health outcome.'
       },
       {
         type: 'values',
@@ -723,7 +709,7 @@ export const pages = Object.freeze({
         type: 'notice',
         eyebrow: 'Photography',
         heading: 'Real people. Clearly labeled photography.',
-        body: 'The portraits on this page show Shahab Siddique and Wajeeh Bakhsh. Atif Muhammad’s portrait will be added when available. Other prelaunch photographs are illustrative and do not identify Apex team members, patients, or facilities.'
+        body: 'The portrait on this page shows Shahab Siddique. Atif Muhammad’s portrait will be added when available. Other prelaunch photographs are illustrative and do not identify Apex team members, patients, or facilities.'
       }
     ]
   },
@@ -778,7 +764,7 @@ export const pages = Object.freeze({
           {
             question: 'Who will provide care?',
             answer:
-              'Apex is physician-led by Wajeeh Bakhsh, MD, and Atif Muhammad, MD. Detailed biographies, clinical responsibilities, and individual appointment availability will be published before scheduling opens.'
+              'Apex is physician-led by Atif Muhammad, MD. Detailed clinical responsibilities and individual appointment availability will be published before scheduling opens.'
           },
           {
             question: 'Will Apex replace primary or specialist care?',

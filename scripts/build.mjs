@@ -531,7 +531,7 @@ function renderHome(page) {
     ${renderHero('home', page)}
     <section class="physician-section" id="apex-approach" aria-labelledby="physician-heading"><div class="physician-image">${imageMarkup(imageCatalog.architectural)}</div><div class="physician-content">
       <p class="eyebrow">The people behind the practice</p><h2 id="physician-heading">${multiline(editorial.physicianHeading)}</h2><p>${escapeHtml(editorial.physicianBody)}</p>
-      <ul class="physician-names"><li>Wajeeh Bakhsh<span>MD</span></li><li>Atif Muhammad<span>MD</span></li></ul>
+      <ul class="physician-names"><li>Atif Muhammad<span>MD</span></li></ul>
       <a class="text-link" href="/about/">Our approach to care <span aria-hidden="true">↗</span></a>
     </div></section>
     <section class="section home-care-section" aria-labelledby="care-heading"><div class="container">

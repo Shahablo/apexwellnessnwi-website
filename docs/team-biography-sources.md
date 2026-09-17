@@ -1,5 +1,7 @@
 # Team biographies and portraits
 
+September 17, 2026 supersession: the owner withdrew Wajeeh Bakhsh from all public Apex content. His biography, portrait, links and identifying references must not be included in current or future customer-facing outputs. The source history below is internal provenance, not current permission to publish. The portrait has been removed from deployable assets.
+
 Updated September 12, 2026 UTC (September 11 in Northwest Indiana).
 
 The practice owner explicitly requested the About-page biographies and approved using his and Wajeeh Bakhsh's photographs from LinkedIn or https://medcodepro.ai/#team. The MedCode Pro portraits were selected as a consistent pair. No generative editing or facial retouching was performed. Shahab's original JPEG was converted to WebP at its original dimensions for web delivery; Wajeeh's small JPEG was retained.

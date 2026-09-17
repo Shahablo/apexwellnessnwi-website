@@ -483,13 +483,13 @@ test("sitemap, robots, and custom 404 cover the complete crawlable site", async 
 test('the About page distinguishes real team portraits, supplied interests, and physician credentials', () => {
   const html = htmlBySlug.get('/about/');
   const portraits = startTags(html, 'img').filter(({attrs}) => attrs['data-photo-kind'] === 'portrait');
-  assert.deepEqual(portraits.map(({attrs}) => attrs.alt), ['Shahab Siddique', 'Wajeeh Bakhsh, MD']);
+  assert.deepEqual(portraits.map(({attrs}) => attrs.alt), ['Shahab Siddique']);
   assert.ok(portraits.every(({attrs}) => attrs.loading === 'lazy'));
   assert.match(html, /Atif Muhammad, MD/);
   assert.match(html, /Portrait coming soon/);
   for (const interest of ['wrestling', 'Brazilian jiu-jitsu', 'Muay Thai', 'boxing', 'weightlifter', 'traveling']) assert.ok(html.includes(interest));
   assert.doesNotMatch(html, /Shahab Siddique, MD|Dr\. Shahab/);
-  assert.match(html, /do not replace orthopaedic evaluation or guarantee that injury or surgery can be prevented/);
+  assert.match(html, /do not replace primary or specialist care or guarantee a particular health outcome/);
 });
 
 test('the confirmed clinic address and LinkedIn Page appear consistently in visible copy and schema', () => {
@@ -588,7 +588,7 @@ function escapeForTest(value) {
 
 test('editorial redesign preserves key content, semantic headings, and navigation fallbacks', () => {
   const home = htmlBySlug.get('/');
-  for (const phrase of ['Wajeeh Bakhsh', 'Atif Muhammad', 'Northwest Indiana', 'No appointment booked', site.launch.label]) {
+  for (const phrase of ['Atif Muhammad', 'Northwest Indiana', 'No appointment booked', site.launch.label]) {
     assert.ok(home.includes(phrase), `homepage must retain ${phrase}`);
   }
   for (const [slug, html] of htmlBySlug) {

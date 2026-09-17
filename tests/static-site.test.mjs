@@ -483,13 +483,29 @@ test("sitemap, robots, and custom 404 cover the complete crawlable site", async 
 test('the About page distinguishes real team portraits, supplied interests, and physician credentials', () => {
   const html = htmlBySlug.get('/about/');
   const portraits = startTags(html, 'img').filter(({attrs}) => attrs['data-photo-kind'] === 'portrait');
-  assert.deepEqual(portraits.map(({attrs}) => attrs.alt), ['Shahab Siddique']);
+  assert.deepEqual(portraits.map(({attrs}) => attrs.alt), ['Shahab Siddique', 'Atif Muhammad, MD']);
   assert.ok(portraits.every(({attrs}) => attrs.loading === 'lazy'));
   assert.match(html, /Atif Muhammad, MD/);
-  assert.match(html, /Portrait coming soon/);
+  assert.doesNotMatch(html, /Portrait coming soon/);
   for (const interest of ['wrestling', 'Brazilian jiu-jitsu', 'Muay Thai', 'boxing', 'weightlifter', 'traveling']) assert.ok(html.includes(interest));
   assert.doesNotMatch(html, /Shahab Siddique, MD|Dr\. Shahab/);
   assert.match(html, /do not replace primary or specialist care or guarantee a particular health outcome/);
+});
+
+test('Atif uses the same owner-supplied authentic portrait on the homepage and About page', async () => {
+  for (const slug of ['/', '/about/']) {
+    const images = startTags(htmlBySlug.get(slug), 'img').filter(({attrs}) => attrs.alt === 'Atif Muhammad, MD');
+    assert.equal(images.length, 1, `${slug} needs one Atif portrait`);
+    const {attrs} = images[0];
+    assert.match(attrs.src, /^\/assets\/images\/atif-muhammad\.png\?v=/);
+    assert.equal(attrs['data-photo-kind'], 'portrait');
+    assert.equal(attrs.width, '1170');
+    assert.equal(attrs.height, '1063');
+    assert.equal(attrs.loading, 'lazy');
+  }
+  const source = await readFile(join(projectRoot, 'assets', 'images', 'atif-muhammad.png'));
+  const published = await readFile(join(publicRoot, 'assets', 'images', 'atif-muhammad.png'));
+  assert.deepEqual(published, source, 'build must preserve the supplied portrait bytes');
 });
 
 test('the confirmed clinic address and LinkedIn Page appear consistently in visible copy and schema', () => {

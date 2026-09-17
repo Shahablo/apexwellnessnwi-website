@@ -125,6 +125,8 @@ body{overflow-x:clip}
 .physician-image{position:relative;min-height:40rem}
 .physician-image figure{height:100%}
 .physician-image img{height:100%;object-fit:cover;aspect-ratio:auto}
+.physician-portrait figure{margin:0}
+.physician-portrait img{object-position:center top}
 .physician-content{padding:clamp(3rem,5.7vw,7rem)}
 .physician-content>.eyebrow{color:#dfd6b9}
 .physician-content h2{font-size:clamp(3.5rem,5.2vw,6.5rem);font-weight:400;color:#f6f4ed;margin:0 0 2rem}
@@ -282,7 +284,7 @@ body{overflow-x:clip}
 @media(max-width:48rem){
   .heading-with-aside{display:block}.heading-with-aside>p{margin-top:2rem;max-width:none}.heading-with-aside>p br{display:none}.heading-with-aside>.text-link{margin-top:1.5rem}
   .care-cards{grid-template-columns:1fr;gap:3.5rem}.care-card .representative img{aspect-ratio:5/4}.care-card .care-card-body h3{font-size:2.6rem;max-width:none}.care-card .care-card-body p{font-size:.98rem;max-width:52ch}
-  .physician-section{grid-template-columns:1fr}.physician-image{height:21rem}.physician-image img{object-position:center 65%}.physician-content{padding:3.5rem var(--gutter)}.physician-content h2{font-size:clamp(3.5rem,9vw,5rem)}.physician-content>p:not(.eyebrow){max-width:none}
+  .physician-section{grid-template-columns:1fr}.physician-image{height:21rem}.physician-image img{object-position:center 65%}.physician-portrait{height:auto;aspect-ratio:1170/1063}.physician-portrait img{object-position:center top}.physician-content{padding:3.5rem var(--gutter)}.physician-content h2{font-size:clamp(3.5rem,9vw,5rem)}.physician-content>p:not(.eyebrow){max-width:none}
   .steps{grid-template-columns:1fr;gap:2.3rem}.step-number{padding:1.2rem 0 1.3rem}.step p{max-width:52ch}
   .journal-feature,.blog-card{grid-template-columns:1fr;gap:2rem}.journal-feature h3{font-size:3rem}.journal-feature>div>p:not(.eyebrow){max-width:none}
   .editorial-row{grid-template-columns:1fr;gap:1.7rem}.editorial-row .section-heading h2{max-width:22ch}.editorial-copy p{max-width:none}

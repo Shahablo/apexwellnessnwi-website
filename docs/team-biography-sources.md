@@ -1,5 +1,7 @@
 # Team biographies and portraits
 
+September 17, 2026 portrait update: the owner supplied an authentic Atif Muhammad portrait and authorized its use in appropriate Apex placements. The unchanged 1170 x 1063 PNG is `assets/images/atif-muhammad.png`, SHA-256 `80ac4f311b1cae8cd23db121794c9ffa5b23d7d3d4e34fc394c9f36695d45b0f`. It appears beside his existing About biography and in the homepage physician introduction. CSS controls framing only; there is no generative editing, facial retouching or change to his biography, credentials or the website's launch-list disclosures. This supersedes the earlier missing-photo statement below. The public-identity exclusion remains in force.
+
 September 17, 2026 supersession: the owner withdrew Wajeeh Bakhsh from all public Apex content. His biography, portrait, links and identifying references must not be included in current or future customer-facing outputs. The source history below is internal provenance, not current permission to publish. The portrait has been removed from deployable assets.
 
 Updated September 12, 2026 UTC (September 11 in Northwest Indiana).

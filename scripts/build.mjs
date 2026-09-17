@@ -523,13 +523,14 @@ function renderBlogIndex(page) {
 
 function renderHome(page) {
   const editorial = page.editorial;
+  const physician = pages.about.sections.find((section) => section.type === 'teamProfiles').profiles.find((person) => person.id === 'atif-muhammad');
   const care = page.sections.find((section) => section.type === 'cards');
   const local = page.sections.find((section) => section.type === 'serviceArea');
   const latest = publishedBlogPosts[0];
   const multiline = (text) => escapeHtml(text).replaceAll('\n', '<br>');
   return `<main id="main-content" class="page" tabindex="-1">
     ${renderHero('home', page)}
-    <section class="physician-section" id="apex-approach" aria-labelledby="physician-heading"><div class="physician-image">${imageMarkup(imageCatalog.architectural)}</div><div class="physician-content">
+    <section class="physician-section" id="apex-approach" aria-labelledby="physician-heading"><div class="physician-image physician-portrait"><figure><img data-photo-kind="portrait" src="${escapeHtml(assetUrl(`images/${physician.image.file}`))}" width="${physician.image.width}" height="${physician.image.height}" alt="${escapeHtml(physician.name)}" loading="lazy" decoding="async"></figure></div><div class="physician-content">
       <p class="eyebrow">The people behind the practice</p><h2 id="physician-heading">${multiline(editorial.physicianHeading)}</h2><p>${escapeHtml(editorial.physicianBody)}</p>
       <ul class="physician-names"><li>Atif Muhammad<span>MD</span></li></ul>
       <a class="text-link" href="/about/">Our approach to care <span aria-hidden="true">↗</span></a>

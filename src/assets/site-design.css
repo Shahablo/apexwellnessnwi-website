@@ -49,16 +49,16 @@ h1,h2,h3{font-family:var(--font-display);font-weight:400;letter-spacing:-.035em;
 .people-introduction{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,7vw,8rem);align-items:start;margin-bottom:4rem}
 .people-introduction .section-heading{margin:0}
 .people-introduction>p{font-size:1rem;line-height:1.9;max-width:52ch;margin:0}
-.team-profile{display:grid;grid-template-columns:minmax(15rem,.8fr) minmax(0,1.3fr);gap:clamp(2.5rem,7vw,8rem);padding-block:4.5rem;border-top:1px solid var(--color-border);align-items:start;scroll-margin-top:2rem}
-.team-portrait{margin:0;max-width:30rem}
-.team-portrait img{width:100%;height:auto;aspect-ratio:1;object-fit:cover;display:block;background:var(--color-surface-alt)}
-.team-portrait figcaption{font-size:.74rem;color:var(--color-muted);padding-top:.75rem}
-.team-biography{max-width:44rem}
+.team-profile{display:grid;grid-template-columns:minmax(15rem,.8fr) minmax(0,1.3fr);gap:clamp(2.5rem,7vw,8rem);padding-block:4.5rem;border-top:1px solid var(--color-border);align-items:center;scroll-margin-top:2rem}
+.team-portrait{margin:0 auto;width:100%;max-width:30rem}
+.team-portrait img{width:100%;height:auto;aspect-ratio:1;object-fit:cover;display:block;background:var(--color-surface-alt);border-radius:1.25rem;box-shadow:0 1rem 2.5rem #183d3612}
+.team-portrait figcaption{font-size:.74rem;color:var(--color-muted);padding-top:.75rem;text-align:center}
+.team-biography{max-width:44rem;width:100%;justify-self:center;text-align:center}
 .team-biography .eyebrow{margin:0 0 1.1rem;font-size:.7rem}
 .section .team-biography h3{font-size:clamp(2.8rem,3.6vw,4.6rem);font-weight:400;line-height:1.06;letter-spacing:-.03em;margin:0 0 1rem}
-.team-biography p{font-size:.97rem;line-height:1.9;margin:0 0 1.2rem}
+.team-biography p{font-size:.97rem;line-height:1.9;max-width:54ch;margin:0 auto 1.2rem}
 .team-biography p.team-headline{font:400 clamp(1.6rem,2vw,2.1rem)/1.3 var(--font-display);color:var(--color-accent);margin-bottom:1.8rem}
-.team-biography p.team-aside{font-size:.9rem;border-left:2px solid var(--color-accent);padding:.25rem 0 .25rem 1.2rem;margin:1.7rem 0 0;color:var(--color-ink)}
+.team-biography p.team-aside{font-size:.9rem;border-top:1px solid var(--color-border);padding:1.2rem .5rem 0;margin:1.7rem auto 0;color:var(--color-ink)}
 .team-biography>.text-link{margin-top:1.3rem}
 .portrait-pending{display:flex;flex-direction:column;justify-content:center;align-items:center;gap:1.5rem;aspect-ratio:1;width:100%;max-width:30rem;background:#e6e8d9;border:1px solid var(--color-border);color:var(--color-ink)}
 .portrait-pending>span{font:400 clamp(5rem,8vw,9rem)/1 var(--font-display);letter-spacing:-.06em}
@@ -125,14 +125,15 @@ body{overflow-x:clip}
 .physician-image{position:relative;min-height:40rem}
 .physician-image figure{height:100%}
 .physician-image img{height:100%;object-fit:cover;aspect-ratio:auto}
-.physician-portrait figure{margin:0}
-.physician-portrait img{object-position:center top}
-.physician-content{padding:clamp(3rem,5.7vw,7rem)}
+.physician-portrait{min-height:0;display:flex;align-items:center;padding:clamp(1.25rem,3vw,3rem)}
+.physician-portrait figure{margin:0;width:100%;height:auto;overflow:hidden;border-radius:1.5rem;box-shadow:0 1rem 2.5rem #071e1833}
+.physician-portrait img{width:100%;height:auto;aspect-ratio:1170/1063;object-position:center top}
+.physician-content{padding:clamp(3rem,5.7vw,7rem);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
 .physician-content>.eyebrow{color:#dfd6b9}
 .physician-content h2{font-size:clamp(3.5rem,5.2vw,6.5rem);font-weight:400;color:#f6f4ed;margin:0 0 2rem}
-.physician-content>p:not(.eyebrow){font-size:.95rem;line-height:1.9;max-width:43ch;color:#e2e8dd}
-.physician-names{list-style:none;padding:0;margin:2.5rem 0 1.3rem}
-.physician-names li{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.9rem 0;border-bottom:1px solid #f6f4ed40;font:400 clamp(1.7rem,2.5vw,2.7rem)/1.2 var(--font-display)}
+.physician-content>p:not(.eyebrow){font-size:.95rem;line-height:1.9;max-width:43ch;margin-inline:auto;color:#e2e8dd}
+.physician-names{list-style:none;padding:0;margin:2.5rem 0 1.3rem;width:100%;max-width:28rem}
+.physician-names li{display:flex;align-items:baseline;justify-content:center;flex-wrap:wrap;gap:.65rem;padding:.9rem 0;border-bottom:1px solid #f6f4ed40;font:400 clamp(1.7rem,2.5vw,2.7rem)/1.2 var(--font-display)}
 .physician-names li span{font:500 .72rem/1.5 var(--font-body);letter-spacing:.08em}
 .physician-content .text-link{color:#ede9ca}
 .steps{grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(1.5rem,4vw,5rem)}
@@ -284,7 +285,7 @@ body{overflow-x:clip}
 @media(max-width:48rem){
   .heading-with-aside{display:block}.heading-with-aside>p{margin-top:2rem;max-width:none}.heading-with-aside>p br{display:none}.heading-with-aside>.text-link{margin-top:1.5rem}
   .care-cards{grid-template-columns:1fr;gap:3.5rem}.care-card .representative img{aspect-ratio:5/4}.care-card .care-card-body h3{font-size:2.6rem;max-width:none}.care-card .care-card-body p{font-size:.98rem;max-width:52ch}
-  .physician-section{grid-template-columns:1fr}.physician-image{height:21rem}.physician-image img{object-position:center 65%}.physician-portrait{height:auto;aspect-ratio:1170/1063}.physician-portrait img{object-position:center top}.physician-content{padding:3.5rem var(--gutter)}.physician-content h2{font-size:clamp(3.5rem,9vw,5rem)}.physician-content>p:not(.eyebrow){max-width:none}
+  .physician-section{grid-template-columns:1fr}.physician-image{height:21rem}.physician-image img{object-position:center 65%}.physician-portrait{height:auto;aspect-ratio:auto}.physician-portrait img{object-position:center top}.physician-content{padding:2rem var(--gutter) 3.5rem}.physician-content h2{font-size:clamp(3.5rem,9vw,5rem)}.physician-content>p:not(.eyebrow){max-width:43ch}
   .steps{grid-template-columns:1fr;gap:2.3rem}.step-number{padding:1.2rem 0 1.3rem}.step p{max-width:52ch}
   .journal-feature,.blog-card{grid-template-columns:1fr;gap:2rem}.journal-feature h3{font-size:3rem}.journal-feature>div>p:not(.eyebrow){max-width:none}
   .editorial-row{grid-template-columns:1fr;gap:1.7rem}.editorial-row .section-heading h2{max-width:22ch}.editorial-copy p{max-width:none}

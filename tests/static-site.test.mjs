@@ -514,7 +514,7 @@ test('the confirmed clinic address and LinkedIn Page appear consistently in visi
     const jsonLd = [...html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)]
       .find((match) => attributes(match[1]).type === 'application/ld+json');
     const organization = JSON.parse(jsonLd[2])['@graph'].find((node) => node['@type'] === 'Organization');
-    assert.equal(organization.address.streetAddress, '8560 Broadway');
+    assert.equal(organization.address.streetAddress, '8550 Broadway, Suite B');
     assert.equal(organization.address.postalCode, '46410');
     assert.ok(organization.sameAs.includes('https://www.linkedin.com/company/apex-wellness-nwi/'));
     assert.doesNotMatch(html, /A confirmed street address|The confirmed clinic address|A confirmed address and visit-modality details/);

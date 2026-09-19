@@ -6,7 +6,7 @@ import { site } from '../src/content.mjs';
 test('the guide gives the owner-confirmed address while preserving prelaunch status', () => {
   const answer = answerWebsiteQuestion('Where is your clinic?');
   assert.ok(answer.text.includes(site.address.label));
-  assert.match(answer.text, /Appointments are not yet available/);
+  assert.match(answer.text, /Coming soon/);
 });
 
 test('site guide answers known questions using bounded local information', () => {

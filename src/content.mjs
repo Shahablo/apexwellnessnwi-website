@@ -5,22 +5,22 @@ const priorityListCta = Object.freeze({
 
 const effectiveDate = 'September 12, 2026';
 
-const clinicAddress = '8560 Broadway, Merrillville, IN 46410';
+const clinicAddress = '8550 Broadway, Suite B, Merrillville, IN 46410';
 
 const emergencyNotice =
   'Apex Wellness does not provide urgent or emergency care. If you are experiencing a medical emergency, call 911 or go to the nearest emergency department.';
 
 const prelaunchNotice =
-  'Apex Wellness is preparing to open. You may request future contact about opening-month consultation availability; appointments, treatment, prescriptions, and payments are not currently available through this website.';
+  'Apex Wellness is coming soon to Merrillville. Find launch updates at apexwellnessnwi.com.';
 
 export const site = Object.freeze({
   name: 'Apex Wellness',
   canonicalUrl: 'https://apexwellnessnwi.com',
   region: 'Northwest Indiana',
-  address: { streetAddress: '8560 Broadway', addressLocality: 'Merrillville', addressRegion: 'IN', postalCode: '46410', addressCountry: 'US', label: clinicAddress },
+  address: { streetAddress: '8550 Broadway, Suite B', addressLocality: 'Merrillville', addressRegion: 'IN', postalCode: '46410', addressCountry: 'US', label: clinicAddress },
   status: 'Prelaunch',
   tagline: 'Physician-led care. Built around you.',
-  contentUpdated: '2026-09-12',
+  contentUpdated: '2026-09-19',
   launch: { date: '2026-11-01', label: 'November 1, 2026', status: 'Planned launch' },
   social: [
     { label: 'Instagram', href: 'https://www.instagram.com/apexwellnessnwi/' },
@@ -63,7 +63,7 @@ export const site = Object.freeze({
     summary:
       'A physician-managed approach to weight, metabolic, and hormone care for adults in Northwest Indiana.',
     location:
-      `Coming soon to ${clinicAddress}. Contact channels, office hours, and appointment availability will be published before scheduling opens.`,
+      `Coming soon to ${clinicAddress}.`,
     copyright: '© 2026 Apex Wellness.'
   }
 });
@@ -74,7 +74,7 @@ export const pages = Object.freeze({
     navLabel: 'Home',
     title: 'Physician-Led Weight & Hormone Care in NWI | Apex Wellness',
     description:
-      'Request future contact about opening-month consultations for planned physician-managed weight, metabolic, and hormone care in Northwest Indiana.',
+      'Physician-led weight, metabolic, and hormone care in Northwest Indiana. Coming soon to Merrillville. Join the Launch List for opening updates.',
     eyebrow: 'Planned launch · November 1, 2026 · Northwest Indiana',
     h1: 'Medical expertise. Focused on your goals.',
     headlineLead: 'Medical expertise.',
@@ -86,7 +86,7 @@ export const pages = Object.freeze({
       label: 'Explore care options',
       href: '/weight-management/'
     },
-    ctaNote: 'Opening updates + future consultation availability · Free to join · No appointment booked',
+    ctaNote: 'Find launch updates at apexwellnessnwi.com',
     editorial: {
       careHeading: 'Focused care.\nA fuller perspective.',
       physicianHeading: 'Physician-led.\nPerson by person.',
@@ -138,7 +138,7 @@ export const pages = Object.freeze({
         eyebrow: 'Stay in the know',
         heading: 'Your next step starts with clear information.',
         body:
-          'Submit only your name and email. Apex may contact you when verified clinician availability, pricing, visit arrangements, and opening-month consultation details are available. A request is not an appointment, reservation, acceptance as a patient, or guarantee of treatment.',
+          'Join the Launch List with your name and email for opening updates from Apex.',
         cta: priorityListCta
       },
       {
@@ -188,7 +188,7 @@ export const pages = Object.freeze({
         eyebrow: 'Opening in Northwest Indiana',
         heading: 'Review the real details before deciding whether to book.',
         body:
-          `November 1, 2026 is our planned launch at ${clinicAddress}, not a guarantee of appointment availability. Contact information, hours, final pricing, and individual clinician availability will be shared before scheduling opens. Joining the launch list does not establish care or guarantee treatment.`,
+          `Coming soon to ${clinicAddress}. Our planned launch is November 1, 2026. Find launch updates at apexwellnessnwi.com.`,
         cta: priorityListCta
       },
       {
@@ -196,7 +196,7 @@ export const pages = Object.freeze({
         eyebrow: 'Region served',
         heading: 'Northwest Indiana',
         body:
-          `Apex Wellness is preparing to open at ${clinicAddress}, for adults in Merrillville, Crown Point, Schererville, Munster, Dyer, St. John, Highland, Hobart, and surrounding communities. Visit arrangements and appointment availability will be published before scheduling opens.`
+          `Coming soon to ${clinicAddress}, serving adults in Merrillville, Crown Point, Schererville, Munster, Dyer, St. John, Highland, Hobart, and surrounding Northwest Indiana communities.`
       }
     ]
   },
@@ -206,11 +206,11 @@ export const pages = Object.freeze({
     navLabel: 'Weight & Metabolic',
     title: 'Medical Weight Management in Northwest Indiana | Apex Wellness',
     description:
-      'Learn about the planned physician-managed approach to medical weight and metabolic care at Apex Wellness in Northwest Indiana.',
+      'Learn about the physician-managed approach to medical weight and metabolic care at Apex Wellness in Northwest Indiana.',
     eyebrow: 'Care area · Medical weight and metabolic care',
     h1: 'Weight care, with the whole person in mind.',
     intro:
-      'The planned care model begins with evaluation, risks, goals, and relevant measurements. Medication may be discussed when clinically indicated, but it is never the only lever and is never guaranteed.',
+      'The care model begins with evaluation, risks, goals, and relevant measurements. Medication may be discussed when clinically indicated, but it is never the only lever and is never guaranteed.',
     cta: priorityListCta,
     sections: [
       {
@@ -301,7 +301,7 @@ export const pages = Object.freeze({
     navLabel: "Men's Hormone Health",
     title: "Men's Hormone Health in Northwest Indiana | Apex Wellness",
     description:
-      "Learn about Apex Wellness's planned physician-managed evaluation of men's hormone concerns in Northwest Indiana.",
+      "Learn about Apex Wellness's physician-managed evaluation of men's hormone concerns in Northwest Indiana.",
     eyebrow: "Care area · Men's hormone health",
     h1: 'A fuller picture of your hormone health.',
     intro:
@@ -321,7 +321,7 @@ export const pages = Object.freeze({
         eyebrow: 'Evaluation',
         heading: 'Symptoms and risk reviewed together.',
         body:
-          'The planned evaluation considers relevant medical history, sleep, cardiovascular and blood-pressure factors, fertility goals, current medications, symptoms, and prior results. Options may include no hormone treatment.'
+          'The evaluation considers relevant medical history, sleep, cardiovascular and blood-pressure factors, fertility goals, current medications, symptoms, and prior results. Options may include no hormone treatment.'
       },
       {
         type: 'detail',
@@ -396,11 +396,11 @@ export const pages = Object.freeze({
     navLabel: "Women's Midlife Care",
     title: 'Menopause & Midlife Care in Northwest Indiana | Apex Wellness',
     description:
-      'Learn about the planned physician-managed approach to perimenopause, menopause, weight, sleep, and metabolic concerns at Apex Wellness.',
+      'Learn about the physician-managed approach to perimenopause, menopause, weight, sleep, and metabolic concerns at Apex Wellness.',
     eyebrow: "Care area · Women's midlife hormone and metabolic care",
     h1: 'Midlife care, built around your next chapter.',
     intro:
-      'The planned approach is individualized rather than built around a generic “hormone balancing” promise. Hormonal and non-hormonal options may be discussed, and coordination or referral remains part of good care.',
+      'The approach is individualized rather than built around a generic “hormone balancing” promise. Hormonal and non-hormonal options may be discussed, and coordination or referral remains part of good care.',
     cta: priorityListCta,
     sections: [
       {
@@ -491,7 +491,7 @@ export const pages = Object.freeze({
     navLabel: 'How It Works',
     title: 'How Care Is Planned to Work | Apex Wellness',
     description:
-      'See the planned four-step Apex Wellness process, from choosing a care area through evaluation, appropriate testing, and a written plan.',
+      'See the four-step Apex Wellness process, from choosing a care area through evaluation, appropriate testing, and a written plan.',
     eyebrow: 'How it works',
     h1: 'Thoughtful care, from the first conversation.',
     intro:
@@ -500,7 +500,7 @@ export const pages = Object.freeze({
     sections: [
       {
         type: 'steps',
-        heading: 'The planned care journey',
+        heading: 'The care journey',
         items: [
           {
             title: 'Choose your care area.',
@@ -540,7 +540,7 @@ export const pages = Object.freeze({
         type: 'prelaunch',
         heading: 'What is available today',
         body:
-          'The website currently accepts requests for future contact about opening-month consultation availability. It does not book or confirm appointments or provide clinical intake, medical advice, prescriptions, or payment. Verified staffing, visit modality, response times, follow-up cadence, and launch availability will be published before scheduling opens.',
+          'Apex is coming soon to Merrillville. Join the Launch List for opening updates and details about getting started.',
         cta: priorityListCta
       }
     ]
@@ -670,7 +670,7 @@ export const pages = Object.freeze({
             aside: 'There is a world beyond the weight room. Conveniently, Atif is interested in both.'
           }
         ],
-        note: 'Our shared interest in fitness shapes the practice’s perspective; it is not a promise of a particular result. Apex’s planned services focus on weight, metabolic, and hormone care. They do not replace primary or specialist care or guarantee a particular health outcome.'
+        note: 'Our shared interest in fitness shapes the practice’s perspective; it is not a promise of a particular result. Apex’s services focus on weight, metabolic, and hormone care. They do not replace primary or specialist care or guarantee a particular health outcome.'
       },
       {
         type: 'values',
@@ -704,7 +704,7 @@ export const pages = Object.freeze({
         eyebrow: 'Location and access',
         heading: 'Operational details are still being finalized.',
         body:
-          `Our location is ${clinicAddress}. Apex is preparing to open; appointments are not yet available. Phone, email, office hours, visit modality, accessibility details, parking information, and response times will be published before scheduling opens.`
+          `Find us at ${clinicAddress}. Coming soon. Find launch updates at apexwellnessnwi.com.`
       },
       {
         type: 'notice',
@@ -724,7 +724,7 @@ export const pages = Object.freeze({
     eyebrow: 'Frequently asked questions',
     h1: 'Questions, answered before you commit.',
     intro:
-      'Apex Wellness is still in prelaunch. These answers separate what is planned from what is currently available and will be updated as verified operating details are finalized.',
+      'Get to know our care areas, location, and approach. Coming soon to Merrillville. Find launch updates at apexwellnessnwi.com.',
     cta: priorityListCta,
     sections: [
       {
@@ -734,7 +734,7 @@ export const pages = Object.freeze({
           {
             question: 'Is Apex Wellness open?',
             answer:
-              'Not yet. This website currently provides information and accepts requests for future contact about consultation availability. It does not book appointments or provide clinical intake, treatment, prescriptions, or payment.'
+              'Coming soon. Find launch updates at apexwellnessnwi.com or join the Launch List to hear from us by email.'
           },
           {
             question: 'Where is Apex located?',
@@ -744,7 +744,7 @@ export const pages = Object.freeze({
           {
             question: 'When will appointments open?',
             answer:
-              'Our planned launch is November 1, 2026. Scheduling is not open yet, and the date may change. Join the launch list for opening updates and future consultation availability; joining does not reserve an appointment.'
+              'Our planned launch is November 1, 2026. Find launch updates at apexwellnessnwi.com.'
           },
           {
             question: 'Does submitting a consultation request reserve an appointment?',
@@ -818,11 +818,11 @@ export const pages = Object.freeze({
     navLabel: 'Launch List',
     title: 'Join the Apex Wellness Launch List | Northwest Indiana',
     description:
-      'Join the Apex Wellness launch list for opening updates and future consultation availability. Physician-led care is planned for Northwest Indiana.',
+      'Join the Apex Wellness Launch List for opening updates. Physician-led weight, metabolic, and hormone care. Coming soon to Merrillville.',
     eyebrow: 'Planned launch · November 1, 2026',
     h1: 'Be ready for what comes next.',
     intro:
-      'Join the launch list for opening updates and future consultation availability. Share only your name and email. We will share the details you need before you decide whether to book. This is not an appointment or medical intake.',
+      'Join the Launch List for opening updates from Apex. Share your name and email, and get to know the practice as we prepare to open.',
     cta: {
       label: 'Go to the request form',
       href: '#consultation-request'
@@ -845,7 +845,7 @@ export const pages = Object.freeze({
       privacyNote:
         'Enter only your name and email. Do not submit symptoms, diagnoses, medications, laboratory values, insurance details, or other sensitive medical information. This form is not monitored for medical concerns.',
       successMessage:
-        'You’re on the launch list. Apex received your request for opening updates and future consultation availability. This is not an appointment confirmation or acceptance as a patient.'
+        'You’re on the Launch List. Thanks for joining us. Find launch updates at apexwellnessnwi.com.'
     },
     sections: [
       {
@@ -862,26 +862,26 @@ export const pages = Object.freeze({
         eyebrow: 'What you are signing up for',
         heading: 'Information first. A decision later.',
         body:
-          'The launch list is our pre-opening contact pathway, previously called the Founding Patient consultation request. You are asking for opening information and future consultation availability—not enrolling in treatment. There is no deposit, guaranteed priority, discount, or appointment. The contact permission you provide has not changed.'
+          'Join the Launch List to receive opening updates, meet the team, and learn more about care at Apex.'
       },
       {
         type: 'cards',
-        eyebrow: 'Planned care areas',
+        eyebrow: 'Care areas',
         heading: 'Explore whether Apex may fit what you are looking for.',
         cards: [
           {
             title: 'Medical Weight and Metabolic Care',
-            body: 'A planned physician-managed approach to evaluation, meaningful measurements, sustainable habits, and medication only when clinically indicated.',
+            body: 'A physician-managed approach to evaluation, meaningful measurements, sustainable habits, and medication only when clinically indicated.',
             href: '/weight-management/'
           },
           {
             title: "Men's Hormone Health",
-            body: 'A planned risk-aware evaluation of symptoms and appropriate testing before any treatment decision.',
+            body: 'A risk-aware evaluation of symptoms and appropriate testing before any treatment decision.',
             href: '/mens-hormone-health/'
           },
           {
             title: "Women's Midlife Hormone and Metabolic Care",
-            body: 'A planned individualized discussion of perimenopause, menopause, weight, sleep, and metabolic concerns.',
+            body: 'An individualized discussion of perimenopause, menopause, weight, sleep, and metabolic concerns.',
             href: '/womens-midlife-care/'
           }
         ]
@@ -889,11 +889,11 @@ export const pages = Object.freeze({
       {
         type: 'steps',
         eyebrow: 'What happens next',
-        heading: 'The request comes first. A booking decision comes later.',
+        heading: 'Stay connected as Apex takes shape.',
         items: [
           {
             title: 'Submit your request.',
-            body: 'Apex records your contact request and communication consent. No appointment is booked automatically.'
+            body: 'Share your name, email, and permission for us to send launch updates.'
           },
           {
             title: 'Receive verified details.',
@@ -911,9 +911,9 @@ export const pages = Object.freeze({
       },
       {
         type: 'notice',
-        heading: 'No appointment or treatment is guaranteed.',
+        heading: 'Keep medical information private.',
         body:
-          'Submitting this form does not reserve a time, establish a clinician-patient relationship, confirm eligibility, promise a prescription, or guarantee any result. Medical questions cannot be evaluated here. For urgent or emergency needs, seek appropriate immediate care.'
+          'Use this form for your name and email only. Medical questions and records belong in a secure clinical conversation. For urgent or emergency needs, seek appropriate immediate care.'
       },
       {
         type: 'faq',

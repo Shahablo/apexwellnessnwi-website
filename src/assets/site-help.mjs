@@ -15,31 +15,31 @@ export function answerWebsiteQuestion(input, launchLabel = 'November 1, 2026') {
     return result('I am an automated website guide with fixed informational answers—not a clinician or live staff member. Your question is processed only in this page, is not saved by this guide, and is not sent to Apex or an AI service. The separate launch form does save the information you choose to submit with consent.', 'Read the privacy policy', '/privacy/');
   }
   if (/\b(launch list|sign ?up|join|book|appointment|consultation|schedule|intake)\b/.test(question)) {
-    return result('Join the free launch list with your name, email, and contact permission. Apex may email opening information and future consultation availability. It is not a booking, medical intake, guaranteed priority, or acceptance as a patient. No payment is collected.', 'Join the launch list', '/founding-patients/');
+    return result('Join the Launch List with your name, email, and contact permission. Find launch updates at apexwellnessnwi.com.', 'Join the launch list', '/founding-patients/');
   }
   if (/\b(open|opening|launch|november|date|when)\b/.test(question)) {
-    return result(`The planned launch is ${launchLabel}. Apex is not open for appointments yet, and the date may change. Join the launch list for opening updates and future consultation availability.`, 'Get opening updates', '/founding-patients/');
+    return result(`The planned launch is ${launchLabel}. Coming soon to Merrillville. Find launch updates at apexwellnessnwi.com.`, 'Get opening updates', '/founding-patients/');
   }
   if (/\b(price|pricing|cost|fee|pay|insurance|cash|medicare|medicaid|afford)\b/.test(question)) {
-    return result('Joining the launch list is free. The planned care model is cash-pay; final fees, what is included, and any separate medication or testing costs will be published before scheduling or payment opens. No insurance coverage or reimbursement is promised.', 'Pricing and what to expect', '/pricing/');
+    return result('Joining the launch list is free. The care model is cash-pay; final fees, what is included, and any separate medication or testing costs will be published before scheduling or payment opens. No insurance coverage or reimbursement is promised.', 'Pricing and what to expect', '/pricing/');
   }
   if (/\b(where|location|address|merrillville|hours|parking|phone|email|contact|telehealth|virtual)\b/.test(question)) {
-    return result('Apex is preparing to open at 8560 Broadway, Merrillville, IN 46410. Appointments are not yet available. Contact channels, hours, parking, accessibility details, and visit arrangements will be published before scheduling opens. The website form currently accepts requests for future contact only.', 'Location and practice details', '/about/');
+    return result('Coming soon to 8550 Broadway, Suite B, Merrillville, IN 46410. Find launch updates at apexwellnessnwi.com.', 'Location and practice details', '/about/');
   }
   if (/\b(who|physician|doctor|team|muhammad|founder)\b/.test(question)) {
-    return result('Apex is physician-led by Atif Muhammad, MD. Meet Atif and Shahab Siddique on the About page. Detailed clinical responsibilities and individual appointment availability will be shared as opening preparations continue.', 'Meet the people behind Apex', '/about/');
+    return result('Apex is physician-led by Atif Muhammad, MD. Meet Atif and Shahab Siddique on the About page. ', 'Meet the people behind Apex', '/about/');
   }
   if (/\b(menopause|perimenopause|women|woman|midlife)\b/.test(question)) {
-    return result('Planned women’s midlife care includes individualized discussion of perimenopause, menopause, and metabolic concerns. This guide cannot determine whether any particular treatment is appropriate or available for you.', 'Explore women’s midlife care', '/womens-midlife-care/');
+    return result('Women’s midlife care includes individualized discussion of perimenopause, menopause, and metabolic concerns. This guide cannot determine whether any particular treatment is appropriate or available for you.', 'Explore women’s midlife care', '/womens-midlife-care/');
   }
   if (/\b(testosterone|trt|men|man)\b/.test(question)) {
-    return result('Planned men’s hormone care starts with a thoughtful evaluation and appropriate testing. Treatment is considered only after a clinical review; a consultation does not guarantee a prescription.', 'Explore men’s hormone health', '/mens-hormone-health/');
+    return result('Men’s hormone care starts with a thoughtful evaluation and appropriate testing. Treatment is considered only after a clinical review; a consultation does not guarantee a prescription.', 'Explore men’s hormone health', '/mens-hormone-health/');
   }
   if (/\b(weight|glp|semaglutide|tirzepatide|metabolic|ozempic|wegovy|zepbound)\b/.test(question)) {
-    return result('Apex is planning physician-led weight and metabolic care with individual evaluation, habits, monitoring, and medication only when clinically appropriate. No medication, prescription, outcome, or treatment eligibility is guaranteed.', 'Explore weight and metabolic care', '/weight-management/');
+    return result('Apex’s approach is physician-led weight and metabolic care with individual evaluation, habits, monitoring, and medication only when clinically appropriate. No medication, prescription, outcome, or treatment eligibility is guaranteed.', 'Explore weight and metabolic care', '/weight-management/');
   }
   if (/\b(service|care|offer|hormone|treat)\b/.test(question)) {
-    return result('The three planned care areas are medical weight and metabolic care, men’s hormone health, and women’s midlife hormone and metabolic care. Apex is not a substitute for primary, specialist, urgent, or emergency care.', 'How care is planned to work', '/how-it-works/');
+    return result('The three care areas are medical weight and metabolic care, men’s hormone health, and women’s midlife hormone and metabolic care. Apex is not a substitute for primary, specialist, urgent, or emergency care.', 'Explore our approach to care', '/how-it-works/');
   }
   return result('I do not have a verified answer to that question. I can help with opening plans, care areas, pricing status, physician leadership, and the launch list. Please do not enter personal or medical information.', 'Browse all FAQs', '/faq/');
 }

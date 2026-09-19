@@ -661,7 +661,7 @@ export const pages = Object.freeze({
             name: 'Atif Muhammad, MD',
             context: 'Physician leadership · Fitness enthusiast · Traveler',
             headline: 'Fitness for a life beyond the gym.',
-            image: { file: 'atif-muhammad.png', width: 1170, height: 1063 },
+            image: { file: 'atif-muhammad-smiling-v2.png', width: 1316, height: 1195 },
             paragraphs: [
               'Dr. Atif Muhammad is an active weightlifter, enjoys traveling, and is passionate about fitness. Those interests connect with a simple idea behind Apex: health matters not only in the gym, but in the life you want to enjoy beyond it.',
               'That might mean pursuing a training goal, feeling capable while exploring somewhere new, or continuing the everyday routines that matter to you. Different people have different priorities, and that personal context deserves a place in a clinical conversation.',

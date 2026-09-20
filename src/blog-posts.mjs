@@ -1,4 +1,7 @@
+import { personalGoalsArticle } from './personal-goals-article.mjs';
+
 export const blogPosts = Object.freeze([
+  personalGoalsArticle,
   {
     "slug": "/blog/apex-wellness-coming-soon-merrillville/",
     "title": "Apex Wellness Coming Soon to Merrillville | Launch Update",

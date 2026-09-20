@@ -1,5 +1,5 @@
 /*
-  Content-Security-Policy: default-src 'self'; base-uri 'self'; connect-src 'self'; font-src 'self'; form-action 'self'; frame-ancestors 'none'; frame-src 'none'; img-src 'self' data:; manifest-src 'self'; media-src 'self'; object-src 'none'; script-src 'self' 'sha256-mOFyH6tuIZIsc2eaS98RdaW6iuGdLeECkoZXG+8CB0c=' 'sha256-aoPuldNNZZLmbFHuRNr0y0mZ2gs1v5dZ2mKA+9/olkg=' 'sha256-+J68AdB1TEwvYIwmGxm7yVlZsVtWdvTqSQ1kAzZWQXk=' 'sha256-ZJxYLK9nx/VkdtzmUhe05XOnYTy4hw46KkgUUUOhHvU=' 'sha256-ZKwPg7PyQI3R7D5WbjrBW2Y6dUSULhf+unMBnCLDtWs=' 'sha256-KcNAbbQs7o/h48MBrt+snQZe4AORok6ZV/IPy6QmYWE=' 'sha256-BpbVJ2d9OKUm62POHc1OHSePooc9NHUjYQzu2LFOtmg=' 'sha256-EgBqMP7oisd6tC7wjosTesIQQemO46gghvTB/PhboxM=' 'sha256-zV4HCsPD6bVWgWWp9J0Af15Fk+wSDbQhfjEXe8ISJIg=' 'sha256-dLRxuNBB9npkCMGE1VMRt9Ue1pkIrE8xxSWm8KU+Kd0=' 'sha256-WhPV8nz9KbCr2RbIgSCvAjrDla0TCXAC72+FWprJeLM=' 'sha256-mFCQHWe58KCiG1UueOspa3GRcxeFfuVjFHIUrAW2hxk=' 'sha256-h0fUOWaAC5hcAgf0QNcm/TWgHuDinv8FIvk9t8DSrhw=' 'sha256-9jVXxCBOoYayXa1mGeWeOJZYndcud73cCueQMHZJol0=' 'sha256-ypTtZsLEA4g0paB9phrvarC4U0/K6H2dDQhMFM8aLwU=' 'sha256-K+Mm1FyZvaeMjJO37dggEjSCuVnPUZX72JrhIJHpOAg=' 'sha256-hJjYpqggB364cfiew5IVBTuMnEEsZo7DyNNji+xFoik=' 'sha256-5MFRAAUk9b3X7zYaw7/A2Fl1DeBzF0IlNNaxcxhZo6c='; style-src 'self'; upgrade-insecure-requests
+  Content-Security-Policy: default-src 'self'; base-uri 'self'; connect-src 'self'; font-src 'self'; form-action 'self'; frame-ancestors 'none'; frame-src 'none'; img-src 'self' data:; manifest-src 'self'; media-src 'self'; object-src 'none'; script-src 'self' 'sha256-mOFyH6tuIZIsc2eaS98RdaW6iuGdLeECkoZXG+8CB0c=' 'sha256-aoPuldNNZZLmbFHuRNr0y0mZ2gs1v5dZ2mKA+9/olkg=' 'sha256-+J68AdB1TEwvYIwmGxm7yVlZsVtWdvTqSQ1kAzZWQXk=' 'sha256-ZJxYLK9nx/VkdtzmUhe05XOnYTy4hw46KkgUUUOhHvU=' 'sha256-ZKwPg7PyQI3R7D5WbjrBW2Y6dUSULhf+unMBnCLDtWs=' 'sha256-KcNAbbQs7o/h48MBrt+snQZe4AORok6ZV/IPy6QmYWE=' 'sha256-BpbVJ2d9OKUm62POHc1OHSePooc9NHUjYQzu2LFOtmg=' 'sha256-EgBqMP7oisd6tC7wjosTesIQQemO46gghvTB/PhboxM=' 'sha256-zV4HCsPD6bVWgWWp9J0Af15Fk+wSDbQhfjEXe8ISJIg=' 'sha256-dLRxuNBB9npkCMGE1VMRt9Ue1pkIrE8xxSWm8KU+Kd0=' 'sha256-WhPV8nz9KbCr2RbIgSCvAjrDla0TCXAC72+FWprJeLM=' 'sha256-mFCQHWe58KCiG1UueOspa3GRcxeFfuVjFHIUrAW2hxk=' 'sha256-h0fUOWaAC5hcAgf0QNcm/TWgHuDinv8FIvk9t8DSrhw=' 'sha256-9jVXxCBOoYayXa1mGeWeOJZYndcud73cCueQMHZJol0=' 'sha256-ypTtZsLEA4g0paB9phrvarC4U0/K6H2dDQhMFM8aLwU=' 'sha256-+utqkUWmTSQjLEVZvNcEJ+FaQEkVpGwM+b8W0MWPfZI=' 'sha256-K+Mm1FyZvaeMjJO37dggEjSCuVnPUZX72JrhIJHpOAg=' 'sha256-hJjYpqggB364cfiew5IVBTuMnEEsZo7DyNNji+xFoik=' 'sha256-5MFRAAUk9b3X7zYaw7/A2Fl1DeBzF0IlNNaxcxhZo6c='; style-src 'self'; upgrade-insecure-requests
   Cross-Origin-Opener-Policy: same-origin
   Cross-Origin-Resource-Policy: same-origin
   Permissions-Policy: accelerometer=(), autoplay=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()
@@ -99,6 +99,12 @@
   Cache-Control: no-cache, max-age=0, must-revalidate
 
 /blog/index.html
+  Cache-Control: no-cache, max-age=0, must-revalidate
+
+/blog/staying-active-as-you-age-personal-goals/
+  Cache-Control: no-cache, max-age=0, must-revalidate
+
+/blog/staying-active-as-you-age-personal-goals/index.html
   Cache-Control: no-cache, max-age=0, must-revalidate
 
 /blog/apex-wellness-coming-soon-merrillville/

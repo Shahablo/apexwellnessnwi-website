@@ -515,7 +515,7 @@ function renderBlogIndex(page) {
   return `<main id="main-content" class="page" tabindex="-1">
     <header class="journal-header"><div class="container"><div><p class="eyebrow">The Apex journal</p><h1 id="page-title">${escapeHtml(page.h1)}</h1></div><p class="journal-deck">${escapeHtml(page.intro)}</p></div></header>
     <section class="section" aria-labelledby="latest-articles"><div class="container">
-      <div class="section-heading"><p class="eyebrow">Latest articles</p><h2 id="latest-articles">Start with the question already on your mind.</h2><p>Every article is written for education, sourced from credible medical references, and clear about what still belongs in a real clinical conversation.</p></div>
+      <div class="section-heading"><p class="eyebrow">Latest articles</p><h2 id="latest-articles">Start with the question already on your mind.</h2><p>Practical reflections, practice updates, and source-backed health education. Each article is clear about its scope and what belongs in an individual clinical conversation.</p></div>
       <div class="blog-grid">${articleCards}</div>
     </div></section>
   </main>`;
@@ -586,8 +586,8 @@ function renderBlogPost(page) {
         <nav class="article-contents" aria-label="In this article"><h2>In this article</h2><ul>${page.sections.map((section, index) => `<li><a href="#${identifier(section.heading)}-${index + 1}">${escapeHtml(section.heading)}</a></li>`).join('')}</ul></nav>
         ${articleSections}
         <aside class="medical-note" aria-labelledby="medical-disclaimer"><h2 id="medical-disclaimer">${escapeHtml(disclaimerHeading)}</h2><p>${escapeHtml(disclaimer)}</p></aside>
-        <section class="article-sources" aria-labelledby="sources-reviewed"><h2 id="sources-reviewed">Sources reviewed</h2><ul>${sourceList}</ul><p class="editorial-note">Published by Apex Wellness for general education. No individual physician medical review is claimed unless a reviewer is explicitly named. Sources and publication dates are provided so you can evaluate the information; your own care requires a clinical conversation.</p></section>
-        <section class="article-cta" aria-labelledby="keep-exploring"><p class="eyebrow">Keep exploring</p><h2 id="keep-exploring">Useful information is a start. Individual care is the next step.</h2><p>Apex Wellness is preparing to open in Northwest Indiana. A consultation request is free and does not book an appointment, establish care, or guarantee treatment.</p><div class="button-row">${buttonMarkup(page.relatedService, true)}${buttonMarkup(site.cta)}</div></section>
+        <section class="article-sources" aria-labelledby="sources-reviewed"><h2 id="sources-reviewed">Sources reviewed</h2><ul>${sourceList}</ul><p class="editorial-note">${escapeHtml(page.editorialNote || "Published by Apex Wellness for general education. No individual physician medical review is claimed unless a reviewer is explicitly named. Sources and publication dates are provided so you can evaluate the information; your own care requires a clinical conversation.")}</p></section>
+        <section class="article-cta" aria-labelledby="keep-exploring"><p class="eyebrow">Keep exploring</p><h2 id="keep-exploring">Useful information is a start. Individual care is the next step.</h2><p>${escapeHtml(page.ctaBody || "Apex Wellness is preparing to open in Northwest Indiana. A consultation request is free and does not book an appointment, establish care, or guarantee treatment.")}</p><div class="button-row">${buttonMarkup(page.relatedService, true)}${buttonMarkup(site.cta)}</div></section>
       </div>
     </article>
   </main>`;

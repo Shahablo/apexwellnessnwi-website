@@ -8,6 +8,19 @@ import test from "node:test";
 
 import { pages, site } from "../src/content.mjs";
 import { blogPosts } from "../src/blog-posts.mjs";
+import { personalGoalsArticle } from "../src/personal-goals-article.mjs";
+
+test('September 20 personal-goals release is the classified nonmedical version, not a medical draft release', () => {
+  assert.equal(createHash('sha256').update(JSON.stringify(personalGoalsArticle)).digest('hex'), '9b5a2c81d751894bf27b18c993c7acadaae84386e3116a14b19c74f5d2ede82b');
+  assert.equal(personalGoalsArticle.editorialType, 'nonmedical');
+  assert.equal(personalGoalsArticle.published, '2026-09-20');
+  assert.equal(personalGoalsArticle.sections.find(s => s.heading === 'Make a note you can use').bullets.length, 6);
+  assert.match(JSON.stringify(personalGoalsArticle), /8550 Broadway, Suite B/);
+  assert.doesNotMatch(JSON.stringify(personalGoalsArticle), /8560|medically reviewed by|guaranteed|—/i);
+  for (const slug of ['/blog/glp-1-weight-loss-expectations-side-effects/', '/blog/weight-loss-plateau-what-to-track/']) {
+    assert.equal(blogPosts.find(post => post.slug === slug).status, 'draft');
+  }
+});
 
 const projectRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const publicRoot = join(projectRoot, "public");

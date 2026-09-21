@@ -20,7 +20,7 @@ export const site = Object.freeze({
   address: { streetAddress: '8550 Broadway, Suite B', addressLocality: 'Merrillville', addressRegion: 'IN', postalCode: '46410', addressCountry: 'US', label: clinicAddress },
   status: 'Prelaunch',
   tagline: 'Physician-led care. Built around you.',
-  contentUpdated: '2026-09-19',
+  contentUpdated: '2026-09-20',
   launch: { date: '2026-11-01', label: 'November 1, 2026', status: 'Planned launch' },
   social: [
     { label: 'Instagram', href: 'https://www.instagram.com/apexwellnessnwi/' },
@@ -29,15 +29,16 @@ export const site = Object.freeze({
     { label: 'NWI wellness community', href: 'https://www.facebook.com/groups/1778107663214102/' }
   ],
   description:
-    'Apex Wellness is preparing a physician-managed weight, metabolic, and hormone care practice for adults in Northwest Indiana.',
+    'Apex Wellness is preparing physician-led weight, metabolic, hormone, and hair-loss care for adults in Northwest Indiana.',
   announcement:
     'Planned launch: November 1, 2026 · Northwest Indiana.',
   cta: priorityListCta,
   navigation: [
     { label: 'Home', href: '/' },
-    { label: 'Weight & Metabolic', href: '/weight-management/' },
-    { label: "Men's Hormone Health", href: '/mens-hormone-health/' },
-    { label: "Women's Midlife Care", href: '/womens-midlife-care/' },
+    { label: 'Weight & Metabolic', href: '/weight-management/', section: 'care' },
+    { label: "Men's Hormone Health", href: '/mens-hormone-health/', section: 'care' },
+    { label: "Women's Midlife Care", href: '/womens-midlife-care/', section: 'care' },
+    { label: 'Hair-Loss Care', href: '/hair-loss-care/', section: 'care' },
     { label: 'How It Works', href: '/how-it-works/' },
     { label: 'Pricing', href: '/pricing/' },
     { label: 'About', href: '/about/' },
@@ -61,7 +62,7 @@ export const site = Object.freeze({
   },
   footer: {
     summary:
-      'A physician-managed approach to weight, metabolic, and hormone care for adults in Northwest Indiana.',
+      'Physician-led weight, metabolic, hormone, and hair-loss care for adults in Northwest Indiana.',
     location:
       `Coming soon to ${clinicAddress}.`,
     copyright: '© 2026 Apex Wellness.'
@@ -72,15 +73,15 @@ export const pages = Object.freeze({
   home: {
     slug: '/',
     navLabel: 'Home',
-    title: 'Physician-Led Weight & Hormone Care in NWI | Apex Wellness',
+    title: 'Weight, Hormone & Hair-Loss Care in NWI | Apex Wellness',
     description:
-      'Physician-led weight, metabolic, and hormone care in Northwest Indiana. Coming soon to Merrillville. Join the Launch List for opening updates.',
+      'Physician-led weight, metabolic, hormone, and hair-loss care in Northwest Indiana. Coming soon to Merrillville. Join the Launch List for opening updates.',
     eyebrow: 'Planned launch · November 1, 2026 · Northwest Indiana',
     h1: 'Medical expertise. Focused on your goals.',
     headlineLead: 'Medical expertise.',
     headlineEmphasis: 'Focused on your goals.',
     intro:
-      'Thoughtful weight, metabolic, and hormone care for adults in Northwest Indiana. Led by Atif Muhammad, MD, Apex is preparing to open with an individualized approach, built around the person seeking care.',
+      'Thoughtful weight, metabolic, hormone, and hair-loss care for adults in Northwest Indiana. Led by Atif Muhammad, MD, Apex is preparing to open with an individualized approach, built around the person seeking care.',
     cta: priorityListCta,
     secondaryCta: {
       label: 'Explore care options',
@@ -103,15 +104,15 @@ export const pages = Object.freeze({
         type: 'trustPoints',
         items: [
           'Physician-led from the start',
-          'Three focused areas of care',
+          'Four focused areas of care',
           'Individual evaluation before treatment',
           'Clear information before you book'
         ]
       },
       {
         type: 'cards',
-        eyebrow: 'Three areas of care',
-        heading: 'Three focused lanes. One physician-managed standard.',
+        eyebrow: 'Four areas of care',
+        heading: 'Four areas of care. One physician-led approach.',
         cards: [
           {
             title: 'Weight & metabolic care',
@@ -130,6 +131,12 @@ export const pages = Object.freeze({
             body:
               'Individualized discussion of perimenopause, menopause, weight, sleep, and metabolic concerns, including hormonal and non-hormonal options.',
             href: '/womens-midlife-care/'
+          },
+          {
+            title: 'Hair-loss care',
+            body:
+              'Planned physician-led evaluation and treatment for hair-loss concerns, with individual care decisions and clear details before treatment.',
+            href: '/hair-loss-care/'
           }
         ]
       },
@@ -178,7 +185,7 @@ export const pages = Object.freeze({
         items: [
           'A physician reviews each evaluation, relevant result, and written clinical plan.',
           'Dosing, monitoring, and referral decisions rely on clinical judgment rather than an automatic protocol.',
-          'The practice stays focused on three care areas with clear fees and exclusions.',
+          'The practice stays focused on four care areas with clear fees and exclusions.',
           'Progress is reviewed using symptoms, measurements, laboratory data when relevant, function, adherence, and side effects.',
           'When another clinician is the better destination, the plan is to say so clearly.'
         ]
@@ -486,6 +493,56 @@ export const pages = Object.freeze({
     ]
   },
 
+  'hair-loss-care': {
+    slug: '/hair-loss-care/',
+    navLabel: 'Hair-Loss Care',
+    title: 'Hair-Loss Care in Merrillville & NWI | Apex Wellness',
+    description:
+      'Physician-led hair-loss care is coming to Apex Wellness in Merrillville, Northwest Indiana. Explore the planned service and join the Launch List.',
+    eyebrow: 'Coming soon · Hair-loss care',
+    h1: 'Hair-loss concerns deserve a thoughtful conversation.',
+    intro:
+      'Apex is preparing to offer physician-led evaluation and treatment for adults with hair-loss concerns. Individual care decisions come first, with service details and pricing available before scheduling opens.',
+    cta: priorityListCta,
+    sections: [
+      {
+        type: 'detail',
+        eyebrow: 'Our approach',
+        heading: 'Start with your concerns and goals.',
+        body:
+          'Once care opens, an individual evaluation will guide the conversation about treatment and next steps. The plan will reflect your circumstances and the scope of care available at Apex.'
+      },
+      {
+        type: 'detail',
+        eyebrow: 'Before treatment',
+        heading: 'Clear information before you decide.',
+        body:
+          'Specific treatment options, costs, and follow-up arrangements are being finalized. Any proposed treatment will require clinical evaluation and informed consent. A consultation does not guarantee a prescription or a particular result.'
+      },
+      {
+        type: 'faq',
+        heading: 'Hair-loss care questions',
+        items: [
+          {
+            question: 'Can I book hair-loss care now?',
+            answer:
+              'Coming soon. Apex is not yet accepting appointments or payment. Join the Launch List for opening updates.'
+          },
+          {
+            question: 'Which hair-loss treatments will Apex offer?',
+            answer:
+              'Hair-loss treatment is part of the planned care offering. Specific options and service details will be published before scheduling opens; an individual evaluation will determine whether a treatment is appropriate.'
+          },
+          {
+            question: 'Should I send photos or medical details through the launch form?',
+            answer:
+              'No. The Launch List collects your name and email for opening updates. Medical information and photographs belong in a secure clinical intake process after an appointment is confirmed.'
+          }
+        ]
+      }
+    ]
+  },
+
   'how-it-works': {
     slug: '/how-it-works/',
     navLabel: 'How It Works',
@@ -505,7 +562,7 @@ export const pages = Object.freeze({
           {
             title: 'Choose your care area.',
             body:
-              'Review medical weight and metabolic care, men’s hormone health, or women’s midlife care. You do not need to disclose a care area on the pre-opening contact form.'
+              'Review medical weight and metabolic care, men’s hormone health, women’s midlife care, or hair-loss care. You do not need to disclose a care area on the pre-opening contact form.'
           },
           {
             title: 'Complete an evaluation.',
@@ -670,7 +727,7 @@ export const pages = Object.freeze({
             aside: 'There is a world beyond the weight room. Conveniently, Atif is interested in both.'
           }
         ],
-        note: 'Our shared interest in fitness shapes the practice’s perspective; it is not a promise of a particular result. Apex’s services focus on weight, metabolic, and hormone care. They do not replace primary or specialist care or guarantee a particular health outcome.'
+        note: 'Our shared interest in fitness shapes the practice’s perspective; it is not a promise of a particular result. Apex’s planned services focus on weight, metabolic, hormone, and hair-loss care. They do not replace primary or specialist care or guarantee a particular health outcome.'
       },
       {
         type: 'values',
@@ -758,6 +815,11 @@ export const pages = Object.freeze({
         heading: 'Care and eligibility',
         items: [
           {
+            question: 'Will Apex offer hair-loss treatment?',
+            answer:
+              'Yes. Physician-led hair-loss care is part of the planned offering, alongside weight and metabolic care, men’s hormone health, and women’s midlife care. Coming soon; specific treatment options and fees will be published before scheduling opens.'
+          },
+          {
             question: 'Does an evaluation guarantee treatment or a prescription?',
             answer:
               'No. Future treatment will require an appropriate evaluation, clinical eligibility, and informed consent. Another clinician or no treatment may be the right recommendation.'
@@ -818,7 +880,7 @@ export const pages = Object.freeze({
     navLabel: 'Launch List',
     title: 'Join the Apex Wellness Launch List | Northwest Indiana',
     description:
-      'Join the Apex Wellness Launch List for opening updates. Physician-led weight, metabolic, and hormone care. Coming soon to Merrillville.',
+      'Join the Apex Wellness Launch List for opening updates. Physician-led weight, metabolic, hormone, and hair-loss care. Coming soon to Merrillville.',
     eyebrow: 'Planned launch · November 1, 2026',
     h1: 'Be ready for what comes next.',
     intro:
@@ -883,6 +945,11 @@ export const pages = Object.freeze({
             title: "Women's Midlife Hormone and Metabolic Care",
             body: 'An individualized discussion of perimenopause, menopause, weight, sleep, and metabolic concerns.',
             href: '/womens-midlife-care/'
+          },
+          {
+            title: 'Hair-Loss Care',
+            body: 'Planned physician-led evaluation and treatment for hair-loss concerns. Service details and pricing will be available before scheduling opens.',
+            href: '/hair-loss-care/'
           }
         ]
       },

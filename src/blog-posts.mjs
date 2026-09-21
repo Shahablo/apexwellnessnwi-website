@@ -5,14 +5,14 @@ export const blogPosts = Object.freeze([
   {
     "slug": "/blog/apex-wellness-coming-soon-merrillville/",
     "title": "Apex Wellness Coming Soon to Merrillville | Launch Update",
-    "description": "Physician-led weight, metabolic, and hormone care. Coming soon to 8550 Broadway, Suite B, Merrillville, IN 46410. Find launch updates at Apex Wellness.",
+    "description": "Physician-led weight, metabolic, hormone, and hair-loss care. Coming soon to 8550 Broadway, Suite B, Merrillville, IN 46410. Find launch updates at Apex Wellness.",
     "eyebrow": "Apex Wellness updates",
     "readTime": "3 minute read",
     "h1": "Apex Wellness Is Coming Soon to Merrillville",
     "intro": "Physician-led care. Built around you.\n\nApex Wellness is coming soon to 8550 Broadway, Suite B, Merrillville, IN 46410. Our planned launch is November 1, 2026. Find launch updates at apexwellnessnwi.com.\n\nWe are building a practice for adults who want a thoughtful conversation about their health, their goals, and the life they want to keep taking part in.",
-    "excerpt": "Our Merrillville address, three areas of care, and an easy way to follow the launch.",
+    "excerpt": "Our Merrillville address, four areas of care, and an easy way to follow the launch.",
     "published": "2026-09-15",
-    "modified": "2026-09-19",
+    "modified": "2026-09-20",
     "category": "Apex Wellness Updates",
     "author": "Apex Wellness Editorial Team",
     "heroImage": "shoreline",
@@ -29,14 +29,15 @@ export const blogPosts = Object.freeze([
         ]
       },
       {
-        "heading": "Three areas of care",
+        "heading": "Four areas of care",
         "paragraphs": [
-          "Our focus is physician-led care in three areas:"
+          "Our planned offering includes physician-led care in four areas:"
         ],
         "bullets": [
           "Weight and metabolic care",
           "Men’s hormone health",
-          "Women’s midlife care"
+          "Women’s midlife care",
+          "Hair-loss care"
         ],
         "paragraphsAfterBullets": [
           "Explore each care area on the website to learn about our approach. The starting point is the person, not a product.",
@@ -81,7 +82,7 @@ export const blogPosts = Object.freeze([
       }
     ],
     "disclaimerHeading": "Launch update",
-    "disclaimer": "Updated September 19, 2026. November 1 is our planned launch date, subject to readiness."
+    "disclaimer": "Updated September 20, 2026 to include planned hair-loss care. November 1 is our planned launch date, subject to readiness."
   },
   {
     slug: "/blog/medical-weight-management-what-it-means/",

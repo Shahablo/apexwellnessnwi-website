@@ -45,6 +45,15 @@ export async function handleWorkerRequest(request, env, ctx = {}) {
     });
   }
 
+  // Google Search Console ownership check. Served here because static asset
+  // handling redirects .html paths, and Google will not verify through a redirect.
+  if (url.pathname === "/google07a86ae9e08bbe79.html" && (request.method === "GET" || request.method === "HEAD")) {
+    return new Response("google-site-verification: google07a86ae9e08bbe79.html", {
+      status: 200,
+      headers: { "Content-Type": "text/html; charset=utf-8", "Cache-Control": "no-cache", "X-Content-Type-Options": "nosniff" },
+    });
+  }
+
   // Static assets are deliberately not fetched here. Wrangler serves them directly
   // and invokes this Worker first only for the configured /api/* routes.
   return notFound();

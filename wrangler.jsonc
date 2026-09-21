@@ -21,7 +21,8 @@
     "not_found_handling": "404-page",
     "html_handling": "auto-trailing-slash",
     "run_worker_first": [
-      "/api/*"
+      "/api/*",
+      "/google07a86ae9e08bbe79.html"
     ]
   },
   "d1_databases": [

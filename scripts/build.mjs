@@ -1033,6 +1033,8 @@ async function build() {
     writeOutput(join(publicDirectory, "_headers"), buildHeaders(documents)),
     writeOutput(join(publicDirectory, "_redirects"), buildRedirects()),
     writeOutput(join(publicDirectory, "favicon.svg"), buildFavicon()),
+    // Google Search Console ownership file for the clinic Google account. Do not remove.
+    writeOutput(join(publicDirectory, "google07a86ae9e08bbe79.html"), "google-site-verification: google07a86ae9e08bbe79.html"),
     writeOutput(join(publicDirectory, "site.webmanifest"), buildManifest()),
   ]);
 

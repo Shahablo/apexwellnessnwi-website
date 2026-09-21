@@ -1,6 +1,8 @@
 import { personalGoalsArticle } from './personal-goals-article.mjs';
+import { choosingAPracticeArticle } from './choosing-a-practice-article.mjs';
 
 export const blogPosts = Object.freeze([
+  choosingAPracticeArticle,
   personalGoalsArticle,
   {
     "slug": "/blog/apex-wellness-coming-soon-merrillville/",

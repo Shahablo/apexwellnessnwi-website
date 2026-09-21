@@ -705,7 +705,7 @@ export const pages = Object.freeze({
             name: 'Shahab Siddique',
             context: 'Health technology · A personal reason to build Apex',
             headline: 'More years doing the things you love.',
-            image: { file: 'shahab-siddique.webp', width: 1254, height: 1254 },
+            image: { file: 'shahab-siddique-warm-v1.webp', width: 1254, height: 1254 },
             paragraphs: [
               'Shahab grew up wrestling and remains an active weightlifter who enjoys Brazilian jiu-jitsu, Muay Thai, and boxing. His interest in wellness starts with a question that gets more relevant with every birthday: how do you keep doing the things you love as you get older?',
               'His professional background is in health technology and clinical workflows. His motivation for Apex is more personal: helping build a physician-led practice that takes long-term strength, function, and individual ambitions seriously.',
@@ -718,7 +718,7 @@ export const pages = Object.freeze({
             name: 'Atif Muhammad, MD',
             context: 'Physician leadership · Fitness enthusiast · Traveler',
             headline: 'Fitness for a life beyond the gym.',
-            image: { file: 'atif-muhammad-smiling-v2.png', width: 1316, height: 1195 },
+            image: { file: 'atif-muhammad-warm-v3.png', width: 1316, height: 1195 },
             paragraphs: [
               'Dr. Atif Muhammad is an active weightlifter, enjoys traveling, and is passionate about fitness. Those interests connect with a simple idea behind Apex: health matters not only in the gym, but in the life you want to enjoy beyond it.',
               'That might mean pursuing a training goal, feeling capable while exploring somewhere new, or continuing the everyday routines that matter to you. Different people have different priorities, and that personal context deserves a place in a clinical conversation.',

@@ -527,20 +527,20 @@ test('the About page distinguishes real team portraits, supplied interests, and 
   assert.match(html, /do not replace primary or specialist care or guarantee a particular health outcome/);
 });
 
-test('Atif uses the exact owner-approved smiling v2 portrait on the homepage and About page', async () => {
+test('Atif uses the exact owner-approved warm-backdrop v3 portrait on the homepage and About page', async () => {
   for (const slug of ['/', '/about/']) {
     const images = startTags(htmlBySlug.get(slug), 'img').filter(({attrs}) => attrs.alt === 'Atif Muhammad, MD');
     assert.equal(images.length, 1, `${slug} needs one Atif portrait`);
     const {attrs} = images[0];
-    assert.match(attrs.src, /^\/assets\/images\/atif-muhammad-smiling-v2\.png\?v=c77f893ac2b2$/);
+    assert.match(attrs.src, /^\/assets\/images\/atif-muhammad-warm-v3\.png\?v=6a16b18ebe4c$/);
     assert.equal(attrs['data-photo-kind'], 'portrait');
     assert.equal(attrs.width, '1316');
     assert.equal(attrs.height, '1195');
     assert.equal(attrs.loading, 'lazy');
   }
-  const source = await readFile(join(projectRoot, 'assets', 'images', 'atif-muhammad-smiling-v2.png'));
-  const published = await readFile(join(publicRoot, 'assets', 'images', 'atif-muhammad-smiling-v2.png'));
-  assert.equal(createHash('sha256').update(source).digest('hex'), 'c77f893ac2b2182bc4d569c464027a064854f917204e3c2db4636397afcfb636');
+  const source = await readFile(join(projectRoot, 'assets', 'images', 'atif-muhammad-warm-v3.png'));
+  const published = await readFile(join(publicRoot, 'assets', 'images', 'atif-muhammad-warm-v3.png'));
+  assert.equal(createHash('sha256').update(source).digest('hex'), '6a16b18ebe4c25ee5007143c555deb927cc427632c49fe2db34ce70c19f23d92');
   assert.deepEqual(published, source, 'build must preserve the approved portrait bytes');
 });
 

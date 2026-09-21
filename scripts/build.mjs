@@ -926,9 +926,10 @@ function buildRssFeed() {
 
 function buildFavicon() {
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Apex Wellness">
-  <rect width="64" height="64" rx="14" fill="#173633"/>
-  <path d="M14 46 31.5 14 50 46M22 34h19" fill="none" stroke="#fbf8f3" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
-  <circle cx="48" cy="16" r="4" fill="#c99a6d"/>
+  <rect width="64" height="64" rx="14" fill="#17372e"/>
+  <path d="M30.6 19.5h2.6L21.6 47.5h-3.2zM33.6 19.5h6.6l11.6 28h-8.2z" fill="#f6f4ed"/>
+  <rect x="24" y="37.2" width="19" height="2.4" fill="#f6f4ed"/>
+  <circle cx="33.5" cy="13" r="4.4" fill="#d9a877"/>
 </svg>
 `;
 }

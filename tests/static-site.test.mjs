@@ -129,6 +129,26 @@ for (const page of pageList) {
   htmlBySlug.set(page.slug, await readFile(output, "utf8"));
 }
 
+test('the new planned care area is discoverable without displacing information links or collecting health interests', () => {
+  const carePaths = site.navigation.filter((item) => item.section === 'care').map((item) => item.href);
+  assert.equal(carePaths.length, 4);
+  assert.ok(carePaths.includes('/hair-loss-care/'));
+  for (const slug of ['/', '/hair-loss-care/']) {
+    const html = htmlBySlug.get(slug);
+    const header = html.match(/<header class="site-header">([\s\S]*?)<\/header>/)[1];
+    for (const href of [...carePaths, '/about/', '/how-it-works/', '/pricing/', '/blog/', '/faq/']) {
+      assert.ok(header.includes(`href="${href}"`), `${slug} primary navigation is missing ${href}`);
+    }
+    assert.match(html, /Coming soon/i);
+  }
+  const hair = htmlBySlug.get('/hair-loss-care/');
+  assert.match(hair, /not yet accepting appointments or payment/);
+  assert.match(hair, /8550 Broadway, Suite B/);
+  assert.doesNotMatch(hair, /minoxidil|finasteride|dutasteride|PRP|transplant|guaranteed regrowth/i);
+  assert.match(htmlBySlug.get('/founding-patients/'), /href="\/hair-loss-care\/"/);
+  assert.doesNotMatch(htmlBySlug.get('/founding-patients/'), /name="care_interest"/);
+});
+
 test("build emits every content page with unique, route-specific metadata", () => {
   const observed = {
     title: [],

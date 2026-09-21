@@ -81,6 +81,7 @@ const heroImages = Object.freeze({
   "weight-management": imageCatalog.weight,
   "mens-hormone-health": imageCatalog.men,
   "womens-midlife-care": imageCatalog.women,
+  "hair-loss-care": imageCatalog.review,
   "how-it-works": imageCatalog.review,
   pricing: imageCatalog.architectural,
   about: imageCatalog.clinic,
@@ -92,6 +93,7 @@ const careCardImages = Object.freeze({
   "/weight-management/": imageCatalog.weight,
   "/mens-hormone-health/": imageCatalog.men,
   "/womens-midlife-care/": imageCatalog.women,
+  "/hair-loss-care/": imageCatalog.review,
 });
 
 const assetVersions = new Map();
@@ -482,7 +484,7 @@ function renderHero(pageKey, page) {
     <div class="signature-image">${imageMarkup(imageCatalog.shoreline, { hero: true })}</div>
     <div class="container signature-content"><p class="eyebrow">Physician-led wellness · Northwest Indiana</p>
       <h1 id="page-title">${escapeHtml(page.headlineLead)} <em>${escapeHtml(page.headlineEmphasis)}</em></h1>
-      <div class="signature-bottom"><div><p>Weight, metabolic, and hormone care.<br>Built around your health history and the goals that matter to you.</p><div class="hero-actions">${buttonMarkup(site.cta)}<a class="hero-explore" href="#care-areas">Discover our approach <span aria-hidden="true">↗</span></a></div></div><p class="signature-launch"><span class="launch-dot" aria-hidden="true"></span>Planned launch<br><strong>${escapeHtml(site.launch.label)}</strong><span class="signature-launch-note">Coming soon · Subject to readiness</span></p></div>
+      <div class="signature-bottom"><div><p>Weight, metabolic, hormone, and hair-loss care.<br>Built around your health history and the goals that matter to you.</p><div class="hero-actions">${buttonMarkup(site.cta)}<a class="hero-explore" href="#care-areas">Discover our approach <span aria-hidden="true">↗</span></a></div></div><p class="signature-launch"><span class="launch-dot" aria-hidden="true"></span>Planned launch<br><strong>${escapeHtml(site.launch.label)}</strong><span class="signature-launch-note">Coming soon · Subject to readiness</span></p></div>
     </div>
   </section>`;
   const image = imageForPage(pageKey, page);
@@ -536,7 +538,7 @@ function renderHome(page) {
       <a class="text-link" href="/about/">Our approach to care <span aria-hidden="true">↗</span></a>
     </div></section>
     <section class="section home-care-section" aria-labelledby="care-heading"><div class="container">
-      <div class="section-heading heading-with-aside"><div><p class="eyebrow">Three areas of care</p><h2 id="care-heading">${multiline(editorial.careHeading)}</h2></div><p>Individual evaluation comes first.<br>Treatment is a clinical decision,<br>never a one-size-fits-all promise.</p></div>
+      <div class="section-heading heading-with-aside"><div><p class="eyebrow">${escapeHtml(care.eyebrow)}</p><h2 id="care-heading">${multiline(editorial.careHeading)}</h2></div><p>Individual evaluation comes first.<br>Treatment is a clinical decision,<br>never a one-size-fits-all promise.</p></div>
       ${careCardsMarkup(care.cards)}
     </div></section>
     <section class="section home-process" aria-labelledby="process-heading"><div class="container">
@@ -631,7 +633,7 @@ function renderMain(pageKey, page) {
 }
 
 function renderNavigation(page) {
-  const visibleLinks = [site.navigation[6], site.navigation[4], site.navigation[5], site.navigation[7], site.navigation[8]];
+  const visibleLinks = ['/about/', '/how-it-works/', '/pricing/', '/blog/', '/faq/'].map((href) => site.navigation.find((item) => item.href === href));
   const links = visibleLinks.map((item) => {
     const current = item.href === page.slug || (page.kind === "blogPost" && item.href === "/blog/") ? ' aria-current="page"' : "";
     return `<li><a href="${escapeHtml(item.href)}"${current}>${escapeHtml(item.label)}</a></li>`;
@@ -644,7 +646,7 @@ function renderNavigation(page) {
         <span class="nav-toggle-label">Menu</span><span class="nav-toggle-icon" aria-hidden="true"></span>
       </button>
       <nav id="primary-navigation" class="site-nav" aria-label="Primary navigation">
-        <ul><li class="care-navigation"><details><summary>Our care</summary><div class="care-dropdown">${site.navigation.slice(1,4).map((item) => `<a href="${item.href}"${item.href === page.slug ? ' aria-current="page"' : ''}>${escapeHtml(item.label)}<span aria-hidden="true">↗</span></a>`).join('')}</div></details></li>${links}</ul>
+        <ul><li class="care-navigation"><details><summary>Our care</summary><div class="care-dropdown">${site.navigation.filter((item) => item.section === 'care').map((item) => `<a href="${item.href}"${item.href === page.slug ? ' aria-current="page"' : ''}>${escapeHtml(item.label)}<span aria-hidden="true">↗</span></a>`).join('')}</div></details></li>${links}</ul>
         <a class="nav-cta" href="${escapeHtml(site.cta.href)}"${site.cta.href === page.slug ? ' aria-current="page"' : ""}>${escapeHtml(site.cta.label)}</a>
       </nav>
     </div>
@@ -665,8 +667,8 @@ function renderLandingNavigation() {
 
 function renderFooter(page) {
   const footerLink = (item) => `<li><a href="${escapeHtml(item.href)}"${item.href === page.slug || (page.kind === "blogPost" && item.href === "/blog/") ? ' aria-current="page"' : ""}>${escapeHtml(item.label)}</a></li>`;
-  const careLinks = site.navigation.slice(1, 4).map(footerLink).join("");
-  const infoLinks = site.navigation.slice(4).map(footerLink).join("");
+  const careLinks = site.navigation.filter((item) => item.section === 'care').map(footerLink).join("");
+  const infoLinks = site.navigation.filter((item) => item.href !== '/' && item.section !== 'care').map(footerLink).join("");
   const policyLinks = site.policyNavigation.map(footerLink).join("");
 
   return `<footer class="site-footer"><div class="container">
@@ -874,6 +876,7 @@ function buildRedirects() {
 /mens-hormone-health /mens-hormone-health/ 301
 /womens-midlife /womens-midlife-care/ 301
 /womens-midlife-care /womens-midlife-care/ 301
+/hair-loss-care /hair-loss-care/ 301
 /how /how-it-works/ 301
 /how-it-works /how-it-works/ 301
 /priority /founding-patients/ 301

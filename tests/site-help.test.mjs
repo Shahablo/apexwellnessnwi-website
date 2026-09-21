@@ -18,6 +18,8 @@ test('site guide answers known questions using bounded local information', () =>
     ['What care do you offer?', '/how-it-works/'],
     ['What about menopause care?', '/womens-midlife-care/'],
     ['Do you offer weight care?', '/weight-management/'],
+    ['Do you offer hair-loss treatment?', '/hair-loss-care/'],
+    ['What hair care is planned for women?', '/hair-loss-care/'],
     ['Is this AI?', '/privacy/']
   ]) assert.equal(answerWebsiteQuestion(question).href, path);
 });
@@ -31,6 +33,7 @@ test('medical and emergency questions take precedence over marketing answers', (
   assert.match(answerWebsiteQuestion('I feel suicidal').text, /call 911/);
   assert.match(answerWebsiteQuestion('I am pregnant, do you offer care?').text, /cannot assess/);
   assert.match(answerWebsiteQuestion('Can you diagnose low testosterone?').text, /cannot assess/);
+  assert.match(answerWebsiteQuestion('Should I take medication for hair loss?').text, /cannot assess/);
 });
 test('privacy and removal requests take precedence over joining the launch list', () => {
   for (const input of ['How do I unsubscribe from the launch list?', 'Can I delete my launch list data?']) {

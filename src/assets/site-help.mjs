@@ -29,6 +29,9 @@ export function answerWebsiteQuestion(input, launchLabel = 'November 1, 2026') {
   if (/\b(who|physician|doctor|team|muhammad|founder)\b/.test(question)) {
     return result('Apex is physician-led by Atif Muhammad, MD. Meet Atif and Shahab Siddique on the About page. ', 'Meet the people behind Apex', '/about/');
   }
+  if (/\b(hair|balding|alopecia)\b/.test(question)) {
+    return result('Physician-led hair-loss care is part of Apex’s planned offering. Coming soon; specific treatment options and fees will be published before scheduling opens. This guide cannot assess hair loss or recommend treatment.', 'Explore planned hair-loss care', '/hair-loss-care/');
+  }
   if (/\b(menopause|perimenopause|women|woman|midlife)\b/.test(question)) {
     return result('Women’s midlife care includes individualized discussion of perimenopause, menopause, and metabolic concerns. This guide cannot determine whether any particular treatment is appropriate or available for you.', 'Explore women’s midlife care', '/womens-midlife-care/');
   }
@@ -39,7 +42,7 @@ export function answerWebsiteQuestion(input, launchLabel = 'November 1, 2026') {
     return result('Apex’s approach is physician-led weight and metabolic care with individual evaluation, habits, monitoring, and medication only when clinically appropriate. No medication, prescription, outcome, or treatment eligibility is guaranteed.', 'Explore weight and metabolic care', '/weight-management/');
   }
   if (/\b(service|care|offer|hormone|treat)\b/.test(question)) {
-    return result('The three care areas are medical weight and metabolic care, men’s hormone health, and women’s midlife hormone and metabolic care. Apex is not a substitute for primary, specialist, urgent, or emergency care.', 'Explore our approach to care', '/how-it-works/');
+    return result('The planned care areas are medical weight and metabolic care, men’s hormone health, women’s midlife care, and hair-loss care. Apex is not a substitute for primary, specialist, urgent, or emergency care.', 'Explore our approach to care', '/how-it-works/');
   }
   return result('I do not have a verified answer to that question. I can help with opening plans, care areas, pricing status, physician leadership, and the launch list. Please do not enter personal or medical information.', 'Browse all FAQs', '/faq/');
 }

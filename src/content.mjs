@@ -76,6 +76,7 @@ export const pages = Object.freeze({
   home: {
     slug: '/',
     navLabel: 'Home',
+    modified: '2026-09-22',
     title: 'Weight, Hormone & Hair-Loss Care in NWI | Apex Wellness',
     description:
       'Physician-led weight, metabolic, hormone, and hair-loss care in Northwest Indiana. Coming soon to Merrillville. Join the Launch List for opening updates.',
@@ -92,7 +93,8 @@ export const pages = Object.freeze({
     },
     ctaNote: 'Find launch updates at apexwellnessnwi.com',
     editorial: {
-      careHeading: 'Focused care.\nA fuller perspective.',
+      careHeading: 'Four ways in.\nOne standard of care.',
+      careAside: 'Evaluated before treated.\nNo shortcuts, no templates.',
       physicianHeading: 'Physician-led.\nPerson by person.',
       physicianBody: 'Atif Muhammad, MD, brings a physician’s perspective to Apex. We are building a practice around careful evaluation, clear conversations, and responsible treatment decisions.',
       processHeading: 'A simple first step.\nSpace to decide.',
@@ -880,6 +882,7 @@ export const pages = Object.freeze({
 
   'founding-patients': {
     slug: '/founding-patients/',
+    modified: '2026-09-22',
     navLabel: 'Launch List',
     title: 'Join the Apex Wellness Launch List | Northwest Indiana',
     description:
@@ -935,22 +938,22 @@ export const pages = Object.freeze({
         heading: 'Explore whether Apex may fit what you are looking for.',
         cards: [
           {
-            title: 'Medical Weight and Metabolic Care',
+            title: 'Weight & metabolic care',
             body: 'A physician-managed approach to evaluation, meaningful measurements, sustainable habits, and medication only when clinically indicated.',
             href: '/weight-management/'
           },
           {
-            title: "Men's Hormone Health",
+            title: "Men’s hormone health",
             body: 'A risk-aware evaluation of symptoms and appropriate testing before any treatment decision.',
             href: '/mens-hormone-health/'
           },
           {
-            title: "Women's Midlife Hormone and Metabolic Care",
+            title: "Women’s midlife care",
             body: 'An individualized discussion of perimenopause, menopause, weight, sleep, and metabolic concerns.',
             href: '/womens-midlife-care/'
           },
           {
-            title: 'Hair-Loss Care',
+            title: 'Hair-loss care',
             body: 'Physician-led evaluation and treatment for thinning and balding, for men and women.',
             href: '/hair-loss-care/'
           }

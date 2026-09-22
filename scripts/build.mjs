@@ -298,14 +298,10 @@ function careCardsMarkup(items) {
   return `<div class="care-cards" id="care-areas">
     ${items.map((item) => {
       const image = careCardImages[item.href];
-      return `<article class="care-card">
+      return `<a class="care-card" href="${escapeHtml(item.href)}" aria-label="${escapeHtml(item.title)}">
         ${image ? imageMarkup(image) : ""}
-        <div class="care-card-body">
-          <h3>${escapeHtml(item.title)}</h3>
-          <p>${escapeHtml(item.body)}</p>
-          <a class="text-link" href="${escapeHtml(item.href)}" aria-label="Explore ${escapeHtml(item.title)}">Explore care <span aria-hidden="true">↗</span></a>
-        </div>
-      </article>`;
+        <div class="care-card-label"><h3 class="care-card-title">${escapeHtml(item.title)}</h3><span class="care-card-go" aria-hidden="true">↗</span></div>
+      </a>`;
     }).join("\n")}
   </div>`;
 }
@@ -540,7 +536,7 @@ function renderHome(page) {
       <a class="text-link" href="/about/">Our approach to care <span aria-hidden="true">↗</span></a>
     </div></section>
     <section class="section home-care-section" aria-labelledby="care-heading"><div class="container">
-      <div class="section-heading heading-with-aside"><div><p class="eyebrow">${escapeHtml(care.eyebrow)}</p><h2 id="care-heading">${multiline(editorial.careHeading)}</h2></div><p>Individual evaluation comes first.<br>Treatment is a clinical decision,<br>never a one-size-fits-all promise.</p></div>
+      <div class="section-heading heading-with-aside"><div><p class="eyebrow">${escapeHtml(care.eyebrow)}</p><h2 id="care-heading">${multiline(editorial.careHeading)}</h2></div><p class="care-aside">${multiline(editorial.careAside)}</p></div>
       ${careCardsMarkup(care.cards)}
     </div></section>
     <section class="section home-process" aria-labelledby="process-heading"><div class="container">

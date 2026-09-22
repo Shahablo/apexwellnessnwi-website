@@ -352,3 +352,78 @@ body{overflow-x:clip}
   .signature-launch-note{color:CanvasText}
   .announcement a:focus-visible,.signature-content a:focus-visible{outline-color:Highlight}
 }
+
+/* Bolder editorial scale and named photo tiles for the care areas. */
+html{font-size:106.25%}
+body{font-weight:450;line-height:1.7}
+h1,h2,h3{letter-spacing:-.042em}
+.eyebrow{font-size:.84rem;font-weight:650;letter-spacing:.13em}
+.section-heading h2,.section .section-heading h2{font-size:clamp(3.15rem,5vw,6.1rem);line-height:1.01;max-width:19ch}
+.introduction-grid h2{font-size:clamp(3.4rem,5.4vw,6.4rem)}
+.local-section h2{font-size:clamp(3.6rem,5.1vw,6.2rem)}
+.launch-section h2{font-size:clamp(3.8rem,6.1vw,7.6rem)}
+.physician-content h2{font-size:clamp(3.7rem,5.6vw,7rem)}
+.editorial-row .section-heading h2{font-size:clamp(3rem,4vw,5rem)}
+.journal-feature h3{font-size:clamp(2.9rem,3.9vw,4.9rem)}
+.blog-card h2{font-size:clamp(2.8rem,4.3vw,5.1rem)}
+.section h3{font-size:2.25rem}
+.step h3{font-size:2.35rem}
+.text-link{font-size:1rem;font-weight:700}
+.button,.button-secondary{font-size:1.0625rem;font-weight:700;min-height:3.5rem;padding:1.05rem 1.6rem}
+.site-nav a,.site-nav summary{font-size:1rem;font-weight:600}
+.premium-brand small{font-size:.58rem}
+.hero-copy>p:not(.eyebrow):not(.cta-note){font-size:1.15rem;line-height:1.8}
+.hero p.eyebrow{font-size:.84rem}
+.heading-with-aside>p{font-size:1.12rem;font-weight:650;line-height:1.65;color:var(--color-ink);max-width:24ch}
+.care-aside{border-left:2px solid var(--color-accent);padding-left:1.15rem;margin-bottom:.6rem}
+/* The shared rule hides these breaks below 48rem, which would run the two
+   sentences together; the aside is short enough to keep both lines. */
+@media(max-width:48rem){.heading-with-aside>p.care-aside br{display:inline}}
+.people-introduction>p,.editorial-copy p,.blog-card p{font-size:1.1rem;line-height:1.85}
+.introduction-copy>p:first-child{font-size:1.2rem}
+.about-deck,.launch-section-copy>p:first-child,.article-header .article-deck{font-size:1.2rem;line-height:1.8}
+.journal-header .journal-deck{font-size:1.12rem}
+.physician-content>p:not(.eyebrow),.journal-feature>div>p:not(.eyebrow){font-size:1.08rem;line-height:1.85}
+.team-biography p{font-size:1.06rem}
+.card p,.step p,.feature-list li,.faq-list p,.article-contents li{font-size:1.05rem;line-height:1.8}
+.faq-list summary{font-size:1.15rem;font-weight:650}
+.pricing-table th,.pricing-table td{font-size:1.02rem}
+.pricing-table tbody th{font-size:1.06rem;font-weight:600}
+.pricing-table thead th{font-size:.86rem}
+.policy p,.policy li{font-size:1.06rem}
+.article-body{font-size:1.15rem;line-height:1.9}
+.medical-note p,.article-sources p,.team-care-note{font-size:1rem;line-height:1.8}
+.quiet-note{font-size:.92rem}
+.trust-strip strong{font-size:.95rem;font-weight:650}
+.breadcrumbs,.article-header .article-meta,.blog-card .article-card-meta{font-size:.88rem}
+.article-kicker,.blog-card .article-kicker,.article-contents h2{font-size:.82rem;font-weight:700}
+.physician-names li span{font-size:.82rem;font-weight:600}
+.footer-grid p,.footer-grid a{font-size:.95rem}
+.footer-grid h2,.footer-grid .eyebrow{font-size:.82rem;font-weight:700}
+.footer-signature>p{font-size:.98rem}
+.footer-meta p{font-size:.85rem}
+.no-js-navigation a,.hero-explore{font-size:.95rem}
+
+/* Each care area is one photo tile: the name sits centred on the image and the
+   whole tile links to that care page, so the grid carries no duplicate copy.
+   Pressing a tile lifts the scrim so the photograph comes forward. */
+.care-cards{gap:clamp(1.4rem,2.6vw,2.6rem);row-gap:clamp(1.4rem,2.6vw,2.6rem);align-items:start}
+.care-card{position:relative;display:block;align-content:stretch;min-height:0;padding:0;border:0;border-radius:0;box-shadow:none;background:#12302a;overflow:hidden;isolation:isolate;color:#f6f4ed;text-decoration:none;transition:transform .3s cubic-bezier(.2,.7,.3,1)}
+.care-card figure{margin:0;display:block}
+.care-card .representative img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;background:#12302a;transition:transform .6s cubic-bezier(.2,.7,.3,1)}
+.care-card::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(180deg,rgba(8,26,21,.5),rgba(8,26,21,.64));transition:background .35s ease}
+.care-card-label{position:absolute;z-index:2;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.4rem;padding:clamp(1.5rem,2.6vw,2.6rem);text-align:center}
+.care-card .care-card-title{margin:0;font-weight:400;font-family:var(--font-display);font-size:clamp(2.6rem,3.7vw,4.4rem);line-height:1.02;letter-spacing:-.04em;color:#fff;max-width:12ch;text-wrap:balance;text-shadow:0 .1rem 2.2rem rgba(8,26,21,.5);transition:transform .35s cubic-bezier(.2,.7,.3,1)}
+.care-card-go{display:grid;place-items:center;width:3.1rem;height:3.1rem;border:1px solid rgba(246,244,237,.6);border-radius:50%;font-size:1.25rem;line-height:1;transition:background .3s ease,color .3s ease,border-color .3s ease,transform .3s ease}
+.care-card:hover,.care-card:focus-visible{color:#fff}
+.care-card:hover::after,.care-card:focus-visible::after{background:linear-gradient(180deg,rgba(8,26,21,.3),rgba(8,26,21,.44))}
+.care-card:hover .representative img,.care-card:focus-visible .representative img{transform:scale(1.06)}
+.care-card:hover .care-card-title,.care-card:focus-visible .care-card-title{transform:translateY(-.3rem)}
+.care-card:hover .care-card-go,.care-card:focus-visible .care-card-go{background:#ede9ca;border-color:#ede9ca;color:#12302a;transform:translateY(-.3rem) scale(1.07)}
+.care-card:active{transform:scale(.986)}
+.care-card:active::after{background:linear-gradient(180deg,rgba(8,26,21,.2),rgba(8,26,21,.34))}
+.care-card:focus-visible{outline:.2rem solid #b65f2b;outline-offset:.25rem}
+@media(max-width:69.999rem){.care-card-label{gap:1.2rem}.care-card .care-card-title{font-size:clamp(2.3rem,4.4vw,3.2rem);max-width:12ch}.care-card-go{width:2.8rem;height:2.8rem;font-size:1.1rem}}
+@media(max-width:48rem){.care-cards{gap:1.6rem}.care-card .representative img{aspect-ratio:16/10}.care-card-label{gap:1rem}.care-card .care-card-title{font-size:clamp(2.2rem,6.6vw,3rem);max-width:14ch}.care-card-go{width:2.6rem;height:2.6rem;font-size:1.05rem}}
+@media(prefers-reduced-motion:reduce){.care-card,.care-card .representative img,.care-card .care-card-title,.care-card-go{transition:none}.care-card:hover .representative img,.care-card:focus-visible .representative img,.care-card:hover .care-card-title,.care-card:focus-visible .care-card-title,.care-card:active{transform:none}.care-card:hover .care-card-go,.care-card:focus-visible .care-card-go{transform:none}}
+@media(forced-colors:active){.care-card{border:1px solid CanvasText}.care-card::after{display:none}.care-card-label{background:Canvas;position:static}.care-card .care-card-title,.care-card-go{color:CanvasText}}

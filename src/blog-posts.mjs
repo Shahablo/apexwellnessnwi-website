@@ -1,7 +1,9 @@
 import { personalGoalsArticle } from './personal-goals-article.mjs';
 import { choosingAPracticeArticle } from './choosing-a-practice-article.mjs';
+import { glp1CoverageArticle } from './glp1-coverage-article.mjs';
 
 export const blogPosts = Object.freeze([
+  glp1CoverageArticle,
   choosingAPracticeArticle,
   personalGoalsArticle,
   {

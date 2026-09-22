@@ -94,8 +94,8 @@ export const pages = Object.freeze({
       physicianBody: 'Atif Muhammad, MD, brings a physician’s perspective to Apex. We are building a practice around careful evaluation, clear conversations, and responsible treatment decisions.',
       processHeading: 'A simple first step.\nSpace to decide.',
       process: [
-        { title: 'Stay in the know.', body: 'Join the launch list with your name and email. No medical history, payment, or commitment.' },
-        { title: 'Get the details.', body: 'Receive opening updates and future consultation information as visit details, pricing, and availability are confirmed.' },
+        { title: 'Stay in the know.', body: 'Join the Launch List with your name and email. That is all we ask for.' },
+        { title: 'Get the details.', body: 'We email you the opening date, pricing and how to book, as each is ready.' },
         { title: 'Choose your next step.', body: 'Review the details, ask questions, and decide whether to request an available appointment when scheduling opens.' }
       ]
     },
@@ -155,7 +155,7 @@ export const pages = Object.freeze({
         items: [
           {
             title: 'Send a contact request.',
-            body: 'Share only your name and email. Do not submit symptoms, diagnoses, medications, laboratory values, or insurance information.'
+            body: 'Your name and email. Keep medical details for your visit.'
           },
           {
             title: 'Review verified launch details.',
@@ -226,7 +226,7 @@ export const pages = Object.freeze({
         body:
           'Adults who want an evidence-informed plan that can include nutrition, protein and resistance-training support, appropriate measurements, careful medication consideration, side-effect review, plateau management, and maintenance planning.',
         note:
-          'This service is not designed for anyone seeking a guaranteed medication, a specific prescription without evaluation, or a promised amount of weight loss.'
+          'If you are looking for a specific prescription without an evaluation, this is not the right fit. Everything here starts with a physician visit.'
       },
       {
         type: 'detail',
@@ -240,7 +240,7 @@ export const pages = Object.freeze({
         eyebrow: 'Testing and measurement',
         heading: 'Ordered only when clinically useful.',
         body:
-          'Depending on history, a clinician may consider metabolic or cardiovascular markers, functional or body-composition measurements, and recent outside results. Testing is not automatic and, when ordered, its cost is disclosed separately.'
+          'Depending on your history, your physician may look at metabolic and cardiovascular markers, body composition and any recent outside results. Testing is ordered when it changes the plan, and its cost is shown separately.'
       },
       {
         type: 'options',
@@ -265,7 +265,7 @@ export const pages = Object.freeze({
           }
         ],
         note:
-          'Apex does not promise weight loss or medication eligibility. Compounded drugs and FDA-approved products are not interchangeable, and product-specific risks and regulatory status must be discussed before use.'
+          'Whether medication makes sense is a decision you and your physician make together. Compounded and FDA-approved products are different things, and we will talk through the difference before anything is prescribed.'
       },
       {
         type: 'followUp',
@@ -291,7 +291,7 @@ export const pages = Object.freeze({
           {
             question: 'Will medication be included in the clinical fee?',
             answer:
-              'Final pricing and inclusions are not yet published. Medication and outside testing will be shown separately unless a future published package expressly says otherwise.'
+              'Pricing is being finalized. Medication and outside lab work will be listed separately from the visit fee so you can see exactly what you are paying for.'
           },
           {
             question: 'What if medication is not right for me?',
@@ -312,7 +312,7 @@ export const pages = Object.freeze({
     eyebrow: "Care area · Men's hormone health",
     h1: 'A fuller picture of your hormone health.',
     intro:
-      'Symptoms, repeat results when appropriate, health risks, fertility goals, and reasonable alternatives all matter. A single laboratory number does not decide the plan, and testosterone is never promised.',
+      'Symptoms, repeat testing when it matters, health risks, fertility goals and the alternatives all go into the plan. One lab number does not decide it.',
     cta: priorityListCta,
     sections: [
       {
@@ -321,7 +321,7 @@ export const pages = Object.freeze({
         body:
           'Men with symptoms or findings that merit a thoughtful evaluation and who want to understand what the numbers may mean, what alternatives exist, and what responsible monitoring would involve.',
         note:
-          'This service is not intended for anyone seeking treatment without evaluation or a guaranteed testosterone prescription.'
+          'If you want a prescription without an evaluation, this is not the place. If you want to know what is going on, it is.'
       },
       {
         type: 'detail',
@@ -360,7 +360,7 @@ export const pages = Object.freeze({
           }
         ],
         note:
-          'Apex does not treat every symptom as hormone deficiency and does not promise improvements in energy, mood, libido, fertility, body composition, or performance.'
+          'Not every symptom is a hormone problem, and we will tell you when it is not.'
       },
       {
         type: 'followUp',
@@ -455,7 +455,7 @@ export const pages = Object.freeze({
           }
         ],
         note:
-          'Hormone therapy is not appropriate for everyone. Apex does not promise “balance,” youth restoration, weight loss, symptom resolution, or a specific prescription.'
+          'Hormone therapy is right for some people and not others. We will be straight with you about which.'
       },
       {
         type: 'followUp',
@@ -486,7 +486,7 @@ export const pages = Object.freeze({
           {
             question: 'Will pellet procedures be offered?',
             answer:
-              'Final treatment offerings are not yet published. No procedure or product should be assumed available during prelaunch.'
+              'The treatment menu is being finalized and will be published before we open.'
           }
         ]
       }
@@ -517,7 +517,7 @@ export const pages = Object.freeze({
         eyebrow: 'Before treatment',
         heading: 'Clear information before you decide.',
         body:
-          'Specific treatment options, costs, and follow-up arrangements are being finalized. Any proposed treatment will require clinical evaluation and informed consent. A consultation does not guarantee a prescription or a particular result.'
+          'Treatment options, costs and follow-up are being finalized. Every plan starts with an evaluation, and we will be honest about what each option can and cannot do.'
       },
       {
         type: 'faq',
@@ -526,7 +526,7 @@ export const pages = Object.freeze({
           {
             question: 'Can I book hair-loss care now?',
             answer:
-              'Coming soon. Apex is not yet accepting appointments or payment. Join the Launch List for opening updates.'
+              'Not yet. We open in November. Join the Launch List and you will hear first.'
           },
           {
             question: 'Which hair-loss treatments will Apex offer?',
@@ -562,7 +562,7 @@ export const pages = Object.freeze({
           {
             title: 'Choose your care area.',
             body:
-              'Review medical weight and metabolic care, men’s hormone health, women’s midlife care, or hair-loss care. You do not need to disclose a care area on the pre-opening contact form.'
+              'Weight and metabolic care, men’s hormone health, women’s midlife care or hair loss. If you are not sure which, that is what the first visit is for.'
           },
           {
             title: 'Complete an evaluation.',
@@ -617,9 +617,9 @@ export const pages = Object.freeze({
     sections: [
       {
         type: 'status',
-        heading: 'Final pricing is not yet published.',
+        heading: 'Pricing is coming before we open.',
         body:
-          'Apex is not accepting payment during prelaunch. Pricing will be posted only after clinical offerings, vendor terms, and operating details are confirmed. Submitting a consultation request is free.'
+          'Apex is cash-pay. Fees will be posted here before scheduling opens, with what is included spelled out. Joining the Launch List is free.'
       },
       {
         type: 'pricingPrinciples',
@@ -670,7 +670,7 @@ export const pages = Object.freeze({
           {
             question: 'Can I pay or reserve an appointment now?',
             answer:
-              'No. The current website does not accept payment or reserve appointments. You may submit a free request for future contact about opening-month consultation availability.'
+              'Not yet. Booking opens in November. Join the Launch List and we will email you when it does.'
           },
           {
             question: 'Can I cancel or receive a refund?',
@@ -727,7 +727,7 @@ export const pages = Object.freeze({
             aside: 'There is a world beyond the weight room. Conveniently, Atif is interested in both.'
           }
         ],
-        note: 'Our shared interest in fitness shapes the practice’s perspective; it is not a promise of a particular result. Apex’s planned services focus on weight, metabolic, hormone, and hair-loss care. They do not replace primary or specialist care or guarantee a particular health outcome.'
+        note: 'Apex focuses on weight, metabolic, hormone and hair-loss care. Keep your primary care doctor; we work alongside them, not instead of them.'
       },
       {
         type: 'values',
@@ -767,7 +767,7 @@ export const pages = Object.freeze({
         type: 'notice',
         eyebrow: 'Photography',
         heading: 'Real people. Clearly labeled photography.',
-        body: 'The portraits on this page show Shahab Siddique and Atif Muhammad, MD. Other prelaunch photographs are illustrative and do not identify Apex team members, patients, or facilities.'
+        body: 'The portraits on this page are Shahab Siddique and Atif Muhammad, MD. Other photographs on the site are illustrative.'
       }
     ]
   },
@@ -796,7 +796,7 @@ export const pages = Object.freeze({
           {
             question: 'Where is Apex located?',
             answer:
-              `Apex is preparing to open at ${clinicAddress}. Parking, accessibility details, phone, email, hours, and visit arrangements will be published before scheduling opens. The address does not mean the practice is currently open for visits.`
+              `${clinicAddress}. We open in November; hours, phone and parking details will be posted here before then.`
           },
           {
             question: 'When will appointments open?',
@@ -806,7 +806,7 @@ export const pages = Object.freeze({
           {
             question: 'Does submitting a consultation request reserve an appointment?',
             answer:
-              'No. It is a free request for updates and future availability, not a reservation or guarantee of an appointment, prescription, treatment, or outcome.'
+              'No. It puts you on the list for opening updates and first access to booking. It is free.'
           }
         ]
       },
@@ -835,9 +835,9 @@ export const pages = Object.freeze({
               'No. Apex is intended as focused care within a defined scope and will not replace routine primary care, recommended screening, urgent or emergency care, or specialist services when those are appropriate.'
           },
           {
-            question: 'Can I send symptoms, diagnoses, medications, or lab values through the consultation form?',
+            question: 'Can I send medical information through the form?',
             answer:
-              'No. The consultation form is not clinical intake. Please do not submit medical or other sensitive information there.'
+              'Please don’t. The form is just for your name and email. Medical details belong in your visit, where they are private.'
           }
         ]
       },
@@ -848,7 +848,7 @@ export const pages = Object.freeze({
           {
             question: 'What will care cost?',
             answer:
-              'Final fees are not yet published, and Apex is not accepting payment. Complete pricing, inclusions, exclusions, and terms will appear before scheduling opens.'
+              'Apex is cash-pay. Full pricing will be posted before scheduling opens.'
           },
           {
             question: 'Will Apex accept insurance?',
@@ -893,19 +893,19 @@ export const pages = Object.freeze({
       label: 'Explore the full site',
       href: '/'
     },
-    ctaNote: 'Free to request · No payment · No medical information',
+    ctaNote: 'Free · Name and email only',
     landing: true,
     form: {
       action: '/api/founding-consultation',
       method: 'post',
       heading: 'Join the launch list',
       submitLabel: 'Join the Launch List',
-      consentVersion: 'founding-consultation-2026-09',
+      consentVersion: 'launch-list-2026-09-21',
       consentLabel:
-        'I ask Apex Wellness to email me about this request. For a consultation request, emails may include verified opening information and future consultation availability. I understand that this form does not confirm an appointment or establish care. I may unsubscribe from promotional email at any time, and I acknowledge the Privacy Policy and Communications Consent.',
-      accessibilityLabel: 'This request is about website or accessibility support.',
+        'Email me opening updates from Apex Wellness. I can unsubscribe anytime, and I have read the Privacy Policy and Communications Consent.',
+      accessibilityLabel: 'This is a website or accessibility question, not a Launch List signup.',
       privacyNote:
-        'Enter only your name and email. Do not submit symptoms, diagnoses, medications, laboratory values, insurance details, or other sensitive medical information. This form is not monitored for medical concerns.',
+        'Just your name and email. Save the medical details for your visit.',
       successMessage:
         'You’re on the Launch List. Thanks for joining us. Find launch updates at apexwellnessnwi.com.'
     },
@@ -913,18 +913,18 @@ export const pages = Object.freeze({
       {
         type: 'trustPoints',
         items: [
-          'No payment to submit',
-          'No medical details requested',
-          'Verified information before booking',
-          'Focused on Northwest Indiana adults'
+          'Free to join',
+          'Name and email only',
+          'First to hear when booking opens',
+          'Built for Northwest Indiana adults'
         ]
       },
       {
         type: 'detail',
         eyebrow: 'What you are signing up for',
-        heading: 'Information first. A decision later.',
+        heading: 'Hear it first.',
         body:
-          'Join the Launch List to receive opening updates, meet the team, and learn more about care at Apex.'
+          'The opening date, pricing and the first booking window go to the Launch List before anywhere else.'
       },
       {
         type: 'cards',
@@ -948,7 +948,7 @@ export const pages = Object.freeze({
           },
           {
             title: 'Hair-Loss Care',
-            body: 'Planned physician-led evaluation and treatment for hair-loss concerns. Service details and pricing will be available before scheduling opens.',
+            body: 'Physician-led evaluation and treatment for thinning and balding, for men and women.',
             href: '/hair-loss-care/'
           }
         ]
@@ -956,51 +956,45 @@ export const pages = Object.freeze({
       {
         type: 'steps',
         eyebrow: 'What happens next',
-        heading: 'Stay connected as Apex takes shape.',
+        heading: 'What happens next',
         items: [
           {
-            title: 'Submit your request.',
-            body: 'Share your name, email, and permission for us to send launch updates.'
+            title: 'Join the list.',
+            body: 'Name and email. Takes ten seconds.'
           },
           {
-            title: 'Receive verified details.',
-            body: 'Apex may email you when clinician availability, visit modality, pricing, policies, and consultation availability are confirmed.'
+            title: 'Get the details.',
+            body: 'We email the opening date, pricing and how care works, as each is confirmed.'
           },
           {
-            title: 'Choose whether to book.',
-            body: 'If consultation availability is offered, review the details and decide whether an available time fits.'
+            title: 'Book if it fits.',
+            body: 'When scheduling opens, Launch List members hear first.'
           },
           {
-            title: 'Complete secure intake after confirmation.',
-            body: 'Only a confirmed clinical workflow should collect medical history or other sensitive information.'
+            title: 'Share your history at your visit.',
+            body: 'Medical intake happens securely once you have an appointment, not on this form.'
           }
         ]
-      },
-      {
-        type: 'notice',
-        heading: 'Keep medical information private.',
-        body:
-          'Use this form for your name and email only. Medical questions and records belong in a secure clinical conversation. For urgent or emergency needs, seek appropriate immediate care.'
       },
       {
         type: 'faq',
         heading: 'Before you submit',
         items: [
           {
-            question: 'Does this request reserve an appointment?',
-            answer: 'No. It requests future contact only and does not guarantee availability, acceptance, treatment, or a prescription.'
+            question: 'Does this reserve an appointment?',
+            answer: 'No. It gets you opening updates and first access when booking opens.'
           },
           {
-            question: 'Does it cost anything to submit?',
-            answer: 'No. The request is free, and this website does not currently accept payment.'
+            question: 'Does it cost anything?',
+            answer: 'No.'
           },
           {
             question: 'Should I include medical information?',
-            answer: 'No. Submit only your name and email. Medical information belongs in the appropriate secure clinical intake process after an appointment is confirmed.'
+            answer: 'No. Just your name and email. Your history is for your visit.'
           },
           {
-            question: 'When will Apex contact me?',
-            answer: 'A response time is not yet published. Apex may contact you when verified opening information and future consultation availability are ready.'
+            question: 'When will I hear from you?',
+            answer: 'As soon as there is something worth telling you: the opening date, pricing, and the first booking window.'
           }
         ]
       }

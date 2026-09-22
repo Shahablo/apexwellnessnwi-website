@@ -19,6 +19,7 @@ export const site = Object.freeze({
   region: 'Northwest Indiana',
   address: { streetAddress: '8550 Broadway, Suite B', addressLocality: 'Merrillville', addressRegion: 'IN', postalCode: '46410', addressCountry: 'US', label: clinicAddress },
   status: 'Prelaunch',
+  email: 'hello@apexwellnessnwi.com',
   tagline: 'Physician-led care. Built around you.',
   contentUpdated: '2026-09-20',
   launch: { date: '2026-11-01', label: 'November 1, 2026', status: 'Planned launch' },
@@ -1134,7 +1135,7 @@ export const pages = Object.freeze({
         heading: 'Changes and questions',
         paragraphs: [
           'The effective date at the top identifies this version. Updated terms will be posted here before they govern new use of the site.',
-          'Until a dedicated contact channel is published, use the Founding Patient form and check the website or accessibility support option for a website-related question. Do not include medical information.'
+          'For a website or policy question, email hello@apexwellnessnwi.com. Please keep medical information out of email.'
         ]
       }
     ]
@@ -1277,7 +1278,7 @@ export const pages = Object.freeze({
         type: 'policySection',
         heading: 'Questions',
         paragraphs: [
-          'A dedicated billing contact is not yet published. During prelaunch, use the Founding Patient form and check the website or accessibility support option for a website-policy question. Do not submit payment details or medical information.'
+          'For a billing or policy question during prelaunch, email hello@apexwellnessnwi.com. Do not send payment details or medical information by email.'
         ]
       }
     ]

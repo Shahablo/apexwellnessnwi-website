@@ -19,7 +19,7 @@ const { onRequest: onPriorityRequest } = await import(
 );
 
 const ORIGIN = "https://apexwellnessnwi.com";
-const CONSENT_VERSION = "founding-consultation-2026-09";
+const CONSENT_VERSION = "launch-list-2026-09-21";
 const VALID_PAYLOAD = {
   full_name: "  Ana   O'Neil  ",
   email: " ANA@Example.COM ",

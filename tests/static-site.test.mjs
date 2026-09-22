@@ -143,7 +143,7 @@ test('the new planned care area is discoverable without displacing information l
     assert.match(html, /Coming soon/i);
   }
   const hair = htmlBySlug.get('/hair-loss-care/');
-  assert.match(hair, /not yet accepting appointments or payment/);
+  assert.match(hair, /Not yet\. We open in November/);
   assert.match(hair, /8550 Broadway, Suite B/);
   assert.doesNotMatch(hair, /minoxidil|finasteride|dutasteride|PRP|transplant|guaranteed regrowth/i);
   assert.match(htmlBySlug.get('/founding-patients/'), /href="\/hair-loss-care\/"/);
@@ -375,7 +375,7 @@ test("founding consultation form matches the minimal API contract and accessible
   assert.equal(consentVersion.type?.toLowerCase(), "hidden");
   assert.equal(
     consentVersion.value,
-    "founding-consultation-2026-09",
+    "launch-list-2026-09-21",
     "consent_version needs the reviewed founding-consultation policy version",
   );
 
@@ -524,7 +524,7 @@ test('the About page distinguishes real team portraits, supplied interests, and 
   assert.doesNotMatch(html, /Portrait coming soon/);
   for (const interest of ['wrestling', 'Brazilian jiu-jitsu', 'Muay Thai', 'boxing', 'weightlifter', 'traveling']) assert.ok(html.includes(interest));
   assert.doesNotMatch(html, /Shahab Siddique, MD|Dr\. Shahab/);
-  assert.match(html, /do not replace primary or specialist care or guarantee a particular health outcome/);
+  assert.match(html, /Keep your primary care doctor/);
 });
 
 test('Atif uses the exact owner-approved warm-backdrop v3 portrait on the homepage and About page', async () => {

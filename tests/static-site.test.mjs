@@ -10,6 +10,7 @@ import { pages, site } from "../src/content.mjs";
 import { blogPosts } from "../src/blog-posts.mjs";
 import { personalGoalsArticle } from "../src/personal-goals-article.mjs";
 import { choosingAPracticeArticle } from "../src/choosing-a-practice-article.mjs";
+import { cashPayCostArticle } from "../src/cash-pay-cost-article.mjs";
 
 test('September 20 personal-goals release is the classified nonmedical version, not a medical draft release', () => {
   assert.equal(createHash('sha256').update(JSON.stringify(personalGoalsArticle)).digest('hex'), '9b5a2c81d751894bf27b18c993c7acadaae84386e3116a14b19c74f5d2ede82b');
@@ -700,5 +701,14 @@ test('September 21 choosing-a-practice release is nonmedical, current-address an
   assert.equal(choosingAPracticeArticle.published, '2026-09-21');
   assert.equal(choosingAPracticeArticle.sections.find(s => s.heading === 'Keep one small comparison sheet').bullets.length, 6);
   assert.match(text, /8550 Broadway, Suite B/);
+  assert.doesNotMatch(text, /8560|medically reviewed by|guaranteed|takes shape|Wajeeh|Bakhsh|—/i);
+});
+
+test('September 26 cash-pay cost article is nonmedical, dated for Saturday, states no Apex fee, and is identity-safe', () => {
+  const text = JSON.stringify(cashPayCostArticle);
+  assert.equal(cashPayCostArticle.editorialType, 'nonmedical');
+  assert.equal(cashPayCostArticle.published, '2026-09-26');
+  assert.match(text, /8550 Broadway, Suite B/);
+  assert.doesNotMatch(text, /\$\d{2,}/, 'no dollar amounts that could read as an Apex fee');
   assert.doesNotMatch(text, /8560|medically reviewed by|guaranteed|takes shape|Wajeeh|Bakhsh|—/i);
 });

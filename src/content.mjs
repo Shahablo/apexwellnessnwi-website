@@ -20,6 +20,8 @@ export const site = Object.freeze({
   address: { streetAddress: '8550 Broadway, Suite B', addressLocality: 'Merrillville', addressRegion: 'IN', postalCode: '46410', addressCountry: 'US', label: clinicAddress },
   status: 'Prelaunch',
   email: 'hello@apexwellnessnwi.com',
+  phone: '(219) 207-2456',
+  phoneHref: 'tel:+12192072456',
   tagline: 'Physician-led care. Built around you.',
   contentUpdated: '2026-09-20',
   launch: { date: '2026-11-01', label: 'November 1, 2026', status: 'Planned launch' },
@@ -797,7 +799,7 @@ export const pages = Object.freeze({
           {
             question: 'Where is Apex located?',
             answer:
-              `${clinicAddress}. We open in November; hours, phone and parking details will be posted here before then.`
+              `${clinicAddress}. We open in November. Call or text (219) 207-2456, or email hello@apexwellnessnwi.com. Hours and parking details will be posted before we open.`
           },
           {
             question: 'When will appointments open?',

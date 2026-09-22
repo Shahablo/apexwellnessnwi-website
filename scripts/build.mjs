@@ -167,6 +167,7 @@ function pageJsonLd(page) {
         postalCode: site.address.postalCode,
         addressCountry: site.address.addressCountry,
       },
+      email: site.email,
       logo: `${site.canonicalUrl}/assets/images/apex-brand-mark.png`,
       areaServed: {
         "@type": "AdministrativeArea",
@@ -354,7 +355,7 @@ function foundingConsultationFormMarkup(form) {
       </label>
       <label class="consent field-full" for="contact-consent">
         <input id="contact-consent" name="contact_consent" type="checkbox" value="true" aria-describedby="contact-consent-help" required>
-        <span id="contact-consent-help">I ask Apex Wellness to email me about this request. For a consultation request, emails may include verified opening information and future consultation availability. I understand that this form does not confirm an appointment or establish care. I may unsubscribe from promotional email at any time, and I acknowledge the <a href="/privacy/">Privacy Policy</a> and <a href="/communications-consent/">Communications Consent</a>.</span>
+        <span id="contact-consent-help">Email me opening updates from Apex Wellness. I can unsubscribe anytime, and I have read the <a href="/privacy/">Privacy Policy</a> and <a href="/communications-consent/">Communications Consent</a>.</span>
       </label>
       <button class="button" type="submit" data-loading-label="Submitting…">${escapeHtml(form.submitLabel)}</button>
       <p id="form-status" class="form-status" role="status" aria-live="polite" aria-atomic="true" tabindex="-1"></p>
@@ -674,7 +675,7 @@ function renderFooter(page) {
   return `<footer class="site-footer"><div class="container">
     <div class="footer-signature"><a href="/" aria-label="Apex Wellness home">Apex Wellness<span aria-hidden="true">↗</span></a><p>${escapeHtml(site.tagline)}</p></div>
     <div class="footer-grid">
-      <div><p class="eyebrow">Northwest Indiana</p><p>${escapeHtml(site.footer.summary)}</p><p>${escapeHtml(site.footer.location)}</p><nav class="social-links" aria-label="Apex social profiles">${site.social.map((profile) => `<a href="${escapeHtml(profile.href)}" rel="me noreferrer" target="_blank">${escapeHtml(profile.label)}<span class="visually-hidden"> (opens a new tab)</span></a>`).join('')}</nav></div>
+      <div><p class="eyebrow">Northwest Indiana</p><p>${escapeHtml(site.footer.summary)}</p><p>${escapeHtml(site.footer.location)}</p><p><a href="mailto:${escapeHtml(site.email)}">${escapeHtml(site.email)}</a></p><nav class="social-links" aria-label="Apex social profiles">${site.social.map((profile) => `<a href="${escapeHtml(profile.href)}" rel="me noreferrer" target="_blank">${escapeHtml(profile.label)}<span class="visually-hidden"> (opens a new tab)</span></a>`).join('')}</nav></div>
       <nav aria-label="Care areas"><h2>Care areas</h2><ul>${careLinks}</ul></nav>
       <nav aria-label="Site information"><h2>Information</h2><ul>${infoLinks}</ul></nav>
       <nav aria-label="Policies"><h2>Policies</h2><ul>${policyLinks}</ul></nav>

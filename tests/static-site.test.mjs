@@ -10,6 +10,7 @@ import { pages, site } from "../src/content.mjs";
 import { blogPosts } from "../src/blog-posts.mjs";
 import { personalGoalsArticle } from "../src/personal-goals-article.mjs";
 import { choosingAPracticeArticle } from "../src/choosing-a-practice-article.mjs";
+import { glp1CoverageArticle } from "../src/glp1-coverage-article.mjs";
 
 test('September 20 personal-goals release is the classified nonmedical version, not a medical draft release', () => {
   assert.equal(createHash('sha256').update(JSON.stringify(personalGoalsArticle)).digest('hex'), '9b5a2c81d751894bf27b18c993c7acadaae84386e3116a14b19c74f5d2ede82b');
@@ -699,6 +700,15 @@ test('September 21 choosing-a-practice release is nonmedical, current-address an
   assert.equal(choosingAPracticeArticle.editorialType, 'nonmedical');
   assert.equal(choosingAPracticeArticle.published, '2026-09-21');
   assert.equal(choosingAPracticeArticle.sections.find(s => s.heading === 'Keep one small comparison sheet').bullets.length, 6);
+  assert.match(text, /8550 Broadway, Suite B/);
+  assert.doesNotMatch(text, /8560|medically reviewed by|guaranteed|takes shape|Wajeeh|Bakhsh|—/i);
+});
+
+test('September 24 GLP-1 coverage article is nonmedical, dated for Thursday, and identity-safe', () => {
+  const text = JSON.stringify(glp1CoverageArticle);
+  assert.equal(glp1CoverageArticle.editorialType, 'nonmedical');
+  assert.equal(glp1CoverageArticle.published, '2026-09-24');
+  assert.equal(glp1CoverageArticle.sections.find(s => s.heading === 'A short checklist to keep').bullets.length, 7);
   assert.match(text, /8550 Broadway, Suite B/);
   assert.doesNotMatch(text, /8560|medically reviewed by|guaranteed|takes shape|Wajeeh|Bakhsh|—/i);
 });

@@ -515,7 +515,7 @@ function renderBlogIndex(page) {
   return `<main id="main-content" class="page" tabindex="-1">
     <header class="journal-header"><div class="container"><div><p class="eyebrow">The Apex journal</p><h1 id="page-title">${escapeHtml(page.h1)}</h1></div><p class="journal-deck">${escapeHtml(page.intro)}</p></div></header>
     <section class="section" aria-labelledby="latest-articles"><div class="container">
-      <div class="section-heading"><p class="eyebrow">Latest articles</p><h2 id="latest-articles">Start with the question already on your mind.</h2><p>Practical reflections, practice updates, and source-backed health education. Each article is clear about its scope and what belongs in an individual clinical conversation.</p></div>
+      <div class="section-heading"><p class="eyebrow">Latest articles</p><h2 id="latest-articles">Start with the question already on your mind.</h2><p>Some pieces make sense of a headline. Others help you ask a better question at your next visit. Either way, you can check where the facts came from.</p></div>
       <div class="blog-grid">${articleCards}</div>
     </div></section>
   </main>`;

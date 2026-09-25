@@ -1292,16 +1292,16 @@ export const pages = Object.freeze({
   blog: {
     slug: '/blog/',
     navLabel: 'Blog',
-    title: 'Weight, Metabolic & Hormone Health Articles | Apex Wellness',
+    title: 'Weight, Hormones & Hair Loss Articles | Apex Wellness NWI',
     description:
-      'Plain-language articles about weight, metabolic, and hormone health for adults in Northwest Indiana from Apex Wellness.',
+      'Clear, source-backed articles on weight, metabolic health, hormones, hair loss and staying active from Apex Wellness in Merrillville, Indiana.',
     eyebrow: 'Apex Wellness field notes',
-    h1: 'Clear answers. Thoughtful care.',
+    h1: 'Health has enough fine print.',
     intro:
-      'Practical explanations about weight, metabolic, and hormone health—with sources, honest limits, and questions worth bringing to a clinical visit.',
+      'We read past the bold claims and ask the useful questions about weight, hormones, hair loss and staying active. Straight answers from a physician-led practice in Northwest Indiana, with sources you can check.',
     cta: priorityListCta,
     kind: 'blogIndex',
-    modified: '2026-09-11',
+    modified: '2026-09-25',
     sections: []
   }
 });

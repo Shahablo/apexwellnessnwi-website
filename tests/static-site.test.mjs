@@ -702,3 +702,15 @@ test('September 21 choosing-a-practice release is nonmedical, current-address an
   assert.match(text, /8550 Broadway, Suite B/);
   assert.doesNotMatch(text, /8560|medically reviewed by|guaranteed|takes shape|Wajeeh|Bakhsh|—/i);
 });
+
+test('September 27 launch-list article stays in its administrative scope', () => {
+  const article = blogPosts.find(post => post.slug === '/blog/launch-list-what-to-share/');
+  assert.ok(article);
+  assert.equal(article.editorialType, 'nonmedical');
+  assert.equal(article.published, '2026-09-27');
+  assert.equal(article.status, 'published');
+  const text = JSON.stringify(article);
+  assert.match(text, /8550 Broadway, Suite B/);
+  assert.match(text, /name and email/i);
+  assert.doesNotMatch(text, /8560|Wajeeh|Bakhsh|guaranteed|—/i);
+});

@@ -714,3 +714,16 @@ test('September 27 launch-list article stays in its administrative scope', () =>
   assert.match(text, /name and email/i);
   assert.doesNotMatch(text, /8560|Wajeeh|Bakhsh|guaranteed|—/i);
 });
+
+test('September 30 community-resource article remains local, sourced and nonmedical', () => {
+  const article = blogPosts.find(post => post.slug === '/blog/lake-county-library-week-planning/');
+  assert.ok(article);
+  assert.equal(article.editorialType, 'nonmedical');
+  assert.equal(article.published, '2026-09-30');
+  assert.equal(article.status, 'published');
+  assert.equal(article.sources.length, 5);
+  const text = JSON.stringify(article);
+  assert.match(text, /1919 W\. 81st Ave/);
+  assert.match(text, /8550 Broadway, Suite B/);
+  assert.doesNotMatch(text, /8560|Wajeeh|Bakhsh|guaranteed|—/i);
+});

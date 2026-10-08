@@ -882,55 +882,58 @@ export const pages = Object.freeze({
 
   'founding-patients': {
     slug: '/founding-patients/',
-    modified: '2026-09-22',
+    modified: '2026-10-08',
     navLabel: 'Launch List',
     title: 'Join the Apex Wellness Launch List | Northwest Indiana',
     description:
       'Join the Apex Wellness Launch List for opening updates. Physician-led weight, metabolic, hormone, and hair-loss care. Coming soon to Merrillville.',
-    eyebrow: 'Planned launch · November 1, 2026',
-    h1: 'Be ready for what comes next.',
+    announcement: 'Coming soon to Merrillville · Physician-led care',
+    launchLabel: 'to be confirmed',
+    eyebrow: 'Apex Wellness · Northwest Indiana',
+    h1: 'More life. Less guesswork.',
     intro:
-      'Join the Launch List for opening updates from Apex. Share your name and email, and get to know the practice as we prepare to open.',
+      'Be first to know when clinical evaluations open. Get opening news and details of our free-test offer.',
     cta: {
-      label: 'Go to the request form',
+      label: 'Notify me when Apex opens',
       href: '#consultation-request'
     },
-    secondaryCta: {
-      label: 'Explore the full site',
-      href: '/'
+    offer: {
+      eyebrow: 'Our launch offer · Available after opening',
+      heading: 'Free initial in-house testosterone test',
+      terms: 'Including blood draw and processing. No purchase required. Send-out labs excluded.'
     },
-    ctaNote: 'Free · Name and email only',
+    ctaNote: 'Free to join. No appointment booked. No commitment to care.',
     landing: true,
     form: {
       action: '/api/founding-consultation',
       method: 'post',
-      heading: 'Join the launch list',
-      submitLabel: 'Join the Launch List',
+      heading: 'Get opening updates.',
+      submitLabel: 'Notify me when Apex opens',
       consentVersion: 'launch-list-2026-09-21',
       consentLabel:
         'Email me opening updates from Apex Wellness. I can unsubscribe anytime, and I have read the Privacy Policy and Communications Consent.',
       accessibilityLabel: 'This is a website or accessibility question, not a Launch List signup.',
       privacyNote:
-        'Just your name and email. Save the medical details for your visit.',
+        'Join the Apex Launch List with your name and email. Save medical details for your visit.',
       successMessage:
-        'You’re on the Launch List. Thanks for joining us. Find launch updates at apexwellnessnwi.com.'
+        'You’re on the Apex Launch List. We’ll share opening news and let you know when clinical evaluations can be booked. No appointment has been booked.'
     },
     sections: [
       {
         type: 'trustPoints',
         items: [
           'Free to join',
-          'Name and email only',
-          'First to hear when booking opens',
-          'Built for Northwest Indiana adults'
+          'Physician-led care',
+          'No commitment to care',
+          'Merrillville · Northwest Indiana'
         ]
       },
       {
         type: 'detail',
-        eyebrow: 'What you are signing up for',
-        heading: 'Hear it first.',
+        eyebrow: 'A thoughtful first step',
+        heading: 'Your questions. A physician-led conversation.',
         body:
-          'The opening date, pricing and the first booking window go to the Launch List before anywhere else.'
+          'Apex is preparing to bring physician-led weight, metabolic, hormone and hair-loss care to Merrillville. Atif Muhammad, MD, leads our clinical care. Joining the list lets you follow our opening plans and decide whether an evaluation is right for you.'
       },
       {
         type: 'cards',
@@ -962,45 +965,45 @@ export const pages = Object.freeze({
       {
         type: 'steps',
         eyebrow: 'What happens next',
-        heading: 'What happens next',
+        heading: 'Stay in the loop. Decide in your own time.',
         items: [
           {
             title: 'Join the list.',
-            body: 'Name and email. Takes ten seconds.'
+            body: 'Leave your name and email, and choose to receive opening updates.'
           },
           {
             title: 'Get the details.',
-            body: 'We email the opening date, pricing and how care works, as each is confirmed.'
+            body: 'Watch for opening news, clinical-evaluation availability and details of the launch offer as plans are confirmed.'
           },
           {
             title: 'Book if it fits.',
-            body: 'When scheduling opens, Launch List members hear first.'
-          },
-          {
-            title: 'Share your history at your visit.',
-            body: 'Medical intake happens securely once you have an appointment, not on this form.'
+            body: 'When scheduling opens, you can review the details and decide whether to book. Joining the list does not reserve an appointment.'
           }
         ]
       },
       {
         type: 'faq',
-        heading: 'Before you submit',
+        heading: 'A few things to know.',
         items: [
           {
             question: 'Does this reserve an appointment?',
-            answer: 'No. It gets you opening updates and first access when booking opens.'
+            answer: 'No. This is an email signup for opening news and notice when clinical evaluations can be booked. It does not reserve an appointment or guarantee treatment.'
           },
           {
             question: 'Does it cost anything?',
-            answer: 'No.'
+            answer: 'No. Joining the Launch List is free, and you can unsubscribe at any time.'
+          },
+          {
+            question: 'What is included in the free-test offer?',
+            answer: 'A free initial in-house testosterone test, including blood draw and processing. No purchase required. Send-out labs are excluded. The offer will be available after opening; this signup does not book a test. Women’s hormone testing sent to an outside laboratory is not included.'
           },
           {
             question: 'Should I include medical information?',
             answer: 'No. Just your name and email. Your history is for your visit.'
           },
           {
-            question: 'When will I hear from you?',
-            answer: 'As soon as there is something worth telling you: the opening date, pricing, and the first booking window.'
+            question: 'When and where will Apex open?',
+            answer: `We’re preparing to open at ${clinicAddress}. The opening date and clinical-evaluation availability will be shared as they are confirmed.`
           }
         ]
       }

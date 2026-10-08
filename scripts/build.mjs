@@ -326,7 +326,7 @@ function pricingMarkup(items) {
 
 function foundingConsultationFormMarkup(form) {
   return `<div class="form-card conversion-form-card" id="consultation-request" tabindex="-1">
-    <p class="eyebrow">Private contact request</p>
+    <p class="eyebrow">The Apex Launch List</p>
     <h2 id="consultation-form-heading">${escapeHtml(form.heading)}</h2>
     <p id="form-guidance">${escapeHtml(form.privacyNote)}</p>
     <form id="consultation-form" action="${escapeHtml(form.action)}" method="${escapeHtml(form.method)}" aria-labelledby="consultation-form-heading" aria-describedby="form-guidance" data-success-message="${escapeHtml(form.successMessage)}">
@@ -597,9 +597,10 @@ function renderConversionHero(page) {
   return `<section class="hero conversion-hero" aria-labelledby="page-title"><div class="container conversion-grid">
     <div class="hero-copy conversion-copy">
       <p class="eyebrow">${escapeHtml(page.eyebrow)}</p>
-      <h1 id="page-title">${escapeHtml(page.h1)}</h1>
+      <h1 id="page-title">${escapeHtml(page.h1).replace('. ', '.<br>')}</h1>
       <p>${escapeHtml(page.intro)}</p>
-      <div class="hero-actions">${buttonMarkup(page.cta)}${buttonMarkup(page.secondaryCta, true)}</div>
+      <div class="launch-offer"><p class="eyebrow">${escapeHtml(page.offer.eyebrow)}</p><h2>${escapeHtml(page.offer.heading)}</h2><p>${escapeHtml(page.offer.terms)}</p></div>
+      <div class="hero-actions">${buttonMarkup(page.cta)}</div>
       <p class="cta-note">${escapeHtml(page.ctaNote)}</p>
     </div>
     ${foundingConsultationFormMarkup(page.form)}
@@ -651,13 +652,12 @@ function renderNavigation(page) {
   </header><noscript><nav class="no-js-navigation container" aria-label="Navigation without JavaScript">${site.navigation.map((item) => `<a href="${escapeHtml(item.href)}">${escapeHtml(item.label)}</a>`).join('')}</nav></noscript>`;
 }
 
-function renderLandingNavigation() {
+function renderLandingNavigation(page) {
   return `<header class="site-header landing-header">
     <div class="container site-header-inner">
       <a class="brand premium-brand" href="/" aria-label="Apex Wellness home"><span>Apex</span><small>WELLNESS</small></a>
-      <nav class="landing-nav" aria-label="Founding Patient page navigation">
-        <a href="/">Explore full site</a>
-        <a class="nav-cta" href="#consultation-request">Join the launch list</a>
+      <nav class="landing-nav" aria-label="Launch List page navigation">
+        <a class="nav-cta" href="#consultation-request">${escapeHtml(page.cta.label)}</a>
       </nav>
     </div>
   </header>`;
@@ -690,7 +690,7 @@ function renderSiteHelp(page) {
     ${buttonMarkup(site.cta)}<p class="widget-note">Free to join. No appointment booked.</p>
   </aside>` : '';
   return `${launchPrompt}
-  <div class="site-help" data-launch-label="${escapeHtml(site.launch.label)}">
+  <div class="site-help" data-launch-label="${escapeHtml(page.launchLabel || site.launch.label)}">
     <button id="help-toggle" class="help-toggle" type="button" aria-expanded="false" aria-controls="site-help-panel" hidden><span aria-hidden="true">✦</span> Ask Apex</button>
     <section id="site-help-panel" class="help-panel" aria-labelledby="help-heading" hidden>
       <header class="help-header"><div><p class="eyebrow">Website guide · Automated</p><h2 id="help-heading">How can I help you?</h2></div><button id="help-close" class="widget-close" type="button" aria-label="Close website guide">×</button></header>
@@ -749,11 +749,11 @@ function renderDocument(pageKey, page, jsonLd, { noIndex = false, mainOverride =
 </head>
 <body class="page-${escapeHtml(pageKey)}${page.landing ? ' landing-page' : ''}">
   <a class="skip-link" href="#main-content">Skip to main content</a>
-  <div class="announcement" role="status"><span class="announcement-copy">${escapeHtml(site.announcement)}</span> <a class="announcement-cta" href="${page.landing ? "#consultation-request" : escapeHtml(site.cta.href)}">${escapeHtml(site.cta.label)} <span aria-hidden="true">↗</span></a></div>
-  ${page.landing ? renderLandingNavigation() : renderNavigation(page)}
+  <div class="announcement" role="status"><span class="announcement-copy">${escapeHtml(page.announcement || site.announcement)}</span>${page.landing ? '' : ` <a class="announcement-cta" href="${escapeHtml(site.cta.href)}">${escapeHtml(site.cta.label)} <span aria-hidden="true">↗</span></a>`}</div>
+  ${page.landing ? renderLandingNavigation(page) : renderNavigation(page)}
   ${mainOverride || renderMain(pageKey, page)}
   ${renderFooter(page)}
-  ${page.landing ? '<a class="mobile-conversion-cta" href="#consultation-request">Join the launch list</a>' : ""}
+  ${page.landing ? `<a class="mobile-conversion-cta" href="#consultation-request">${escapeHtml(page.cta.label)}</a>` : ""}
   ${renderSiteHelp(page)}
 </body>
 </html>

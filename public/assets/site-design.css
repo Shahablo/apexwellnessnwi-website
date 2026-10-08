@@ -305,6 +305,17 @@ body{overflow-x:clip}
 }
 @media(forced-colors:active){.signature-hero::before{display:none}.signature-content{background:Canvas;color:CanvasText}.signature-content h1,.signature-content h1 em,.signature-content p,.hero-explore{color:CanvasText}.signature-bottom .button{background:ButtonFace;color:ButtonText;border:1px solid ButtonText}.physician-section,.team-section{background:Canvas;color:CanvasText}.physician-content h2,.physician-content p,.physician-content .text-link{color:CanvasText}}
 
+/* Window campaign: one promise, one signup action, with offer terms beside it. */
+.landing-page .conversion-copy h1{max-width:12ch}
+.landing-page .conversion-copy>p:not(.eyebrow):not(.cta-note){max-width:42ch}
+.landing-page .site-help{display:none}
+.launch-offer{margin:1.8rem 0;padding:1.35rem 1.5rem;border-left:3px solid #a46d4b;background:#f6f4ed}
+.launch-offer .eyebrow{font-size:.68rem;line-height:1.6;letter-spacing:.07em;margin:0 0 .65rem}
+.launch-offer h2{font-size:clamp(1.8rem,2.7vw,2.5rem);line-height:1.1;margin:0 0 .8rem;max-width:24ch}
+.launch-offer>p:last-child{font-size:.9rem;line-height:1.65;margin:0;max-width:46ch}
+.landing-page .conversion-copy .cta-note{font-size:.8rem;line-height:1.65}
+@media(max-width:40rem){.landing-page .conversion-hero{padding-top:1.75rem}.landing-page .conversion-copy h1{font-size:3.6rem}.launch-offer{padding:1.1rem 1.2rem;margin:1.4rem 0}.landing-page .conversion-copy .hero-actions{display:none}.landing-page .conversion-copy .cta-note{margin-bottom:0}}
+
 /* Readable launch information and confident, goal-focused hero. */
 .announcement{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:.75rem 1.5rem;padding:.9rem var(--gutter);font-size:1.0625rem;font-weight:600;line-height:1.6;letter-spacing:.015em}
 .announcement-copy{max-width:48ch;text-wrap:balance}

@@ -668,6 +668,12 @@ test('homepage leads with medical expertise and keeps launch actions readable on
   assert.doesNotMatch(home, /A thoughtful(?:<br>|\s)+approach to/);
   assert.match(home, /class="signature-launch-note">Coming soon · Subject to readiness/);
   for (const [slug, html] of htmlBySlug) {
+    if (slug === '/founding-patients/') {
+      assert.match(html, /Coming soon to Merrillville · Physician-led care/);
+      assert.doesNotMatch(html, /November 1|2026-11-01/);
+      assert.match(html, /href="#consultation-request">Notify me when Apex opens/);
+      continue;
+    }
     assert.match(html, /class="announcement-copy">Planned launch:/, `${slug} retains planned status`);
     assert.match(html, /class="announcement-cta" href="(?:\/founding-patients\/|#consultation-request)">Join the Launch List/, `${slug} retains a working launch-list action`);
   }
@@ -678,6 +684,16 @@ test('homepage leads with medical expertise and keeps launch actions readable on
   assert.match(readability, /\.signature-bottom \.signature-launch\{display:block/);
   assert.doesNotMatch(readability, /\.signature-launch\{[^}]*display:none/);
   assert.match(readability, /\.announcement \.announcement-cta\{[^}]*min-height:3rem/);
+});
+
+test('the QR landing page keeps the free-test terms adjacent and promises updates, not a reserved appointment', () => {
+  const html = htmlBySlug.get('/founding-patients/');
+  const offer = html.match(/<div class="launch-offer">([\s\S]*?)<\/div>/)?.[1];
+  assert.ok(offer);
+  for (const phrase of ['Free initial in-house testosterone test', 'blood draw and processing', 'No purchase required', 'Send-out labs excluded', 'Available after opening']) assert.ok(offer.includes(phrase));
+  assert.match(html, /No appointment has been booked/);
+  assert.match(html, /data-launch-label="to be confirmed"/);
+  assert.doesNotMatch(html, /before anywhere else|first access|Takes ten seconds/);
 });
 
 test('all CSS assets and self-hosted fonts resolve without third-party runtime calls', async () => {

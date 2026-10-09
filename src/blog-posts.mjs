@@ -2,8 +2,10 @@ import { personalGoalsArticle } from './personal-goals-article.mjs';
 import { choosingAPracticeArticle } from './choosing-a-practice-article.mjs';
 import { launchListArticle } from './launch-list-article.mjs';
 import { lakeCountyLibraryArticle } from './lake-county-library-article.mjs';
+import { readingClinicWebsiteArticle } from './reading-clinic-website-article.mjs';
 
 export const blogPosts = Object.freeze([
+  readingClinicWebsiteArticle,
   lakeCountyLibraryArticle,
   launchListArticle,
   choosingAPracticeArticle,

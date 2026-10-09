@@ -124,6 +124,7 @@ function canonicalUrl(slug) {
 }
 
 function imageForPage(pageKey, page) {
+  if (page.heroImage === null) return null;
   return imageCatalog[page.heroImage] || heroImages[pageKey] || imageCatalog.shoreline;
 }
 
@@ -236,7 +237,7 @@ function pageJsonLd(page) {
       "@id": `${url}#article`,
       headline: page.h1,
       description: page.description,
-      image: `${site.canonicalUrl}${assetUrl(`images/${heroImage.file}`)}`,
+      ...(heroImage ? { image: `${site.canonicalUrl}${assetUrl(`images/${heroImage.file}`)}` } : {}),
       datePublished: page.published,
       dateModified: page.modified,
       author: {
@@ -501,8 +502,8 @@ function renderHero(pageKey, page) {
 function renderBlogIndex(page) {
   const articleCards = publishedBlogPosts.map((post) => {
     const image = imageForPage("blog-post", post);
-    return `<article class="blog-card">
-      <a class="blog-card-image" href="${escapeHtml(post.slug)}" aria-label="Read ${escapeHtml(post.h1)}">${imageMarkup(image)}</a>
+    return `<article class="blog-card${image ? '' : ' blog-card--text'}">
+      ${image ? `<a class="blog-card-image" href="${escapeHtml(post.slug)}" aria-label="Read ${escapeHtml(post.h1)}">${imageMarkup(image)}</a>` : ''}
       <div class="blog-card-body">
         <p class="article-kicker">${escapeHtml(post.category)}</p>
         <h2><a href="${escapeHtml(post.slug)}">${escapeHtml(post.h1)}</a></h2>
@@ -545,7 +546,7 @@ function renderHome(page) {
     </div></section>
     ${latest ? `<section class="section home-journal" aria-labelledby="journal-heading"><div class="container">
       <div class="section-heading heading-with-aside"><div><p class="eyebrow">The Apex journal</p><h2 id="journal-heading">A little more understanding.</h2></div><a class="text-link" href="/blog/">Explore the blog <span aria-hidden="true">↗</span></a></div>
-      <article class="journal-feature"><a class="journal-feature-image" href="${escapeHtml(latest.slug)}" aria-label="Read ${escapeHtml(latest.h1)}">${imageMarkup(imageForPage('blog-post', latest))}</a><div><p class="eyebrow">${escapeHtml(latest.category)} · ${escapeHtml(latest.readTime || '8 minute read')}</p><h3><a href="${escapeHtml(latest.slug)}">${escapeHtml(latest.h1)}</a></h3><p>${escapeHtml(latest.excerpt)}</p><a class="text-link" href="${escapeHtml(latest.slug)}">Read the article <span aria-hidden="true">↗</span></a><p class="quiet-note">General education. Your own care starts with a clinical conversation.</p></div></article>
+      <article class="journal-feature${latest.heroImage === null ? ' journal-feature--text' : ''}">${latest.heroImage === null ? '' : `<a class="journal-feature-image" href="${escapeHtml(latest.slug)}" aria-label="Read ${escapeHtml(latest.h1)}">${imageMarkup(imageForPage('blog-post', latest))}</a>`}<div><p class="eyebrow">${escapeHtml(latest.category)} · ${escapeHtml(latest.readTime || '8 minute read')}</p><h3><a href="${escapeHtml(latest.slug)}">${escapeHtml(latest.h1)}</a></h3><p>${escapeHtml(latest.excerpt)}</p><a class="text-link" href="${escapeHtml(latest.slug)}">Read the article <span aria-hidden="true">↗</span></a><p class="quiet-note">General education. Your own care starts with a clinical conversation.</p></div></article>
     </div></section>` : ''}
     <section class="section local-section" aria-labelledby="local-heading"><div class="container editorial-row"><div><p class="eyebrow">Rooted in our region</p><h2 id="local-heading">For life in<br>Northwest Indiana.</h2></div><div class="editorial-copy"><p>${escapeHtml(local.body)}</p><a class="text-link" href="/faq/">Opening & location questions <span aria-hidden="true">↗</span></a></div></div></section>
     ${renderLaunchCta()}
@@ -580,7 +581,7 @@ function renderBlogPost(page) {
         <h1 id="page-title">${escapeHtml(page.h1)}</h1>
         ${introParagraphs}
         <p class="article-meta">By ${escapeHtml(page.author)} · <time datetime="${escapeHtml(page.published)}">Published ${escapeHtml(formatDate(page.published))}</time>${page.modified !== page.published ? ` · <time datetime="${escapeHtml(page.modified)}">Updated ${escapeHtml(formatDate(page.modified))}</time>` : ""}</p>
-        ${imageMarkup(image, { hero: true })}
+        ${image ? imageMarkup(image, { hero: true }) : ''}
       </header>
       <div class="article-body">
         <nav class="article-contents" aria-label="In this article"><h2>In this article</h2><ul>${page.sections.map((section, index) => `<li><a href="#${identifier(section.heading)}-${index + 1}">${escapeHtml(section.heading)}</a></li>`).join('')}</ul></nav>
@@ -705,7 +706,7 @@ function renderSiteHelp(page) {
 
 function renderDocument(pageKey, page, jsonLd, { noIndex = false, mainOverride = "" } = {}) {
   const canonical = canonicalUrl(page.slug);
-  const heroImage = page.kind === 'blogPost' ? imageForPage(pageKey, page) : { file: 'apex-social-preview.png', width: 1200, height: 630, alt: 'Apex Wellness — Physician-led care. Built around you. Northwest Indiana.' };
+  const heroImage = (page.kind === 'blogPost' ? imageForPage(pageKey, page) : null) || { file: 'apex-social-preview.png', width: 1200, height: 630, alt: 'Apex Wellness — Physician-led care. Built around you. Northwest Indiana.' };
   const socialImage = `${site.canonicalUrl}${assetUrl(`images/${heroImage.file}`)}`;
 
   return `<!doctype html>
@@ -968,7 +969,7 @@ function validateContent() {
 
   for (const [index, post] of blogPosts.entries()) {
     const key = `blogPosts[${index}]`;
-    for (const field of ["slug", "title", "description", "h1", "intro", "excerpt", "published", "modified", "category", "author", "heroImage"]) {
+    for (const field of ["slug", "title", "description", "h1", "intro", "excerpt", "published", "modified", "category", "author"]) {
       if (!post[field]) throw new Error(`${key} is missing ${field}.`);
     }
     if (!post.slug.startsWith("/blog/") || !post.slug.endsWith("/")) {
@@ -980,7 +981,7 @@ function validateContent() {
     if (!post.sections?.length) throw new Error(`${key} needs article sections.`);
     if (!post.sources?.length) throw new Error(`${key} needs reviewed sources.`);
     if (!post.relatedService?.href || !post.relatedService?.label) throw new Error(`${key} needs a related service link.`);
-    if (!imageCatalog[post.heroImage]) throw new Error(`${key} uses an unknown hero image.`);
+    if (post.heroImage !== null && !imageCatalog[post.heroImage]) throw new Error(`${key} uses an unknown hero image.`);
     if (slugs.has(post.slug)) throw new Error(`Duplicate page slug: ${post.slug}`);
     if (titles.has(post.title)) throw new Error(`Duplicate page title: ${post.title}`);
     if (descriptions.has(post.description)) throw new Error(`Duplicate page description: ${post.description}`);

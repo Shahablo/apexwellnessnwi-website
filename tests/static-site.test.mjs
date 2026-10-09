@@ -743,3 +743,20 @@ test('September 30 community-resource article remains local, sourced and nonmedi
   assert.match(text, /8550 Broadway, Suite B/);
   assert.doesNotMatch(text, /8560|Wajeeh|Bakhsh|guaranteed|—/i);
 });
+
+test('October 9 website-reading guide uses its own date, current facts and deliberate no-image layout', async () => {
+  const article = blogPosts.find(post => post.slug === '/blog/how-to-read-a-clinic-website/');
+  assert.ok(article);
+  assert.equal(article.status, 'published');
+  assert.equal(article.editorialType, 'nonmedical');
+  assert.equal(article.published, '2026-10-09');
+  assert.equal(article.heroImage, null);
+  const html = await readFile(pageOutputPath(article.slug), 'utf8');
+  assert.match(html, /Published October 9, 2026/);
+  assert.match(html, /MedlinePlus: Evaluating Health Information/);
+  assert.match(html, /NCCIH: Are You Reading News or Advertising/);
+  assert.doesNotMatch(html, /<figure class="representative"/);
+  const text = JSON.stringify(article);
+  assert.match(text, /8550 Broadway, Suite B/);
+  assert.doesNotMatch(text, /8560|Wajeeh|Bakhsh|guaranteed|—/i);
+});

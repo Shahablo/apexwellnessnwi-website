@@ -14,7 +14,7 @@ export const choosingAPracticeArticle = Object.freeze({
     {
       "heading": "Start with responsibility",
       "paragraphs": [
-        "Ask who would conduct the first evaluation, who would review any results, and who would make decisions about your care. Write down the person's role as well as the name. A team photo or the phrase \"physician-led\" does not tell you which person handles each step.",
+        "Ask who would conduct the first evaluation, who would review any results, and who would make decisions about your care. Write down the person's role as well as the name. A team photo or a headline about the care team does not tell you which person handles each step.",
         "Then ask how decisions get explained. Where can you raise a question, and who would talk it through with you? You are looking for a clear account of who is responsible for what. A list of credentials is not the same thing."
       ]
     },
@@ -88,5 +88,5 @@ export const choosingAPracticeArticle = Object.freeze({
   "disclaimerHeading": "A note about this worksheet",
   "disclaimer": "These are administrative and process questions for comparing practices. They are not a medical assessment or a treatment recommendation, and they do not describe Apex Wellness's final operating procedures. Keep personal health questions for a private conversation with a qualified clinician.",
   "editorialNote": "An original Apex Wellness planning worksheet, not medical advice. The NIDDK source informs only the cost and program-operation questions; no clinical recommendation is drawn from it.",
-  "ctaBody": "Physician-led care. Coming soon to Merrillville. See how care is planned to work or join the Launch List for opening updates."
+  "ctaBody": "Thoughtful care. Coming soon to Merrillville. See how care is planned to work or join the Launch List for opening updates."
 });

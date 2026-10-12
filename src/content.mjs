@@ -22,7 +22,7 @@ export const site = Object.freeze({
   email: 'hello@apexwellnessnwi.com',
   phone: '(219) 207-2456',
   phoneHref: 'tel:+12192072456',
-  tagline: 'Physician-led care. Built around you.',
+  tagline: 'Thoughtful care. Built around you.',
   contentUpdated: '2026-10-12',
   launch: { date: '2026-11-04', label: 'November 4, 2026', status: 'Planned launch' },
   social: [
@@ -32,7 +32,7 @@ export const site = Object.freeze({
     { label: 'NWI wellness community', href: 'https://www.facebook.com/groups/1778107663214102/' }
   ],
   description:
-    'Apex Wellness is preparing physician-led weight, metabolic, hormone, and hair-loss care for adults in Northwest Indiana.',
+    'Apex Wellness is preparing weight, metabolic, hormone, and hair-loss care for adults in Northwest Indiana.',
   announcement:
     'Planned launch: November 4, 2026 · Northwest Indiana.',
   cta: priorityListCta,
@@ -65,7 +65,7 @@ export const site = Object.freeze({
   },
   footer: {
     summary:
-      'Physician-led weight, metabolic, hormone, and hair-loss care for adults in Northwest Indiana.',
+      'Weight, metabolic, hormone, and hair-loss care for adults in Northwest Indiana.',
     location:
       `Coming soon to ${clinicAddress}.`,
     copyright: '© 2026 Apex Wellness.'
@@ -79,13 +79,13 @@ export const pages = Object.freeze({
     modified: '2026-09-22',
     title: 'Weight, Hormone & Hair-Loss Care in NWI | Apex Wellness',
     description:
-      'Physician-led weight, metabolic, hormone, and hair-loss care in Northwest Indiana. Coming soon to Merrillville. Join the Launch List for opening updates.',
+      'Weight, metabolic, hormone, and hair-loss care in Northwest Indiana. Coming soon to Merrillville. Join the Launch List for opening updates.',
     eyebrow: 'Planned launch · November 4, 2026 · Northwest Indiana',
     h1: 'Medical expertise. Focused on your goals.',
     headlineLead: 'Medical expertise.',
     headlineEmphasis: 'Focused on your goals.',
     intro:
-      'Thoughtful weight, metabolic, hormone, and hair-loss care for adults in Northwest Indiana. Led by Atif Muhammad, MD, Apex is preparing to open with an individualized approach, built around the person seeking care.',
+      'Thoughtful weight, metabolic, hormone, and hair-loss care for adults in Northwest Indiana. Apex is preparing to open with an individualized approach, built around the person seeking care.',
     cta: priorityListCta,
     secondaryCta: {
       label: 'Explore care options',
@@ -95,8 +95,8 @@ export const pages = Object.freeze({
     editorial: {
       careHeading: 'Four ways in.\nOne standard of care.',
       careAside: 'Evaluated before treated.\nNo shortcuts, no templates.',
-      physicianHeading: 'Physician-led.\nPerson by person.',
-      physicianBody: 'Atif Muhammad, MD, brings a physician’s perspective to Apex. We are building a practice around careful evaluation, clear conversations, and responsible treatment decisions.',
+      approachHeading: 'Thoughtful care.\nBuilt around you.',
+      approachBody: 'We are building a practice around careful evaluation, clear conversations, and individual goals. Care-team details and appointment availability will be shared before scheduling opens.',
       processHeading: 'A simple first step.\nSpace to decide.',
       process: [
         { title: 'Stay in the know.', body: 'Join the Launch List with your name and email. That is all we ask for.' },
@@ -108,7 +108,7 @@ export const pages = Object.freeze({
       {
         type: 'trustPoints',
         items: [
-          'Physician-led from the start',
+          'Individual goals from the start',
           'Four focused areas of care',
           'Individual evaluation before treatment',
           'Clear information before you book'
@@ -117,7 +117,7 @@ export const pages = Object.freeze({
       {
         type: 'cards',
         eyebrow: 'Four areas of care',
-        heading: 'Four areas of care. One physician-led approach.',
+        heading: 'Four areas of care. One individualized approach.',
         cards: [
           {
             title: 'Weight & metabolic care',
@@ -140,7 +140,7 @@ export const pages = Object.freeze({
           {
             title: 'Hair-loss care',
             body:
-              'Planned physician-led evaluation and treatment for hair-loss concerns, with individual care decisions and clear details before treatment.',
+              'Planned clinical evaluation and treatment for hair-loss concerns, with individual care decisions and clear details before treatment.',
             href: '/hair-loss-care/'
           }
         ]
@@ -186,9 +186,9 @@ export const pages = Object.freeze({
       {
         type: 'featureList',
         eyebrow: 'Why Apex',
-        heading: 'What physician management is intended to mean here.',
+        heading: 'What our planned approach means.',
         items: [
-          'A physician reviews each evaluation, relevant result, and written clinical plan.',
+          'Care begins with an individual clinical evaluation and a plan appropriate to the person.',
           'Dosing, monitoring, and referral decisions rely on clinical judgment rather than an automatic protocol.',
           'The practice stays focused on four care areas with clear fees and exclusions.',
           'Progress is reviewed using symptoms, measurements, laboratory data when relevant, function, adherence, and side effects.',
@@ -218,7 +218,7 @@ export const pages = Object.freeze({
     navLabel: 'Weight & Metabolic',
     title: 'Medical Weight Management in Northwest Indiana | Apex Wellness',
     description:
-      'Learn about the physician-managed approach to medical weight and metabolic care at Apex Wellness in Northwest Indiana.',
+      'Learn about the individualized approach to medical weight and metabolic care at Apex Wellness in Northwest Indiana.',
     eyebrow: 'Care area · Medical weight and metabolic care',
     h1: 'Weight care, with the whole person in mind.',
     intro:
@@ -231,7 +231,7 @@ export const pages = Object.freeze({
         body:
           'Adults who want an evidence-informed plan that can include nutrition, protein and resistance-training support, appropriate measurements, careful medication consideration, side-effect review, plateau management, and maintenance planning.',
         note:
-          'If you are looking for a specific prescription without an evaluation, this is not the right fit. Everything here starts with a physician visit.'
+          'If you are looking for a specific prescription without an evaluation, this is not the right fit. Everything here starts with a clinical evaluation.'
       },
       {
         type: 'detail',
@@ -245,7 +245,7 @@ export const pages = Object.freeze({
         eyebrow: 'Testing and measurement',
         heading: 'Ordered only when clinically useful.',
         body:
-          'Depending on your history, your physician may look at metabolic and cardiovascular markers, body composition and any recent outside results. Testing is ordered when it changes the plan, and its cost is shown separately.'
+          'Depending on your history, your clinician may look at metabolic and cardiovascular markers, body composition and any recent outside results. Testing is ordered when it changes the plan, and its cost is shown separately.'
       },
       {
         type: 'options',
@@ -270,7 +270,7 @@ export const pages = Object.freeze({
           }
         ],
         note:
-          'Whether medication makes sense is a decision you and your physician make together. Compounded and FDA-approved products are different things, and we will talk through the difference before anything is prescribed.'
+          'Whether medication makes sense is a decision you and your clinician make together. Compounded and FDA-approved products are different things, and we will talk through the difference before anything is prescribed.'
       },
       {
         type: 'followUp',
@@ -313,7 +313,7 @@ export const pages = Object.freeze({
     navLabel: "Men's Hormone Health",
     title: "Men's Hormone Health in Northwest Indiana | Apex Wellness",
     description:
-      "Learn about Apex Wellness's physician-managed evaluation of men's hormone concerns in Northwest Indiana.",
+      "Learn about Apex Wellness's individualized evaluation of men's hormone concerns in Northwest Indiana.",
     eyebrow: "Care area · Men's hormone health",
     h1: 'A fuller picture of your hormone health.',
     intro:
@@ -408,7 +408,7 @@ export const pages = Object.freeze({
     navLabel: "Women's Midlife Care",
     title: 'Menopause & Midlife Care in Northwest Indiana | Apex Wellness',
     description:
-      'Learn about the physician-managed approach to perimenopause, menopause, weight, sleep, and metabolic concerns at Apex Wellness.',
+      'Learn about the individualized approach to perimenopause, menopause, weight, sleep, and metabolic concerns at Apex Wellness.',
     eyebrow: "Care area · Women's midlife hormone and metabolic care",
     h1: 'Midlife care, built around your next chapter.',
     intro:
@@ -503,11 +503,11 @@ export const pages = Object.freeze({
     navLabel: 'Hair-Loss Care',
     title: 'Hair-Loss Care in Merrillville & NWI | Apex Wellness',
     description:
-      'Physician-led hair-loss care is coming to Apex Wellness in Merrillville, Northwest Indiana. Explore the planned service and join the Launch List.',
+      'Hair-loss care is coming to Apex Wellness in Merrillville, Northwest Indiana. Explore the planned service and join the Launch List.',
     eyebrow: 'Coming soon · Hair-loss care',
     h1: 'Hair-loss concerns deserve a thoughtful conversation.',
     intro:
-      'Apex is preparing to offer physician-led evaluation and treatment for adults with hair-loss concerns. Individual care decisions come first, with service details and pricing available before scheduling opens.',
+      'Apex is preparing to offer clinical evaluation and treatment for adults with hair-loss concerns. Individual care decisions come first, with service details and pricing available before scheduling opens.',
     cta: priorityListCta,
     sections: [
       {
@@ -692,9 +692,9 @@ export const pages = Object.freeze({
     navLabel: 'About',
     title: 'Meet the Team | Apex Wellness Northwest Indiana',
     description:
-      'Meet Shahab Siddique and Atif Muhammad, MD, and learn about the personal motivations behind Apex Wellness in Northwest Indiana.',
+      'Meet founder Shahab Siddique and learn about the personal motivations behind Apex Wellness in Northwest Indiana.',
     eyebrow: 'The people behind Apex',
-    h1: 'Different backgrounds. One shared motivation.',
+    h1: 'A personal reason to build Apex.',
     intro:
       'Staying strong, capable, and involved in the things we love. Our reasons for building Apex are personal—and your reasons for seeking care should matter just as much.',
     cta: priorityListCta,
@@ -703,7 +703,7 @@ export const pages = Object.freeze({
         type: 'teamProfiles',
         eyebrow: 'Meet the team',
         heading: 'People first. In the practice, too.',
-        intro: 'A shared enthusiasm for fitness brought us to the same question: how can thoughtful, physician-led care support the life someone wants to keep living? You do not need to be an athlete to belong here. Your goals set the context.',
+        intro: 'A personal interest in staying active raised a question: how can thoughtful care support the life someone wants to keep living? You do not need to be an athlete to belong here. Your goals set the context.',
         profiles: [
           {
             id: 'shahab-siddique',
@@ -713,23 +713,10 @@ export const pages = Object.freeze({
             image: { file: 'shahab-siddique-warm-v1.webp', width: 1254, height: 1254 },
             paragraphs: [
               'Shahab grew up wrestling and remains an active weightlifter who enjoys Brazilian jiu-jitsu, Muay Thai, and boxing. His interest in wellness starts with a question that gets more relevant with every birthday: how do you keep doing the things you love as you get older?',
-              'His professional background is in health technology and clinical workflows. His motivation for Apex is more personal: helping build a physician-led practice that takes long-term strength, function, and individual ambitions seriously.',
+              'His professional background is in health technology and clinical workflows. His motivation for Apex is more personal: helping build a practice that takes long-term strength, function, and individual ambitions seriously.',
               'For Shahab, health is about more than a number on a scale. It is about another round on the mats, time under the bar, and staying engaged in a life that feels like yours.'
             ],
             aside: 'Birthdays can stay. Automatically retiring your favorite hobbies? Less appealing.'
-          },
-          {
-            id: 'atif-muhammad',
-            name: 'Atif Muhammad, MD',
-            context: 'Physician leadership · Fitness enthusiast · Traveler',
-            headline: 'Fitness for a life beyond the gym.',
-            image: { file: 'atif-muhammad-warm-v3.png', width: 1316, height: 1195 },
-            paragraphs: [
-              'Dr. Atif Muhammad is an active weightlifter, enjoys traveling, and is passionate about fitness. Those interests connect with a simple idea behind Apex: health matters not only in the gym, but in the life you want to enjoy beyond it.',
-              'That might mean pursuing a training goal, feeling capable while exploring somewhere new, or continuing the everyday routines that matter to you. Different people have different priorities, and that personal context deserves a place in a clinical conversation.',
-              'Atif’s enthusiasm for fitness fits Apex’s focus on thoughtful, physician-led care rather than one definition of success. The point is not to make everyone’s goals look the same. It is to understand what being well means to each person.'
-            ],
-            aside: 'There is a world beyond the weight room. Conveniently, Atif is interested in both.'
           }
         ],
         note: 'Apex focuses on weight, metabolic, hormone and hair-loss care. Keep your primary care doctor; we work alongside them, not instead of them.'
@@ -772,7 +759,7 @@ export const pages = Object.freeze({
         type: 'notice',
         eyebrow: 'Photography',
         heading: 'Real people. Clearly labeled photography.',
-        body: 'The portraits on this page are Shahab Siddique and Atif Muhammad, MD. Other photographs on the site are illustrative.'
+        body: 'The portrait on this page is founder Shahab Siddique. Other photographs on the site are illustrative.'
       }
     ]
   },
@@ -822,7 +809,7 @@ export const pages = Object.freeze({
           {
             question: 'Will Apex offer hair-loss treatment?',
             answer:
-              'Yes. Physician-led hair-loss care is part of the planned offering, alongside weight and metabolic care, men’s hormone health, and women’s midlife care. Coming soon; specific treatment options and fees will be published before scheduling opens.'
+              'Yes. Hair-loss care is part of the planned offering, alongside weight and metabolic care, men’s hormone health, and women’s midlife care. Coming soon; specific treatment options and fees will be published before scheduling opens.'
           },
           {
             question: 'Does an evaluation guarantee treatment or a prescription?',
@@ -832,7 +819,7 @@ export const pages = Object.freeze({
           {
             question: 'Who will provide care?',
             answer:
-              'Apex is physician-led by Atif Muhammad, MD. Detailed clinical responsibilities and individual appointment availability will be published before scheduling opens.'
+              'Care-team members, their roles and credentials, and appointment availability will be published before scheduling opens.'
           },
           {
             question: 'Will Apex replace primary or specialist care?',
@@ -886,8 +873,8 @@ export const pages = Object.freeze({
     navLabel: 'Launch List',
     title: 'Join the Apex Wellness Launch List | Northwest Indiana',
     description:
-      'Join the Apex Wellness Launch List for opening updates. Physician-led weight, metabolic, hormone, and hair-loss care. Coming soon to Merrillville.',
-    announcement: 'Coming soon to Merrillville · Physician-led care',
+      'Join the Apex Wellness Launch List for opening updates. Weight, metabolic, hormone, and hair-loss care. Coming soon to Merrillville.',
+    announcement: 'Coming soon to Merrillville · Thoughtful care',
     launchLabel: 'to be confirmed',
     eyebrow: 'Apex Wellness · Northwest Indiana',
     h1: 'More life. Less guesswork.',
@@ -923,7 +910,7 @@ export const pages = Object.freeze({
         type: 'trustPoints',
         items: [
           'Free to join',
-          'Physician-led care',
+          'Thoughtful care',
           'No commitment to care',
           'Merrillville · Northwest Indiana'
         ]
@@ -931,9 +918,9 @@ export const pages = Object.freeze({
       {
         type: 'detail',
         eyebrow: 'A thoughtful first step',
-        heading: 'Your questions. A physician-led conversation.',
+        heading: 'Your questions. A thoughtful conversation.',
         body:
-          'Apex is preparing to bring physician-led weight, metabolic, hormone and hair-loss care to Merrillville. Atif Muhammad, MD, leads our clinical care. Joining the list lets you follow our opening plans and decide whether an evaluation is right for you.'
+          'Apex is preparing to bring weight, metabolic, hormone and hair-loss care to Merrillville. Joining the list lets you follow our opening plans and decide whether an evaluation is right for you.'
       },
       {
         type: 'cards',
@@ -942,7 +929,7 @@ export const pages = Object.freeze({
         cards: [
           {
             title: 'Weight & metabolic care',
-            body: 'A physician-managed approach to evaluation, meaningful measurements, sustainable habits, and medication only when clinically indicated.',
+            body: 'An individualized approach to evaluation, meaningful measurements, sustainable habits, and medication only when clinically indicated.',
             href: '/weight-management/'
           },
           {
@@ -957,7 +944,7 @@ export const pages = Object.freeze({
           },
           {
             title: 'Hair-loss care',
-            body: 'Physician-led evaluation and treatment for thinning and balding, for men and women.',
+            body: 'Clinical evaluation and treatment for thinning and balding, for men and women.',
             href: '/hair-loss-care/'
           }
         ]
@@ -1117,7 +1104,7 @@ export const pages = Object.freeze({
         heading: 'Prelaunch limitations',
         paragraphs: [
           'Descriptions of the planned practice, services, workflows, pricing structure, visit modalities, and availability may change before launch. Only information identified as finalized at the time scheduling opens should be relied upon for a care or payment decision.',
-          `Physician leadership, our location at ${clinicAddress}, and a planned launch date are identified on the site. Detailed clinical responsibilities, licensure information, legal practice details, contact channels, hours, pricing, and appointment availability are still being finalized.`
+          `Our location at ${clinicAddress} and a planned launch date are identified on the site. Detailed clinical responsibilities, licensure information, legal practice details, contact channels, hours, pricing, and appointment availability are still being finalized.`
         ]
       },
       {
@@ -1301,7 +1288,7 @@ export const pages = Object.freeze({
     eyebrow: 'Apex Wellness field notes',
     h1: 'Health has enough fine print.',
     intro:
-      'We read past the bold claims and ask the useful questions about weight, hormones, hair loss and staying active. Straight answers from a physician-led practice in Northwest Indiana, with sources you can check.',
+      'We read past the bold claims and ask the useful questions about weight, hormones, hair loss and staying active. Straight answers from a practice in Northwest Indiana, with sources you can check.',
     cta: priorityListCta,
     kind: 'blogIndex',
     modified: '2026-09-25',

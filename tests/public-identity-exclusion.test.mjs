@@ -6,7 +6,7 @@ import test from 'node:test';
 import { answerWebsiteQuestion } from '../src/assets/site-help.mjs';
 
 const publicRoot = fileURLToPath(new URL('../public/', import.meta.url));
-const excludedIdentity = /wajeeh|bakhsh|orthop(?:a)?edic surgeon/i;
+const excludedIdentity = /\batif\b|muhammad|wajeeh|bakhsh|orthop(?:a)?edic surgeon|physician[ -](?:led|managed)|physician reviews each/i;
 const textExtensions = new Set(['.html', '.js', '.css', '.json', '.xml', '.txt', '.svg', '.webmanifest']);
 
 async function checkDirectory(directory) {
@@ -25,7 +25,7 @@ test('all deployable pages, metadata, scripts and asset names honor the public i
 });
 
 test('website guide does not disclose the excluded physician even when asked directly', () => {
-  for (const question of ['Who are the physicians?', 'Is Wajeeh Bakhsh a founder?', 'Who is the orthopaedic surgeon?']) {
+  for (const question of ['Who are the physicians?', 'Does Atif work here?', 'Is Wajeeh Bakhsh a founder?', 'Who is the orthopaedic surgeon?']) {
     assert.doesNotMatch(JSON.stringify(answerWebsiteQuestion(question)), excludedIdentity);
   }
 });

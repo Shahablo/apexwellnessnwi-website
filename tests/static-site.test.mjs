@@ -11,8 +11,8 @@ import { blogPosts } from "../src/blog-posts.mjs";
 import { personalGoalsArticle } from "../src/personal-goals-article.mjs";
 import { choosingAPracticeArticle } from "../src/choosing-a-practice-article.mjs";
 
-test('September 20 personal-goals release is the classified nonmedical version, not a medical draft release', () => {
-  assert.equal(createHash('sha256').update(JSON.stringify(personalGoalsArticle)).digest('hex'), '9b5a2c81d751894bf27b18c993c7acadaae84386e3116a14b19c74f5d2ede82b');
+test('personal-goals release preserves the nonmedical version with October 12 staffing-neutral CTA', () => {
+  assert.equal(createHash('sha256').update(JSON.stringify(personalGoalsArticle)).digest('hex'), 'c66270968b1dabd1dd897ea5b950c2cef9f23a0287de54dd6b69c8fccebf4731');
   assert.equal(personalGoalsArticle.editorialType, 'nonmedical');
   assert.equal(personalGoalsArticle.published, '2026-09-20');
   assert.equal(personalGoalsArticle.sections.find(s => s.heading === 'Make a note you can use').bullets.length, 6);
@@ -518,30 +518,13 @@ test("sitemap, robots, and custom 404 cover the complete crawlable site", async 
 test('the About page distinguishes real team portraits, supplied interests, and physician credentials', () => {
   const html = htmlBySlug.get('/about/');
   const portraits = startTags(html, 'img').filter(({attrs}) => attrs['data-photo-kind'] === 'portrait');
-  assert.deepEqual(portraits.map(({attrs}) => attrs.alt), ['Shahab Siddique', 'Atif Muhammad, MD']);
+  assert.deepEqual(portraits.map(({attrs}) => attrs.alt), ['Shahab Siddique']);
   assert.ok(portraits.every(({attrs}) => attrs.loading === 'lazy'));
-  assert.match(html, /Atif Muhammad, MD/);
+  assert.doesNotMatch(html, /Atif|Muhammad/);
   assert.doesNotMatch(html, /Portrait coming soon/);
-  for (const interest of ['wrestling', 'Brazilian jiu-jitsu', 'Muay Thai', 'boxing', 'weightlifter', 'traveling']) assert.ok(html.includes(interest));
+  for (const interest of ['wrestling', 'Brazilian jiu-jitsu', 'Muay Thai', 'boxing', 'weightlifter']) assert.ok(html.includes(interest));
   assert.doesNotMatch(html, /Shahab Siddique, MD|Dr\. Shahab/);
   assert.match(html, /Keep your primary care doctor/);
-});
-
-test('Atif uses the exact owner-approved warm-backdrop v3 portrait on the homepage and About page', async () => {
-  for (const slug of ['/', '/about/']) {
-    const images = startTags(htmlBySlug.get(slug), 'img').filter(({attrs}) => attrs.alt === 'Atif Muhammad, MD');
-    assert.equal(images.length, 1, `${slug} needs one Atif portrait`);
-    const {attrs} = images[0];
-    assert.match(attrs.src, /^\/assets\/images\/atif-muhammad-warm-v3\.png\?v=6a16b18ebe4c$/);
-    assert.equal(attrs['data-photo-kind'], 'portrait');
-    assert.equal(attrs.width, '1316');
-    assert.equal(attrs.height, '1195');
-    assert.equal(attrs.loading, 'lazy');
-  }
-  const source = await readFile(join(projectRoot, 'assets', 'images', 'atif-muhammad-warm-v3.png'));
-  const published = await readFile(join(publicRoot, 'assets', 'images', 'atif-muhammad-warm-v3.png'));
-  assert.equal(createHash('sha256').update(source).digest('hex'), '6a16b18ebe4c25ee5007143c555deb927cc427632c49fe2db34ce70c19f23d92');
-  assert.deepEqual(published, source, 'build must preserve the approved portrait bytes');
 });
 
 test('the confirmed clinic address and LinkedIn Page appear consistently in visible copy and schema', () => {
@@ -640,7 +623,7 @@ function escapeForTest(value) {
 
 test('editorial redesign preserves key content, semantic headings, and navigation fallbacks', () => {
   const home = htmlBySlug.get('/');
-  for (const phrase of ['Atif Muhammad', 'Northwest Indiana', 'No appointment booked', site.launch.label]) {
+  for (const phrase of ['Thoughtful care', 'Northwest Indiana', 'No appointment booked', site.launch.label]) {
     assert.ok(home.includes(phrase), `homepage must retain ${phrase}`);
   }
   for (const [slug, html] of htmlBySlug) {
@@ -651,14 +634,14 @@ test('editorial redesign preserves key content, semantic headings, and navigatio
   }
 });
 
-test('homepage replaces the generic introduction with one physician section immediately after the hero', () => {
+test('homepage replaces the generic introduction with one staff-neutral approach section immediately after the hero', () => {
   const home = htmlBySlug.get('/');
   const sectionLabels = [...home.matchAll(/<section\b[^>]*aria-labelledby="([^"]+)"/g)].map((match) => match[1]);
-  assert.deepEqual(sectionLabels.slice(0, 3), ['page-title', 'physician-heading', 'care-heading']);
-  assert.equal(sectionLabels.filter((label) => label === 'physician-heading').length, 1);
+  assert.deepEqual(sectionLabels.slice(0, 3), ['page-title', 'approach-heading', 'care-heading']);
+  assert.equal(sectionLabels.filter((label) => label === 'approach-heading').length, 1);
   assert.doesNotMatch(home, /Your health is personal|Your care should be, too|class="section introduction-section"/);
-  assert.match(home, /class="physician-section" id="apex-approach"/);
-  assert.match(home, /Physician-led\.<br>Person by person\./);
+  assert.match(home, /class="section approach-section" id="apex-approach"/);
+  assert.match(home, /Thoughtful care\.<br>Built around you\./);
   assert.match(home, /href="\/about\/">Our approach to care/);
 });
 
@@ -669,7 +652,7 @@ test('homepage leads with medical expertise and keeps launch actions readable on
   assert.match(home, /class="signature-launch-note">Coming soon · Subject to readiness/);
   for (const [slug, html] of htmlBySlug) {
     if (slug === '/founding-patients/') {
-      assert.match(html, /Coming soon to Merrillville · Physician-led care/);
+      assert.match(html, /Coming soon to Merrillville · Thoughtful care/);
       assert.doesNotMatch(html, /November 1|2026-11-01/);
       assert.match(html, /href="#consultation-request">Notify me when Apex opens/);
       continue;

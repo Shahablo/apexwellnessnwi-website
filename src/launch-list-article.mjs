@@ -46,7 +46,7 @@ export const launchListArticle = {
     {
       heading: 'Where to find Apex updates',
       paragraphs: [
-        'Apex Wellness provides physician-led weight and metabolic care, men’s hormone health, women’s midlife care, and hair-loss care for thinning and balding. Coming soon to 8550 Broadway, Suite B, Merrillville, IN 46410.',
+        'Apex Wellness provides weight and metabolic care, men’s hormone health, women’s midlife care, and hair-loss care for thinning and balding. Coming soon to 8550 Broadway, Suite B, Merrillville, IN 46410.',
         'The Launch List is a free way to receive opening updates. The FAQ and Privacy Policy have current practical details. For this first step, a name and email are enough. The rest of your story can stay yours.'
       ]
     }

@@ -13,11 +13,11 @@ export const blogPosts = Object.freeze([
   {
     "slug": "/blog/apex-wellness-coming-soon-merrillville/",
     "title": "Apex Wellness Coming Soon to Merrillville | Launch Update",
-    "description": "Physician-led weight, metabolic, hormone, and hair-loss care. Coming soon to 8550 Broadway, Suite B, Merrillville, IN 46410. Find launch updates at Apex Wellness.",
+    "description": "Weight, metabolic, hormone, and hair-loss care. Coming soon to 8550 Broadway, Suite B, Merrillville, IN 46410. Find launch updates at Apex Wellness.",
     "eyebrow": "Apex Wellness updates",
     "readTime": "3 minute read",
     "h1": "Apex Wellness Is Coming Soon to Merrillville",
-    "intro": "Physician-led care. Built around you.\n\nApex Wellness is coming soon to 8550 Broadway, Suite B, Merrillville, IN 46410. Our planned launch is November 4, 2026. Find launch updates at apexwellnessnwi.com.\n\nWe are building a practice for adults who want a thoughtful conversation about their health, their goals, and the life they want to keep taking part in.",
+    "intro": "Thoughtful care. Built around you.\n\nApex Wellness is coming soon to 8550 Broadway, Suite B, Merrillville, IN 46410. Our planned launch is November 4, 2026. Find launch updates at apexwellnessnwi.com.\n\nWe are building a practice for adults who want a thoughtful conversation about their health, their goals, and the life they want to keep taking part in.",
     "excerpt": "Our Merrillville address, four areas of care, and an easy way to follow the launch.",
     "published": "2026-09-15",
     "modified": "2026-10-12",
@@ -39,7 +39,7 @@ export const blogPosts = Object.freeze([
       {
         "heading": "Four areas of care",
         "paragraphs": [
-          "Our planned offering includes physician-led care in four areas:"
+          "Our planned offering includes thoughtful care in four areas:"
         ],
         "bullets": [
           "Weight and metabolic care",
@@ -55,7 +55,6 @@ export const blogPosts = Object.freeze([
       {
         "heading": "Meet the people behind Apex",
         "paragraphs": [
-          "Atif Muhammad, MD, brings his perspective as a physician and an active weightlifter. Outside medicine, he enjoys fitness and travel.",
           "Shahab Siddique grew up wrestling and enjoys lifting, BJJ, Muay Thai, and boxing. His interest in staying involved in those activities as he gets older helped inspire Apex.",
           "Our About page shares more of that story. Those personal interests explain part of our motivation, not a checklist for the people we welcome."
         ]

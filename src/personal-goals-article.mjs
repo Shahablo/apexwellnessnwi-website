@@ -80,5 +80,5 @@ export const personalGoalsArticle = Object.freeze({
   "disclaimerHeading": "A note about this worksheet",
   "disclaimer": "These prompts help you describe personal interests and practical priorities. They are not an exercise prescription, medical assessment or treatment recommendation. Keep health questions for a private conversation with a qualified clinician.",
   "editorialNote": "An original Apex Wellness reflection worksheet, not medical advice. The linked pages provide context for the practice and its current launch information; they are not evidence of a clinical benefit.",
-  "ctaBody": "Physician-led care. Coming soon to Merrillville. Meet the team or join the Launch List for opening updates."
+  "ctaBody": "Thoughtful care. Coming soon to Merrillville. Meet the team or join the Launch List for opening updates."
 });

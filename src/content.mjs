@@ -23,8 +23,8 @@ export const site = Object.freeze({
   phone: '(219) 207-2456',
   phoneHref: 'tel:+12192072456',
   tagline: 'Physician-led care. Built around you.',
-  contentUpdated: '2026-09-20',
-  launch: { date: '2026-11-01', label: 'November 1, 2026', status: 'Planned launch' },
+  contentUpdated: '2026-10-12',
+  launch: { date: '2026-11-04', label: 'November 4, 2026', status: 'Planned launch' },
   social: [
     { label: 'Instagram', href: 'https://www.instagram.com/apexwellnessnwi/' },
     { label: 'Facebook', href: 'https://www.facebook.com/profile.php?id=61593954582564' },
@@ -34,7 +34,7 @@ export const site = Object.freeze({
   description:
     'Apex Wellness is preparing physician-led weight, metabolic, hormone, and hair-loss care for adults in Northwest Indiana.',
   announcement:
-    'Planned launch: November 1, 2026 · Northwest Indiana.',
+    'Planned launch: November 4, 2026 · Northwest Indiana.',
   cta: priorityListCta,
   navigation: [
     { label: 'Home', href: '/' },
@@ -80,7 +80,7 @@ export const pages = Object.freeze({
     title: 'Weight, Hormone & Hair-Loss Care in NWI | Apex Wellness',
     description:
       'Physician-led weight, metabolic, hormone, and hair-loss care in Northwest Indiana. Coming soon to Merrillville. Join the Launch List for opening updates.',
-    eyebrow: 'Planned launch · November 1, 2026 · Northwest Indiana',
+    eyebrow: 'Planned launch · November 4, 2026 · Northwest Indiana',
     h1: 'Medical expertise. Focused on your goals.',
     headlineLead: 'Medical expertise.',
     headlineEmphasis: 'Focused on your goals.',
@@ -200,7 +200,7 @@ export const pages = Object.freeze({
         eyebrow: 'Opening in Northwest Indiana',
         heading: 'Review the real details before deciding whether to book.',
         body:
-          `Coming soon to ${clinicAddress}. Our planned launch is November 1, 2026. Find launch updates at apexwellnessnwi.com.`,
+          `Coming soon to ${clinicAddress}. Our planned launch is November 4, 2026. Find launch updates at apexwellnessnwi.com.`,
         cta: priorityListCta
       },
       {
@@ -806,7 +806,7 @@ export const pages = Object.freeze({
           {
             question: 'When will appointments open?',
             answer:
-              'Our planned launch is November 1, 2026. Find launch updates at apexwellnessnwi.com.'
+              'Our planned launch is November 4, 2026. Find launch updates at apexwellnessnwi.com.'
           },
           {
             question: 'Does submitting a consultation request reserve an appointment?',

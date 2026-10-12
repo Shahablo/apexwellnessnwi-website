@@ -1,5 +1,5 @@
 // Deliberately local, fixed answers: never infer eligibility or generate medical advice.
-export function answerWebsiteQuestion(input, launchLabel = 'November 1, 2026') {
+export function answerWebsiteQuestion(input, launchLabel = 'November 4, 2026') {
   const question = String(input || '').slice(0, 500).toLowerCase().normalize('NFKC');
   const result = (text, label, href) => ({ text, label, href });
   if (/\b(emergency|chest pain|trouble breathing|cannot breathe|can't breathe|suicid\w*|overdose|stroke)\b/.test(question)) {

@@ -3,8 +3,14 @@ import { choosingAPracticeArticle } from './choosing-a-practice-article.mjs';
 import { launchListArticle } from './launch-list-article.mjs';
 import { lakeCountyLibraryArticle } from './lake-county-library-article.mjs';
 import { readingClinicWebsiteArticle } from './reading-clinic-website-article.mjs';
+import { comingSoonStatusArticle } from './coming-soon-status-article.mjs';
+import { fourAreasArticle } from './four-areas-article.mjs';
+import { cashPayFeePageArticle } from './cash-pay-fee-page-article.mjs';
 
 export const blogPosts = Object.freeze([
+  cashPayFeePageArticle,
+  fourAreasArticle,
+  comingSoonStatusArticle,
   readingClinicWebsiteArticle,
   lakeCountyLibraryArticle,
   launchListArticle,

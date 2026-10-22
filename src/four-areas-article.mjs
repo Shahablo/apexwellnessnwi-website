@@ -3,56 +3,44 @@ export const fourAreasArticle = Object.freeze({
   status: 'published',
   editorialType: 'nonmedical',
   title: 'Why Apex Wellness Focuses on Four Areas of Care | Merrillville, IN',
-  description: 'Weight and metabolic care, men’s hormone health, women’s midlife care, and hair-loss care: why Apex Wellness in Merrillville chose a narrow focus, and what that means for a visit.',
+  description: 'Apex Wellness is coming soon to Merrillville. Here is the thinking behind its four planned areas of care, and where to find the details that are confirmed so far.',
   eyebrow: 'About Apex',
-  readTime: '4 minute read',
-  h1: 'A clinic that does four things on purpose',
-  intro: 'Most new clinics add services the way a diner adds pages to its menu. Apex is doing the opposite. The plan is four areas of care, each with its own evaluation, and a clear answer about what Apex does not do.\n\nThis article explains the four areas, why they were grouped together, and what “evaluation before treatment” means in practice. It is a description of how the clinic is designed, not medical advice about whether any of it is right for you.',
-  excerpt: 'Why Apex Wellness chose a narrow focus, how the four care areas connect, and what evaluation-before-treatment means for a first visit.',
+  readTime: '3 minute read',
+  h1: 'Four areas of care. On purpose.',
+  intro: 'Apex Wellness is coming soon to Merrillville with a deliberately short list: weight and metabolic care, men’s hormone health, women’s midlife care, and hair-loss care. Those are the areas the clinic plans to focus on, not a promise that every service or appointment is available today.\n\nWhy these four? They reflect the questions the practice was created to make room for. A shorter list also makes it easier to say clearly what Apex intends to do, and what still needs to be confirmed before opening.',
+  excerpt: 'The thinking behind Apex’s four planned care areas, with a straightforward look at what is confirmed and what is still to come.',
   published: '2026-10-22',
   modified: '2026-10-22',
   category: 'About Apex',
   author: 'Apex Wellness Editorial Team',
   heroImage: null,
-  relatedService: { label: 'See how care is planned to work', href: '/how-it-works/' },
+  relatedService: { label: 'Explore the planned care areas', href: '/how-it-works/' },
   sections: [
     {
-      heading: 'The four areas',
+      heading: 'What the four areas are',
       paragraphs: [
-        'Each area has its own page on this site with a fuller description. In one sentence each:'
-      ],
-      bullets: [
-        'Weight and metabolic care: evaluation, meaningful measurements, nutrition and muscle-preservation support, and medication only when clinically indicated.',
-        'Men’s hormone health: a risk-aware evaluation of symptoms with appropriate testing, and treatment considered only after the full clinical picture is reviewed.',
-        'Women’s midlife care: an individualized discussion of perimenopause, menopause, weight, sleep and metabolic concerns, including hormonal and non-hormonal options.',
-        'Hair-loss care: evaluation of thinning and balding, and a discussion of the options that fit the cause.'
+        'Weight and metabolic care is one planned focus. Men’s hormone health and women’s midlife care have their own pages because they are not the same conversation. Hair-loss care for thinning and balding is the fourth area. Each page describes the current plan in more detail.',
+        'These labels tell you what Apex intends to focus on. They do not tell you which option, if any, would be appropriate for one person. That is a clinical question for a qualified professional, not a conclusion to draw from a website headline.'
       ]
     },
     {
-      heading: 'Why these four belong together',
+      heading: 'Why a short list matters',
       paragraphs: [
-        'They share a patient more often than they share a textbook chapter. The adult who asks about weight is often the same adult who has questions about energy, sleep, or changes they noticed in their forties. Someone asking about hair is often also wondering what else has shifted. Keeping these areas in one practice means a question that starts in one lane can be heard in the others without a new referral and a new waiting room.',
-        'A narrow focus also keeps the clinic honest about its limits. Apex is not a primary-care practice, an urgent-care clinic, or an emergency service. If a concern belongs with your primary-care doctor or a specialist, the right answer is to say so.'
+        'A new clinic can be tempted to sound like it does everything. That makes a crowded website, but it does not make the next step clearer for the person reading it. Apex would rather name its focus plainly and give each area room for a proper explanation.',
+        'The four areas also leave space for different reasons people seek care. You do not need to be an athlete or have a dramatic “before” story to be interested in your health. Ordinary goals count.'
       ]
     },
     {
-      heading: 'What “evaluation before treatment” means',
+      heading: 'What is confirmed, and what is not',
       paragraphs: [
-        'On the How It Works page, the first steps are choosing a care area, an individual evaluation, and appropriate testing. Only then does a written plan follow. The order is the point.',
-        'In practice, that means a first visit is a conversation and an assessment, not a transaction. Sometimes the plan will include a treatment. Sometimes it will be “this is not the right fit,” or “talk to your primary-care doctor about this first.” Both count as good outcomes of an evaluation, and the fee structure, when published, will make clear what you pay in each case.'
+        'The care focus and the location are confirmed: 8550 Broadway, Suite B, Merrillville, IN 46410. Apex is still Coming soon. The clinical team, appointment availability and final fees will be shared when they are confirmed. A date on a planning calendar is not an open door.',
+        'For now, the care pages explain the intended scope and the Launch List is a way to receive opening updates. Joining the list is free and does not reserve an appointment or establish care.'
       ]
     },
     {
-      heading: 'What Apex is not promising',
+      heading: 'Start with the area that interests you',
       paragraphs: [
-        'No specific result, timeline, or medication is promised on this site, and none will be promised in a consultation before an evaluation. Treatment eligibility depends on an individual clinical picture and informed consent.',
-        'Clinician names and credentials will be published when they are confirmed. Until then, the honest description of Apex is a clinic that is still being built, with its care areas and standards decided ahead of its team announcements.'
-      ]
-    },
-    {
-      heading: 'Where to read more',
-      paragraphs: [
-        'Each care area has a page that describes the planned evaluation in more detail, and the FAQ answers the practical questions we hear most. Apex Wellness is coming soon to 8550 Broadway, Suite B, Merrillville, IN 46410.'
+        'Read the individual care page that brought you here. If you want to know when the clinic is ready to share more, join the Launch List. Questions welcome, but please keep personal health details out of the form and social comments.'
       ]
     }
   ],
@@ -61,10 +49,10 @@ export const fourAreasArticle = Object.freeze({
     { label: 'Apex Wellness: Men’s Hormone Health', href: 'https://apexwellnessnwi.com/mens-hormone-health/' },
     { label: 'Apex Wellness: Women’s Midlife Care', href: 'https://apexwellnessnwi.com/womens-midlife-care/' },
     { label: 'Apex Wellness: Hair-Loss Care', href: 'https://apexwellnessnwi.com/hair-loss-care/' },
-    { label: 'Apex Wellness: How It Works', href: 'https://apexwellnessnwi.com/how-it-works/' }
+    { label: 'Apex Wellness: Launch List', href: 'https://apexwellnessnwi.com/founding-patients/' }
   ],
   disclaimerHeading: 'About this article',
-  disclaimer: 'This describes how Apex Wellness is designed. It is not medical advice, and it does not state that any treatment is appropriate for a particular person. Discuss personal health decisions with a qualified clinician.',
-  editorialNote: 'Prepared by the Apex Wellness Editorial Team on October 20, 2026 from the clinic’s published care-area and How It Works pages. It contains no treatment recommendations and claims no individual clinician review.',
-  ctaBody: 'Read the four care-area pages, then join the Launch List if you want to hear when scheduling opens.'
+  disclaimer: 'This is a description of Apex’s planned focus, not medical advice or a statement that appointments are currently available.',
+  editorialNote: 'Prepared by the Apex Wellness Editorial Team from the clinic’s confirmed care-area and location information. No individual clinician review is claimed.',
+  ctaBody: 'Explore the care pages or join the Launch List for opening updates.'
 });

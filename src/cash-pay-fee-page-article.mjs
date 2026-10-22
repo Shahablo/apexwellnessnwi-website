@@ -1,6 +1,6 @@
 export const cashPayFeePageArticle = Object.freeze({
   slug: '/blog/how-to-read-a-cash-pay-fee-page/',
-  status: 'published',
+  status: 'draft',
   editorialType: 'nonmedical',
   title: 'What Does a Cash-Pay Clinic Cost? How to Read a Fee Page | Apex Wellness',
   description: 'How cash-pay (self-pay) clinics price care, the four costs to look for on any fee page, questions to ask before booking, and your right to a Good Faith Estimate.',

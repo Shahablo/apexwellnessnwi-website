@@ -30,7 +30,7 @@ const imageCatalog = Object.freeze({
     file: "apex-clinic-interior.webp",
     width: 1536,
     height: 1024,
-    alt: "A warm, calm medical consultation room.",
+    alt: "Sneak preview! A warm consultation-space concept for Apex Wellness.",
   },
   men: {
     file: "apex-mens-care.webp",
@@ -603,7 +603,7 @@ function renderConversionHero(page) {
       <p class="cta-note">${escapeHtml(page.ctaNote)}</p>
     </div>
     ${foundingConsultationFormMarkup(page.form)}
-    <div class="conversion-image">${imageMarkup(imageCatalog.consultation)}</div>
+    <div class="conversion-image">${imageMarkup(imageCatalog.clinic)}</div>
   </div></section>`;
 }
 

@@ -679,6 +679,9 @@ test('the QR landing page explains the first 100 assessments offer without promi
   assert.match(html, /<h1 id="page-title">Merrillville, meet Apex\.<\/h1>/);
   for (const area of ['weight and metabolic care', 'men’s hormone health', 'women’s midlife care', 'hair-loss care for thinning and balding']) assert.match(html, new RegExp(area));
   assert.match(html, /signing up does not book a visit/);
+  assert.match(html, /src="\/assets\/images\/apex-clinic-interior\.webp/);
+  assert.match(html, /alt="Sneak preview! A warm consultation-space concept for Apex Wellness\."/);
+  assert.doesNotMatch(html, /src="\/assets\/images\/apex-hero-consultation\.webp/);
   const offer = html.match(/<div class="launch-offer">([\s\S]*?)<\/div>/)?.[1];
   assert.ok(offer);
   for (const phrase of ['First 100 assessments', 'After opening', 'on us', 'selected baseline labs', 'when clinically appropriate', 'not a reservation']) assert.ok(offer.includes(phrase));

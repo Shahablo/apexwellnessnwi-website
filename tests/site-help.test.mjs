@@ -24,7 +24,7 @@ test('site guide answers known questions using bounded local information', () =>
   ]) assert.equal(answerWebsiteQuestion(question).href, path);
 });
 test('launch date is supplied by site configuration', () => {
-  assert.match(answerWebsiteQuestion('When do you open?', 'November 4, 2026').text, /planned launch is November 4, 2026/);
+  assert.match(answerWebsiteQuestion('When do you open?', 'November 16, 2026').text, /planned launch is November 16, 2026/);
 });
 test('medical and emergency questions take precedence over marketing answers', () => {
   assert.match(answerWebsiteQuestion('I have chest pain and want an appointment').text, /call 911/);

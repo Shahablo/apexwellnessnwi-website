@@ -23,8 +23,8 @@ export const site = Object.freeze({
   phone: '(219) 207-2456',
   phoneHref: 'tel:+12192072456',
   tagline: 'Thoughtful care. Built around you.',
-  contentUpdated: '2026-10-12',
-  launch: { date: '2026-11-04', label: 'November 4, 2026', status: 'Planned launch' },
+  contentUpdated: '2026-10-23',
+  launch: { date: '2026-11-16', label: 'November 16, 2026', status: 'Planned launch' },
   social: [
     { label: 'Instagram', href: 'https://www.instagram.com/apexwellnessnwi/' },
     { label: 'Facebook', href: 'https://www.facebook.com/profile.php?id=61593954582564' },
@@ -34,7 +34,7 @@ export const site = Object.freeze({
   description:
     'Apex Wellness is preparing weight, metabolic, hormone, and hair-loss care for adults in Northwest Indiana.',
   announcement:
-    'Planned launch: November 4, 2026 · Northwest Indiana.',
+    'Planned launch: November 16, 2026 · Northwest Indiana.',
   cta: priorityListCta,
   navigation: [
     { label: 'Home', href: '/' },
@@ -76,16 +76,16 @@ export const pages = Object.freeze({
   home: {
     slug: '/',
     navLabel: 'Home',
-    modified: '2026-09-22',
-    title: 'Weight, Hormone & Hair-Loss Care in NWI | Apex Wellness',
+    modified: '2026-10-23',
+    title: 'Weight, Hormone & Hair-Loss Care in Merrillville | Apex Wellness',
     description:
       'Weight, metabolic, hormone, and hair-loss care in Northwest Indiana. Coming soon to Merrillville. Join the Launch List for opening updates.',
-    eyebrow: 'Planned launch · November 4, 2026 · Northwest Indiana',
-    h1: 'Medical expertise. Focused on your goals.',
-    headlineLead: 'Medical expertise.',
-    headlineEmphasis: 'Focused on your goals.',
+    eyebrow: 'Planned launch · November 16, 2026 · Northwest Indiana',
+    h1: 'Weight, hormones, hair loss. Coming to Merrillville.',
+    headlineLead: 'Weight, hormones, hair loss.',
+    headlineEmphasis: 'Coming to Merrillville.',
     intro:
-      'Thoughtful weight, metabolic, hormone, and hair-loss care for adults in Northwest Indiana. Apex is preparing to open with an individualized approach, built around the person seeking care.',
+      'Apex Wellness is preparing to open with weight and metabolic care, men’s hormone health, women’s midlife care, and hair-loss care for thinning and balding. Coming soon to 8550 Broadway, Suite B.',
     cta: priorityListCta,
     secondaryCta: {
       label: 'Explore care options',
@@ -200,7 +200,7 @@ export const pages = Object.freeze({
         eyebrow: 'Opening in Northwest Indiana',
         heading: 'Review the real details before deciding whether to book.',
         body:
-          `Coming soon to ${clinicAddress}. Our planned launch is November 4, 2026. Find launch updates at apexwellnessnwi.com.`,
+          `Coming soon to ${clinicAddress}. Our planned launch is November 16, 2026, subject to readiness. Find launch updates at apexwellnessnwi.com.`,
         cta: priorityListCta
       },
       {
@@ -216,7 +216,7 @@ export const pages = Object.freeze({
   'weight-management': {
     slug: '/weight-management/',
     navLabel: 'Weight & Metabolic',
-    title: 'Medical Weight Management in Northwest Indiana | Apex Wellness',
+    title: 'Medical Weight Management in Merrillville, IN | Apex Wellness',
     description:
       'Learn about the individualized approach to medical weight and metabolic care at Apex Wellness in Northwest Indiana.',
     eyebrow: 'Care area · Medical weight and metabolic care',
@@ -311,7 +311,7 @@ export const pages = Object.freeze({
   'mens-hormone-health': {
     slug: '/mens-hormone-health/',
     navLabel: "Men's Hormone Health",
-    title: "Men's Hormone Health in Northwest Indiana | Apex Wellness",
+    title: "Men's Hormone Health in Merrillville, IN | Apex Wellness",
     description:
       "Learn about Apex Wellness's individualized evaluation of men's hormone concerns in Northwest Indiana.",
     eyebrow: "Care area · Men's hormone health",
@@ -406,7 +406,7 @@ export const pages = Object.freeze({
   'womens-midlife-care': {
     slug: '/womens-midlife-care/',
     navLabel: "Women's Midlife Care",
-    title: 'Menopause & Midlife Care in Northwest Indiana | Apex Wellness',
+    title: 'Menopause & Midlife Care in Merrillville, IN | Apex Wellness',
     description:
       'Learn about the individualized approach to perimenopause, menopause, weight, sleep, and metabolic concerns at Apex Wellness.',
     eyebrow: "Care area · Women's midlife hormone and metabolic care",
@@ -531,7 +531,7 @@ export const pages = Object.freeze({
           {
             question: 'Can I book hair-loss care now?',
             answer:
-              'Not yet. We open in November. Join the Launch List and you will hear first.'
+              'Not yet. Hair-loss care is planned for opening, but scheduling is not available. Join the Launch List for updates.'
           },
           {
             question: 'Which hair-loss treatments will Apex offer?',
@@ -675,7 +675,7 @@ export const pages = Object.freeze({
           {
             question: 'Can I pay or reserve an appointment now?',
             answer:
-              'Not yet. Booking opens in November. Join the Launch List and we will email you when it does.'
+              'Not yet. Join the Launch List and we will email you when scheduling is confirmed.'
           },
           {
             question: 'Can I cancel or receive a refund?',
@@ -788,12 +788,12 @@ export const pages = Object.freeze({
           {
             question: 'Where is Apex located?',
             answer:
-              `${clinicAddress}. We open in November. Call or text (219) 207-2456, or email hello@apexwellnessnwi.com. Hours and parking details will be posted before we open.`
+              `${clinicAddress}. We are preparing to open. Call or text (219) 207-2456, or email hello@apexwellnessnwi.com. Hours and parking details will be posted before we open.`
           },
           {
             question: 'When will appointments open?',
             answer:
-              'Our planned launch is November 4, 2026. Find launch updates at apexwellnessnwi.com.'
+              'November 16, 2026 is our planned launch, subject to readiness. We will announce scheduling when it is confirmed. Join the Launch List for updates.'
           },
           {
             question: 'Does submitting a consultation request reserve an appointment?',
@@ -869,25 +869,25 @@ export const pages = Object.freeze({
 
   'founding-patients': {
     slug: '/founding-patients/',
-    modified: '2026-10-08',
+    modified: '2026-10-23',
     navLabel: 'Launch List',
-    title: 'Join the Apex Wellness Launch List | Northwest Indiana',
+    title: 'Apex Wellness Launch List | Care Coming to Merrillville',
     description:
-      'Join the Apex Wellness Launch List for opening updates. Weight, metabolic, hormone, and hair-loss care. Coming soon to Merrillville.',
+      'Join the Apex Wellness Launch List for opening updates and details of the first 100 assessments offer. Coming soon to Merrillville.',
     announcement: 'Coming soon to Merrillville · Thoughtful care',
-    launchLabel: 'to be confirmed',
+    launchLabel: 'November 16, 2026 (planned; subject to readiness)',
     eyebrow: 'Apex Wellness · Northwest Indiana',
-    h1: 'More life. Less guesswork.',
+    h1: 'Merrillville, meet Apex.',
     intro:
-      'Be first to know when clinical evaluations open. Get opening news and details of our free-test offer.',
+      'We’re preparing to open with weight and metabolic care, men’s hormone health, women’s midlife care, and hair-loss care for thinning and balding. Join the list for opening and scheduling updates; signing up does not book a visit.',
     cta: {
-      label: 'Notify me when Apex opens',
+      label: 'Join the Launch List',
       href: '#consultation-request'
     },
     offer: {
-      eyebrow: 'Our launch offer · Available after opening',
-      heading: 'Free initial in-house testosterone test',
-      terms: 'Including blood draw and processing. No purchase required. Send-out labs excluded.'
+      eyebrow: 'First 100 assessments · After opening',
+      heading: 'First 100 assessments, on us.',
+      terms: 'For the first 100 initial wellness assessments after opening, selected baseline labs are included when clinically appropriate. One per person; no purchase required. Additional care or testing may cost extra. The Launch List is not a reservation.'
     },
     ctaNote: 'Free to join. No appointment booked. No commitment to care.',
     landing: true,
@@ -895,7 +895,7 @@ export const pages = Object.freeze({
       action: '/api/founding-consultation',
       method: 'post',
       heading: 'Get opening updates.',
-      submitLabel: 'Notify me when Apex opens',
+      submitLabel: 'Join the Launch List',
       consentVersion: 'launch-list-2026-09-21',
       consentLabel:
         'Email me opening updates from Apex Wellness. I can unsubscribe anytime, and I have read the Privacy Policy and Communications Consent.',
@@ -981,8 +981,8 @@ export const pages = Object.freeze({
             answer: 'No. Joining the Launch List is free, and you can unsubscribe at any time.'
           },
           {
-            question: 'What is included in the free-test offer?',
-            answer: 'A free initial in-house testosterone test, including blood draw and processing. No purchase required. Send-out labs are excluded. The offer will be available after opening; this signup does not book a test. Women’s hormone testing sent to an outside laboratory is not included.'
+            question: 'How does the first 100 assessments offer work?',
+            answer: 'After opening, the first 100 initial assessments will include the assessment and selected baseline labs at no charge when clinically appropriate. One offer per person; no purchase required. The clinician determines which tests, if any, are appropriate; additional testing or care may have a cost. Joining this email list does not book an assessment or reserve the offer. We will share scheduling and full terms when confirmed.'
           },
           {
             question: 'Should I include medical information?',
@@ -990,7 +990,7 @@ export const pages = Object.freeze({
           },
           {
             question: 'When and where will Apex open?',
-            answer: `We’re preparing to open at ${clinicAddress}. The opening date and clinical-evaluation availability will be shared as they are confirmed.`
+            answer: `We’re preparing to open at ${clinicAddress}. November 16, 2026 is the planned date, subject to readiness. We will announce clinical-evaluation availability when confirmed.`
           }
         ]
       }

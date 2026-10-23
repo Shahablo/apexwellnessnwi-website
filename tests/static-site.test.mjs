@@ -143,7 +143,7 @@ test('the new planned care area is discoverable without displacing information l
     assert.match(html, /Coming soon/i);
   }
   const hair = htmlBySlug.get('/hair-loss-care/');
-  assert.match(hair, /Not yet\. We open in November/);
+  assert.match(hair, /Hair-loss care is planned for opening, but scheduling is not available/);
   assert.match(hair, /8550 Broadway, Suite B/);
   assert.doesNotMatch(hair, /minoxidil|finasteride|dutasteride|PRP|transplant|guaranteed regrowth/i);
   assert.match(htmlBySlug.get('/founding-patients/'), /href="\/hair-loss-care\/"/);
@@ -645,16 +645,21 @@ test('homepage replaces the generic introduction with one staff-neutral approach
   assert.match(home, /href="\/about\/">Our approach to care/);
 });
 
-test('homepage leads with medical expertise and keeps launch actions readable on small screens', async () => {
+test('homepage names the planned care and location without suggesting bookings are open', async () => {
   const home = htmlBySlug.get('/');
-  assert.match(home, /<h1 id="page-title">Medical expertise\. <em>Focused on your goals\.<\/em><\/h1>/);
+  assert.equal(site.launch.date, '2026-11-16');
+  assert.match(home, /Planned launch: November 16, 2026/);
+  assert.doesNotMatch([...htmlBySlug.values()].join('\n'), /November 4, 2026|2026-11-04/);
+  assert.match(home, /<h1 id="page-title">Weight, hormones, hair loss\. <em>Coming to Merrillville\.<\/em><\/h1>/);
+  for (const area of ['weight and metabolic care', 'men’s hormone health', 'women’s midlife care', 'hair-loss care for thinning and balding']) assert.match(home, new RegExp(area));
+  assert.match(home, /Coming soon to 8550 Broadway, Suite B/);
   assert.doesNotMatch(home, /A thoughtful(?:<br>|\s)+approach to/);
   assert.match(home, /class="signature-launch-note">Coming soon · Subject to readiness/);
   for (const [slug, html] of htmlBySlug) {
     if (slug === '/founding-patients/') {
       assert.match(html, /Coming soon to Merrillville · Thoughtful care/);
-      assert.doesNotMatch(html, /November 1|2026-11-01/);
-      assert.match(html, /href="#consultation-request">Notify me when Apex opens/);
+      assert.doesNotMatch(html, /November 1(?!\d)|2026-11-01/);
+      assert.match(html, /href="#consultation-request">Join the Launch List/);
       continue;
     }
     assert.match(html, /class="announcement-copy">Planned launch:/, `${slug} retains planned status`);
@@ -669,13 +674,17 @@ test('homepage leads with medical expertise and keeps launch actions readable on
   assert.match(readability, /\.announcement \.announcement-cta\{[^}]*min-height:3rem/);
 });
 
-test('the QR landing page keeps the free-test terms adjacent and promises updates, not a reserved appointment', () => {
+test('the QR landing page explains the first 100 assessments offer without promising a reserved appointment', () => {
   const html = htmlBySlug.get('/founding-patients/');
+  assert.match(html, /<h1 id="page-title">Merrillville, meet Apex\.<\/h1>/);
+  for (const area of ['weight and metabolic care', 'men’s hormone health', 'women’s midlife care', 'hair-loss care for thinning and balding']) assert.match(html, new RegExp(area));
+  assert.match(html, /signing up does not book a visit/);
   const offer = html.match(/<div class="launch-offer">([\s\S]*?)<\/div>/)?.[1];
   assert.ok(offer);
-  for (const phrase of ['Free initial in-house testosterone test', 'blood draw and processing', 'No purchase required', 'Send-out labs excluded', 'Available after opening']) assert.ok(offer.includes(phrase));
+  for (const phrase of ['First 100 assessments', 'After opening', 'on us', 'selected baseline labs', 'when clinically appropriate', 'not a reservation']) assert.ok(offer.includes(phrase));
+  assert.doesNotMatch(html, /APEXNOV|Free initial in-house testosterone test/);
   assert.match(html, /No appointment has been booked/);
-  assert.match(html, /data-launch-label="to be confirmed"/);
+  assert.match(html, /data-launch-label="November 16, 2026 \(planned; subject to readiness\)"/);
   assert.doesNotMatch(html, /before anywhere else|first access|Takes ten seconds/);
 });
 

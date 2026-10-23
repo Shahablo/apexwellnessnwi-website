@@ -23,10 +23,10 @@ export const blogPosts = Object.freeze([
     "eyebrow": "Apex Wellness updates",
     "readTime": "3 minute read",
     "h1": "Apex Wellness Is Coming Soon to Merrillville",
-    "intro": "Thoughtful care. Built around you.\n\nApex Wellness is coming soon to 8550 Broadway, Suite B, Merrillville, IN 46410. Our planned launch is November 4, 2026. Find launch updates at apexwellnessnwi.com.\n\nWe are building a practice for adults who want a thoughtful conversation about their health, their goals, and the life they want to keep taking part in.",
+    "intro": "Thoughtful care. Built around you.\n\nApex Wellness is coming soon to 8550 Broadway, Suite B, Merrillville, IN 46410. Our planned launch is November 16, 2026, subject to readiness. Find launch updates at apexwellnessnwi.com.\n\nWe are building a practice for adults who want a thoughtful conversation about their health, their goals, and the life they want to keep taking part in.",
     "excerpt": "Our Merrillville address, four areas of care, and an easy way to follow the launch.",
     "published": "2026-09-15",
-    "modified": "2026-10-12",
+    "modified": "2026-10-23",
     "category": "Apex Wellness Updates",
     "author": "Apex Wellness Editorial Team",
     "heroImage": "shoreline",
@@ -95,7 +95,7 @@ export const blogPosts = Object.freeze([
       }
     ],
     "disclaimerHeading": "Launch update",
-    "disclaimer": "Updated October 12, 2026 with the current planned launch date of November 4, subject to readiness."
+    "disclaimer": "Updated October 23, 2026 with the planned launch date of November 16, subject to readiness."
   },
   {
     slug: "/blog/medical-weight-management-what-it-means/",

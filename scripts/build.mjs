@@ -42,7 +42,7 @@ const imageCatalog = Object.freeze({
     file: "apex-nwi-shoreline.webp",
     width: 1729,
     height: 910,
-    alt: "The Lake Michigan shoreline in Northwest Indiana.",
+    alt: "An atmospheric shoreline scene behind the Apex Wellness introduction.",
   },
   review: {
     file: "apex-physician-review.webp",
@@ -483,7 +483,7 @@ function renderHero(pageKey, page) {
     <div class="signature-image">${imageMarkup(imageCatalog.shoreline, { hero: true })}</div>
     <div class="container signature-content"><p class="eyebrow">Wellness · Northwest Indiana</p>
       <h1 id="page-title">${escapeHtml(page.headlineLead)} <em>${escapeHtml(page.headlineEmphasis)}</em></h1>
-      <div class="signature-bottom"><div><p>Weight, metabolic, hormone, and hair-loss care.<br>Built around your health history and the goals that matter to you.</p><div class="hero-actions">${buttonMarkup(site.cta)}<a class="hero-explore" href="#care-areas">Discover our approach <span aria-hidden="true">↗</span></a></div></div><p class="signature-launch"><span class="launch-dot" aria-hidden="true"></span>Planned launch<br><strong>${escapeHtml(site.launch.label)}</strong><span class="signature-launch-note">Coming soon · Subject to readiness</span></p></div>
+      <div class="signature-bottom"><div><p>${escapeHtml(page.intro)}</p><div class="hero-actions">${buttonMarkup(site.cta)}<a class="hero-explore" href="#care-areas">Explore care areas <span aria-hidden="true">↗</span></a></div></div><p class="signature-launch"><span class="launch-dot" aria-hidden="true"></span>Planned launch<br><strong>${escapeHtml(site.launch.label)}</strong><span class="signature-launch-note">Coming soon · Subject to readiness</span></p></div>
     </div>
   </section>`;
   const image = imageForPage(pageKey, page);
@@ -1019,7 +1019,7 @@ async function build() {
   };
   const notFoundJsonLd = pageJsonLd(notFoundPage);
   documents.push(notFoundJsonLd);
-  const notFoundMain = `<main id="main-content" class="page" tabindex="-1"><section class="hero" aria-labelledby="page-title"><div class="container section-narrow"><p class="eyebrow">${escapeHtml(notFoundPage.eyebrow)}</p><h1 id="page-title">${escapeHtml(notFoundPage.h1)}</h1><p>${escapeHtml(notFoundPage.intro)}</p><div class="button-row"><a class="button" href="/">Return home</a><a class="button-secondary" href="/founding-patients/">Request a Consultation</a></div></div></section></main>`;
+  const notFoundMain = `<main id="main-content" class="page" tabindex="-1"><section class="hero" aria-labelledby="page-title"><div class="container section-narrow"><p class="eyebrow">${escapeHtml(notFoundPage.eyebrow)}</p><h1 id="page-title">${escapeHtml(notFoundPage.h1)}</h1><p>${escapeHtml(notFoundPage.intro)}</p><div class="button-row"><a class="button" href="/">Return home</a><a class="button-secondary" href="/founding-patients/">Join the Launch List</a></div></div></section></main>`;
   await writeOutput(join(publicDirectory, "404.html"), renderDocument("404", notFoundPage, notFoundJsonLd, { noIndex: true, mainOverride: notFoundMain }));
 
   await Promise.all([

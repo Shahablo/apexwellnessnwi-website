@@ -16,3 +16,6 @@ coverage/
 Thumbs.db
 .vscode/
 .idea/
+
+# Generated during the site build from assets/video; avoid storing the 22 MB master twice.
+public/assets/video/

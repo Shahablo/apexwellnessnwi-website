@@ -10,8 +10,10 @@ const rootDirectory = fileURLToPath(new URL("../", import.meta.url));
 const publicDirectory = join(rootDirectory, "public");
 const sourceAssetsDirectory = join(rootDirectory, "src", "assets");
 const sourceImagesDirectory = join(rootDirectory, "assets", "images");
+const sourceVideoDirectory = join(rootDirectory, "assets", "video");
 const publicAssetsDirectory = join(publicDirectory, "assets");
 const publicImagesDirectory = join(publicAssetsDirectory, "images");
+const publicVideoDirectory = join(publicAssetsDirectory, "video");
 const buildDate = process.env.SOURCE_DATE_EPOCH
   ? new Date(Number(process.env.SOURCE_DATE_EPOCH) * 1000).toISOString().slice(0, 10)
   : new Date().toISOString().slice(0, 10);
@@ -20,6 +22,18 @@ const publishedBlogPosts = blogPosts
   .sort((a, b) => b.published.localeCompare(a.published));
 
 const imageCatalog = Object.freeze({
+  behindWindow: {
+    file: "behind-apex-window-setup-2026-10-24.jpg",
+    width: 1080,
+    height: 1620,
+    alt: "Shahab works on old window lettering outside the Apex Wellness space in Merrillville.",
+  },
+  behindPosters: {
+    file: "behind-apex-posters-setup-2026-10-24.jpg",
+    width: 1167,
+    height: 1152,
+    alt: "Opening-update posters and QR codes in the Apex Wellness windows at 8550 Broadway.",
+  },
   consultation: {
     file: "apex-hero-consultation.webp",
     width: 1199,
@@ -559,12 +573,21 @@ function renderBlogPost(page) {
   const image = imageForPage("blog-post", page);
   const introParagraphs = page.intro.split(/\n\s*\n/).map((paragraph) => `<p class="article-deck">${escapeHtml(paragraph)}</p>`).join("\n");
   const sourceList = page.sources.map((source) => `<li><a href="${escapeHtml(source.href)}">${escapeHtml(source.label)}</a></li>`).join("\n");
+  const video = page.video ? `<figure class="article-video">
+    <video controls playsinline preload="metadata" width="1080" height="1920" poster="${escapeHtml(assetUrl(`images/${page.video.poster}`))}" aria-label="Behind-the-scenes Apex Wellness setup video">
+      <source src="${escapeHtml(assetUrl(`video/${page.video.file}`))}" type="video/mp4">
+      <track kind="captions" src="${escapeHtml(assetUrl(`video/${page.video.captionFile}`))}" srclang="en" label="English" default>
+      Your browser does not support video. <a href="${escapeHtml(assetUrl(`video/${page.video.file}`))}">Download the 30-second video</a>.
+    </video><figcaption>${escapeHtml(page.video.caption)}</figcaption>
+    <details class="article-transcript"><summary>Read the video transcript</summary>${page.video.transcript.map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join('')}</details>
+  </figure>` : '';
   const articleSections = page.sections.map((section, index) => {
     const id = `${identifier(section.heading)}-${index + 1}`;
     return `<section aria-labelledby="${id}">
       <h2 id="${id}">${escapeHtml(section.heading)}</h2>
       ${(section.paragraphs || []).map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join("\n")}
       ${section.bullets ? `<ul>${section.bullets.map((item) => `<li>${escapeHtml(item)}</li>`).join("\n")}</ul>` : ""}
+      ${section.image ? `<figure class="article-photo"><img data-photo-kind="representative" src="${escapeHtml(assetUrl(`images/${section.image.file}`))}" width="${section.image.width}" height="${section.image.height}" alt="${escapeHtml(section.image.alt)}" loading="lazy" decoding="async"><figcaption>${escapeHtml(section.image.caption)}</figcaption></figure>` : ''}
       ${(section.paragraphsAfterBullets || []).map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join("\n")}
     </section>`;
   }).join("\n");
@@ -582,6 +605,7 @@ function renderBlogPost(page) {
         ${image ? imageMarkup(image, { hero: true }) : ''}
       </header>
       <div class="article-body">
+        ${video}
         <nav class="article-contents" aria-label="In this article"><h2>In this article</h2><ul>${page.sections.map((section, index) => `<li><a href="#${identifier(section.heading)}-${index + 1}">${escapeHtml(section.heading)}</a></li>`).join('')}</ul></nav>
         ${articleSections}
         <aside class="medical-note" aria-labelledby="medical-disclaimer"><h2 id="medical-disclaimer">${escapeHtml(disclaimerHeading)}</h2><p>${escapeHtml(disclaimer)}</p></aside>
@@ -791,6 +815,7 @@ async function prepareAssets() {
   const helpUi = (await readFile(join(sourceAssetsDirectory, "site-assistant.mjs"), 'utf8')).replace(/^import .*?;\r?\n/, '');
   await writeOutput(join(publicAssetsDirectory, 'site-assistant.js'), `(() => {\n'use strict';\n${helpEngine}\n${helpUi}\n})();\n`);
   await cp(sourceImagesDirectory, publicImagesDirectory, { recursive: true });
+  await cp(sourceVideoDirectory, publicVideoDirectory, { recursive: true });
 
   assetVersions.set("site.css", await fingerprint(join(sourceAssetsDirectory, "site.css")));
   assetVersions.set("site.js", await fingerprint(join(sourceAssetsDirectory, "site.js")));
@@ -800,6 +825,10 @@ async function prepareAssets() {
   const imageFiles = await readdir(sourceImagesDirectory, { withFileTypes: true });
   await Promise.all(imageFiles.filter((entry) => entry.isFile()).map(async (entry) => {
     assetVersions.set(`images/${entry.name}`, await fingerprint(join(sourceImagesDirectory, entry.name)));
+  }));
+  const videoFiles = await readdir(sourceVideoDirectory, { withFileTypes: true });
+  await Promise.all(videoFiles.filter((entry) => entry.isFile()).map(async (entry) => {
+    assetVersions.set(`video/${entry.name}`, await fingerprint(join(sourceVideoDirectory, entry.name)));
   }));
 }
 

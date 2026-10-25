@@ -13,7 +13,7 @@ test('site guide answers known questions using bounded local information', () =>
   for (const [question, path] of [
     ['How do I join the launch list?', '/founding-patients/'],
     ['What does care cost?', '/pricing/'],
-    ['Where is your clinic?', '/about/'],
+    ['Where is your clinic?', '/merrillville/'],
     ['Who are the physicians?', '/about/'],
     ['What care do you offer?', '/how-it-works/'],
     ['What about menopause care?', '/womens-midlife-care/'],
@@ -25,6 +25,13 @@ test('site guide answers known questions using bounded local information', () =>
 });
 test('launch date is supplied by site configuration', () => {
   assert.match(answerWebsiteQuestion('When do you open?', 'November 16, 2026').text, /planned launch is November 16, 2026/);
+});
+
+test('the location answer preserves in-person-only launch plans without opening bookings', () => {
+  const answer = answerWebsiteQuestion('Do you offer telehealth?');
+  assert.equal(answer.href, '/merrillville/');
+  assert.match(answer.text, /telehealth is not planned for launch/);
+  assert.match(answer.text, /Scheduling is not open yet/);
 });
 test('medical and emergency questions take precedence over marketing answers', () => {
   assert.match(answerWebsiteQuestion('I have chest pain and want an appointment').text, /call 911/);

@@ -465,7 +465,7 @@ test("photographs retain accessible image metadata without representative imager
     }
 
     assert.doesNotMatch(html, /<(?:figcaption|p)\b[^>]*\bclass=["'][^"']*representative-caption/i, `${page.slug} must not render representative imagery captions`);
-    for (const {attrs} of images) assert.ok(['representative', 'portrait'].includes(attrs['data-photo-kind']), `${page.slug} photograph kind must be explicit`);
+    for (const {attrs} of images) assert.ok(['representative', 'portrait', 'documentary'].includes(attrs['data-photo-kind']), `${page.slug} photograph kind must be explicit`);
   }
 
   assert.ok(totalImages > 0, "the generated site contains no real images");

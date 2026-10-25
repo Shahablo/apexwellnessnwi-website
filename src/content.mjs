@@ -1,3 +1,5 @@
+import { merrillvillePage, visitDetails } from './visit-details.mjs';
+
 const priorityListCta = Object.freeze({
   label: 'Join the Launch List',
   href: '/founding-patients/'
@@ -44,6 +46,7 @@ export const site = Object.freeze({
     { label: 'Hair-Loss Care', href: '/hair-loss-care/', section: 'care' },
     { label: 'How It Works', href: '/how-it-works/' },
     { label: 'Pricing', href: '/pricing/' },
+    { label: 'Location', href: '/merrillville/' },
     { label: 'About', href: '/about/' },
     { label: 'Blog', href: '/blog/' },
     { label: 'FAQ', href: '/faq/' }
@@ -73,10 +76,11 @@ export const site = Object.freeze({
 });
 
 export const pages = Object.freeze({
+  merrillville: merrillvillePage,
   home: {
     slug: '/',
     navLabel: 'Home',
-    modified: '2026-10-23',
+    modified: '2026-10-25',
     title: 'Weight, Hormone & Hair-Loss Care in Merrillville | Apex Wellness',
     description:
       'Weight, metabolic, hormone, and hair-loss care in Northwest Indiana. Coming soon to Merrillville. Join the Launch List for opening updates.',
@@ -215,11 +219,12 @@ export const pages = Object.freeze({
 
   'weight-management': {
     slug: '/weight-management/',
+    modified: '2026-10-25',
     navLabel: 'Weight & Metabolic',
-    title: 'Medical Weight Management in Merrillville, IN | Apex Wellness',
+    title: 'Medical Weight Loss in Merrillville, IN | Apex Wellness',
     description:
-      'Learn about the individualized approach to medical weight and metabolic care at Apex Wellness in Northwest Indiana.',
-    eyebrow: 'Care area · Medical weight and metabolic care',
+      'Explore planned medical weight loss and metabolic care at Apex Wellness in Merrillville. Coming soon, with in-person visits and pricing before booking.',
+    eyebrow: 'Coming soon to Merrillville · Weight & metabolic care',
     h1: 'Weight care, with the whole person in mind.',
     intro:
       'The care model begins with evaluation, risks, goals, and relevant measurements. Medication may be discussed when clinically indicated, but it is never the only lever and is never guaranteed.',
@@ -296,7 +301,7 @@ export const pages = Object.freeze({
           {
             question: 'Will medication be included in the clinical fee?',
             answer:
-              'Pricing is being finalized. Medication and outside lab work will be listed separately from the visit fee so you can see exactly what you are paying for.'
+              'Pricing is being finalized. Published fees will explain whether medication, laboratory work or supplies are included in a package or billed separately.'
           },
           {
             question: 'What if medication is not right for me?',
@@ -310,11 +315,12 @@ export const pages = Object.freeze({
 
   'mens-hormone-health': {
     slug: '/mens-hormone-health/',
+    modified: '2026-10-25',
     navLabel: "Men's Hormone Health",
-    title: "Men's Hormone Health in Merrillville, IN | Apex Wellness",
+    title: 'Testosterone & Hormone Evaluation in Merrillville | Apex Wellness',
     description:
-      "Learn about Apex Wellness's individualized evaluation of men's hormone concerns in Northwest Indiana.",
-    eyebrow: "Care area · Men's hormone health",
+      'Explore planned men’s hormone and testosterone evaluation at Apex Wellness in Merrillville. Coming soon; treatment depends on an individual clinical evaluation.',
+    eyebrow: 'Coming soon to Merrillville · Men’s hormone health',
     h1: 'A fuller picture of your hormone health.',
     intro:
       'Symptoms, repeat testing when it matters, health risks, fertility goals and the alternatives all go into the plan. One lab number does not decide it.',
@@ -391,7 +397,7 @@ export const pages = Object.freeze({
           {
             question: 'Will home administration be available?',
             answer:
-              'Visit modality, medication fulfillment, administration pathways, training, and supply details are still being finalized and will be published before care opens.'
+              'Visits are planned to be in person at launch. Medication fulfillment, administration pathways, training and supply details are still being finalized and will be published before care opens.'
           },
           {
             question: 'Does Apex use one “optimal” testosterone number?',
@@ -405,11 +411,12 @@ export const pages = Object.freeze({
 
   'womens-midlife-care': {
     slug: '/womens-midlife-care/',
+    modified: '2026-10-25',
     navLabel: "Women's Midlife Care",
     title: 'Menopause & Midlife Care in Merrillville, IN | Apex Wellness',
     description:
       'Learn about the individualized approach to perimenopause, menopause, weight, sleep, and metabolic concerns at Apex Wellness.',
-    eyebrow: "Care area · Women's midlife hormone and metabolic care",
+    eyebrow: 'Coming soon to Merrillville · Women’s midlife care',
     h1: 'Midlife care, built around your next chapter.',
     intro:
       'The approach is individualized rather than built around a generic “hormone balancing” promise. Hormonal and non-hormonal options may be discussed, and coordination or referral remains part of good care.',
@@ -500,11 +507,12 @@ export const pages = Object.freeze({
 
   'hair-loss-care': {
     slug: '/hair-loss-care/',
+    modified: '2026-10-25',
     navLabel: 'Hair-Loss Care',
     title: 'Hair-Loss Care in Merrillville & NWI | Apex Wellness',
     description:
       'Hair-loss care is coming to Apex Wellness in Merrillville, Northwest Indiana. Explore the planned service and join the Launch List.',
-    eyebrow: 'Coming soon · Hair-loss care',
+    eyebrow: 'Coming soon to Merrillville · Hair-loss care',
     h1: 'Hair-loss concerns deserve a thoughtful conversation.',
     intro:
       'Apex is preparing to offer clinical evaluation and treatment for adults with hair-loss concerns. Individual care decisions come first, with service details and pricing available before scheduling opens.',
@@ -766,6 +774,7 @@ export const pages = Object.freeze({
 
   faq: {
     slug: '/faq/',
+    modified: '2026-10-25',
     navLabel: 'FAQ',
     title: 'Frequently Asked Questions | Apex Wellness',
     description:
@@ -837,6 +846,7 @@ export const pages = Object.freeze({
         type: 'faqGroup',
         heading: 'Cost and logistics',
         items: [
+          visitDetails.quickAnswers[1],
           {
             question: 'What will care cost?',
             answer:

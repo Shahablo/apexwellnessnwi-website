@@ -10,6 +10,19 @@ import { pages, site } from "../src/content.mjs";
 import { blogPosts } from "../src/blog-posts.mjs";
 import { personalGoalsArticle } from "../src/personal-goals-article.mjs";
 import { choosingAPracticeArticle } from "../src/choosing-a-practice-article.mjs";
+import { behindTheScenesArticle } from "../src/behind-the-scenes-article.mjs";
+
+test('October 24 behind-the-scenes article remains an unpublished nonmedical source draft', () => {
+  assert.equal(behindTheScenesArticle.status, 'draft');
+  assert.equal(behindTheScenesArticle.editorialType, 'nonmedical');
+  assert.equal(behindTheScenesArticle.heroImage, null);
+  assert.equal(behindTheScenesArticle.slug, '/blog/the-work-behind-opening-apex/');
+  assert.ok(blogPosts.includes(behindTheScenesArticle));
+  const text = JSON.stringify(behindTheScenesArticle);
+  assert.match(text, /8550 Broadway, Suite B/);
+  assert.match(text, /coming soon/i);
+  assert.doesNotMatch(text, /Atif|Wajeeh|physician-led|book now|appointments are available|guaranteed|—/i);
+});
 
 test('personal-goals release preserves the nonmedical version with October 12 staffing-neutral CTA', () => {
   assert.equal(createHash('sha256').update(JSON.stringify(personalGoalsArticle)).digest('hex'), 'c66270968b1dabd1dd897ea5b950c2cef9f23a0287de54dd6b69c8fccebf4731');

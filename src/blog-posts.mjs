@@ -6,8 +6,10 @@ import { readingClinicWebsiteArticle } from './reading-clinic-website-article.mj
 import { comingSoonStatusArticle } from './coming-soon-status-article.mjs';
 import { fourAreasArticle } from './four-areas-article.mjs';
 import { cashPayFeePageArticle } from './cash-pay-fee-page-article.mjs';
+import { behindTheScenesArticle } from './behind-the-scenes-article.mjs';
 
 export const blogPosts = Object.freeze([
+  behindTheScenesArticle,
   cashPayFeePageArticle,
   fourAreasArticle,
   comingSoonStatusArticle,

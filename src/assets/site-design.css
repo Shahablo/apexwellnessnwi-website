@@ -486,3 +486,21 @@ h1,h2,h3{letter-spacing:-.042em}
 @media(max-width:48rem){.launch-prompt{display:none}}
 @media(max-width:60rem){.visit-facts{grid-template-columns:1fr 1fr}.visit-facts>div:first-child{grid-column:1/-1}.planning-links{grid-template-columns:1fr}.local-preview-grid{grid-template-columns:1fr}.local-preview img{max-height:38rem;object-fit:cover}}
 @media(max-width:35rem){.visit-facts{grid-template-columns:1fr;gap:1rem}.visit-details-note a{display:block;margin:.65rem 0 0}.planning-links:has(>li:nth-child(4)){grid-template-columns:1fr}.location-details address{font-size:1.15rem}}
+/* QR visitors can review the visit and leave a distinct appointment contact request. */
+.visit-planner-shell { max-width: 48rem; padding-block: clamp(2rem, 6vw, 4.5rem); }
+.visit-planner-intro h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); line-height: 1.04; margin: .6rem 0 1rem; }
+.visit-planner-intro > p:last-child { max-width: 38rem; }
+.visit-planner { margin-block: 2rem; padding: clamp(1.2rem, 4vw, 2.5rem); background: #fffdf8; border: 1px solid #cbd5cd; border-radius: 18px; }
+.visit-progress { display: flex; list-style: none; gap: .7rem; padding: 0; margin: 0 0 1.7rem; font-size: .82rem; }
+.visit-progress li { flex: 1; border-top: 3px solid #dce2da; padding-top: .7rem; }
+.visit-progress [aria-current="step"] { border-color: #173633; font-weight: 800; color: #173633; }
+.visit-planner h2 { font-size: clamp(2rem, 5vw, 2.8rem); line-height: 1.1; margin-block: .6rem 1.25rem; }
+.visit-planner [data-visit-step][hidden], .visit-planner button[hidden] { display: none; }
+.visit-fact { padding: 1.2rem; margin-block: 1.25rem; background: #edf1e9; border-radius: 10px; line-height: 1.7; }
+.visit-fact p:last-child { margin-bottom: 0; }
+.visit-note { font-size: .9rem; line-height: 1.65; color: #42544c; }
+.visit-actions { display: flex; gap: .8rem; flex-wrap: wrap; margin-top: 1.7rem; }
+.visit-planner form { display: grid; gap: 1rem; margin-block: 1.2rem; }
+.visit-planner form .consent { font-size: .88rem; }
+.visit-planner h2:focus { outline: 2px solid #657c6b; outline-offset: .4rem; }
+@media (max-width: 35rem) { .visit-actions .button, .visit-planner form > .button { width: 100%; } }

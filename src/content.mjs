@@ -1,4 +1,5 @@
 import { merrillvillePage, visitDetails } from './visit-details.mjs';
+import { visitPlannerPage } from './visit-planner.mjs';
 
 const priorityListCta = Object.freeze({
   label: 'Join the Launch List',
@@ -45,6 +46,7 @@ export const site = Object.freeze({
     { label: "Women's Midlife Care", href: '/womens-midlife-care/', section: 'care' },
     { label: 'Hair-Loss Care', href: '/hair-loss-care/', section: 'care' },
     { label: 'How It Works', href: '/how-it-works/' },
+    { label: 'Plan Your Visit', href: '/plan-your-visit/' },
     { label: 'Pricing', href: '/pricing/' },
     { label: 'Location', href: '/merrillville/' },
     { label: 'About', href: '/about/' },
@@ -76,6 +78,7 @@ export const site = Object.freeze({
 });
 
 export const pages = Object.freeze({
+  'plan-your-visit': visitPlannerPage,
   merrillville: merrillvillePage,
   home: {
     slug: '/',
@@ -879,7 +882,7 @@ export const pages = Object.freeze({
 
   'founding-patients': {
     slug: '/founding-patients/',
-    modified: '2026-10-23',
+    modified: '2026-10-25',
     navLabel: 'Launch List',
     title: 'Apex Wellness Launch List | Care Coming to Merrillville',
     description:
@@ -901,6 +904,7 @@ export const pages = Object.freeze({
     },
     ctaNote: 'Free to join. No appointment booked. No commitment to care.',
     landing: true,
+    visitPlanner: true,
     form: {
       action: '/api/founding-consultation',
       method: 'post',
@@ -1013,18 +1017,18 @@ export const pages = Object.freeze({
     title: 'Privacy Policy | Apex Wellness',
     description:
       'Read how the Apex Wellness prelaunch website collects, uses, protects, and retains consultation-request information.',
-    eyebrow: `Effective ${effectiveDate}`,
+    eyebrow: 'Updated October 25, 2026',
     h1: 'Privacy Policy',
     intro:
       'This prelaunch policy explains the limited information collected through the Apex Wellness website and Founding Patient contact form. It may be updated as clinical services and secure patient systems are introduced.',
     cta: priorityListCta,
-    effectiveDate,
+    effectiveDate: 'October 25, 2026',
     sections: [
       {
         type: 'policySection',
         heading: 'Information we collect',
         paragraphs: [
-          'The Founding Patient form asks for your name and email address. You may optionally identify the request as website or accessibility support. The form does not ask which care area interests you. Please do not submit symptoms, diagnoses, medications, laboratory values, insurance information, or other sensitive medical details.',
+          'The Launch List form asks for your name and email address for opening updates. You may optionally identify the request as website or accessibility support. The separate Plan Your Visit form asks for your name, email and phone number so Apex can follow up about arranging a future visit. Appointment follow-up requests are stored separately from the Launch List and do not subscribe you to marketing emails or text messages. Neither form asks which care area interests you. Please do not submit symptoms, diagnoses, medications, laboratory values, insurance information, or other sensitive medical details.',
           'For security, reliability, and consent records, the site may also record the submission time, consent version, source domain, browser or device information, and whether the submission passed anti-spam checks. The raw IP address is not retained. Only a one-way salted hash derived from it is retained for abuse prevention and rate limiting.',
           'Earlier priority-list records remain associated with the consent provided when they were submitted. They are not silently converted into consultation requests.'
         ]
@@ -1152,18 +1156,18 @@ export const pages = Object.freeze({
     title: 'Communications Consent | Apex Wellness',
     description:
       'Understand consent for Apex Wellness prelaunch emails, how consent is recorded, and how to unsubscribe.',
-    eyebrow: `Effective ${effectiveDate}`,
+    eyebrow: 'Updated October 25, 2026',
     h1: 'Communications Consent',
     intro:
-      'This consent applies to prelaunch email requested through the Founding Patient contact form. Apex does not currently request a phone number or permission for marketing texts or calls.',
+      'This consent applies to the Launch List and the separate appointment follow-up form on Plan Your Visit. The appointment form requests a phone number for a call about your request. It does not enroll you in marketing calls or text messages.',
     cta: priorityListCta,
-    effectiveDate,
+    effectiveDate: 'October 25, 2026',
     sections: [
       {
         type: 'policySection',
         heading: 'What you agree to receive',
         paragraphs: [
-          'By checking the consent box and submitting the form, you ask Apex Wellness to email you about your request. If your request concerns a consultation, emails may include verified opening information and future consultation availability.',
+          'The Launch List checkbox asks permission to send opening updates, with the option to unsubscribe. The appointment follow-up checkbox asks permission for Apex to call or email you about arranging a future visit when availability is confirmed. An appointment follow-up request does not subscribe you to marketing emails or text messages, reserve a time or create a clinical record. These permissions are stored separately.',
           'If you check the website or accessibility support option, Apex may email you to respond to that request; it will not treat that selection as a consultation-marketing request. Consultation-related messages may be informational and promotional. Messages are not medical advice, clinical messages, appointment confirmations, or emergency communications.'
         ]
       },

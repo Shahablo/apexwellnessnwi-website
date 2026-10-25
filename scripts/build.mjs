@@ -5,6 +5,7 @@ import { fileURLToPath } from "node:url";
 
 import { pages, site } from "../src/content.mjs";
 import { visitDetails } from "../src/visit-details.mjs";
+import { schedulingUrl } from "../src/visit-planner.mjs";
 import { blogPosts } from "../src/blog-posts.mjs";
 
 const rootDirectory = fileURLToPath(new URL("../", import.meta.url));
@@ -655,7 +656,7 @@ function renderConversionHero(page) {
       <h1 id="page-title">${escapeHtml(page.h1).replace('. ', '.<br>')}</h1>
       <p>${escapeHtml(page.intro)}</p>
       <div class="launch-offer"><p class="eyebrow">${escapeHtml(page.offer.eyebrow)}</p><h2>${escapeHtml(page.offer.heading)}</h2><p>${escapeHtml(page.offer.terms)}</p></div>
-      <div class="hero-actions">${buttonMarkup(page.cta)}</div>
+      <div class="hero-actions">${page.visitPlanner ? '<a class="button" href="/plan-your-visit/">Plan your first visit</a>' : ''}${buttonMarkup(page.cta)}</div>
       <p class="cta-note">${escapeHtml(page.ctaNote)}</p>
     </div>
     ${foundingConsultationFormMarkup(page.form)}
@@ -664,6 +665,7 @@ function renderConversionHero(page) {
 }
 
 function renderMain(pageKey, page) {
+  if (page.kind === 'visitPlanner') return renderVisitPlanner(page);
   if (pageKey === 'home') return renderHome(page);
   if (page.kind === "blogIndex") return renderBlogIndex(page);
   if (page.kind === "blogPost") return renderBlogPost(page);
@@ -685,6 +687,50 @@ function renderMain(pageKey, page) {
     ${page.sections.map(renderSection).join("\n")}
     ${site.navigation.some((item) => item.section === 'care' && item.href === page.slug) ? renderSection({ type: 'linkCards', eyebrow: 'Plan your next step', heading: 'The details that help you decide.', items: visitDetails.planningLinks }, page.sections.length) : ''}
     ${page.landing ? '' : renderLaunchCta()}
+  </main>`;
+}
+
+function renderVisitPlanner(page) {
+  const booking = schedulingUrl();
+  return `<main id="main-content" class="page visit-planner-page" tabindex="-1">
+    <div class="container visit-planner-shell">
+      <header class="visit-planner-intro"><p class="eyebrow">${escapeHtml(page.eyebrow)}</p><h1>${escapeHtml(page.h1)}</h1><p>${escapeHtml(page.intro)}</p></header>
+      <div class="visit-planner" data-visit-planner>
+        <ol class="visit-progress" aria-label="Walkthrough steps"><li data-visit-indicator>1. Your visit</li><li data-visit-indicator>2. Costs</li><li data-visit-indicator>3. Next step</li></ol>
+        <p class="eyebrow" data-visit-progress aria-live="polite">Three simple steps</p>
+        <section data-visit-step aria-labelledby="visit-step-one"><h2 id="visit-step-one" tabindex="-1">Start close to home.</h2>
+          <p>Visits will be in person at our Merrillville clinic.</p>
+          <div class="visit-fact"><strong>8550 Broadway, Suite B</strong><br>Merrillville, IN 46410<br><a href="/merrillville/">Location and directions</a></div>
+          <p>We are preparing weight and metabolic care, men’s hormone health, women’s midlife care, and hair-loss care for adults.</p>
+          <p class="visit-note">Coming soon. Appointment availability and clinician details will be shared when confirmed.</p>
+          <div class="visit-actions"><button class="button" type="button" data-visit-next hidden>Next: costs</button></div>
+        </section>
+        <section data-visit-step aria-labelledby="visit-step-two"><h2 id="visit-step-two" tabindex="-1">Know the costs before you commit.</h2>
+          <p>Apex is a cash-pay practice. Final prices and what is included will be published before scheduling opens.</p>
+          <div class="visit-fact"><strong>First 100 assessments, on us.</strong><p>For the first 100 initial wellness assessments after opening, selected baseline labs are included when clinically appropriate. One per person; no purchase required. Additional care or testing may cost extra. A contact request or Launch List signup does not reserve this offer.</p></div>
+          <p><a href="/pricing/">Review our pricing information</a></p>
+          <div class="visit-actions"><button class="button-secondary" type="button" data-visit-back hidden>Back</button><button class="button" type="button" data-visit-next hidden>Next: your next step</button></div>
+        </section>
+        <section data-visit-step aria-labelledby="visit-step-three"><h2 id="visit-step-three" tabindex="-1">${booking ? 'Continue to scheduling.' : 'Ask us to follow up.'}</h2>
+          ${booking ? `<p>Continue to Apex’s Tebra scheduling page to review available appointments. A request is not booked until Apex confirms it.</p><a class="button" href="${escapeHtml(booking)}" rel="noreferrer" referrerpolicy="no-referrer">Continue to Tebra</a>` : `<p>Scheduling is being set up. Leave your name, email and phone number if you would like Apex to contact you about arranging a visit when availability is confirmed.</p>
+          <div id="consultation-request"><form id="consultation-form" action="/api/appointment-contact" method="post" aria-labelledby="visit-step-three" aria-describedby="appointment-guidance" data-success-message="Your follow-up request has been saved. Apex can call or email you about arranging a visit when availability is confirmed. No appointment is booked, and you have not joined the newsletter.">
+            <p id="appointment-guidance" class="visit-note">Contact details only. Please do not enter symptoms, medications or medical history. This form is not monitored for urgent concerns.</p>
+            <div class="field field-full"><label for="full-name">Name</label><input id="full-name" name="full_name" type="text" autocomplete="name" minlength="2" maxlength="100" required></div>
+            <div class="field field-full"><label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" inputmode="email" maxlength="254" required></div>
+            <div class="field field-full"><label for="phone">Phone number</label><input id="phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" minlength="10" maxlength="25" aria-describedby="phone-help" required><p id="phone-help" class="field-help">A U.S. or Canadian number where Apex can call you. This does not sign you up for text messages.</p></div>
+            <div class="field-honeypot" aria-hidden="true"><label for="website">Leave this field blank</label><input id="website" name="website" type="text" tabindex="-1" autocomplete="off" maxlength="200" aria-hidden="true"></div>
+            <input name="consent_version" type="hidden" value="appointment-contact-2026-10-25"><input name="form_started_at" type="hidden">
+            <label class="consent field-full" for="contact-consent"><input id="contact-consent" name="contact_consent" type="checkbox" value="true" required><span>Apex may call or email me about this request and arranging a future visit. This does not subscribe me to marketing emails or text messages. I have read the <a href="/privacy/">Privacy Policy</a> and <a href="/communications-consent/">Communications Consent</a>.</span></label>
+            <button class="button" type="submit" data-loading-label="Saving…">Request appointment follow-up</button>
+            <p id="form-status" class="form-status" role="status" aria-live="polite" aria-atomic="true" tabindex="-1"></p>
+            <noscript><p>JavaScript is required to send the form. You can call <a href="tel:+12192072456">(219) 207-2456</a> for general questions.</p></noscript>
+          </form></div><p class="visit-note">No appointment booked. No deposit. No commitment to care.</p>`}
+          <p>Only want opening news? <a href="/founding-patients/#consultation-request">Join the Launch List instead.</a></p>
+          <div class="visit-actions"><button class="button-secondary" type="button" data-visit-back hidden>Back</button></div>
+        </section>
+      </div>
+      <p class="visit-note">Questions about the clinic? Call <a href="tel:+12192072456">(219) 207-2456</a>. For a medical emergency, call 911.</p>
+    </div>
   </main>`;
 }
 
@@ -803,6 +849,7 @@ function renderDocument(pageKey, page, jsonLd, { noIndex = false, mainOverride =
   <script type="application/ld+json">${jsonLd}</script>
   <script src="${escapeHtml(assetUrl("site.js"))}" defer></script>
   <script src="${escapeHtml(assetUrl("site-assistant.js"))}" defer></script>
+  ${page.kind === 'visitPlanner' ? `<script src="${escapeHtml(assetUrl('visit-planner.js'))}" defer></script>` : ''}
 </head>
 <body class="page-${escapeHtml(pageKey)}${page.landing ? ' landing-page' : ''}">
   <a class="skip-link" href="#main-content">Skip to main content</a>
@@ -837,6 +884,7 @@ async function prepareAssets() {
   await cp(join(sourceAssetsDirectory, "site.css"), join(publicAssetsDirectory, "site.css"));
   await cp(join(sourceAssetsDirectory, "site.js"), join(publicAssetsDirectory, "site.js"));
   await cp(join(sourceAssetsDirectory, 'site-design.css'), join(publicAssetsDirectory, 'site-design.css'));
+  await cp(join(sourceAssetsDirectory, 'visit-planner.js'), join(publicAssetsDirectory, 'visit-planner.js'));
   const fontDirectory = join(publicAssetsDirectory, 'fonts');
   await mkdir(fontDirectory, { recursive: true });
   for (const file of ['instrument-serif-latin-400-normal.woff2', 'instrument-serif-latin-400-italic.woff2']) {
@@ -854,6 +902,7 @@ async function prepareAssets() {
   assetVersions.set("site.css", await fingerprint(join(sourceAssetsDirectory, "site.css")));
   assetVersions.set("site.js", await fingerprint(join(sourceAssetsDirectory, "site.js")));
   assetVersions.set('site-design.css', await fingerprint(join(sourceAssetsDirectory, 'site-design.css')));
+  assetVersions.set('visit-planner.js', await fingerprint(join(sourceAssetsDirectory, 'visit-planner.js')));
   assetVersions.set('site-assistant.js', await fingerprint(join(publicAssetsDirectory, 'site-assistant.js')));
 
   const imageFiles = await readdir(sourceImagesDirectory, { withFileTypes: true });

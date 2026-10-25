@@ -66,6 +66,22 @@ const INSERT_REQUEST_SQL = `
     created_at = excluded.created_at
 `;
 
+const INSERT_APPOINTMENT_CONTACT_SQL = `
+  INSERT INTO appointment_contact_requests (
+    id, full_name, email, request_kind, contact_consent, consent_version,
+    consented_at, ip_hash, user_agent, source_origin, created_at, phone
+  ) VALUES (?, ?, ?, ?, 1, ?, ?, ?, ?, ?, ?, ?)
+  ON CONFLICT (email) DO UPDATE SET
+    full_name = excluded.full_name,
+    phone = excluded.phone,
+    consent_version = excluded.consent_version,
+    consented_at = excluded.consented_at,
+    ip_hash = excluded.ip_hash,
+    user_agent = excluded.user_agent,
+    source_origin = excluded.source_origin,
+    status = 'new'
+`;
+
 const PRUNE_RATE_LIMITS_SQL = `
   DELETE FROM priority_rate_limits
   WHERE window_started_at < ?
@@ -139,19 +155,26 @@ function normalizeUserAgent(value) {
   return value.replace(/[\u0000-\u001f\u007f]/g, " ").replace(/\s+/g, " ").trim().slice(0, 512) || "unknown";
 }
 
-function validatePayload(payload, expectedConsentVersion) {
+function normalizePhone(value) {
+  if (typeof value !== 'string' || value.length > 25 || !/^[+\d().\s-]+$/.test(value)) return null;
+  const digits = value.replace(/\D/g, '').replace(/^1(?=\d{10}$)/, '');
+  return /^[2-9]\d{2}[2-9]\d{6}$/.test(digits) ? `+1${digits}` : null;
+}
+
+function validatePayload(payload, expectedConsentVersion, appointmentContact = false) {
   if (!payload || typeof payload !== "object" || Array.isArray(payload)) {
     return { fields: ["form"] };
   }
 
   const keys = Object.keys(payload);
-  if (keys.some((key) => !ALLOWED_FIELDS.has(key))) {
+  if (keys.some((key) => !(ALLOWED_FIELDS.has(key) || (appointmentContact && key === 'phone')) || (appointmentContact && key === 'accessibility_request'))) {
     return { fields: ["form"] };
   }
 
   const fields = [];
   const fullName = normalizeName(payload.full_name);
   const email = normalizeEmail(payload.email);
+  const phone = appointmentContact ? normalizePhone(payload.phone) : null;
   const consentVersion = typeof payload.consent_version === "string"
     && /^[A-Za-z0-9][A-Za-z0-9._-]{0,39}$/.test(payload.consent_version)
     ? payload.consent_version
@@ -162,6 +185,7 @@ function validatePayload(payload, expectedConsentVersion) {
 
   if (!fullName) fields.push("full_name");
   if (!email) fields.push("email");
+  if (appointmentContact && !phone) fields.push('phone');
   if (payload.contact_consent !== true) fields.push("contact_consent");
   if (!consentVersion || consentVersion !== expectedConsentVersion) fields.push("consent_version");
   if (typeof accessibilityRequest !== "boolean") fields.push("accessibility_request");
@@ -178,7 +202,8 @@ function validatePayload(payload, expectedConsentVersion) {
     value: fields.length ? null : {
       fullName,
       email,
-      requestKind: accessibilityRequest ? "website_accessibility" : "founding_consultation",
+      phone,
+      requestKind: appointmentContact ? 'appointment_contact' : (accessibilityRequest ? "website_accessibility" : "founding_consultation"),
       consentVersion,
       website: (payload.website || "").trim(),
       formStartedAt: payload.form_started_at,
@@ -298,8 +323,11 @@ async function readJsonBody(request) {
   }
 }
 
-async function handlePost(context, origin) {
+async function handlePost(context, origin, appointmentContact) {
   const { request, env } = context;
+  if (appointmentContact && env?.APPOINTMENT_REQUESTS_ENABLED !== 'true') {
+    return failure(origin, 503, 'Appointment follow-up requests are not available yet. Please try again later.');
+  }
   const contentType = request.headers.get("Content-Type") || "";
   if (!/^application\/json(?:\s*;|$)/i.test(contentType)) {
     return failure(origin, 415, "Submit the form as JSON.");
@@ -325,7 +353,7 @@ async function handlePost(context, origin) {
     return failure(origin, 400, "The submitted form could not be read.");
   }
 
-  const validation = validatePayload(parsed.value, env.FOUNDING_CONSENT_VERSION);
+  const validation = validatePayload(parsed.value, appointmentContact ? 'appointment-contact-2026-10-25' : env.FOUNDING_CONSENT_VERSION, appointmentContact);
   if (validation.fields.length) {
     return failure(origin, 422, "Please check the highlighted fields and try again.", validation.fields);
   }
@@ -368,7 +396,7 @@ async function handlePost(context, origin) {
     );
   }
 
-  await env.DB.prepare(INSERT_REQUEST_SQL).bind(
+  const insertValues = [
     crypto.randomUUID(),
     validation.value.fullName,
     validation.value.email,
@@ -379,14 +407,16 @@ async function handlePost(context, origin) {
     normalizeUserAgent(request.headers.get("User-Agent")),
     origin,
     nowIso,
-  ).run();
+  ];
+  if (appointmentContact) insertValues.push(validation.value.phone);
+  await env.DB.prepare(appointmentContact ? INSERT_APPOINTMENT_CONTACT_SQL : INSERT_REQUEST_SQL).bind(...insertValues).run();
 
   // Duplicate email/request-kind pairs refresh the consent record and receive the
   // same response, avoiding membership disclosure while preserving renewed consent.
   return success(origin);
 }
 
-export async function onRequest(context) {
+async function dispatchRequest(context, appointmentContact = false) {
   const { request } = context;
   const origin = request.headers.get("Origin") || "";
 
@@ -418,9 +448,13 @@ export async function onRequest(context) {
   }
 
   try {
-    return await handlePost(context, origin);
+    return await handlePost(context, origin, appointmentContact);
   } catch (error) {
-    console.error("Founding consultation endpoint failure", error instanceof Error ? error.message : "unknown error");
+    // Never log database errors, which may contain submitted contact values.
+    console.error("Contact endpoint failure");
     return failure(origin, 500, "Consultation requests are temporarily unavailable. Please try again later.");
   }
 }
+
+export const onRequest = (context) => dispatchRequest(context, false);
+export const onAppointmentRequest = (context) => dispatchRequest(context, true);

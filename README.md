@@ -48,7 +48,7 @@ Production requires:
 
 - D1 binding `DB` using the database declared in `wrangler.jsonc`.
 - Runtime secret `IP_HASH_SALT` with at least 16 random characters.
-- Runtime variable `FOUNDING_CONSENT_VERSION=founding-consultation-2026-09` (checked in because it is not secret).
+- Runtime variable `FOUNDING_CONSENT_VERSION=launch-list-2026-09-21` (checked in because it is not secret; keep it aligned with `wrangler.jsonc` and the reviewed form copy).
 - Optional runtime secret `TURNSTILE_SECRET_KEY`, but only after a matching frontend Turnstile token integration is deployed. Enabling the secret without that integration will reject normal submissions.
 
 The Cloudflare zone also enforces these host-level controls, which cannot be expressed in a Static Assets `_redirects` file:

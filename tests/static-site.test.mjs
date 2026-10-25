@@ -550,16 +550,30 @@ test('the About page distinguishes real team portraits, supplied interests, and 
   assert.match(html, /Keep your primary care doctor/);
 });
 
-test('the confirmed clinic address and LinkedIn Page appear consistently in visible copy and schema', () => {
+test('the prelaunch clinic uses verified local-business facts without invented hours, coordinates or reviews', () => {
   for (const [slug, html] of htmlBySlug) {
     assert.ok(html.includes(site.address.label), `${slug} needs the confirmed address`);
     const jsonLd = [...html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)]
       .find((match) => attributes(match[1]).type === 'application/ld+json');
-    const organization = JSON.parse(jsonLd[2])['@graph'].find((node) => node['@type'] === 'Organization');
-    assert.equal(organization.address.streetAddress, '8550 Broadway, Suite B');
-    assert.equal(organization.address.postalCode, '46410');
-    assert.ok(organization.sameAs.includes('https://www.linkedin.com/company/apex-wellness-nwi/'));
+    const clinic = JSON.parse(jsonLd[2])['@graph'].find((node) => node['@id'] === `${site.canonicalUrl}/#organization`);
+    assert.equal(clinic['@type'], 'MedicalClinic');
+    assert.match(clinic.description, /preparing/i);
+    assert.equal(clinic.address.streetAddress, '8550 Broadway, Suite B');
+    assert.equal(clinic.address.postalCode, '46410');
+    assert.ok(clinic.sameAs.includes('https://www.linkedin.com/company/apex-wellness-nwi/'));
+    for (const unsupported of ['openingHours', 'openingHoursSpecification', 'geo', 'review', 'aggregateRating', 'medicalSpecialty', 'availableService']) {
+      assert.equal(clinic[unsupported], undefined, `${slug} must not invent ${unsupported}`);
+    }
     assert.doesNotMatch(html, /A confirmed street address|The confirmed clinic address|A confirmed address and visit-modality details/);
+  }
+});
+
+test('illustrative care images do not imply real Apex patients or clinicians', () => {
+  for (const slug of ['/weight-management/', '/mens-hormone-health/', '/womens-midlife-care/']) {
+    const html = htmlBySlug.get(slug);
+    const hero = startTags(html, 'img').find(({attrs}) => attrs['data-photo-kind'] === 'representative');
+    assert.ok(hero, `${slug} needs its illustrative hero image`);
+    assert.match(hero.attrs.alt, /^Illustrative scene/i);
   }
 });
 

@@ -225,6 +225,14 @@ body{overflow-x:clip}
 .article-header .representative img{aspect-ratio:2/1}
 .breadcrumbs{font-size:.74rem;line-height:1.8;gap:.7rem;margin-bottom:3rem}
 .article-body{max-width:44rem;font-size:1.06rem;line-height:1.95}
+.article-video{margin:0 0 3rem;max-width:26rem}
+.article-video video{display:block;width:100%;height:auto;aspect-ratio:9/16;background:#18382f;border-radius:.6rem;object-fit:contain}
+.article-video figcaption,.article-photo figcaption{font-size:.85rem;line-height:1.6;color:var(--color-muted);margin-top:.65rem}
+.article-photo{margin:2rem 0}
+.article-photo img{display:block;width:100%;height:auto;max-height:42rem;object-fit:contain;background:#ece8dc;border-radius:.45rem}
+.article-transcript{border-bottom:1px solid var(--color-border);padding:.75rem 0 1rem;font-size:.88rem;line-height:1.7}
+.article-transcript summary{cursor:pointer;font-weight:700}
+.article-transcript p{margin:.75rem 0 0}
 .article-body>section{margin-top:3.5rem}
 .article-body h2{font-weight:400;font-size:clamp(2.3rem,3.2vw,3.4rem);line-height:1.1;margin-bottom:1.3rem;max-width:26ch}
 .article-contents{background:transparent;padding:1.8rem 0;border-block:1px solid var(--color-border);border-inline:0;border-radius:0}

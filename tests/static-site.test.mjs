@@ -10,6 +10,29 @@ import { pages, site } from "../src/content.mjs";
 import { blogPosts } from "../src/blog-posts.mjs";
 import { personalGoalsArticle } from "../src/personal-goals-article.mjs";
 import { choosingAPracticeArticle } from "../src/choosing-a-practice-article.mjs";
+import { behindTheScenesArticle } from "../src/behind-the-scenes-article.mjs";
+import { buildoutPartOneArticle } from "../src/buildout-part-one-article.mjs";
+
+test('October 24 owner-directed build-out articles use final media and exclude withdrawn identities', async () => {
+  assert.equal(behindTheScenesArticle.status, 'published');
+  assert.equal(behindTheScenesArticle.editorialType, 'nonmedical');
+  assert.equal(behindTheScenesArticle.slug, '/blog/before-the-doors-open-apex-wellness/');
+  assert.ok(blogPosts.includes(behindTheScenesArticle));
+  assert.equal(buildoutPartOneArticle.status, 'published');
+  assert.equal(buildoutPartOneArticle.editorialType, 'nonmedical');
+  assert.equal(buildoutPartOneArticle.slug, '/blog/the-door-and-the-to-do-list/');
+  assert.ok(blogPosts.includes(buildoutPartOneArticle));
+  assert.match(JSON.stringify(buildoutPartOneArticle), /spoke with Comcast/);
+  for (const article of [behindTheScenesArticle, buildoutPartOneArticle]) {
+    const copy = JSON.stringify(article);
+    assert.match(copy, /8550 Broadway, Suite B/);
+    assert.match(copy, /preparing to open|coming soon/i);
+    assert.doesNotMatch(copy, /Atif|Wajeeh|physician-led|book now|appointments are available|guaranteed|—/i);
+  }
+  const video = join(projectRoot, 'assets', 'video', behindTheScenesArticle.video.file);
+  assert.equal(createHash('sha256').update(await readFile(video)).digest('hex'), '281351e61f4012917fba55b2f841133fd1603c9f20acff490cfb8b3f44e3c880');
+  assert.ok(existsSync(join(projectRoot, 'assets', 'video', behindTheScenesArticle.video.captionFile)));
+});
 
 test('personal-goals release preserves the nonmedical version with October 12 staffing-neutral CTA', () => {
   assert.equal(createHash('sha256').update(JSON.stringify(personalGoalsArticle)).digest('hex'), 'c66270968b1dabd1dd897ea5b950c2cef9f23a0287de54dd6b69c8fccebf4731');

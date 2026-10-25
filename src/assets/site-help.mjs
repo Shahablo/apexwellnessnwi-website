@@ -24,7 +24,7 @@ export function answerWebsiteQuestion(input, launchLabel = 'November 16, 2026') 
     return result('Joining the launch list is free. The care model is cash-pay; final fees, what is included, and any separate medication or testing costs will be published before scheduling or payment opens. No insurance coverage or reimbursement is promised.', 'Pricing and what to expect', '/pricing/');
   }
   if (/\b(where|location|address|merrillville|hours|parking|phone|email|contact|telehealth|virtual)\b/.test(question)) {
-    return result('Coming soon to 8550 Broadway, Suite B, Merrillville, IN 46410. Find launch updates at apexwellnessnwi.com.', 'Location and practice details', '/about/');
+    return result('Coming soon to 8550 Broadway, Suite B, Merrillville, IN 46410. Visits will be in person at launch; telehealth is not planned for launch. Scheduling is not open yet. Hours and arrival details will be shared before appointments begin.', 'Location and visit details', '/merrillville/');
   }
   if (/\b(who|physician|doctor|team|founder)\b/.test(question)) {
     return result('Care-team members, their roles and credentials, and appointment availability will be shared before scheduling opens. Read about Apex’s founder and planned approach on the About page. ', 'Meet the people behind Apex', '/about/');

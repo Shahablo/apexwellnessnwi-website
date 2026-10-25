@@ -75,6 +75,8 @@ if (launchPrompt) {
   document.querySelector('#dismiss-launch').addEventListener('click', dismissInvitation);
   if (!dismissed) {
     const showAfterEngagement = () => {
+      // On phones, the inline invitations remain available without covering answers.
+      if (window.matchMedia('(max-width: 48rem)').matches) return;
       const progressed = window.scrollY > Math.min(500, window.innerHeight * 0.65);
       if (!progressed) return;
       window.removeEventListener('scroll', showAfterEngagement);

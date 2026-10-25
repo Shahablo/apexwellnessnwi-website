@@ -4,6 +4,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { pages, site } from "../src/content.mjs";
+import { visitDetails } from "../src/visit-details.mjs";
 import { blogPosts } from "../src/blog-posts.mjs";
 
 const rootDirectory = fileURLToPath(new URL("../", import.meta.url));
@@ -23,12 +24,14 @@ const publishedBlogPosts = blogPosts
 
 const imageCatalog = Object.freeze({
   behindWindow: {
+    kind: 'documentary',
     file: "behind-apex-window-setup-2026-10-24.jpg",
     width: 1080,
     height: 1620,
     alt: "Shahab works on old window lettering outside the Apex Wellness space in Merrillville.",
   },
   behindPosters: {
+    kind: 'documentary',
     file: "behind-apex-posters-setup-2026-10-24.jpg",
     width: 1167,
     height: 1152,
@@ -275,7 +278,7 @@ function imageMarkup(image, { hero = false } = {}) {
     : 'loading="lazy"';
 
   return `<figure class="representative">
-    <img data-photo-kind="representative" src="${escapeHtml(assetUrl(`images/${image.file}`))}" width="${image.width}" height="${image.height}" alt="${escapeHtml(image.alt)}" ${loading} decoding="async">
+    <img data-photo-kind="${escapeHtml(image.kind || 'representative')}" src="${escapeHtml(assetUrl(`images/${image.file}`))}" width="${image.width}" height="${image.height}" alt="${escapeHtml(image.alt)}" ${loading} decoding="async">
   </figure>`;
 }
 
@@ -297,6 +300,24 @@ function faqMarkup(items) {
       <p>${escapeHtml(item.answer)}</p>
     </details>`).join("\n")}
   </div>`;
+}
+
+function planningLinksMarkup(items) {
+  return `<ul class="planning-links">${items.map((item) => `<li><h3>${escapeHtml(item.title)}</h3><p>${escapeHtml(item.body)}</p><a class="text-link" href="${escapeHtml(item.href)}">${escapeHtml(item.label)} <span aria-hidden="true">↗</span></a></li>`).join('')}</ul>`;
+}
+
+function renderCareDetails(page) {
+  const faqIndex = page.sections.findIndex((section) => section.type === 'faq');
+  const faq = page.sections[faqIndex];
+  const faqHref = faq ? `#${identifier(faq.heading)}-${faqIndex + 1}` : '/faq/';
+  return `<aside class="care-visit-details" aria-label="Visit details"><div class="container">
+    <dl class="visit-facts">
+      <div><dt>Location</dt><dd><a href="/merrillville/">Merrillville · 8550 Broadway, Suite B</a></dd></div>
+      <div><dt>Visit format</dt><dd>${escapeHtml(visitDetails.format)}</dd></div>
+      <div><dt>Cost</dt><dd><a href="/pricing/">Cash-pay · Fees before booking</a></dd></div>
+    </dl>
+    <p class="visit-details-note">Coming soon. Scheduling is not open yet. <a href="${escapeHtml(faqHref)}">Jump to common questions <span aria-hidden="true">↓</span></a></p>
+  </div></aside>`;
 }
 
 function cardsMarkup(items, className = "cards") {
@@ -381,6 +402,16 @@ function renderSection(section, index) {
   const alternatingClass = index % 2 ? " section-alt" : "";
 
   switch (section.type) {
+    case 'linkCards':
+      return `<section class="section planning-section" aria-labelledby="${id}"><div class="container">${headingMarkup(section, id)}${planningLinksMarkup(section.items)}</div></section>`;
+
+    case 'locationDetails':
+      return `<section class="section location-details" aria-labelledby="${id}"><div class="container editorial-row">
+        ${headingMarkup(section, id)}<div class="editorial-copy"><address>${escapeHtml(site.address.streetAddress)}<br>${escapeHtml(site.address.addressLocality)}, ${escapeHtml(site.address.addressRegion)} ${escapeHtml(site.address.postalCode)}</address><p>${escapeHtml(section.body)}</p>
+        <dl class="location-facts"><div><dt>Visits</dt><dd>${escapeHtml(visitDetails.format)}</dd></div><div><dt>Availability</dt><dd>Coming soon. Scheduling is not open.</dd></div><div><dt>General questions</dt><dd><a href="${escapeHtml(site.phoneHref)}">${escapeHtml(site.phone)}</a><br><a href="mailto:${escapeHtml(site.email)}">${escapeHtml(site.email)}</a></dd></div></dl>
+        <a class="text-link" href="${escapeHtml(visitDetails.directionsUrl)}">Open directions in Google Maps <span aria-hidden="true">↗</span></a></div>
+      </div></section>`;
+
     case "trustPoints":
       return `<aside class="trust-strip" aria-label="Apex Wellness care standards">
         <ul class="container trust-strip-list">${section.items.map((item) => `<li><strong>${escapeHtml(item)}</strong></li>`).join("")}</ul>
@@ -556,11 +587,12 @@ function renderHome(page) {
       <div class="section-heading heading-with-aside"><div><p class="eyebrow">Your next step</p><h2 id="process-heading">${multiline(editorial.processHeading)}</h2></div><a class="text-link" href="/how-it-works/">How it works <span aria-hidden="true">↗</span></a></div>
       <ol class="steps">${editorial.process.map((step, index) => `<li class="step"><span class="step-number" aria-hidden="true">0${index + 1}</span><h3>${escapeHtml(step.title)}</h3><p>${escapeHtml(step.body)}</p></li>`).join('')}</ol>
     </div></section>
+    <section class="section faq-section home-quick-answers" aria-labelledby="quick-answers-heading"><div class="container editorial-row"><div class="section-heading"><p class="eyebrow">Before you decide</p><h2 id="quick-answers-heading">The practical questions, answered.</h2><a class="text-link" href="/faq/">Read all FAQs <span aria-hidden="true">↗</span></a></div>${faqMarkup(visitDetails.quickAnswers)}</div></section>
     ${latest ? `<section class="section home-journal" aria-labelledby="journal-heading"><div class="container">
       <div class="section-heading heading-with-aside"><div><p class="eyebrow">The Apex journal</p><h2 id="journal-heading">A little more understanding.</h2></div><a class="text-link" href="/blog/">Explore the blog <span aria-hidden="true">↗</span></a></div>
       <article class="journal-feature${latest.heroImage === null ? ' journal-feature--text' : ''}">${latest.heroImage === null ? '' : `<a class="journal-feature-image" href="${escapeHtml(latest.slug)}" aria-label="Read ${escapeHtml(latest.h1)}">${imageMarkup(imageForPage('blog-post', latest))}</a>`}<div><p class="eyebrow">${escapeHtml(latest.category)} · ${escapeHtml(latest.readTime || '8 minute read')}</p><h3><a href="${escapeHtml(latest.slug)}">${escapeHtml(latest.h1)}</a></h3><p>${escapeHtml(latest.excerpt)}</p><a class="text-link" href="${escapeHtml(latest.slug)}">Read the article <span aria-hidden="true">↗</span></a><p class="quiet-note">General education. Your own care starts with a clinical conversation.</p></div></article>
     </div></section>` : ''}
-    <section class="section local-section" aria-labelledby="local-heading"><div class="container editorial-row"><div><p class="eyebrow">Rooted in our region</p><h2 id="local-heading">For life in<br>Northwest Indiana.</h2></div><div class="editorial-copy"><p>${escapeHtml(local.body)}</p><a class="text-link" href="/faq/">Opening & location questions <span aria-hidden="true">↗</span></a></div></div></section>
+    <section class="section local-section local-preview" aria-labelledby="local-heading"><div class="container local-preview-grid"><div><p class="eyebrow">Our Merrillville location</p><h2 id="local-heading">Taking shape<br>on Broadway.</h2><p>${escapeHtml(local.body)}</p><p>${escapeHtml(visitDetails.formatNote)}</p><a class="text-link" href="/merrillville/">See our location & visit details <span aria-hidden="true">↗</span></a></div><div>${imageMarkup(imageCatalog.behindWindow)}<p class="quiet-note">Getting the space ready, October 2026. Follow the <a href="/blog/the-door-and-the-to-do-list/">build-out journal</a>.</p></div></div></section>
     ${renderLaunchCta()}
   </main>`;
 }
@@ -649,13 +681,15 @@ function renderMain(pageKey, page) {
 
   return `<main id="main-content" class="page" tabindex="-1">
     ${page.landing ? renderConversionHero(page) : renderHero(pageKey, page)}
+    ${site.navigation.some((item) => item.section === 'care' && item.href === page.slug) ? renderCareDetails(page) : ''}
     ${page.sections.map(renderSection).join("\n")}
+    ${site.navigation.some((item) => item.section === 'care' && item.href === page.slug) ? renderSection({ type: 'linkCards', eyebrow: 'Plan your next step', heading: 'The details that help you decide.', items: visitDetails.planningLinks }, page.sections.length) : ''}
     ${page.landing ? '' : renderLaunchCta()}
   </main>`;
 }
 
 function renderNavigation(page) {
-  const visibleLinks = ['/about/', '/how-it-works/', '/pricing/', '/blog/', '/faq/'].map((href) => site.navigation.find((item) => item.href === href));
+  const visibleLinks = ['/about/', '/how-it-works/', '/pricing/', '/merrillville/', '/blog/', '/faq/'].map((href) => site.navigation.find((item) => item.href === href));
   const links = visibleLinks.map((item) => {
     const current = item.href === page.slug || (page.kind === "blogPost" && item.href === "/blog/") ? ' aria-current="page"' : "";
     return `<li><a href="${escapeHtml(item.href)}"${current}>${escapeHtml(item.label)}</a></li>`;

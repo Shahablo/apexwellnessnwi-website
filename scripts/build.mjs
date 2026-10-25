@@ -50,7 +50,7 @@ const imageCatalog = Object.freeze({
     file: "apex-mens-care.webp",
     width: 1713,
     height: 918,
-    alt: "An adult man discussing health goals during a medical consultation.",
+    alt: "Illustrative scene of an adult man discussing health goals with a clinician.",
   },
   shoreline: {
     file: "apex-nwi-shoreline.webp",
@@ -68,13 +68,13 @@ const imageCatalog = Object.freeze({
     file: "apex-weight-care.webp",
     width: 1577,
     height: 997,
-    alt: "An adult patient discussing a weight and metabolic care plan.",
+    alt: "Illustrative scene of an adult discussing a care plan with a clinician.",
   },
   women: {
     file: "apex-womens-care.webp",
     width: 1729,
     height: 910,
-    alt: "An adult woman speaking with a clinician about midlife health concerns.",
+    alt: "Illustrative scene of an adult woman speaking with a clinician.",
   },
   architectural: {
     file: "background-option-architectural.webp",
@@ -168,7 +168,8 @@ function pageJsonLd(page) {
   const url = canonicalUrl(page.slug);
   const graph = [
     {
-      "@type": "Organization",
+      // MedicalClinic is a LocalBusiness subtype; omit hours, clinicians, services, and reviews until verified.
+      "@type": "MedicalClinic",
       "@id": `${site.canonicalUrl}/#organization`,
       name: site.name,
       url: `${site.canonicalUrl}/`,

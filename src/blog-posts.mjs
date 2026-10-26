@@ -8,8 +8,10 @@ import { fourAreasArticle } from './four-areas-article.mjs';
 import { cashPayFeePageArticle } from './cash-pay-fee-page-article.mjs';
 import { behindTheScenesArticle } from './behind-the-scenes-article.mjs';
 import { buildoutPartOneArticle } from './buildout-part-one-article.mjs';
+import { midlifeLocalConversationArticle } from './midlife-local-conversation-article.mjs';
 
 export const blogPosts = Object.freeze([
+  midlifeLocalConversationArticle,
   behindTheScenesArticle,
   buildoutPartOneArticle,
   cashPayFeePageArticle,

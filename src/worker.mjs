@@ -1,4 +1,5 @@
 import { onRequest as handleFoundingConsultationRequest, onAppointmentRequest } from "../functions/api/founding-consultation.js";
+import { onRequest as handlePexyFollowupRequest } from "../functions/api/pexy-followup.js";
 import { onRequest as handleRetiredPriorityRequest } from "../functions/api/priority.js";
 
 function notFound() {
@@ -22,6 +23,10 @@ function notFound() {
 
 export async function handleWorkerRequest(request, env, ctx = {}) {
   const url = new URL(request.url);
+
+  if (url.pathname === '/api/pexy-followup') {
+    return handlePexyFollowupRequest({ request, env });
+  }
 
   if (url.pathname === '/api/appointment-contact') {
     return onAppointmentRequest({ request, env });

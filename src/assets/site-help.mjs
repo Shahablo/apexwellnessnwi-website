@@ -1,4 +1,5 @@
-// Pexy is a browser-only guide to verified public information, not a clinical or live chat service.
+// Pexy answers from verified public information in the browser. A separate,
+// opt-in form can send a retyped general question to Apex for human follow-up.
 // Keep answers and destinations aligned with current site content before each release.
 export function shouldOfferPexy({ elapsedMs, desktop, topExit = false, engaged = false, pageVisible = true, available = true }) {
   return desktop && pageVisible && available &&
@@ -15,21 +16,26 @@ export function pexyNudgeCopy(pathname = '/') {
 export function answerWebsiteQuestion(input, launchLabel = 'November 16, 2026') {
   const question = String(input || '').slice(0, 500).toLowerCase().normalize('NFKC');
   const plannedDate = String(launchLabel).replace(/\s*\(.*\)$/, '');
-  const result = (text, label, href) => ({ text, label, href });
+  const result = (text, label, href, followupEligible = false) => ({ text, label, href, followupEligible });
   const asks = (pattern) => pattern.test(question);
 
   // Safety and privacy take priority over promotional or navigation answers.
   if (asks(/\b(emergency|chest pain|trouble breathing|cannot breathe|can't breathe|suicid\w*|overdose|stroke)\b/)) {
     return result('Pexy is not monitored and cannot assess an emergency. If you may be experiencing a medical emergency, call 911 or go to the nearest emergency department.', 'Website medical notice', '/faq/');
   }
-  if (asks(/\b(my (symptoms?|labs?|tests?|results?|dose|medications?|diagnosis|condition|history)|i (have|feel|take|am taking|am pregnant)|am i (eligible|a candidate|pregnant)|should i|can i take|what dose|dosage|diagnos\w*|side effects?|test results|prescribe me|is it safe for me)\b/)) {
+  if (asks(/\b(my (symptoms?|labs?|tests?|results?|dose|medications?|diagnosis|condition|history)|i (have|feel|take|am taking|am pregnant)|am i (eligible|a candidate|pregnant)|should i|can i take|what dose|dosage|diagnos\w*|side effects?|test results|prescribe me|is it safe for me)\b/) ||
+      asks(/\b(?:my|i|me|our|we)\b.{0,80}\b(?:pain|injur\w*|sick|ill|dizz\w*|fever|nausea|headache|rash|disease|symptom\w*|lab\w*|result\w*|medicat\w*|diagnos\w*|treat\w*|pregnan\w*|prescript\w*)\b/) ||
+      asks(/\b(?:dizziness|fever|nausea|headache|rash|shortness of breath|blood pressure|medical record|patient history)\b/)) {
     return result('That needs a qualified clinician who knows your situation. Pexy cannot assess symptoms, interpret results, recommend medication, or decide whether care fits you. Please do not put medical details in this chat. For an urgent concern, seek timely medical care.', 'About care and eligibility', '/faq/');
   }
   if (asks(/\b(delete|unsubscribe|remove my|stop emails|opt out|data request)\b/)) {
     return result('Pexy cannot change your preferences and has not submitted a request for you. You can use the unsubscribe link in an Apex promotional email. For another data request, follow the contact route in the privacy policy.', 'Privacy and contact requests', '/privacy/');
   }
+  if (asks(/\b(?:talk|speak)\s+to\s+(?:a\s+)?(?:person|human|someone|staff|team)\b/)) {
+    return result('You can call or text (219) 207-2456, or email hello@apexwellnessnwi.com with general questions. Please do not send medical records or sensitive health details through those public contact routes. Pexy does not automatically forward your question to staff.', 'Contact and location', '/merrillville/');
+  }
   if (asks(/\b(privacy|data|store|save|ai|bot|human|person|chat|recorded|monitored)\b/)) {
-    return result('I’m Pexy, an automated website guide with a fixed set of answers. I am not a person, clinician, or live inbox. Questions stay in this page and are not saved or sent to Apex or an AI service. The separate signup and visit-request forms save what you choose to submit under their stated terms.', 'Read the privacy policy', '/privacy/');
+    return result('I’m Pexy, an automated website guide with a fixed set of answers. I am not a person or clinician. Your question to Pexy stays in this page and is not sent to Apex or an AI service. If I cannot answer a general question, you can separately ask the team to reply using a short form. Only what you type into that form is sent.', 'Read the privacy policy', '/privacy/');
   }
 
   // Distinguish the public offer, contact request, and email list. None is a booking.
@@ -50,7 +56,7 @@ export function answerWebsiteQuestion(input, launchLabel = 'November 16, 2026') 
     return result('Apex plans to be cash-pay. The final prices, what each fee includes, payment details, and any separate testing, medication, or outside costs are not public yet. They will be posted before scheduling or payment opens. The Launch List is free; no insurance coverage or reimbursement is promised.', 'Pricing and what to expect', '/pricing/');
   }
   if (asks(/\b(call|text|phone|email|contact|reach|talk to (?:someone|staff)|speak to (?:someone|staff))\b/)) {
-    return result('You can call or text (219) 207-2456, or email hello@apexwellnessnwi.com with general questions. Please do not send medical records or sensitive health details through those public contact routes. Pexy does not forward this chat to staff.', 'Contact and location', '/merrillville/');
+    return result('You can call or text (219) 207-2456, or email hello@apexwellnessnwi.com with general questions. Please do not send medical records or sensitive health details through those public contact routes. Pexy does not automatically forward your question to staff.', 'Contact and location', '/merrillville/');
   }
   if (asks(/\b(hours?|parking|directions?|where|location|address|merrillville|suite|near me|telehealth|virtual|remote|in.person)\b/)) {
     return result(`Coming soon to 8550 Broadway, Suite B, Merrillville, IN 46410. ${plannedDate} is the planned date, subject to readiness. Visits are planned in person at launch; telehealth is not planned for launch. Hours and parking details have not been announced. Scheduling is not open yet.`, 'Location and visit details', '/merrillville/');
@@ -91,5 +97,5 @@ export function answerWebsiteQuestion(input, launchLabel = 'November 16, 2026') 
     return result('Apex is preparing four care areas in Merrillville: weight and metabolic care, men’s hormone health, women’s midlife care, and hair-loss care. They are planned services, with clinical availability to be confirmed before scheduling opens.', 'Explore the care areas', '/how-it-works/');
   }
 
-  return result('I do not have a verified answer to that one, and I would rather say so than guess. Pexy can help with opening plans, care areas, the first-100 offer, pricing status, visit requests, location, and website policies. Please do not enter personal or medical information.', 'Browse all FAQs', '/faq/');
+  return result('I do not have a verified answer to that one, and I would rather say so than guess. You can browse the FAQs or ask the Apex team to follow up about a general website question. Please leave medical or personal health details out of the form.', 'Browse all FAQs', '/faq/', true);
 }

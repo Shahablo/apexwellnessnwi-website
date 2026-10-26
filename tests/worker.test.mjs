@@ -6,11 +6,14 @@ const foundingSource = await readFile(
   new URL("../functions/api/founding-consultation.js", import.meta.url),
   "utf8",
 );
+const pexySource = await readFile(new URL("../functions/api/pexy-followup.js", import.meta.url), "utf8");
 const prioritySource = await readFile(new URL("../functions/api/priority.js", import.meta.url), "utf8");
 const foundingUrl = `data:text/javascript;base64,${Buffer.from(foundingSource).toString("base64")}`;
+const pexyUrl = `data:text/javascript;base64,${Buffer.from(pexySource).toString("base64")}`;
 const priorityUrl = `data:text/javascript;base64,${Buffer.from(prioritySource).toString("base64")}`;
 const workerSource = (await readFile(new URL("../src/worker.mjs", import.meta.url), "utf8"))
   .replace("../functions/api/founding-consultation.js", foundingUrl)
+  .replace("../functions/api/pexy-followup.js", pexyUrl)
   .replace("../functions/api/priority.js", priorityUrl);
 const { default: worker, handleWorkerRequest } = await import(
   `data:text/javascript;base64,${Buffer.from(workerSource).toString("base64")}`
@@ -27,6 +30,19 @@ test("delegates the exact Founding Patient endpoint to its request handler", asy
   assert.equal(response.status, 405);
   assert.equal(response.headers.get("Allow"), "POST, OPTIONS");
   assert.equal(response.headers.get("Access-Control-Allow-Origin"), ORIGIN);
+});
+
+test("delegates only the exact Pexy follow-up endpoint", async () => {
+  const response = await worker.fetch(new Request(`${ORIGIN}/api/pexy-followup`, {
+    method: "GET",
+    headers: { Origin: ORIGIN },
+  }), {}, {});
+  assert.equal(response.status, 405);
+  assert.equal(response.headers.get("Allow"), "POST, OPTIONS");
+  for (const path of ["/api/pexy-followup/", "/api/pexy-followup-extra", "/API/pexy-followup"]) {
+    const unknown = await worker.fetch(new Request(`${ORIGIN}${path}`), {}, {});
+    assert.equal(unknown.status, 404, path);
+  }
 });
 
 test("delegates the exact legacy Priority endpoint to its retired handler", async () => {

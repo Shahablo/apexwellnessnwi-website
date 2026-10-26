@@ -625,9 +625,20 @@ test('all runtime scripts exist as deployable assets and the site guide stays lo
     assert.ok(helpForm);
     assert.ok(!attributes(helpForm[1]).action, 'local guide must not post questions');
     assert.ok(startTags(helpForm[2], 'input').every(({attrs}) => !attrs.name), 'questions must not become native form data');
+    const followupForm = [...html.matchAll(/<form\b([^>]*)>([\s\S]*?)<\/form>/gi)].find((match) => attributes(match[1]).id === 'pexy-followup-form');
+    assert.ok(followupForm, `${slug} needs an opt-in follow-up form`);
+    assert.ok(Object.hasOwn(attributes(followupForm[1]), 'hidden'), 'follow-up must start hidden');
+    assert.ok(html.indexOf('id="pexy-followup-form"') < html.indexOf('class="help-topics"'), 'unknown-answer follow-up should appear before the quick topics');
+    assert.match(followupForm[2], /name="full_name"/);
+    assert.match(followupForm[2], /name="email"/);
+    assert.match(followupForm[2], /name="question"/);
+    assert.match(followupForm[2], /name="contact_consent"[^>]*required/);
+    assert.match(followupForm[2], /earlier Pexy question will not be sent/);
   }
   const assistant = await readFile(join(publicRoot, 'assets', 'site-assistant.js'), 'utf8');
-  assert.doesNotMatch(assistant, /\bfetch\s*\(|XMLHttpRequest|sendBeacon|WebSocket|\beval\s*\(/);
+  assert.match(assistant, /fetch\('\/api\/pexy-followup'/);
+  assert.match(assistant, /pexy-followup-action/);
+  assert.doesNotMatch(assistant, /XMLHttpRequest|sendBeacon|WebSocket|\beval\s*\(/);
   assert.doesNotMatch(assistant, /^import\s|^export\s/m);
   assert.match(assistant, /answerWebsiteQuestion/);
 });

@@ -377,6 +377,11 @@ function foundingConsultationFormMarkup(form) {
         <input id="email" name="email" type="email" autocomplete="email" inputmode="email" maxlength="254" aria-describedby="email-help" required>
         <p id="email-help" class="field-help">We will use this address only as described in the Privacy Policy.</p>
       </div>
+      <div class="field field-full" data-launch-phone-field>
+        <label for="launch-phone">Phone number</label>
+        <input id="launch-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" minlength="10" maxlength="25" aria-describedby="launch-phone-help" required>
+        <p id="launch-phone-help" class="field-help">A U.S. or Canadian number for a personal call about this Launch List request or confirmed scheduling availability. No text messages.</p>
+      </div>
       <div class="field-honeypot" aria-hidden="true">
         <label for="website">Leave this field blank</label>
         <input id="website" name="website" type="text" tabindex="-1" autocomplete="off" maxlength="200" aria-hidden="true">
@@ -389,7 +394,7 @@ function foundingConsultationFormMarkup(form) {
       </label>
       <label class="consent field-full" for="contact-consent">
         <input id="contact-consent" name="contact_consent" type="checkbox" value="true" aria-describedby="contact-consent-help" required>
-        <span id="contact-consent-help">Email me opening updates from Apex Wellness. I can unsubscribe anytime, and I have read the <a href="/privacy/">Privacy Policy</a> and <a href="/communications-consent/">Communications Consent</a>.</span>
+        <span id="contact-consent-help"><span data-list-consent>Email me Apex opening updates. Apex may call the number I provide only to clarify this request or share confirmed scheduling availability. No text messages, automated calls, or unrelated promotional calls. I can unsubscribe from emails anytime. I have read the <a href="/privacy/">Privacy Policy</a> and <a href="/communications-consent/">Communications Consent</a>.</span><span data-support-consent hidden>Apex may email me only about my website or accessibility-support request. This does not join the Launch List or authorize phone calls or texts. I have read the <a href="/privacy/">Privacy Policy</a> and <a href="/communications-consent/">Communications Consent</a>.</span></span>
       </label>
       <button class="button" type="submit" data-loading-label="Submitting…">${escapeHtml(form.submitLabel)}</button>
       <p id="form-status" class="form-status" role="status" aria-live="polite" aria-atomic="true" tabindex="-1"></p>

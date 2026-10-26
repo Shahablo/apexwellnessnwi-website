@@ -46,7 +46,7 @@ export function answerWebsiteQuestion(input, launchLabel = 'November 16, 2026') 
     return result('Scheduling is not open yet. You can see how a first visit is expected to work and leave a contact request for manual follow-up. That form asks for name, email, phone, and separate contact consent; it does not book a time, start clinical intake, or reserve the first-100 offer. Please keep medical details out of the form.', 'Plan your visit', '/plan-your-visit/');
   }
   if (asks(/\b(launch list|sign ?up|join|newsletter|email updates|opening updates|founding patients|qr code|qr)\b/)) {
-    return result('The Launch List is a free way to get opening and scheduling updates by email. It asks for your name, email, and consent. It does not book a visit or hold a place in the first-100 offer. The printed Apex QR code leads to this page.', 'Join the Launch List', '/founding-patients/');
+    return result('The Launch List is a free way to get opening and scheduling updates by email. It asks for your name, email, phone number and consent. Apex may make a limited manual call about the request or confirmed scheduling availability; no texts or automated calls. It does not book a visit or hold a place in the first-100 offer. The printed Apex QR code leads to this page.', 'Join the Launch List', '/founding-patients/');
   }
 
   if (asks(/\b(labs?|blood ?work|tests?|testing)\b/) && asks(/\b(included|free|covered|cost)\b/)) {

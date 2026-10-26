@@ -327,6 +327,7 @@ test("founding consultation form matches the minimal API contract and accessible
   const allowedNames = new Set([
     "full_name",
     "email",
+    "phone",
     "contact_consent",
     "consent_version",
     "website",
@@ -337,6 +338,7 @@ test("founding consultation form matches the minimal API contract and accessible
   const requiredStaticNames = [
     "full_name",
     "email",
+    "phone",
     "contact_consent",
     "consent_version",
     "website",
@@ -365,6 +367,7 @@ test("founding consultation form matches the minimal API contract and accessible
 
   const fullName = controlsByName.get("full_name").attrs;
   const email = controlsByName.get("email").attrs;
+  const phone = controlsByName.get("phone").attrs;
   const consent = controlsByName.get("contact_consent").attrs;
   const accessibilityRequest = controlsByName.get("accessibility_request")?.attrs;
   const honeypot = controlsByName.get("website").attrs;
@@ -381,6 +384,12 @@ test("founding consultation form matches the minimal API contract and accessible
   assert.equal(email.inputmode, "email");
   assert.equal(email.maxlength, "254");
   assert.ok("required" in email);
+  assert.equal(phone.type?.toLowerCase(), "tel");
+  assert.equal(phone.autocomplete, "tel");
+  assert.equal(phone.inputmode, "tel");
+  assert.equal(phone.minlength, "10");
+  assert.equal(phone.maxlength, "25");
+  assert.ok("required" in phone, "the Launch List requires phone in its default mode");
   assert.equal(consent.type?.toLowerCase(), "checkbox");
   assert.equal(consent.value, "true");
   assert.ok("required" in consent);
@@ -398,11 +407,11 @@ test("founding consultation form matches the minimal API contract and accessible
   assert.equal(consentVersion.type?.toLowerCase(), "hidden");
   assert.equal(
     consentVersion.value,
-    "launch-list-2026-09-21",
+    "launch-list-phone-2026-10-26",
     "consent_version needs the reviewed founding-consultation policy version",
   );
 
-  const visibleNames = ["full_name", "email", "contact_consent"];
+  const visibleNames = ["full_name", "email", "phone", "contact_consent"];
   if (accessibilityRequest) visibleNames.push("accessibility_request");
   for (const name of visibleNames) {
     const control = controlsByName.get(name).attrs;
@@ -420,7 +429,12 @@ test("founding consultation form matches the minimal API contract and accessible
     "consultation form needs a polite live region");
 
   const fieldNames = [...controlsByName.keys()].join(" ");
-  assert.doesNotMatch(fieldNames, /care_interest|phone|zip|symptom|diagnosis|medication|medical|message|notes?|request_kind|utm/i);
+  assert.doesNotMatch(fieldNames, /care_interest|zip|symptom|diagnosis|medication|medical|message|notes?|request_kind|utm/i);
+  assert.match(formHtml, /data-launch-phone-field/, "phone needs a container for support-mode hiding");
+  assert.match(formHtml, /data-list-consent/, "Launch List phone and email consent must be visible by default");
+  assert.match(formHtml, /data-support-consent\s+hidden/, "support-specific consent should begin hidden");
+  assert.match(formHtml, /No text messages/i, "phone help and consent must not imply SMS permission");
+  assert.doesNotMatch(formHtml, /just your name and email/i, "remove the stale name/email-only claim");
 
   const siteJs = await readFile(join(publicRoot, "assets", "site.js"), "utf8");
   assert.match(
@@ -431,6 +445,8 @@ test("founding consultation form matches the minimal API contract and accessible
   assert.doesNotMatch(siteJs, /["']\/api\/priority["']/, "client JavaScript must not submit to the retired endpoint");
   assert.match(siteJs, /String\(Date\.now\(\)\)/, "form_started_at must be initialized from the current epoch time");
   assert.match(siteJs, /Number\(payload\.form_started_at\)/, "form_started_at must be sent as a number");
+  assert.match(siteJs, /phone\.disabled\s*=\s*supportMode/, "support mode must omit the phone field from submission");
+  assert.match(siteJs, /phone\.required\s*=\s*!supportMode/, "support mode must not require a phone");
   assert.match(
     siteJs,
     /payload\[checkbox\.name\]\s*=\s*checkbox\.checked/,
@@ -761,7 +777,8 @@ test('September 27 launch-list article stays in its administrative scope', () =>
   assert.equal(article.status, 'published');
   const text = JSON.stringify(article);
   assert.match(text, /8550 Broadway, Suite B/);
-  assert.match(text, /name and email/i);
+  assert.match(text, /phone/i);
+  assert.doesNotMatch(text, /just (?:your )?name and email/i);
   assert.doesNotMatch(text, /8560|Wajeeh|Bakhsh|guaranteed|—/i);
 });
 

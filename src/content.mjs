@@ -26,7 +26,7 @@ export const site = Object.freeze({
   phone: '(219) 207-2456',
   phoneHref: 'tel:+12192072456',
   tagline: 'Thoughtful care. Built around you.',
-  contentUpdated: '2026-10-23',
+  contentUpdated: '2026-10-26',
   launch: { date: '2026-11-16', label: 'November 16, 2026', status: 'Planned launch' },
   social: [
     { label: 'Instagram', href: 'https://www.instagram.com/apexwellnessnwi/' },
@@ -106,7 +106,7 @@ export const pages = Object.freeze({
       approachBody: 'We are building a practice around careful evaluation, clear conversations, and individual goals. Care-team details and appointment availability will be shared before scheduling opens.',
       processHeading: 'A simple first step.\nSpace to decide.',
       process: [
-        { title: 'Stay in the know.', body: 'Join the Launch List with your name and email. That is all we ask for.' },
+        { title: 'Stay in the know.', body: 'Join the Launch List with your name, email and phone number. Keep medical details for a future secure clinical intake.' },
         { title: 'Get the details.', body: 'We email you the opening date, pricing and how to book, as each is ready.' },
         { title: 'Choose your next step.', body: 'Review the details, ask questions, and decide whether to request an available appointment when scheduling opens.' }
       ]
@@ -157,7 +157,7 @@ export const pages = Object.freeze({
         eyebrow: 'Stay in the know',
         heading: 'Your next step starts with clear information.',
         body:
-          'Join the Launch List with your name and email for opening updates from Apex.',
+          'Join the Launch List with your name, email and phone number for opening updates from Apex.',
         cta: priorityListCta
       },
       {
@@ -167,7 +167,7 @@ export const pages = Object.freeze({
         items: [
           {
             title: 'Send a contact request.',
-            body: 'Your name and email. Keep medical details for your visit.'
+            body: 'Your name, email and phone number. Keep medical details for your visit.'
           },
           {
             title: 'Review verified launch details.',
@@ -552,7 +552,7 @@ export const pages = Object.freeze({
           {
             question: 'Should I send photos or medical details through the launch form?',
             answer:
-              'No. The Launch List collects your name and email for opening updates. Medical information and photographs belong in a secure clinical intake process after an appointment is confirmed.'
+              'No. The Launch List collects your name, email and phone number for opening updates and limited follow-up. Medical information and photographs belong in a secure clinical intake process after an appointment is confirmed.'
           }
         ]
       }
@@ -841,7 +841,7 @@ export const pages = Object.freeze({
           {
             question: 'Can I send medical information through the form?',
             answer:
-              'Please don’t. The form is just for your name and email. Medical details belong in your visit, where they are private.'
+              'Please don’t. The form asks for your name, email and phone number. Medical details belong in a secure clinical conversation, not in this signup.'
           }
         ]
       },
@@ -868,7 +868,7 @@ export const pages = Object.freeze({
           {
             question: 'How will clinical information and messages be handled?',
             answer:
-              'The pre-opening form collects only a name, email address, consent record, and an optional website-accessibility flag. Details about secure clinical intake, record handling, response times, and patient communications will be published before care opens.'
+              'The pre-opening Launch List form collects a name, email address, phone number, consent record and an optional website-accessibility flag. It is not clinical intake. Details about secure clinical intake, record handling, response times and patient communications will be published before care opens.'
           }
         ]
       },
@@ -910,12 +910,12 @@ export const pages = Object.freeze({
       method: 'post',
       heading: 'Get opening updates.',
       submitLabel: 'Join the Launch List',
-      consentVersion: 'launch-list-2026-09-21',
+      consentVersion: 'launch-list-phone-2026-10-26',
       consentLabel:
-        'Email me opening updates from Apex Wellness. I can unsubscribe anytime, and I have read the Privacy Policy and Communications Consent.',
+        'Email me opening updates from Apex Wellness. Apex may manually call the phone number I provide only to clarify this Launch List request or share confirmed scheduling availability. No texts, automated calls or unrelated promotional calls. I can unsubscribe from emails anytime, and I have read the Privacy Policy and Communications Consent.',
       accessibilityLabel: 'This is a website or accessibility question, not a Launch List signup.',
       privacyNote:
-        'Join the Apex Launch List with your name and email. Save medical details for your visit.',
+        'Join the Apex Launch List with your name, email and phone number. Apex may use your number only for the limited follow-up described in the consent below. No texts. Save medical details for a future secure clinical intake.',
       successMessage:
         'You’re on the Apex Launch List. We’ll share opening news and let you know when clinical evaluations can be booked. No appointment has been booked.'
     },
@@ -970,7 +970,7 @@ export const pages = Object.freeze({
         items: [
           {
             title: 'Join the list.',
-            body: 'Leave your name and email, and choose to receive opening updates.'
+            body: 'Leave your name, email and phone number, and choose to receive opening updates.'
           },
           {
             title: 'Get the details.',
@@ -1000,7 +1000,7 @@ export const pages = Object.freeze({
           },
           {
             question: 'Should I include medical information?',
-            answer: 'No. Just your name and email. Your history is for your visit.'
+            answer: 'No. The form asks for your name, email and phone number. Keep your medical history for a secure clinical intake after a visit is arranged.'
           },
           {
             question: 'When and where will Apex open?',
@@ -1028,7 +1028,7 @@ export const pages = Object.freeze({
         type: 'policySection',
         heading: 'Information we collect',
         paragraphs: [
-          'The Launch List form asks for your name and email address for opening updates. You may optionally identify the request as website or accessibility support. The separate Plan Your Visit form asks for your name, email and phone number so Apex can follow up about arranging a future visit. If Pexy cannot answer a general website question, its optional follow-up form asks for your name, email and a newly typed general question. Each request has its own purpose and consent; a Pexy follow-up does not subscribe you to marketing emails or text messages, reserve a visit, or start clinical intake. Please do not submit symptoms, diagnoses, medications, laboratory values, insurance information, or other sensitive medical details.',
+          'The Launch List form asks for your name, email address and phone number for opening updates and limited follow-up about the signup or confirmed scheduling availability. It does not authorize text messages, automated calls or unrelated promotional calls. If you select website or accessibility support instead, the phone field is not required or submitted and Apex uses your name and email to respond. The separate Plan Your Visit form asks for your name, email and phone number so Apex can follow up about arranging a future visit. If Pexy cannot answer a general website question, its optional follow-up form asks for your name, email and a newly typed general question. Each request has its own purpose and consent; a Pexy follow-up does not subscribe you to marketing emails or text messages, reserve a visit, or start clinical intake. Please do not submit symptoms, diagnoses, medications, laboratory values, insurance information, or other sensitive medical details.',
           'For security, reliability, and consent records, the site may also record the submission time, consent version, source domain, browser or device information, and whether the submission passed anti-spam checks. The raw IP address is not retained. Only a one-way salted hash derived from it is retained for abuse prevention and rate limiting.',
           'Earlier priority-list records remain associated with the consent provided when they were submitted. They are not silently converted into consultation requests.'
         ]
@@ -1160,7 +1160,7 @@ export const pages = Object.freeze({
     eyebrow: 'Updated October 26, 2026',
     h1: 'Communications Consent',
     intro:
-      'These separate permissions apply to the Launch List, appointment follow-up form, and Pexy’s optional general-question follow-up form. The appointment form requests a phone number for a call about your request. Pexy’s form requests an email for a reply to one general question. Neither form enrolls you in marketing calls or text messages.',
+      'These separate permissions apply to the Launch List, appointment follow-up form and Pexy’s optional general-question follow-up form. The Launch List and appointment forms request a phone number for limited calls about those requests. Website or accessibility support through the Launch List page requires no phone number. Pexy’s form requests an email for a reply to one general question. None of these forms authorizes text messages, automated calls or unrelated promotional calls.',
     cta: priorityListCta,
     effectiveDate: 'October 26, 2026',
     sections: [
@@ -1168,7 +1168,7 @@ export const pages = Object.freeze({
         type: 'policySection',
         heading: 'What you agree to receive',
         paragraphs: [
-          'The Launch List checkbox asks permission to send opening updates, with the option to unsubscribe. The appointment follow-up checkbox asks permission for Apex to call or email you about arranging a future visit when availability is confirmed. Pexy’s follow-up checkbox asks permission for Apex to email you only about the general question you type into that form. Pexy does not send its earlier question or a transcript. These permissions are stored separately. A Pexy follow-up does not subscribe you to marketing messages, reserve a visit, or start clinical care.',
+          'The Launch List checkbox asks permission to email opening updates and make a manual call only to clarify your signup or share confirmed scheduling availability; you can unsubscribe from emails. It does not authorize text messages, automated calls or unrelated promotional calls. The appointment follow-up checkbox separately asks permission for Apex to call or email you about arranging a future visit when availability is confirmed. Pexy’s follow-up checkbox asks permission for Apex to email you only about the general question you type into that form. Pexy does not send its earlier question or a transcript. These permissions are stored separately. A Pexy follow-up does not subscribe you to marketing messages, reserve a visit, or start clinical care.',
           'If you check the website or accessibility support option, Apex may email you to respond to that request; it will not treat that selection as a consultation-marketing request. Consultation-related messages may be informational and promotional. Messages are not medical advice, clinical messages, appointment confirmations, or emergency communications.'
         ]
       },
@@ -1184,7 +1184,7 @@ export const pages = Object.freeze({
         type: 'policySection',
         heading: 'Consent records',
         paragraphs: [
-          'Apex may record the email address, submission time, optional website-accessibility flag, consent language and version, source domain, and technical information reasonably needed to document the request and protect the form from abuse. Pexy follow-up records also include the name and newly typed general question you submit. The raw IP address is not retained. Only a one-way salted hash derived from it is retained for abuse prevention and rate limiting.',
+          'Apex may record the name, email address, phone number where requested, submission time, optional website-accessibility flag, consent language and version, source domain, and technical information reasonably needed to document the request and protect the form from abuse. Pexy follow-up records also include the newly typed general question you submit. The raw IP address is not retained. Only a one-way salted hash derived from it is retained for abuse prevention and rate limiting.',
           'Earlier priority-list consent remains limited to the purpose and language presented when that consent was collected; it is not reclassified as a consultation request.',
           'Consent records are protected and retained as described in the Privacy Policy.'
         ]
@@ -1225,7 +1225,7 @@ export const pages = Object.freeze({
         type: 'policySection',
         heading: 'Request help or report a barrier',
         paragraphs: [
-          'Until a dedicated accessibility contact is published, use the Founding Patient form and check the website or accessibility support option. Provide only your name and email through the form; Apex can request the minimum additional information needed when responding.',
+          'Until a dedicated accessibility contact is published, use the Founding Patient form and check the website or accessibility support option. That option asks for your name and email, not a phone number. Do not add health details; Apex can request only the minimum additional information needed when responding.',
           'Do not include medical or other sensitive information. Apex will use the email address you provide to respond and work toward a reasonable accessible alternative.'
         ]
       },

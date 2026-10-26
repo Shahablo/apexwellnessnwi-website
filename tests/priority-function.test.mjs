@@ -19,10 +19,11 @@ const { onRequest: onPriorityRequest } = await import(
 );
 
 const ORIGIN = "https://apexwellnessnwi.com";
-const CONSENT_VERSION = "launch-list-2026-09-21";
+const CONSENT_VERSION = "launch-list-phone-2026-10-26";
 const VALID_PAYLOAD = {
   full_name: "  Ana   O'Neil  ",
   email: " ANA@Example.COM ",
+  phone: " (219) 555-0123 ",
   contact_consent: true,
   consent_version: CONSENT_VERSION,
   website: "",
@@ -50,6 +51,7 @@ class MockStatement {
       id,
       fullName,
       email,
+      phone,
       requestKind,
       consentVersion,
       consentedAt,
@@ -69,6 +71,7 @@ class MockStatement {
       ));
       Object.assign(existing, {
         fullName,
+        phone,
         contactConsent: 1,
         consentVersion,
         consentedAt,
@@ -84,6 +87,7 @@ class MockStatement {
       id,
       fullName,
       email,
+      phone,
       requestKind,
       contactConsent: 1,
       consentVersion,
@@ -198,11 +202,33 @@ test("accepts only the minimal consultation contract", async () => {
     "accessibility_request",
   ]);
 
-  for (const prohibited of ["care_interest", "phone", "message", "request_kind", "utm_source"]) {
+  for (const prohibited of ["care_interest", "message", "request_kind", "utm_source"]) {
     const response = await call(request({ [prohibited]: "must not be accepted" }));
     assert.equal(response.status, 422, prohibited);
     assert.deepEqual((await response.json()).fields, ["form"], prohibited);
   }
+});
+
+test("requires a valid North American phone for Launch List requests", async () => {
+  for (const phone of [undefined, "", "123", "1234567890", "219555012", "21955501234", "+44 20 7946 0958", "219-555-0123 ext 4", 2195550123]) {
+    const db = new MockDB();
+    const response = await call(request({ phone }), env(db));
+    assert.equal(response.status, 422, String(phone));
+    assert.deepEqual((await response.json()).fields, ["phone"], String(phone));
+    assert.equal(db.submissions.length, 0, String(phone));
+  }
+});
+
+test("normalizes common U.S. and Canada phone formats before storage", async () => {
+  for (const phone of ["2195550123", "219-555-0123", "(219) 555-0123", "+1 (219) 555-0123", "1.219.555.0123"]) {
+    const db = new MockDB();
+    const response = await call(request({ phone }), env(db));
+    assert.equal(response.status, 200, phone);
+    assert.equal(db.submissions[0].phone, "+12195550123", phone);
+  }
+  const canadaDb = new MockDB();
+  assert.equal((await call(request({ phone: "+1 416 555 0123" }), env(canadaDb))).status, 200);
+  assert.equal(canadaDb.submissions[0].phone, "+14165550123");
 });
 
 test("requires the configured consent version and a strict boolean consent", async () => {
@@ -287,6 +313,7 @@ test("normalizes and stores a Founding Patient consent record without raw IP", a
   const stored = db.submissions[0];
   assert.equal(stored.fullName, "Ana O'Neil");
   assert.equal(stored.email, "ana@example.com");
+  assert.equal(stored.phone, "+12195550123");
   assert.equal(stored.requestKind, "founding_consultation");
   assert.equal(stored.contactConsent, 1);
   assert.equal(stored.consentVersion, CONSENT_VERSION);
@@ -301,11 +328,25 @@ test("derives the website-accessibility request kind from the optional boolean",
   const response = await call(request({
     email: "accessibility@example.com",
     accessibility_request: true,
+    phone: undefined,
   }), env(db));
 
   assert.equal(response.status, 200);
   assert.equal(db.submissions.length, 1);
   assert.equal(db.submissions[0].requestKind, "website_accessibility");
+  assert.equal(db.submissions[0].phone, null);
+});
+
+test("website-accessibility requests remain phone-free", async () => {
+  const db = new MockDB();
+  const phoneFree = await call(request({ accessibility_request: true, phone: undefined }), env(db));
+  assert.equal(phoneFree.status, 200);
+  assert.equal(db.submissions[0].phone, null);
+
+  const withPhone = await call(request({ accessibility_request: true, phone: "2195550123" }), env(db));
+  assert.equal(withPhone.status, 422);
+  assert.deepEqual((await withPhone.json()).fields, ["phone"]);
+  assert.equal(db.submissions.length, 1);
 });
 
 test("includes hardened security headers on success and error responses", async () => {
@@ -330,10 +371,12 @@ test("refreshes repeat consent per email and request kind without disclosing mem
   const duplicate = await call(request({
     full_name: "Ana Updated",
     email: "ana@example.com",
+    phone: "1-312-555-0144",
   }), testEnv);
   const accessibility = await call(request({
     email: "ana@example.com",
     accessibility_request: true,
+    phone: undefined,
   }), testEnv);
 
   assert.equal(first.status, 200);
@@ -342,6 +385,8 @@ test("refreshes repeat consent per email and request kind without disclosing mem
   assert.equal(accessibility.status, 200);
   assert.equal(db.submissions.length, 2);
   assert.equal(db.submissions[0].fullName, "Ana Updated");
+  assert.equal(db.submissions[0].phone, "+13125550144");
+  assert.equal(db.submissions[1].phone, null);
   assert.ok(db.submissions[0].consentedAt >= firstConsentTime);
   assert.deepEqual(db.submissions.map(({ requestKind }) => requestKind), [
     "founding_consultation",
@@ -441,10 +486,14 @@ test("retires the legacy Priority endpoint with a hardened 410 and no database w
   assert.match((await response.json()).message, /retired/i);
 });
 
-test("migration preserves legacy Priority rows and constrains the new request kinds", async () => {
+test("phone migration preserves legacy records, permits phone-free support, and constrains stored numbers", async () => {
   const migration1 = await readFile(new URL("../migrations/0001_priority.sql", import.meta.url), "utf8");
   const migration2 = await readFile(
     new URL("../migrations/0002_founding_consultations.sql", import.meta.url),
+    "utf8",
+  );
+  const migration5 = await readFile(
+    new URL("../migrations/0005_launch_list_phone.sql", import.meta.url),
     "utf8",
   );
   const database = new DatabaseSync(":memory:");
@@ -475,28 +524,72 @@ test("migration preserves legacy Priority rows and constrains the new request ki
       "legacy@example.com",
     );
 
-    const insertFounding = database.prepare(`
+    database.prepare(`
       INSERT INTO founding_consultation_requests (
         id, full_name, email, request_kind, contact_consent, consent_version,
         consented_at, ip_hash, user_agent, source_origin, created_at
       ) VALUES (?, ?, ?, ?, 1, ?, ?, ?, ?, ?, ?)
-    `);
-    insertFounding.run(
-      "founding-id",
-      "Founding Patient",
-      "founding@example.com",
+    `).run(
+      "pre-phone-id",
+      "Earlier Launch List Member",
+      "earlier@example.com",
       "founding_consultation",
-      CONSENT_VERSION,
+      "launch-list-2026-09-21",
       "2026-09-02T00:00:00.000Z",
       "b".repeat(64),
       "migration test",
       ORIGIN,
       "2026-09-02T00:00:00.000Z",
     );
+    database.exec(migration5);
+    assert.equal(
+      database.prepare("SELECT phone FROM founding_consultation_requests WHERE id = ?").get("pre-phone-id").phone,
+      null,
+      "historical consent records should remain intact without retroactively adding a phone",
+    );
+
+    const insertFounding = database.prepare(`
+      INSERT INTO founding_consultation_requests (
+        id, full_name, email, phone, request_kind, contact_consent, consent_version,
+        consented_at, ip_hash, user_agent, source_origin, created_at
+      ) VALUES (?, ?, ?, ?, ?, 1, ?, ?, ?, ?, ?, ?)
+    `);
+    insertFounding.run(
+      "founding-id",
+      "Founding Patient",
+      "founding@example.com",
+      "+12195550123",
+      "founding_consultation",
+      CONSENT_VERSION,
+      "2026-10-26T00:00:00.000Z",
+      "b".repeat(64),
+      "migration test",
+      ORIGIN,
+      "2026-10-26T00:00:00.000Z",
+    );
+    assert.equal(
+      database.prepare("SELECT phone FROM founding_consultation_requests WHERE id = ?").get("founding-id").phone,
+      "+12195550123",
+    );
+    insertFounding.run(
+      "support-id", "Website Support", "support@example.com", null, "website_accessibility",
+      CONSENT_VERSION, "2026-10-26T00:00:00.000Z", "b".repeat(64), "migration test", ORIGIN,
+      "2026-10-26T00:00:00.000Z",
+    );
+    assert.equal(
+      database.prepare("SELECT phone FROM founding_consultation_requests WHERE id = ?").get("support-id").phone,
+      null,
+    );
+    assert.throws(() => insertFounding.run(
+      "invalid-phone-id", "Invalid Phone", "invalid-phone@example.com", "2195550123", "founding_consultation",
+      CONSENT_VERSION, "2026-10-26T00:00:00.000Z", "b".repeat(64), "migration test", ORIGIN,
+      "2026-10-26T00:00:00.000Z",
+    ), /constraint/i);
     assert.throws(() => insertFounding.run(
       "invalid-kind-id",
       "Invalid Kind",
       "invalid@example.com",
+      "+12195550123",
       "other",
       CONSENT_VERSION,
       "2026-09-02T00:00:00.000Z",

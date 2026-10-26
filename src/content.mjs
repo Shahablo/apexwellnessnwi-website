@@ -552,7 +552,7 @@ export const pages = Object.freeze({
           {
             question: 'Should I send photos or medical details through the launch form?',
             answer:
-              'No. The Launch List collects your name, email and phone number for opening updates and limited follow-up. Medical information and photographs belong in a secure clinical intake process after an appointment is confirmed.'
+              'No. The Launch List collects your name, email and phone number for opening updates. A separate optional checkbox permits a limited manual call. Medical information and photographs belong in a secure clinical intake process after an appointment is confirmed.'
           }
         ]
       }
@@ -910,12 +910,13 @@ export const pages = Object.freeze({
       method: 'post',
       heading: 'Get opening updates.',
       submitLabel: 'Join the Launch List',
-      consentVersion: 'launch-list-phone-2026-10-26',
+      consentVersion: 'launch-list-split-2026-10-26',
+      phoneConsentVersion: 'launch-manual-call-2026-10-26',
       consentLabel:
-        'Email me opening updates from Apex Wellness. Apex may manually call the phone number I provide only to clarify this Launch List request or share confirmed scheduling availability. No texts, automated calls or unrelated promotional calls. I can unsubscribe from emails anytime, and I have read the Privacy Policy and Communications Consent.',
+        'Email me opening updates from Apex Wellness. I can unsubscribe anytime, and I have read the Privacy Policy and Communications Consent.',
       accessibilityLabel: 'This is a website or accessibility question, not a Launch List signup.',
       privacyNote:
-        'Join the Apex Launch List with your name, email and phone number. Apex may use your number only for the limited follow-up described in the consent below. No texts. Save medical details for a future secure clinical intake.',
+        'Join the Apex Launch List with your name, email and phone number. A manual call is optional and requires the separate permission below. No texts. Save medical details for a future secure clinical intake.',
       successMessage:
         'You’re on the Apex Launch List. We’ll share opening news and let you know when clinical evaluations can be booked. No appointment has been booked.'
     },
@@ -1028,7 +1029,7 @@ export const pages = Object.freeze({
         type: 'policySection',
         heading: 'Information we collect',
         paragraphs: [
-          'The Launch List form asks for your name, email address and phone number for opening updates and limited follow-up about the signup or confirmed scheduling availability. It does not authorize text messages, automated calls or unrelated promotional calls. If you select website or accessibility support instead, the phone field is not required or submitted and Apex uses your name and email to respond. The separate Plan Your Visit form asks for your name, email and phone number so Apex can follow up about arranging a future visit. If Pexy cannot answer a general website question, its optional follow-up form asks for your name, email and a newly typed general question. Each request has its own purpose and consent; a Pexy follow-up does not subscribe you to marketing emails or text messages, reserve a visit, or start clinical intake. Please do not submit symptoms, diagnoses, medications, laboratory values, insurance information, or other sensitive medical details.',
+          'The Launch List form asks for your name, email address and phone number. Its required email checkbox covers opening updates. A separate optional checkbox permits a manual call only to clarify your signup or share confirmed scheduling availability; leaving it unchecked does not prevent joining. It does not authorize text messages, automated calls or unrelated promotional calls. If you select website or accessibility support instead, the phone field is not required or submitted and Apex uses your name and email to respond. The separate Plan Your Visit form asks for your name, email and phone number so Apex can follow up about arranging a future visit. If Pexy cannot answer a general website question, its optional follow-up form asks for your name, email and a newly typed general question. Each request has its own purpose and consent; a Pexy follow-up does not subscribe you to marketing emails or text messages, reserve a visit, or start clinical intake. Please do not submit symptoms, diagnoses, medications, laboratory values, insurance information, or other sensitive medical details.',
           'For security, reliability, and consent records, the site may also record the submission time, consent version, source domain, browser or device information, and whether the submission passed anti-spam checks. The raw IP address is not retained. Only a one-way salted hash derived from it is retained for abuse prevention and rate limiting.',
           'Earlier priority-list records remain associated with the consent provided when they were submitted. They are not silently converted into consultation requests.'
         ]
@@ -1160,7 +1161,7 @@ export const pages = Object.freeze({
     eyebrow: 'Updated October 26, 2026',
     h1: 'Communications Consent',
     intro:
-      'These separate permissions apply to the Launch List, appointment follow-up form and Pexy’s optional general-question follow-up form. The Launch List and appointment forms request a phone number for limited calls about those requests. Website or accessibility support through the Launch List page requires no phone number. Pexy’s form requests an email for a reply to one general question. None of these forms authorizes text messages, automated calls or unrelated promotional calls.',
+      'Separate permissions apply to Launch List emails, optional manual Launch List calls, appointment follow-up and Pexy’s general-question follow-up. The Launch List requires a phone number, but Apex will not call from that signup unless the separate optional call box is checked. Website or accessibility support through the Launch List page requires no phone number. Pexy’s form requests an email for a reply to one general question. None of these forms authorizes text messages, automated calls or unrelated promotional calls.',
     cta: priorityListCta,
     effectiveDate: 'October 26, 2026',
     sections: [
@@ -1168,7 +1169,7 @@ export const pages = Object.freeze({
         type: 'policySection',
         heading: 'What you agree to receive',
         paragraphs: [
-          'The Launch List checkbox asks permission to email opening updates and make a manual call only to clarify your signup or share confirmed scheduling availability; you can unsubscribe from emails. It does not authorize text messages, automated calls or unrelated promotional calls. The appointment follow-up checkbox separately asks permission for Apex to call or email you about arranging a future visit when availability is confirmed. Pexy’s follow-up checkbox asks permission for Apex to email you only about the general question you type into that form. Pexy does not send its earlier question or a transcript. These permissions are stored separately. A Pexy follow-up does not subscribe you to marketing messages, reserve a visit, or start clinical care.',
+          'The required Launch List email checkbox asks permission for opening updates; you can unsubscribe from emails. A separate optional checkbox permits only a manual call to clarify your signup or share confirmed scheduling availability. Leaving that box unchecked does not prevent joining the list. Neither checkbox authorizes text messages, automated calls or unrelated promotional calls. The appointment follow-up checkbox separately asks permission for Apex to call or email you about arranging a future visit when availability is confirmed. Pexy’s follow-up checkbox asks permission for Apex to email you only about the general question you type into that form. Pexy does not send its earlier question or a transcript. These permissions are stored separately. A Pexy follow-up does not subscribe you to marketing messages, reserve a visit, or start clinical care.',
           'If you check the website or accessibility support option, Apex may email you to respond to that request; it will not treat that selection as a consultation-marketing request. Consultation-related messages may be informational and promotional. Messages are not medical advice, clinical messages, appointment confirmations, or emergency communications.'
         ]
       },

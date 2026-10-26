@@ -133,7 +133,7 @@
     });
 
     form.querySelectorAll('input[type="checkbox"][name]').forEach((checkbox) => {
-      payload[checkbox.name] = checkbox.checked;
+      if (!checkbox.disabled) payload[checkbox.name] = checkbox.checked;
     });
 
     return payload;
@@ -146,6 +146,9 @@
     const supportRequest = form.elements.namedItem("accessibility_request");
     const phone = form.elements.namedItem("phone");
     const phoneField = phone?.closest("[data-launch-phone-field]");
+    const phoneConsent = form.elements.namedItem("phone_followup_consent");
+    const phoneConsentField = phoneConsent?.closest("[data-phone-consent-field]");
+    const phoneConsentVersion = form.elements.namedItem("phone_followup_consent_version");
     const listConsent = form.querySelector("[data-list-consent]");
     const supportConsent = form.querySelector("[data-support-consent]");
     const syncRequestPurpose = () => {
@@ -154,6 +157,14 @@
       phone.required = !supportMode;
       phone.disabled = supportMode;
       phoneField.hidden = supportMode;
+      if (phoneConsent instanceof HTMLInputElement && phoneConsentField) {
+        phoneConsent.disabled = supportMode;
+        phoneConsentField.hidden = supportMode;
+        if (supportMode) phoneConsent.checked = false;
+      }
+      if (phoneConsentVersion instanceof HTMLInputElement) {
+        phoneConsentVersion.disabled = supportMode;
+      }
       if (listConsent) listConsent.hidden = supportMode;
       if (supportConsent) supportConsent.hidden = !supportMode;
       if (supportMode) {
@@ -282,7 +293,9 @@
         ensureStartedAt(form);
         const successMessage = payload.accessibility_request
           ? "Thank you. Apex received your website or accessibility-support request."
-          : form.dataset.successMessage;
+          : result?.verification_pending === true
+            ? "Check your inbox and confirm your email to receive Apex opening updates. No appointment has been booked."
+            : form.dataset.successMessage;
         showStatus(
           "success",
           successMessage || result?.message || "Thank you. Apex received your consultation request."

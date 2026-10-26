@@ -35,7 +35,12 @@
   ],
   "vars": {
     "APPOINTMENT_REQUESTS_ENABLED": "true",
-    "FOUNDING_CONSENT_VERSION": "launch-list-phone-2026-10-26"
+    "FOUNDING_CONSENT_VERSION": "launch-list-split-2026-10-26",
+    "LAUNCH_EMAIL_ENABLED": "false",
+    "LAUNCH_EMAIL_FOLLOWUPS_ENABLED": "false"
+  },
+  "triggers": {
+    "crons": []
   },
   "observability": {
     "enabled": true

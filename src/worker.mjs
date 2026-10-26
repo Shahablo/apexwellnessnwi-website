@@ -1,6 +1,11 @@
 import { onRequest as handleFoundingConsultationRequest, onAppointmentRequest } from "../functions/api/founding-consultation.js";
 import { onRequest as handlePexyFollowupRequest } from "../functions/api/pexy-followup.js";
 import { onRequest as handleRetiredPriorityRequest } from "../functions/api/priority.js";
+import {
+  handleLaunchEmailAction,
+  handleLaunchEmailWebhook,
+  runLaunchEmailQueue,
+} from "./launch-email.mjs";
 
 function notFound() {
   return new Response(JSON.stringify({
@@ -30,6 +35,14 @@ export async function handleWorkerRequest(request, env, ctx = {}) {
 
   if (url.pathname === '/api/appointment-contact') {
     return onAppointmentRequest({ request, env });
+  }
+
+  if (url.pathname === "/api/launch-email/webhook") {
+    return handleLaunchEmailWebhook(request, env);
+  }
+  if (url.pathname === "/api/launch-email/verify"
+    || url.pathname === "/api/launch-email/unsubscribe") {
+    return handleLaunchEmailAction(request, env);
   }
 
   if (url.pathname === "/api/founding-consultation") {
@@ -71,5 +84,11 @@ export async function handleWorkerRequest(request, env, ctx = {}) {
 export default {
   fetch(request, env, ctx) {
     return handleWorkerRequest(request, env, ctx);
+  },
+  scheduled(_event, env, ctx) {
+    ctx.waitUntil(runLaunchEmailQueue(env).catch(() => {
+      // Do not log SQL or provider exceptions, which may contain contact data.
+      console.error("Launch email dispatch failed");
+    }));
   },
 };

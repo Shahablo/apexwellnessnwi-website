@@ -1,3 +1,5 @@
+import { launchEmailConfigured, launchEmailEnabled, recordLaunchSignup } from "../../src/launch-email.mjs";
+
 const ALLOWED_ORIGINS = new Set([
   "https://apexwellnessnwi.com",
   "https://www.apexwellnessnwi.com",
@@ -12,6 +14,8 @@ const ALLOWED_FIELDS = new Set([
   "full_name",
   "email",
   "phone",
+  "phone_followup_consent",
+  "phone_followup_consent_version",
   "contact_consent",
   "consent_version",
   "accessibility_request",
@@ -25,6 +29,7 @@ const MIN_FORM_TIME_MS = 750;
 const RATE_WINDOW_MS = 60 * 60 * 1_000;
 const IP_RATE_LIMIT = 10;
 const EMAIL_RATE_LIMIT = 5;
+const PHONE_FOLLOWUP_CONSENT_VERSION = "launch-manual-call-2026-10-26";
 const RATE_LIMIT_RETENTION_MS = 2 * RATE_WINDOW_MS;
 
 const RATE_LIMIT_SQL = `
@@ -48,6 +53,9 @@ const INSERT_REQUEST_SQL = `
     full_name,
     email,
     phone,
+    phone_followup_consent,
+    phone_followup_consent_version,
+    phone_followup_recorded_at,
     request_kind,
     contact_consent,
     consent_version,
@@ -56,17 +64,20 @@ const INSERT_REQUEST_SQL = `
     user_agent,
     source_origin,
     created_at
-  ) VALUES (?, ?, ?, ?, ?, 1, ?, ?, ?, ?, ?, ?)
+  ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 1, ?, ?, ?, ?, ?, ?)
   ON CONFLICT (email, request_kind) DO UPDATE SET
     full_name = excluded.full_name,
     phone = excluded.phone,
+    phone_followup_consent = excluded.phone_followup_consent,
+    phone_followup_consent_version = excluded.phone_followup_consent_version,
+    phone_followup_recorded_at = excluded.phone_followup_recorded_at,
     contact_consent = excluded.contact_consent,
-    consent_version = excluded.consent_version,
-    consented_at = excluded.consented_at,
+    consent_version = founding_consultation_requests.consent_version,
+    consented_at = founding_consultation_requests.consented_at,
     ip_hash = excluded.ip_hash,
     user_agent = excluded.user_agent,
     source_origin = excluded.source_origin,
-    created_at = excluded.created_at
+    created_at = founding_consultation_requests.created_at
 `;
 
 const INSERT_APPOINTMENT_CONTACT_SQL = `
@@ -118,10 +129,13 @@ function json(origin, status, body, extraHeaders) {
   });
 }
 
-function success(origin) {
+function success(origin, verificationPending = false) {
   return json(origin, 200, {
     ok: true,
-    message: "Thank you. Your request was received.",
+    message: verificationPending
+      ? "Thank you. Check your email to confirm your Apex opening updates."
+      : "Thank you. Your request was received.",
+    ...(verificationPending ? { verification_pending: true } : {}),
   });
 }
 
@@ -170,7 +184,8 @@ function validatePayload(payload, expectedConsentVersion, appointmentContact = f
   }
 
   const keys = Object.keys(payload);
-  if (keys.some((key) => !ALLOWED_FIELDS.has(key) || (appointmentContact && key === 'accessibility_request'))) {
+  if (keys.some((key) => !ALLOWED_FIELDS.has(key)
+    || (appointmentContact && ['accessibility_request', 'phone_followup_consent', 'phone_followup_consent_version'].includes(key)))) {
     return { fields: ["form"] };
   }
 
@@ -187,11 +202,20 @@ function validatePayload(payload, expectedConsentVersion, appointmentContact = f
   const phone = accessibilityRequest === true && !appointmentContact
     ? null
     : normalizePhone(payload.phone);
+  const launchList = !appointmentContact && accessibilityRequest === false;
+  const phoneFollowupConsent = launchList ? payload.phone_followup_consent : null;
+  const phoneFollowupVersion = launchList ? payload.phone_followup_consent_version : null;
 
   if (!fullName) fields.push("full_name");
   if (!email) fields.push("email");
   if ((appointmentContact || accessibilityRequest === false) && !phone) fields.push('phone');
   if (!appointmentContact && accessibilityRequest === true && payload.phone !== undefined) fields.push('phone');
+  if (launchList && typeof phoneFollowupConsent !== "boolean") fields.push("phone_followup_consent");
+  if (launchList && phoneFollowupVersion !== PHONE_FOLLOWUP_CONSENT_VERSION) {
+    fields.push("phone_followup_consent_version");
+  }
+  if (!launchList && (payload.phone_followup_consent !== undefined
+    || payload.phone_followup_consent_version !== undefined)) fields.push("form");
   if (payload.contact_consent !== true) fields.push("contact_consent");
   if (!consentVersion || consentVersion !== expectedConsentVersion) fields.push("consent_version");
   if (typeof accessibilityRequest !== "boolean") fields.push("accessibility_request");
@@ -209,6 +233,8 @@ function validatePayload(payload, expectedConsentVersion, appointmentContact = f
       fullName,
       email,
       phone,
+      phoneFollowupConsent,
+      phoneFollowupVersion,
       requestKind: appointmentContact ? 'appointment_contact' : (accessibilityRequest ? "website_accessibility" : "founding_consultation"),
       consentVersion,
       website: (payload.website || "").trim(),
@@ -363,6 +389,12 @@ async function handlePost(context, origin, appointmentContact) {
   if (validation.fields.length) {
     return failure(origin, 422, "Please check the highlighted fields and try again.", validation.fields);
   }
+  const queueLaunchEmail = !appointmentContact
+    && validation.value.requestKind === "founding_consultation"
+    && launchEmailEnabled(env);
+  if (queueLaunchEmail && !launchEmailConfigured(env)) {
+    return failure(origin, 503, "Launch List signup is temporarily unavailable. Please try again later.");
+  }
 
   const now = Date.now();
   if (validation.value.website) return success(origin);
@@ -406,7 +438,13 @@ async function handlePost(context, origin, appointmentContact) {
     crypto.randomUUID(),
     validation.value.fullName,
     validation.value.email,
-    ...(!appointmentContact ? [validation.value.phone] : []),
+    ...(!appointmentContact ? [
+      validation.value.phone,
+      validation.value.requestKind === "founding_consultation"
+        ? (validation.value.phoneFollowupConsent ? 1 : 0) : null,
+      validation.value.phoneFollowupVersion,
+      validation.value.requestKind === "founding_consultation" ? nowIso : null,
+    ] : []),
     validation.value.requestKind,
     validation.value.consentVersion,
     nowIso,
@@ -416,11 +454,23 @@ async function handlePost(context, origin, appointmentContact) {
     nowIso,
   ];
   if (appointmentContact) insertValues.push(validation.value.phone);
-  await env.DB.prepare(appointmentContact ? INSERT_APPOINTMENT_CONTACT_SQL : INSERT_REQUEST_SQL).bind(...insertValues).run();
+  const requestStatement = env.DB
+    .prepare(appointmentContact ? INSERT_APPOINTMENT_CONTACT_SQL : INSERT_REQUEST_SQL)
+    .bind(...insertValues);
+  if (!appointmentContact && validation.value.requestKind === "founding_consultation") {
+    await recordLaunchSignup(
+      env, requestStatement, validation.value.email, validation.value.consentVersion,
+      validation.value.phoneFollowupConsent, validation.value.phoneFollowupVersion,
+      new Date(now), queueLaunchEmail,
+    );
+  } else {
+    await requestStatement.run();
+  }
 
-  // Duplicate email/request-kind pairs refresh the consent record and receive the
-  // same response, avoiding membership disclosure while preserving renewed consent.
-  return success(origin);
+  // Duplicate email/request-kind pairs retain the source row's original
+  // consent/version. A new immutable event records each renewed Launch List
+  // choice without exposing existing membership in the response.
+  return success(origin, queueLaunchEmail);
 }
 
 async function dispatchRequest(context, appointmentContact = false) {

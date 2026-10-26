@@ -23,10 +23,9 @@ function brandedHtml({ title, body, action, note, unsubscribe }) {
   return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeHtml(title)}</title></head>`
     + '<body style="margin:0;padding:0;background:#f6f4ed">'
     + '<table role="presentation" width="100%" cellspacing="0" cellpadding="0" bgcolor="#f6f4ed" style="border-collapse:collapse;background:#f6f4ed"><tr><td align="center" style="padding:24px 12px">'
-    + '<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:600px;border:1px solid #d2d4c7;border-collapse:collapse;background:#ffffff"><tr><td style="padding:28px 30px 22px 14px;background:#f6f4ed">'
+    + '<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:600px;border:1px solid #d2d4c7;border-collapse:collapse;background:#ffffff"><tr><td style="padding:22px 30px 18px 14px;background:#f6f4ed">'
     + `<a href="${SITE}" style="text-decoration:none"><img src="${LOGO}" width="410" alt="Apex Wellness" style="display:block;width:410px;max-width:100%;height:auto;margin-left:-30px;border:0;color:#183d36;font:bold 22px Arial,Helvetica,sans-serif"></a>`
     + '</td></tr><tr><td style="padding:30px 30px 14px">'
-    + '<p style="margin:0 0 12px;color:#785331;font:bold 11px/1.4 Arial,Helvetica,sans-serif;letter-spacing:2px;text-transform:uppercase">Merrillville, Indiana</p>'
     + `<h1 style="margin:0 0 22px;color:#183d36;font:normal 34px/1.15 Georgia,Times,serif">${escapeHtml(title)}</h1>`
     + body.map(paragraph).join("")
     + (action ? button(action.url, action.label) : "")
@@ -47,10 +46,10 @@ export function renderLaunchEmail(stage, links = {}) {
 
   if (stage === "verify") {
     subject = "Confirm your Apex Wellness opening updates";
-    title = "One more step.";
+    title = "Confirm your email.";
     body = [
       "One quick click and you're on the Apex Wellness Launch List.",
-      "Confirm your email below. We'll share opening news and let you know when appointment requests become available.",
+      "We'll share opening news and let you know when appointment requests become available.",
     ];
     action = { url: links.verify, label: "Confirm my email" };
     note = "If you didn't request this, you can ignore this email. Joining the list does not book an appointment or reserve an offer. Please don't send medical information by reply.";

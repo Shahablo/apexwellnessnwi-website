@@ -26,8 +26,10 @@ test("branded launch emails retain action, consent and plain-text fallbacks", ()
   assert.match(verify.htmlContent, /id=test&amp;token=sample/);
   assert.match(verify.textContent, /id=test&token=sample/);
   assert.match(verify.htmlContent, /width="410" alt="Apex Wellness"/);
-  assert.match(verify.htmlContent, /padding:28px 30px 22px 14px/);
+  assert.match(verify.htmlContent, /padding:22px 30px 18px 14px/);
   assert.match(verify.htmlContent, /margin-left:-30px/);
+  assert.match(verify.htmlContent, /Confirm your email\.<\/h1>/);
+  assert.doesNotMatch(verify.htmlContent, /One more step|Merrillville, Indiana/);
   assert.match(verify.textContent, /appointment requests become available/);
   assert.doesNotMatch(verify.htmlContent + verify.textContent, /\bthanks\b/i);
   for (const stage of ["welcome", "day3", "day10"]) {
@@ -41,8 +43,9 @@ test("branded launch emails retain action, consent and plain-text fallbacks", ()
     assert.doesNotMatch(email.htmlContent, /before-the-doors-open-apex-wellness/);
     assert.doesNotMatch(email.htmlContent, /Physician-led care|Atif|Wajeeh/);
     assert.match(email.htmlContent, /width="410" alt="Apex Wellness"/);
-    assert.match(email.htmlContent, /padding:28px 30px 22px 14px/);
+    assert.match(email.htmlContent, /padding:22px 30px 18px 14px/);
     assert.match(email.htmlContent, /margin-left:-30px/);
+    assert.doesNotMatch(email.htmlContent, /Merrillville, Indiana/);
     if (stage === "welcome") {
       assert.match(email.textContent, /The Apex name is on the door in Merrillville/);
       assert.match(email.textContent, /Appointment requests are coming soon/);
@@ -231,6 +234,7 @@ test("verification is double opt-in, deduplicated, and phone never enters Brevo"
     assert.match(getHtml, /Confirm your email/);
     assert.match(getHtml, /assets\/launch-email-action\.css/);
     assert.match(getHtml, /assets\/images\/apex-email-lockup\.png/);
+    assert.doesNotMatch(getHtml, /class="eyebrow"|Merrillville, Indiana/);
     assert.match(getHtml, /<form method="post" action="\/api\/launch-email\/verify">/);
     assert.match(getHtml, /Coming soon[\s\S]*8550 Broadway, Suite B/);
     assert.doesNotMatch(getHtml, /<script\b/i);

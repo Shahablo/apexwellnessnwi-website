@@ -85,7 +85,7 @@ function page(title, explanation, path, id, token, button, showHomeLink = false)
       + '<link rel="stylesheet" href="/assets/launch-email-action.css"></head><body>'
       + '<div class="action-shell"><header class="action-brand">'
       + '<img src="/assets/images/apex-email-lockup.png" width="304" height="99" alt="Apex Wellness">'
-      + '</header><main><p class="eyebrow">Merrillville, Indiana</p>'
+      + '</header><main>'
       + '<h1>' + title + '</h1><p class="explanation">' + explanation + '</p>' + form + homeLink + '</main>'
       + '<footer class="action-footer">Coming soon<br>8550 Broadway, Suite B<br>Merrillville, IN 46410</footer>'
       + '</div></body></html>',

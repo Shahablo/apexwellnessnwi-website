@@ -27,6 +27,7 @@ test("branded launch emails retain action, consent and plain-text fallbacks", ()
   assert.match(verify.textContent, /id=test&token=sample/);
   assert.match(verify.htmlContent, /width="410" alt="Apex Wellness"/);
   assert.match(verify.htmlContent, /padding:28px 30px 22px 14px/);
+  assert.match(verify.htmlContent, /margin-left:-30px/);
   assert.match(verify.textContent, /appointment requests become available/);
   assert.doesNotMatch(verify.htmlContent + verify.textContent, /\bthanks\b/i);
   for (const stage of ["welcome", "day3", "day10"]) {
@@ -41,11 +42,14 @@ test("branded launch emails retain action, consent and plain-text fallbacks", ()
     assert.doesNotMatch(email.htmlContent, /Physician-led care|Atif|Wajeeh/);
     assert.match(email.htmlContent, /width="410" alt="Apex Wellness"/);
     assert.match(email.htmlContent, /padding:28px 30px 22px 14px/);
+    assert.match(email.htmlContent, /margin-left:-30px/);
     if (stage === "welcome") {
-      assert.match(email.textContent, /one step at a time/);
-      assert.match(email.textContent, /appointment requests open/);
+      assert.match(email.textContent, /The Apex name is on the door in Merrillville/);
+      assert.match(email.textContent, /Appointment requests are coming soon/);
+      assert.match(email.textContent, /share pricing when it's published/);
       assert.match(email.textContent, /does not book a visit or reserve one of the first 100 assessments/);
       assert.doesNotMatch(email.htmlContent + email.textContent, /\bthanks\b/i);
+      assert.doesNotMatch(email.htmlContent + email.textContent, /one step at a time|behind-the-scenes updates/i);
     }
   }
 });

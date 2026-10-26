@@ -24,7 +24,7 @@ function brandedHtml({ title, body, action, note, unsubscribe }) {
     + '<body style="margin:0;padding:0;background:#f6f4ed">'
     + '<table role="presentation" width="100%" cellspacing="0" cellpadding="0" bgcolor="#f6f4ed" style="border-collapse:collapse;background:#f6f4ed"><tr><td align="center" style="padding:24px 12px">'
     + '<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:600px;border:1px solid #d2d4c7;border-collapse:collapse;background:#ffffff"><tr><td style="padding:28px 30px 22px 14px;background:#f6f4ed">'
-    + `<a href="${SITE}" style="text-decoration:none"><img src="${LOGO}" width="410" alt="Apex Wellness" style="display:block;width:410px;max-width:100%;height:auto;border:0;color:#183d36;font:bold 22px Arial,Helvetica,sans-serif"></a>`
+    + `<a href="${SITE}" style="text-decoration:none"><img src="${LOGO}" width="410" alt="Apex Wellness" style="display:block;width:410px;max-width:100%;height:auto;margin-left:-30px;border:0;color:#183d36;font:bold 22px Arial,Helvetica,sans-serif"></a>`
     + '</td></tr><tr><td style="padding:30px 30px 14px">'
     + '<p style="margin:0 0 12px;color:#785331;font:bold 11px/1.4 Arial,Helvetica,sans-serif;letter-spacing:2px;text-transform:uppercase">Merrillville, Indiana</p>'
     + `<h1 style="margin:0 0 22px;color:#183d36;font:normal 34px/1.15 Georgia,Times,serif">${escapeHtml(title)}</h1>`
@@ -65,8 +65,8 @@ export function renderLaunchEmail(stage, links = {}) {
     subject = "You're on the Apex Wellness Launch List";
     title = "You're on the list.";
     body = [
-      "You're on the list, and we're glad you're here. We're getting Apex ready in Merrillville, one step at a time.",
-      "We'll share a few behind-the-scenes updates, then email you when pricing is posted and appointment requests open.",
+      "We're glad you're here. The Apex name is on the door in Merrillville, and we're excited to open it to our neighbors soon.",
+      "Appointment requests are coming soon. We'll email you when scheduling opens and share pricing when it's published.",
     ];
     note = "Joining this list does not book a visit or reserve one of the first 100 assessments.";
     paragraphs = [

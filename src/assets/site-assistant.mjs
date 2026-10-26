@@ -24,7 +24,7 @@ function setOpen(open, restoreFocus = false) {
     input.value = '';
     answer.replaceChildren();
     const greeting = document.createElement('p');
-    greeting.textContent = 'Ask about opening plans, care areas, pricing, or the launch list.';
+    greeting.textContent = 'What can I help you find? Try a topic below or ask a general website question.';
     answer.append(greeting);
     if (restoreFocus) toggle.focus();
   }

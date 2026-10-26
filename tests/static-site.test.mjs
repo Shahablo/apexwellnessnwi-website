@@ -616,6 +616,8 @@ test('all runtime scripts exist as deployable assets and the site guide stays lo
       assert.ok(existsSync(outputTargetForPath(path)), `${slug} missing script ${path}`);
     }
     assert.match(html, /id="help-toggle"[^>]*hidden/);
+    assert.match(html, /Ask Pexy/);
+    assert.match(html, /Hi, I’m Pexy\./);
     const helpForm = [...html.matchAll(/<form\b([^>]*)>([\s\S]*?)<\/form>/gi)].find((match) => attributes(match[1]).id === 'site-help-form');
     assert.ok(helpForm);
     assert.ok(!attributes(helpForm[1]).action, 'local guide must not post questions');

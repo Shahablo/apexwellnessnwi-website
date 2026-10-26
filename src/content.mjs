@@ -1016,19 +1016,19 @@ export const pages = Object.freeze({
     navLabel: 'Privacy Policy',
     title: 'Privacy Policy | Apex Wellness',
     description:
-      'Read how the Apex Wellness prelaunch website collects, uses, protects, and retains consultation-request information.',
-    eyebrow: 'Updated October 25, 2026',
+      'Read how the Apex Wellness prelaunch website handles contact requests and optional Pexy website-question follow-ups.',
+    eyebrow: 'Updated October 26, 2026',
     h1: 'Privacy Policy',
     intro:
-      'This prelaunch policy explains the limited information collected through the Apex Wellness website and Founding Patient contact form. It may be updated as clinical services and secure patient systems are introduced.',
+      'This prelaunch policy explains the limited information collected through the Apex Wellness website, its contact forms, and Pexy’s optional follow-up form. It may be updated as clinical services and secure patient systems are introduced.',
     cta: priorityListCta,
-    effectiveDate: 'October 25, 2026',
+    effectiveDate: 'October 26, 2026',
     sections: [
       {
         type: 'policySection',
         heading: 'Information we collect',
         paragraphs: [
-          'The Launch List form asks for your name and email address for opening updates. You may optionally identify the request as website or accessibility support. The separate Plan Your Visit form asks for your name, email and phone number so Apex can follow up about arranging a future visit. Appointment follow-up requests are stored separately from the Launch List and do not subscribe you to marketing emails or text messages. Neither form asks which care area interests you. Please do not submit symptoms, diagnoses, medications, laboratory values, insurance information, or other sensitive medical details.',
+          'The Launch List form asks for your name and email address for opening updates. You may optionally identify the request as website or accessibility support. The separate Plan Your Visit form asks for your name, email and phone number so Apex can follow up about arranging a future visit. If Pexy cannot answer a general website question, its optional follow-up form asks for your name, email and a newly typed general question. Each request has its own purpose and consent; a Pexy follow-up does not subscribe you to marketing emails or text messages, reserve a visit, or start clinical intake. Please do not submit symptoms, diagnoses, medications, laboratory values, insurance information, or other sensitive medical details.',
           'For security, reliability, and consent records, the site may also record the submission time, consent version, source domain, browser or device information, and whether the submission passed anti-spam checks. The raw IP address is not retained. Only a one-way salted hash derived from it is retained for abuse prevention and rate limiting.',
           'Earlier priority-list records remain associated with the consent provided when they were submitted. They are not silently converted into consultation requests.'
         ]
@@ -1040,6 +1040,7 @@ export const pages = Object.freeze({
           'To record, review, and respond to your contact request.',
           'To send verified opening information and future consultation-availability information you requested.',
           'To answer a website or accessibility help request submitted through the form.',
+          'To review and reply by email to a general website question you separately submit through Pexy’s follow-up form.',
           'To protect the form and website from abuse, fraud, spam, and security threats.',
           'To maintain a record of consent and honor unsubscribe or deletion requests where applicable.'
         ]
@@ -1048,8 +1049,8 @@ export const pages = Object.freeze({
         type: 'policySection',
         heading: 'Automated website guide',
         paragraphs: [
-          'The Ask Apex guide uses fixed informational answers within your browser. Questions entered there are not sent to Apex or an external AI service, and the guide does not save conversation content. Please do not enter personal or medical information. Closing the guide clears its displayed answer.',
-          'A temporary session preference remembers if you dismiss the launch invitation. It does not contain your questions or contact details. The separate launch-list form records information only when you choose to submit it with contact consent.'
+          'Pexy uses fixed informational answers within your browser. Questions typed to Pexy are not sent to Apex or an external AI service, and Pexy does not save the conversation. If Pexy cannot answer a general question, you may choose to type a new question, name, and email into its separate follow-up form. Only that form submission is sent to Apex for a reply; the original Pexy question is not automatically copied or sent. Do not enter personal health information in either place.',
+          'A temporary session preference remembers if you dismiss the launch invitation. It does not contain your questions or contact details. The Launch List, visit-request, and Pexy follow-up forms record information only when you choose to submit them with the consent shown for that form.'
         ]
       },
       {
@@ -1065,14 +1066,14 @@ export const pages = Object.freeze({
         heading: 'Security and retention',
         paragraphs: [
           'Apex uses administrative, technical, and organizational safeguards intended to protect submitted information. No website, transmission, or storage method can be guaranteed completely secure.',
-          'Consultation-request information, earlier priority-list information, and related consent records are retained only as long as reasonably needed for their stated purposes, to honor communication preferences, resolve disputes, meet applicable obligations, and protect the service. Records are deleted or de-identified when no longer reasonably needed, subject to legal or security requirements.'
+          'Consultation-request information, Pexy follow-up questions, earlier priority-list information, and related consent records are retained only as long as reasonably needed for their stated purposes, to honor communication preferences, resolve disputes, meet applicable obligations, and protect the service. Records are deleted or de-identified when no longer reasonably needed, subject to legal or security requirements.'
         ]
       },
       {
         type: 'policySection',
         heading: 'Your choices',
         paragraphs: [
-          'You may unsubscribe using the link in an email. You may also use the Founding Patient form, check the website or accessibility support option, and request access, correction, or deletion of your prelaunch contact information. Do not include medical details in that request.',
+          'You may unsubscribe from marketing using the link in an email. You may also use the Founding Patient form, check the website or accessibility support option, and request access, correction, or deletion of your prelaunch contact or Pexy follow-up information. Do not include medical details in that request.',
           'Browser privacy controls may limit cookies or similar technologies. Essential security and form-protection functions may still be required for the site to operate.'
         ]
       },
@@ -1155,19 +1156,19 @@ export const pages = Object.freeze({
     navLabel: 'Communications Consent',
     title: 'Communications Consent | Apex Wellness',
     description:
-      'Understand consent for Apex Wellness prelaunch emails, how consent is recorded, and how to unsubscribe.',
-    eyebrow: 'Updated October 25, 2026',
+      'Understand Apex Wellness consent for opening updates, visit requests, and replies to general Pexy website questions.',
+    eyebrow: 'Updated October 26, 2026',
     h1: 'Communications Consent',
     intro:
-      'This consent applies to the Launch List and the separate appointment follow-up form on Plan Your Visit. The appointment form requests a phone number for a call about your request. It does not enroll you in marketing calls or text messages.',
+      'These separate permissions apply to the Launch List, appointment follow-up form, and Pexy’s optional general-question follow-up form. The appointment form requests a phone number for a call about your request. Pexy’s form requests an email for a reply to one general question. Neither form enrolls you in marketing calls or text messages.',
     cta: priorityListCta,
-    effectiveDate: 'October 25, 2026',
+    effectiveDate: 'October 26, 2026',
     sections: [
       {
         type: 'policySection',
         heading: 'What you agree to receive',
         paragraphs: [
-          'The Launch List checkbox asks permission to send opening updates, with the option to unsubscribe. The appointment follow-up checkbox asks permission for Apex to call or email you about arranging a future visit when availability is confirmed. An appointment follow-up request does not subscribe you to marketing emails or text messages, reserve a time or create a clinical record. These permissions are stored separately.',
+          'The Launch List checkbox asks permission to send opening updates, with the option to unsubscribe. The appointment follow-up checkbox asks permission for Apex to call or email you about arranging a future visit when availability is confirmed. Pexy’s follow-up checkbox asks permission for Apex to email you only about the general question you type into that form. Pexy does not send its earlier question or a transcript. These permissions are stored separately. A Pexy follow-up does not subscribe you to marketing messages, reserve a visit, or start clinical care.',
           'If you check the website or accessibility support option, Apex may email you to respond to that request; it will not treat that selection as a consultation-marketing request. Consultation-related messages may be informational and promotional. Messages are not medical advice, clinical messages, appointment confirmations, or emergency communications.'
         ]
       },
@@ -1175,7 +1176,7 @@ export const pages = Object.freeze({
         type: 'policySection',
         heading: 'Consent is optional and revocable',
         paragraphs: [
-          'Submitting a consultation request is optional. Consent to prelaunch email is not a condition of receiving medical care or making a purchase, neither of which is currently available through the site.',
+          'Submitting any contact request is optional. Consent to prelaunch email is not a condition of receiving medical care or making a purchase, neither of which is currently available through the site.',
           'You may unsubscribe at any time using the link in an email. Apex may retain a limited suppression record so that the unsubscribe request continues to be honored.'
         ]
       },
@@ -1183,7 +1184,7 @@ export const pages = Object.freeze({
         type: 'policySection',
         heading: 'Consent records',
         paragraphs: [
-          'Apex may record the email address, submission time, optional website-accessibility flag, consent language and version, source domain, and technical information reasonably needed to document the request and protect the form from abuse. The raw IP address is not retained. Only a one-way salted hash derived from it is retained for abuse prevention and rate limiting.',
+          'Apex may record the email address, submission time, optional website-accessibility flag, consent language and version, source domain, and technical information reasonably needed to document the request and protect the form from abuse. Pexy follow-up records also include the name and newly typed general question you submit. The raw IP address is not retained. Only a one-way salted hash derived from it is retained for abuse prevention and rate limiting.',
           'Earlier priority-list consent remains limited to the purpose and language presented when that consent was collected; it is not reclassified as a consultation request.',
           'Consent records are protected and retained as described in the Privacy Policy.'
         ]

@@ -795,11 +795,24 @@ function renderSiteHelp(page) {
     <button id="help-toggle" class="help-toggle" type="button" aria-expanded="false" aria-controls="site-help-panel" aria-label="Ask Pexy, automated website guide" hidden><span aria-hidden="true">✦</span> Ask Pexy</button>
     <section id="site-help-panel" class="help-panel" aria-labelledby="help-heading" hidden>
       <header class="help-header"><div><p class="eyebrow">Apex website guide · Automated</p><h2 id="help-heading">Hi, I’m Pexy.</h2></div><button id="help-close" class="widget-close" type="button" aria-label="Close Pexy">×</button></header>
-      <p class="help-disclosure" id="help-disclosure">I can point you to Apex facts, not give medical advice or reach a live person. Please skip personal or medical details. Your question stays in this page and is not sent to Apex or an AI service.</p>
+      <p class="help-disclosure" id="help-disclosure">I can point you to Apex facts, not give medical advice or reach a live person. Please skip personal or medical details. Your question to Pexy stays in this page and is not sent to Apex or an AI service. A separate follow-up form appears only when I cannot answer a general question.</p>
       <div id="help-answer" class="help-answer" role="status" aria-live="polite" aria-atomic="true"><p>What can I help you find? Try a topic below or ask a general website question.</p></div>
+      <form id="pexy-followup-form" class="pexy-followup" aria-labelledby="pexy-followup-heading" hidden>
+        <h3 id="pexy-followup-heading">Ask the Apex team</h3>
+        <p id="pexy-followup-guidance">Pexy could not verify that answer. If you want a reply, type a <strong>general website question</strong> below. Your earlier Pexy question will not be sent. Please leave out symptoms, test results, medications, and other health details.</p>
+        <div class="pexy-followup-fields">
+          <label for="pexy-followup-name">Your name<input id="pexy-followup-name" name="full_name" type="text" autocomplete="name" minlength="2" maxlength="100" required></label>
+          <label for="pexy-followup-email">Email for the reply<input id="pexy-followup-email" name="email" type="email" autocomplete="email" maxlength="254" required></label>
+          <label class="pexy-followup-question" for="pexy-followup-question">General question for Apex<textarea id="pexy-followup-question" name="question" rows="3" minlength="8" maxlength="500" aria-describedby="pexy-followup-guidance" required></textarea></label>
+        </div>
+        <label class="pexy-followup-consent" for="pexy-followup-consent"><input id="pexy-followup-consent" name="contact_consent" type="checkbox" required><span>Yes, Apex may email me only to answer this general question. This does not sign me up for marketing, book a visit, or start clinical care. I have read the <a href="/privacy/">Privacy Policy</a> and <a href="/communications-consent/">Communications Consent</a>.</span></label>
+        <div class="pexy-followup-trap" aria-hidden="true"><label for="pexy-followup-website">Website<input id="pexy-followup-website" name="website" type="text" tabindex="-1" autocomplete="off"></label></div>
+        <button class="pexy-followup-submit" type="submit">Send general question</button>
+      </form>
+      <p id="pexy-followup-status" class="pexy-followup-status" role="status" aria-live="polite"></p>
       <div class="help-topics" aria-label="Common questions"><button type="button" data-help-question="When do you open?">Opening</button><button type="button" data-help-question="What care do you offer?">Care areas</button><button type="button" data-help-question="How does the first 100 assessments offer work?">First 100</button><button type="button" data-help-question="What does care cost?">Pricing</button><button type="button" data-help-question="Can I request a visit?">Visit request</button><button type="button" data-help-question="Where is Apex located?">Location</button></div>
       <form id="site-help-form" aria-label="Ask Pexy a website question"><label for="help-question">Your website question</label><div class="help-input-row"><input id="help-question" type="text" maxlength="500" autocomplete="off" placeholder="Type a general question…" aria-describedby="help-disclosure" required><button type="submit">Ask Pexy</button></div></form>
-      <p class="widget-note">Not monitored. For a medical emergency, call 911. <a href="/faq/">All FAQs</a></p>
+      <p class="widget-note">Pexy is not live chat. For a medical emergency, call 911. <a href="/faq/">All FAQs</a></p>
     </section>
   </div>`;
 }

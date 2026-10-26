@@ -1,0 +1,18 @@
+:root{color-scheme:light;font-family:Arial,Helvetica,sans-serif;color:#183d36;background:#f6f4ed}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;padding:clamp(1rem,6vw,3rem);display:grid;place-items:center;background:#f6f4ed}
+.action-shell{width:min(100%,36rem);background:#fff;border:1px solid #d2d4c7;box-shadow:0 16px 48px #183d3614}
+.action-brand{padding:1.5rem 1.5rem 1.3rem;background:#f6f4ed;border-bottom:1px solid #d2d4c7}
+.action-brand img{display:block;width:min(100%,19rem);height:auto}
+main{padding:clamp(1.5rem,5vw,2.5rem)}
+.eyebrow{margin:0 0 1rem;color:#785331;font-size:.72rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase}
+h1{margin:0 0 1rem;font:normal clamp(2.1rem,7vw,2.8rem)/1.1 Georgia,Times,serif;letter-spacing:-.025em}
+.explanation{margin:0;color:#374740;font-size:1rem;line-height:1.65}
+form{margin:1.7rem 0 0}
+button{min-height:3rem;padding:.8rem 1.4rem;border:1px solid #183d36;border-radius:3px;background:#183d36;color:#fff;font:700 .95rem/1.3 Arial,Helvetica,sans-serif;cursor:pointer}
+button:hover{background:#20483c}
+button:focus-visible{outline:3px solid #785331;outline-offset:3px}
+.home-link{margin:1.7rem 0 0;font-size:.95rem;line-height:1.5}
+.home-link a{color:#183d36;text-underline-offset:.2em}
+.home-link a:focus-visible{outline:3px solid #785331;outline-offset:3px}
+.action-footer{padding:1rem clamp(1.5rem,5vw,2.5rem) 1.4rem;border-top:1px solid #d2d4c7;background:#f6f4ed;color:#52665e;font-size:.8rem;line-height:1.5}

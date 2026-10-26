@@ -68,23 +68,32 @@ function textResponse(status, message) {
   });
 }
 
-function page(title, explanation, path, id, token, button) {
+function page(title, explanation, path, id, token, button, showHomeLink = false) {
   const form = path
     ? '<form method="post" action="' + path + '">'
       + '<input type="hidden" name="id" value="' + id + '">'
       + '<input type="hidden" name="token" value="' + token + '">'
       + '<button type="submit">' + button + "</button></form>"
     : "";
+  const homeLink = showHomeLink
+    ? '<p class="home-link"><a href="/">Visit Apex Wellness</a></p>'
+    : "";
   return new Response(
-    '<!doctype html><html lang="en"><meta charset="utf-8">'
+    '<!doctype html><html lang="en"><head><meta charset="utf-8">'
       + '<meta name="viewport" content="width=device-width,initial-scale=1">'
       + "<title>" + title + " | Apex Wellness</title>"
-      + '<main><h1>' + title + "</h1><p>" + explanation + "</p>" + form + "</main></html>",
+      + '<link rel="stylesheet" href="/assets/launch-email-action.css"></head><body>'
+      + '<div class="action-shell"><header class="action-brand">'
+      + '<img src="/assets/images/apex-email-lockup.png" width="304" height="99" alt="Apex Wellness">'
+      + '</header><main><p class="eyebrow">Merrillville, Indiana</p>'
+      + '<h1>' + title + '</h1><p class="explanation">' + explanation + '</p>' + form + homeLink + '</main>'
+      + '<footer class="action-footer">Coming soon<br>8550 Broadway, Suite B<br>Merrillville, IN 46410</footer>'
+      + '</div></body></html>',
     {
       status: 200,
       headers: {
         "Cache-Control": "no-store",
-        "Content-Security-Policy": "default-src 'none'; form-action 'self'; base-uri 'none'; frame-ancestors 'none'",
+        "Content-Security-Policy": "default-src 'none'; style-src 'self'; img-src 'self'; form-action 'self'; base-uri 'none'; frame-ancestors 'none'",
         "Content-Type": "text/html; charset=utf-8",
         "Referrer-Policy": "no-referrer",
         "X-Content-Type-Options": "nosniff",
@@ -352,8 +361,8 @@ export async function handleLaunchEmailAction(request, env) {
     : await unsubscribe(env, id, token);
   if (!succeeded) return page("Link unavailable", "This link has expired or cannot be used.", null);
   return isVerify
-    ? page("You're confirmed", "Thanks. You'll receive Apex opening updates when they're ready.", null)
-    : page("You're unsubscribed", "Apex opening-update emails have stopped.", null);
+    ? page("You're confirmed", "You're on the Apex Wellness Launch List. Watch for opening updates in your inbox. Appointment requests are coming soon; no visit has been booked.", null)
+    : page("You're unsubscribed", "Your opening-update emails have stopped. We'll miss having you along. If you ever want to check in, Apex Wellness is right here in Merrillville.", null, null, null, null, true);
 }
 
 function dueRowsSql(includeFollowups) {

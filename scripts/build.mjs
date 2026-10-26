@@ -753,7 +753,7 @@ function renderNavigation(page) {
 
   return `<header class="site-header">
     <div class="container site-header-inner">
-      <a class="brand premium-brand" href="/" aria-label="Apex Wellness home"${page.slug === '/' ? ' aria-current="page"' : ''}><span>Apex</span><small>WELLNESS</small></a>
+      <a class="brand premium-brand" href="/" aria-label="Apex Wellness home"${page.slug === '/' ? ' aria-current="page"' : ''}><img src="/assets/images/apex-icon-as-a-lockup-20261026.svg" width="172" height="98" alt="Apex Wellness"></a>
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation" aria-label="Open main menu">
         <span class="nav-toggle-label">Menu</span><span class="nav-toggle-icon" aria-hidden="true"></span>
       </button>
@@ -768,7 +768,7 @@ function renderNavigation(page) {
 function renderLandingNavigation(page) {
   return `<header class="site-header landing-header">
     <div class="container site-header-inner">
-      <a class="brand premium-brand" href="/" aria-label="Apex Wellness home"><span>Apex</span><small>WELLNESS</small></a>
+      <a class="brand premium-brand" href="/" aria-label="Apex Wellness home"><img src="/assets/images/apex-icon-as-a-lockup-20261026.svg" width="172" height="98" alt="Apex Wellness"></a>
       <nav class="landing-nav" aria-label="Launch List page navigation">
         <a class="nav-cta" href="#consultation-request">${escapeHtml(page.cta.label)}</a>
       </nav>
@@ -783,7 +783,7 @@ function renderFooter(page) {
   const policyLinks = site.policyNavigation.map(footerLink).join("");
 
   return `<footer class="site-footer"><div class="container">
-    <div class="footer-signature"><a href="/" aria-label="Apex Wellness home">Apex Wellness<span aria-hidden="true">↗</span></a><p>${escapeHtml(site.tagline)}</p></div>
+    <div class="footer-signature"><a href="/" aria-label="Apex Wellness home"><img src="/assets/images/apex-icon-as-a-reversed-lockup-20261026.svg" width="860" height="490" alt="Apex Wellness"><span aria-hidden="true">↗</span></a><p>${escapeHtml(site.tagline)}</p></div>
     <div class="footer-grid">
       <div><p class="eyebrow">Northwest Indiana</p><p>${escapeHtml(site.footer.summary)}</p><p>${escapeHtml(site.footer.location)}</p><p><a href="${escapeHtml(site.phoneHref)}">${escapeHtml(site.phone)}</a> · <a href="mailto:${escapeHtml(site.email)}">${escapeHtml(site.email)}</a></p><nav class="social-links" aria-label="Apex social profiles">${site.social.map((profile) => `<a href="${escapeHtml(profile.href)}" rel="me noreferrer" target="_blank">${escapeHtml(profile.label)}<span class="visually-hidden"> (opens a new tab)</span></a>`).join('')}</nav></div>
       <nav aria-label="Care areas"><h2>Care areas</h2><ul>${careLinks}</ul></nav>

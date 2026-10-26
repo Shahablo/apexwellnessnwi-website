@@ -35,6 +35,8 @@
   ],
   "vars": {
     "APPOINTMENT_REQUESTS_ENABLED": "true",
+    "BREVO_SENDER_EMAIL": "shahab@apexwellnessnwi.com",
+    "BREVO_REPLY_TO_EMAIL": "shahab@apexwellnessnwi.com",
     "FOUNDING_CONSENT_VERSION": "launch-list-split-2026-10-26",
     "LAUNCH_EMAIL_ENABLED": "false",
     "LAUNCH_EMAIL_FOLLOWUPS_ENABLED": "false"

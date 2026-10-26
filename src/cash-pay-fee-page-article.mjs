@@ -72,7 +72,7 @@ export const cashPayFeePageArticle = Object.freeze({
       heading: 'How Apex will handle it',
       paragraphs: [
         'Apex Wellness is a cash-pay clinic coming soon to Merrillville for weight and metabolic care, men’s hormone health, women’s midlife care, and hair-loss care. Final fees will be published on this site before scheduling opens. The visit fee will be shown separately from lab work and any medication, so you can see exactly what you are paying for, and there will be no pressure packages.',
-        'Apex Wellness is coming soon to 8550 Broadway, Suite B, Merrillville, IN 46410. If you would like to hear when fees are posted, the Launch List asks only for a name and an email.'
+        'Apex Wellness is coming soon to 8550 Broadway, Suite B, Merrillville, IN 46410. If you would like to hear when fees are posted, the Launch List asks for a name, email and phone number.'
       ]
     }
   ],

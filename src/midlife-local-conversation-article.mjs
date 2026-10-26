@@ -33,7 +33,7 @@ export const midlifeLocalConversationArticle = Object.freeze({
     {
       heading: 'Where to follow along',
       paragraphs: [
-        'Our women’s midlife care page explains the planned focus. The Merrillville page shows the location. The Launch List is for opening, team, pricing and scheduling updates as those details are confirmed. It asks for a name and email.',
+        'Our women’s midlife care page explains the planned focus. The Merrillville page shows the location. The Launch List is for opening, team, pricing and scheduling updates as those details are confirmed. It asks for a name, email and phone number.',
         'Apex is Coming soon; appointments are not open. The door tells you where. The Launch List will tell you when there is more to share.'
       ]
     }

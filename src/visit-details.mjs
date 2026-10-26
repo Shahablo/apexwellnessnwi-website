@@ -8,7 +8,7 @@ export const visitDetails = Object.freeze({
     { question: 'Where will visits take place?', answer: 'At 8550 Broadway, Suite B, Merrillville, IN 46410. Apex is coming soon, with in-person visits planned at launch. Appointment availability will be announced when it is confirmed.' },
     { question: 'Will Apex offer telehealth at launch?', answer: 'No. Visits are planned to be in person at launch. Join the Launch List for opening updates; joining does not book an appointment.' },
     { question: 'What will care cost, and is insurance accepted?', answer: 'Apex is planning a cash-pay model. Final prices will be published before scheduling opens, with package inclusions and any separate costs explained. Joining the Launch List is free.' },
-    { question: 'What happens after I join the Launch List?', answer: 'You can receive opening updates and details about pricing and how to book when they are ready. The form asks for your name and email. Keep health information for the secure clinical intake process after an appointment is confirmed.' }
+    { question: 'What happens after I join the Launch List?', answer: 'You can receive opening updates and details about pricing and how to book when they are ready. The Launch List asks for your name, email and phone number. Keep health information for the secure clinical intake process after an appointment is confirmed.' }
   ],
   planningLinks: [
     { title: 'Costs and inclusions', body: 'See what is still being finalized, what fees will explain, and how to compare the full cost of care.', href: '/pricing/', label: 'Review pricing details' },

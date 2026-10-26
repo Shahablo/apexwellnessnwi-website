@@ -10,7 +10,7 @@ export const comingSoonStatusArticle = Object.freeze({
   intro: 'A sign that says Coming soon raises more questions than it answers. Where? When? What kind of clinic? Can I book yet? This is the plain version, written in October 2026, with the confirmed parts separated from the parts still being finalized.\n\nIf you read nothing else: Apex is a new medical clinic in Merrillville focused on four areas of care, the planned opening is November 16, 2026, and nothing can be booked yet.',
   excerpt: 'The confirmed facts about Apex Wellness in Merrillville, the parts still being finalized, and what the Launch List actually does.',
   published: '2026-10-20',
-  modified: '2026-10-23',
+  modified: '2026-10-26',
   category: 'Apex Wellness Updates',
   author: 'Apex Wellness Editorial Team',
   heroImage: 'clinic',
@@ -47,7 +47,7 @@ export const comingSoonStatusArticle = Object.freeze({
     {
       heading: 'What the Launch List does, and does not do',
       paragraphs: [
-        'The Launch List asks for a name and an email address. That is all. It is not an appointment request, a waitlist with a number, or a place to describe symptoms. Medical information belongs in a secure intake process after an appointment is confirmed, not in a form on a website.',
+        'The Launch List asks for a name, email address and phone number. Apex may use that number for a limited manual follow-up about the signup or confirmed scheduling availability; the form does not authorize texts or automated calls. It is not an appointment request, a waitlist with a number, or a place to describe symptoms. Medical information belongs in a secure intake process after an appointment is confirmed, not in a form on a website.',
         'When something on the list above moves from “being finalized” to “confirmed,” the list is how we tell you. If you want to see the kind of email you would receive, the earlier article on what a launch list should ask for explains the standard we hold ourselves to.'
       ]
     },
@@ -68,5 +68,5 @@ export const comingSoonStatusArticle = Object.freeze({
   disclaimerHeading: 'About this update',
   disclaimer: 'This is a status update about a clinic that has not yet opened. It is not medical advice and does not describe services that are currently available. Planned dates depend on readiness.',
   editorialNote: 'Prepared by the Apex Wellness Editorial Team on October 20, 2026 from the clinic’s current confirmed plans. The hero image is a design preview of a consultation room, not a photograph of the finished Suite B space. No individual clinician review is claimed for this nonmedical update.',
-  ctaBody: 'Join the Launch List with a name and email, and we will tell you when each item above is confirmed.'
+  ctaBody: 'Join the Launch List with your name, email and phone number for updates as the details above are confirmed.'
 });

@@ -1257,6 +1257,10 @@ div.pricing-table {
   gap: 0.42rem;
 }
 
+#consultation-form [hidden] {
+  display: none !important;
+}
+
 .field label,
 .field-label {
   color: var(--color-ink);

@@ -143,6 +143,27 @@
     const form = document.querySelector("#consultation-form");
     if (!form) return;
 
+    const supportRequest = form.elements.namedItem("accessibility_request");
+    const phone = form.elements.namedItem("phone");
+    const phoneField = phone?.closest("[data-launch-phone-field]");
+    const listConsent = form.querySelector("[data-list-consent]");
+    const supportConsent = form.querySelector("[data-support-consent]");
+    const syncRequestPurpose = () => {
+      if (!(supportRequest instanceof HTMLInputElement) || !(phone instanceof HTMLInputElement) || !phoneField) return;
+      const supportMode = supportRequest.checked;
+      phone.required = !supportMode;
+      phone.disabled = supportMode;
+      phoneField.hidden = supportMode;
+      if (listConsent) listConsent.hidden = supportMode;
+      if (supportConsent) supportConsent.hidden = !supportMode;
+      if (supportMode) {
+        phone.removeAttribute("aria-invalid");
+        phone.removeAttribute("aria-errormessage");
+      }
+    };
+    supportRequest?.addEventListener("change", syncRequestPurpose);
+    syncRequestPurpose();
+
     let status = document.querySelector("#form-status");
     if (!status) {
       status = document.createElement("p");
@@ -256,6 +277,7 @@
         }
 
         form.reset();
+        syncRequestPurpose();
         clearFieldErrors();
         ensureStartedAt(form);
         const successMessage = payload.accessibility_request

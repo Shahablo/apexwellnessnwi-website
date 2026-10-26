@@ -11,6 +11,7 @@ const ALLOWED_HOSTNAMES = new Set([
 const ALLOWED_FIELDS = new Set([
   "full_name",
   "email",
+  "phone",
   "contact_consent",
   "consent_version",
   "accessibility_request",
@@ -46,6 +47,7 @@ const INSERT_REQUEST_SQL = `
     id,
     full_name,
     email,
+    phone,
     request_kind,
     contact_consent,
     consent_version,
@@ -54,9 +56,10 @@ const INSERT_REQUEST_SQL = `
     user_agent,
     source_origin,
     created_at
-  ) VALUES (?, ?, ?, ?, 1, ?, ?, ?, ?, ?, ?)
+  ) VALUES (?, ?, ?, ?, ?, 1, ?, ?, ?, ?, ?, ?)
   ON CONFLICT (email, request_kind) DO UPDATE SET
     full_name = excluded.full_name,
+    phone = excluded.phone,
     contact_consent = excluded.contact_consent,
     consent_version = excluded.consent_version,
     consented_at = excluded.consented_at,
@@ -167,14 +170,13 @@ function validatePayload(payload, expectedConsentVersion, appointmentContact = f
   }
 
   const keys = Object.keys(payload);
-  if (keys.some((key) => !(ALLOWED_FIELDS.has(key) || (appointmentContact && key === 'phone')) || (appointmentContact && key === 'accessibility_request'))) {
+  if (keys.some((key) => !ALLOWED_FIELDS.has(key) || (appointmentContact && key === 'accessibility_request'))) {
     return { fields: ["form"] };
   }
 
   const fields = [];
   const fullName = normalizeName(payload.full_name);
   const email = normalizeEmail(payload.email);
-  const phone = appointmentContact ? normalizePhone(payload.phone) : null;
   const consentVersion = typeof payload.consent_version === "string"
     && /^[A-Za-z0-9][A-Za-z0-9._-]{0,39}$/.test(payload.consent_version)
     ? payload.consent_version
@@ -182,10 +184,14 @@ function validatePayload(payload, expectedConsentVersion, appointmentContact = f
   const accessibilityRequest = payload.accessibility_request === undefined
     ? false
     : payload.accessibility_request;
+  const phone = accessibilityRequest === true && !appointmentContact
+    ? null
+    : normalizePhone(payload.phone);
 
   if (!fullName) fields.push("full_name");
   if (!email) fields.push("email");
-  if (appointmentContact && !phone) fields.push('phone');
+  if ((appointmentContact || accessibilityRequest === false) && !phone) fields.push('phone');
+  if (!appointmentContact && accessibilityRequest === true && payload.phone !== undefined) fields.push('phone');
   if (payload.contact_consent !== true) fields.push("contact_consent");
   if (!consentVersion || consentVersion !== expectedConsentVersion) fields.push("consent_version");
   if (typeof accessibilityRequest !== "boolean") fields.push("accessibility_request");
@@ -400,6 +406,7 @@ async function handlePost(context, origin, appointmentContact) {
     crypto.randomUUID(),
     validation.value.fullName,
     validation.value.email,
+    ...(!appointmentContact ? [validation.value.phone] : []),
     validation.value.requestKind,
     validation.value.consentVersion,
     nowIso,

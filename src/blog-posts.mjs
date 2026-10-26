@@ -32,7 +32,7 @@ export const blogPosts = Object.freeze([
     "intro": "Thoughtful care. Built around you.\n\nApex Wellness is coming soon to 8550 Broadway, Suite B, Merrillville, IN 46410. Our planned launch is November 16, 2026, subject to readiness. Find launch updates at apexwellnessnwi.com.\n\nWe are building a practice for adults who want a thoughtful conversation about their health, their goals, and the life they want to keep taking part in.",
     "excerpt": "Our Merrillville address, four areas of care, and an easy way to follow the launch.",
     "published": "2026-09-15",
-    "modified": "2026-10-23",
+    "modified": "2026-10-26",
     "category": "Apex Wellness Updates",
     "author": "Apex Wellness Editorial Team",
     "heroImage": "shoreline",
@@ -74,7 +74,7 @@ export const blogPosts = Object.freeze([
       {
         "heading": "Follow the launch",
         "paragraphs": [
-          "Join the Launch List with your name and email to receive opening updates. You can also find launch updates at apexwellnessnwi.com.",
+          "Join the Launch List with your name, email and phone number to receive opening updates. You can also find launch updates at apexwellnessnwi.com.",
           "Keep medical history, symptoms, and test results out of the signup form. It is designed for contact details, so you can hear from us as the practice takes shape."
         ]
       },

@@ -708,8 +708,10 @@ test('editorial redesign preserves key content, semantic headings, and navigatio
 test('site header and footer use the approved icon-as-A wordmark without changing the QR landing route', async () => {
   const light = await readFile(join(publicRoot, 'assets', 'images', 'apex-icon-as-a-lockup-20261026.svg'));
   const reversed = await readFile(join(publicRoot, 'assets', 'images', 'apex-icon-as-a-reversed-lockup-20261026.svg'));
-  assert.equal(createHash('sha256').update(light).digest('hex'), 'f38d232a5809bc48738456f5f538bda5c04c13257689bbaeafe020f6b9c92830');
-  assert.equal(createHash('sha256').update(reversed).digest('hex'), '4d0de12f40d1825c9b9ef2148c63693ffb6ee7b7d985d5dc8195c1304641a50c');
+  // Git checks out SVG text with platform-specific line endings; the brand master uses CRLF.
+  const brandMasterHash = (bytes) => createHash('sha256').update(bytes.toString('utf8').replace(/\r?\n/g, '\r\n')).digest('hex');
+  assert.equal(brandMasterHash(light), 'f38d232a5809bc48738456f5f538bda5c04c13257689bbaeafe020f6b9c92830');
+  assert.equal(brandMasterHash(reversed), '4d0de12f40d1825c9b9ef2148c63693ffb6ee7b7d985d5dc8195c1304641a50c');
   for (const [slug, html] of htmlBySlug) {
     const header = html.match(/<header class="site-header(?: landing-header)?">[\s\S]*?<\/header>/)?.[0];
     assert.ok(header, `${slug} is missing the site header`);
@@ -768,6 +770,9 @@ test('homepage names the planned care and location without suggesting bookings a
 test('the QR landing page explains the first 100 assessments offer without promising a reserved appointment', () => {
   const html = htmlBySlug.get('/founding-patients/');
   assert.match(html, /<h1 id="page-title">Merrillville, meet Apex\.<\/h1>/);
+  assert.match(html, /Join the Apex Launch List with your name, email and phone number/);
+  assert.match(html, /The Launch List asks for your name, email and phone number/);
+  assert.doesNotMatch(html, /Just your name and email|This is an email signup/i);
   for (const area of ['weight and metabolic care', 'men’s hormone health', 'women’s midlife care', 'hair-loss care for thinning and balding']) assert.match(html, new RegExp(area));
   assert.match(html, /signing up does not book a visit/);
   assert.match(html, /src="\/assets\/images\/apex-clinic-interior\.webp/);

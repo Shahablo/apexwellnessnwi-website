@@ -882,7 +882,7 @@ export const pages = Object.freeze({
 
   'founding-patients': {
     slug: '/founding-patients/',
-    modified: '2026-10-25',
+    modified: '2026-10-26',
     navLabel: 'Launch List',
     title: 'Apex Wellness Launch List | Care Coming to Merrillville',
     description:
@@ -989,7 +989,7 @@ export const pages = Object.freeze({
         items: [
           {
             question: 'Does this reserve an appointment?',
-            answer: 'No. This is an email signup for opening news and notice when clinical evaluations can be booked. It does not reserve an appointment or guarantee treatment.'
+            answer: 'No. The Launch List asks for your name, email and phone number, with separate optional permission for a manual call. We’ll send opening news and let you know by email when clinical evaluations can be booked. Joining does not reserve an appointment or guarantee treatment.'
           },
           {
             question: 'Does it cost anything?',
@@ -997,7 +997,7 @@ export const pages = Object.freeze({
           },
           {
             question: 'How does the first 100 assessments offer work?',
-            answer: 'After opening, the first 100 initial assessments will include the assessment and selected baseline labs at no charge when clinically appropriate. One offer per person; no purchase required. The clinician determines which tests, if any, are appropriate; additional testing or care may have a cost. Joining this email list does not book an assessment or reserve the offer. We will share scheduling and full terms when confirmed.'
+            answer: 'After opening, the first 100 initial assessments will include the assessment and selected baseline labs at no charge when clinically appropriate. One offer per person; no purchase required. The clinician determines which tests, if any, are appropriate; additional testing or care may have a cost. Joining the Launch List does not book an assessment or reserve the offer. We will share scheduling and full terms when confirmed.'
           },
           {
             question: 'Should I include medical information?',

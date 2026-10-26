@@ -785,15 +785,13 @@ function renderFooter(page) {
 }
 
 function renderSiteHelp(page) {
-  const launchPrompt = !page.landing && !page.effectiveDate ? `<aside class="launch-prompt" id="launch-prompt" aria-labelledby="launch-prompt-title" hidden>
-    <button class="widget-close" id="dismiss-launch" aria-label="Dismiss launch invitation" type="button">×</button>
-    <p class="eyebrow">${escapeHtml(site.launch.status)} · ${escapeHtml(site.launch.label)}</p>
-    <h2 id="launch-prompt-title">Be part of what comes next.</h2>
-    <p>Opening updates and future consultation availability. Just your name and email.</p>
-    ${buttonMarkup(site.cta)}<p class="widget-note">Free to join. No appointment booked.</p>
-  </aside>` : '';
-  return `${launchPrompt}
-  <div class="site-help" data-launch-label="${escapeHtml(page.launchLabel || site.launch.label)}">
+  return `<div class="site-help" data-launch-label="${escapeHtml(page.launchLabel || site.launch.label)}">
+    <aside id="pexy-nudge" class="pexy-nudge" aria-label="Pexy website guide invitation" hidden>
+      <button id="pexy-nudge-close" class="widget-close" type="button" aria-label="Dismiss Pexy invitation">×</button>
+      <p class="eyebrow">A quick question?</p>
+      <p id="pexy-nudge-copy">Need a quick answer? I can help with opening plans, care areas, pricing updates, and visit requests.</p>
+      <button id="pexy-nudge-open" class="pexy-nudge-action" type="button">Ask Pexy <span aria-hidden="true">↗</span></button>
+    </aside>
     <button id="help-toggle" class="help-toggle" type="button" aria-expanded="false" aria-controls="site-help-panel" aria-label="Ask Pexy, automated website guide" hidden><span aria-hidden="true">✦</span> Ask Pexy</button>
     <section id="site-help-panel" class="help-panel" aria-labelledby="help-heading" hidden>
       <header class="help-header"><div><p class="eyebrow">Apex website guide · Automated</p><h2 id="help-heading">Hi, I’m Pexy.</h2></div><button id="help-close" class="widget-close" type="button" aria-label="Close Pexy">×</button></header>
@@ -893,7 +891,7 @@ async function prepareAssets() {
   await cp(join(rootDirectory, 'node_modules/@fontsource-variable/manrope/files/manrope-latin-wght-normal.woff2'), join(fontDirectory, 'manrope-latin-wght-normal.woff2'));
   await cp(join(rootDirectory, 'node_modules/@fontsource/instrument-serif/LICENSE'), join(fontDirectory, 'instrument-serif-license.txt'));
   await cp(join(rootDirectory, 'node_modules/@fontsource-variable/manrope/LICENSE'), join(fontDirectory, 'manrope-license.txt'));
-  const helpEngine = (await readFile(join(sourceAssetsDirectory, "site-help.mjs"), 'utf8')).replace('export function', 'function');
+  const helpEngine = (await readFile(join(sourceAssetsDirectory, "site-help.mjs"), 'utf8')).replaceAll('export function', 'function');
   const helpUi = (await readFile(join(sourceAssetsDirectory, "site-assistant.mjs"), 'utf8')).replace(/^import .*?;\r?\n/, '');
   await writeOutput(join(publicAssetsDirectory, 'site-assistant.js'), `(() => {\n'use strict';\n${helpEngine}\n${helpUi}\n})();\n`);
   await cp(sourceImagesDirectory, publicImagesDirectory, { recursive: true });

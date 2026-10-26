@@ -1,12 +1,28 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { answerWebsiteQuestion } from '../src/assets/site-help.mjs';
+import { answerWebsiteQuestion, pexyNudgeCopy, shouldOfferPexy } from '../src/assets/site-help.mjs';
 import { site } from '../src/content.mjs';
 
 test('the guide gives the owner-confirmed address while preserving prelaunch status', () => {
   const answer = answerWebsiteQuestion('Where is your clinic?');
   assert.ok(answer.text.includes(site.address.label));
   assert.match(answer.text, /Coming soon/);
+});
+
+test('Pexy invites only after a qualified desktop exit or engagement', () => {
+  assert.equal(shouldOfferPexy({ elapsedMs: 14999, desktop: true, topExit: true }), false);
+  assert.equal(shouldOfferPexy({ elapsedMs: 15000, desktop: true, topExit: true }), true);
+  assert.equal(shouldOfferPexy({ elapsedMs: 40000, desktop: true, engaged: true }), true);
+  assert.equal(shouldOfferPexy({ elapsedMs: 40000, desktop: false, topExit: true, engaged: true }), false);
+  assert.equal(shouldOfferPexy({ elapsedMs: 40000, desktop: true, topExit: true, pageVisible: false }), false);
+  assert.equal(shouldOfferPexy({ elapsedMs: 40000, desktop: true, topExit: true, available: false }), false);
+});
+
+test('Pexy invitation reflects the page without inventing a price or booking', () => {
+  assert.match(pexyNudgeCopy('/pricing/'), /being finalized/);
+  assert.doesNotMatch(pexyNudgeCopy('/pricing/'), /\$\d+/);
+  assert.match(pexyNudgeCopy('/founding-patients/'), /first-100 assessment offer/);
+  assert.match(pexyNudgeCopy('/plan-your-visit/'), /does not book a time/);
 });
 
 test('site guide answers known questions using bounded local information', () => {

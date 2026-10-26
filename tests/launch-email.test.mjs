@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { webcrypto } from "node:crypto";
+import { createHash, webcrypto } from "node:crypto";
 import { readFile } from "node:fs/promises";
 import { DatabaseSync } from "node:sqlite";
 import test from "node:test";
@@ -21,7 +21,7 @@ test("branded launch emails retain action, consent and plain-text fallbacks", ()
   const verify = renderLaunchEmail("verify", {
     verify: ORIGIN + "/api/launch-email/verify?id=test&token=sample",
   });
-  assert.match(verify.htmlContent, /apex-email-lockup\.png/);
+  assert.match(verify.htmlContent, /apex-icon-as-a-email-20261026\.png/);
   assert.match(verify.htmlContent, /Confirm my email/);
   assert.match(verify.htmlContent, /id=test&amp;token=sample/);
   assert.match(verify.textContent, /id=test&token=sample/);
@@ -36,7 +36,7 @@ test("branded launch emails retain action, consent and plain-text fallbacks", ()
     const email = renderLaunchEmail(stage, {
       unsubscribe: ORIGIN + "/api/launch-email/unsubscribe?id=test&token=sample",
     });
-    assert.match(email.htmlContent, /apex-email-lockup\.png/);
+    assert.match(email.htmlContent, /apex-icon-as-a-email-20261026\.png/);
     assert.match(email.htmlContent, /<a href="https:\/\/apexwellnessnwi\.com\/api\/launch-email\/unsubscribe/);
     assert.match(email.textContent, /Unsubscribe from opening updates:/);
     assert.match(email.htmlContent, /8550 Broadway, Suite B/);
@@ -59,12 +59,13 @@ test("branded launch emails retain action, consent and plain-text fallbacks", ()
 
 test("confirmation page styling is built from same-origin Apex assets", async () => {
   const css = await readFile(new URL("../public/assets/launch-email-action.css", import.meta.url), "utf8");
-  const logo = await readFile(new URL("../public/assets/images/apex-email-lockup.png", import.meta.url));
+  const logo = await readFile(new URL("../public/assets/images/apex-icon-as-a-email-20261026.png", import.meta.url));
   assert.match(css, /#f6f4ed/);
   assert.match(css, /#183d36/);
   assert.match(css, /#785331/);
   assert.match(css, /button:focus-visible/);
   assert.ok(logo.length > 0);
+  assert.equal(createHash('sha256').update(logo).digest('hex'), '1b5861c133a1b76024034091aece894cb4de69db8cccfee7a6a800168f5a02bf');
   assert.doesNotMatch(css, /@import|url\(|javascript:/i);
 });
 
@@ -233,7 +234,7 @@ test("verification is double opt-in, deduplicated, and phone never enters Brevo"
     const getHtml = await get.text();
     assert.match(getHtml, /Confirm your email/);
     assert.match(getHtml, /assets\/launch-email-action\.css/);
-    assert.match(getHtml, /assets\/images\/apex-email-lockup\.png/);
+    assert.match(getHtml, /assets\/images\/apex-icon-as-a-email-20261026\.png/);
     assert.doesNotMatch(getHtml, /class="eyebrow"|Merrillville, Indiana/);
     assert.match(getHtml, /<form method="post" action="\/api\/launch-email\/verify">/);
     assert.match(getHtml, /Coming soon[\s\S]*8550 Broadway, Suite B/);

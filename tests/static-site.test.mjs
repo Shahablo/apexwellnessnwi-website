@@ -471,7 +471,11 @@ test("photographs retain accessible image metadata without representative imager
 
   for (const page of pageList) {
     const html = htmlBySlug.get(page.slug);
-    const images = startTags(html, "img");
+    const allImages = startTags(html, "img");
+    const images = allImages.filter(({ attrs }) => attrs['data-photo-kind']);
+    for (const { attrs } of allImages.filter(({ attrs }) => !attrs['data-photo-kind'])) {
+      assert.match(attrs.src || '', /^\/assets\/images\/apex-icon-as-a-(?:reversed-)?lockup-20261026\.svg$/, `${page.slug} non-photographic image must be the approved logo`);
+    }
     totalImages += images.length;
     if (!images.length) continue;
 
@@ -699,6 +703,26 @@ test('editorial redesign preserves key content, semantic headings, and navigatio
     assert.equal(new Set(ids).size, ids.length, `${slug} duplicate IDs`);
     if (slug !== '/founding-patients/') assert.match(html, /<noscript><nav[^>]*aria-label="Navigation without JavaScript"/);
   }
+});
+
+test('site header and footer use the approved icon-as-A wordmark without changing the QR landing route', async () => {
+  const light = await readFile(join(publicRoot, 'assets', 'images', 'apex-icon-as-a-lockup-20261026.svg'));
+  const reversed = await readFile(join(publicRoot, 'assets', 'images', 'apex-icon-as-a-reversed-lockup-20261026.svg'));
+  assert.equal(createHash('sha256').update(light).digest('hex'), 'f38d232a5809bc48738456f5f538bda5c04c13257689bbaeafe020f6b9c92830');
+  assert.equal(createHash('sha256').update(reversed).digest('hex'), '4d0de12f40d1825c9b9ef2148c63693ffb6ee7b7d985d5dc8195c1304641a50c');
+  for (const [slug, html] of htmlBySlug) {
+    const header = html.match(/<header class="site-header(?: landing-header)?">[\s\S]*?<\/header>/)?.[0];
+    assert.ok(header, `${slug} is missing the site header`);
+    assert.match(header, /<a class="brand premium-brand" href="\/" aria-label="Apex Wellness home"[^>]*><img src="\/assets\/images\/apex-icon-as-a-lockup-20261026\.svg" width="172" height="98" alt="Apex Wellness"><\/a>/);
+    assert.doesNotMatch(header, /<span>Apex<\/span>|<small>WELLNESS<\/small>/);
+    assert.match(html, /<div class="footer-signature"><a href="\/" aria-label="Apex Wellness home"><img src="\/assets\/images\/apex-icon-as-a-reversed-lockup-20261026\.svg" width="860" height="490" alt="Apex Wellness">/);
+  }
+  const landing = htmlBySlug.get('/founding-patients/');
+  assert.ok(landing, 'the printed QR destination remains present');
+  assert.match(landing, /<link rel="canonical" href="https:\/\/apexwellnessnwi\.com\/founding-patients\/">/);
+  const css = await readFile(join(publicRoot, 'assets', 'site-design.css'), 'utf8');
+  assert.match(css, /\.premium-brand img\{display:block;width:8\.75rem;height:auto;max-height:none\}/);
+  assert.match(css, /\.premium-brand img\{width:7\.25rem\}/);
 });
 
 test('homepage replaces the generic introduction with one staff-neutral approach section immediately after the hero', () => {

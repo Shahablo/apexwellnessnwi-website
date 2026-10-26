@@ -1,6 +1,6 @@
 const ADDRESS = "8550 Broadway, Suite B, Merrillville, IN 46410";
 const SITE = "https://apexwellnessnwi.com";
-const LOGO = SITE + "/assets/images/apex-email-lockup.png";
+const LOGO = SITE + "/assets/images/apex-icon-as-a-email-20261026.png";
 
 function escapeHtml(value) {
   return String(value).replace(/[&<>"']/g, (character) => ({

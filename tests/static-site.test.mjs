@@ -328,6 +328,8 @@ test("founding consultation form matches the minimal API contract and accessible
     "full_name",
     "email",
     "phone",
+    "phone_followup_consent",
+    "phone_followup_consent_version",
     "contact_consent",
     "consent_version",
     "website",
@@ -339,6 +341,8 @@ test("founding consultation form matches the minimal API contract and accessible
     "full_name",
     "email",
     "phone",
+    "phone_followup_consent",
+    "phone_followup_consent_version",
     "contact_consent",
     "consent_version",
     "website",
@@ -368,6 +372,8 @@ test("founding consultation form matches the minimal API contract and accessible
   const fullName = controlsByName.get("full_name").attrs;
   const email = controlsByName.get("email").attrs;
   const phone = controlsByName.get("phone").attrs;
+  const phoneFollowup = controlsByName.get("phone_followup_consent").attrs;
+  const phoneFollowupVersion = controlsByName.get("phone_followup_consent_version").attrs;
   const consent = controlsByName.get("contact_consent").attrs;
   const accessibilityRequest = controlsByName.get("accessibility_request")?.attrs;
   const honeypot = controlsByName.get("website").attrs;
@@ -390,6 +396,9 @@ test("founding consultation form matches the minimal API contract and accessible
   assert.equal(phone.minlength, "10");
   assert.equal(phone.maxlength, "25");
   assert.ok("required" in phone, "the Launch List requires phone in its default mode");
+  assert.equal(phoneFollowup.type?.toLowerCase(), "checkbox");
+  assert.ok(!("required" in phoneFollowup), "manual calls must remain optional");
+  assert.equal(phoneFollowupVersion.value, "launch-manual-call-2026-10-26");
   assert.equal(consent.type?.toLowerCase(), "checkbox");
   assert.equal(consent.value, "true");
   assert.ok("required" in consent);
@@ -407,11 +416,11 @@ test("founding consultation form matches the minimal API contract and accessible
   assert.equal(consentVersion.type?.toLowerCase(), "hidden");
   assert.equal(
     consentVersion.value,
-    "launch-list-phone-2026-10-26",
+    "launch-list-split-2026-10-26",
     "consent_version needs the reviewed founding-consultation policy version",
   );
 
-  const visibleNames = ["full_name", "email", "phone", "contact_consent"];
+  const visibleNames = ["full_name", "email", "phone", "contact_consent", "phone_followup_consent"];
   if (accessibilityRequest) visibleNames.push("accessibility_request");
   for (const name of visibleNames) {
     const control = controlsByName.get(name).attrs;
@@ -431,7 +440,8 @@ test("founding consultation form matches the minimal API contract and accessible
   const fieldNames = [...controlsByName.keys()].join(" ");
   assert.doesNotMatch(fieldNames, /care_interest|zip|symptom|diagnosis|medication|medical|message|notes?|request_kind|utm/i);
   assert.match(formHtml, /data-launch-phone-field/, "phone needs a container for support-mode hiding");
-  assert.match(formHtml, /data-list-consent/, "Launch List phone and email consent must be visible by default");
+  assert.match(formHtml, /data-list-consent/, "Launch List email consent must be visible by default");
+  assert.match(formHtml, /data-phone-consent-field/, "optional manual-call consent must be separate");
   assert.match(formHtml, /data-support-consent\s+hidden/, "support-specific consent should begin hidden");
   assert.match(formHtml, /No text messages/i, "phone help and consent must not imply SMS permission");
   assert.doesNotMatch(formHtml, /just your name and email/i, "remove the stale name/email-only claim");
@@ -447,6 +457,8 @@ test("founding consultation form matches the minimal API contract and accessible
   assert.match(siteJs, /Number\(payload\.form_started_at\)/, "form_started_at must be sent as a number");
   assert.match(siteJs, /phone\.disabled\s*=\s*supportMode/, "support mode must omit the phone field from submission");
   assert.match(siteJs, /phone\.required\s*=\s*!supportMode/, "support mode must not require a phone");
+  assert.match(siteJs, /result\?\.verification_pending\s*===\s*true/,
+    "enabled double opt-in must instruct visitors to confirm their email");
   assert.match(
     siteJs,
     /payload\[checkbox\.name\]\s*=\s*checkbox\.checked/,

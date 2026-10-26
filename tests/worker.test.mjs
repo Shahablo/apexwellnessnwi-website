@@ -1,23 +1,6 @@
 import assert from "node:assert/strict";
-import { readFile } from "node:fs/promises";
 import test from "node:test";
-
-const foundingSource = await readFile(
-  new URL("../functions/api/founding-consultation.js", import.meta.url),
-  "utf8",
-);
-const pexySource = await readFile(new URL("../functions/api/pexy-followup.js", import.meta.url), "utf8");
-const prioritySource = await readFile(new URL("../functions/api/priority.js", import.meta.url), "utf8");
-const foundingUrl = `data:text/javascript;base64,${Buffer.from(foundingSource).toString("base64")}`;
-const pexyUrl = `data:text/javascript;base64,${Buffer.from(pexySource).toString("base64")}`;
-const priorityUrl = `data:text/javascript;base64,${Buffer.from(prioritySource).toString("base64")}`;
-const workerSource = (await readFile(new URL("../src/worker.mjs", import.meta.url), "utf8"))
-  .replace("../functions/api/founding-consultation.js", foundingUrl)
-  .replace("../functions/api/pexy-followup.js", pexyUrl)
-  .replace("../functions/api/priority.js", priorityUrl);
-const { default: worker, handleWorkerRequest } = await import(
-  `data:text/javascript;base64,${Buffer.from(workerSource).toString("base64")}`
-);
+import worker, { handleWorkerRequest } from "../src/worker.mjs";
 
 const ORIGIN = "https://apexwellnessnwi.com";
 

@@ -3,27 +3,19 @@ import { webcrypto } from "node:crypto";
 import { readFile } from "node:fs/promises";
 import { DatabaseSync } from "node:sqlite";
 import test from "node:test";
+import { onRequest as onFoundingRequest } from "../functions/api/founding-consultation.js";
+import { onRequest as onPriorityRequest } from "../functions/api/priority.js";
 
 if (!globalThis.crypto) globalThis.crypto = webcrypto;
 
-const foundingSource = await readFile(
-  new URL("../functions/api/founding-consultation.js", import.meta.url),
-  "utf8",
-);
-const prioritySource = await readFile(new URL("../functions/api/priority.js", import.meta.url), "utf8");
-const { onRequest: onFoundingRequest } = await import(
-  `data:text/javascript;base64,${Buffer.from(foundingSource).toString("base64")}`
-);
-const { onRequest: onPriorityRequest } = await import(
-  `data:text/javascript;base64,${Buffer.from(prioritySource).toString("base64")}`
-);
-
 const ORIGIN = "https://apexwellnessnwi.com";
-const CONSENT_VERSION = "launch-list-phone-2026-10-26";
+const CONSENT_VERSION = "launch-list-split-2026-10-26";
 const VALID_PAYLOAD = {
   full_name: "  Ana   O'Neil  ",
   email: " ANA@Example.COM ",
   phone: " (219) 555-0123 ",
+  phone_followup_consent: false,
+  phone_followup_consent_version: "launch-manual-call-2026-10-26",
   contact_consent: true,
   consent_version: CONSENT_VERSION,
   website: "",
@@ -43,6 +35,14 @@ class MockStatement {
   }
 
   async run() {
+    if (this.sql.includes("INSERT INTO launch_list_consent_events")) {
+      this.db.consentEvents.push({
+        emailConsentVersion: this.params[1],
+        phoneConsent: this.params[2],
+        phoneConsentVersion: this.params[3],
+      });
+      return { success: true, meta: { changes: 1 } };
+    }
     if (!this.sql.includes("INSERT INTO founding_consultation_requests")) {
       throw new Error("Unexpected run statement");
     }
@@ -52,6 +52,9 @@ class MockStatement {
       fullName,
       email,
       phone,
+      phoneFollowupConsent,
+      phoneFollowupVersion,
+      phoneFollowupRecordedAt,
       requestKind,
       consentVersion,
       consentedAt,
@@ -72,13 +75,15 @@ class MockStatement {
       Object.assign(existing, {
         fullName,
         phone,
+        phoneFollowupConsent,
+        phoneFollowupVersion,
+        phoneFollowupRecordedAt,
         contactConsent: 1,
         consentVersion,
         consentedAt,
         ipHash,
         userAgent,
         sourceOrigin,
-        createdAt,
       });
       return { success: true, meta: { changes: 1 } };
     }
@@ -88,6 +93,9 @@ class MockStatement {
       fullName,
       email,
       phone,
+      phoneFollowupConsent,
+      phoneFollowupVersion,
+      phoneFollowupRecordedAt,
       requestKind,
       contactConsent: 1,
       consentVersion,
@@ -104,6 +112,7 @@ class MockStatement {
 class MockDB {
   constructor() {
     this.submissions = [];
+    this.consentEvents = [];
     this.rateCounters = new Map();
   }
 
@@ -112,6 +121,11 @@ class MockDB {
   }
 
   async batch(statements) {
+    if (statements[0]?.sql.includes("INSERT INTO founding_consultation_requests")) {
+      const results = [];
+      for (const statement of statements) results.push(await statement.run());
+      return results;
+    }
     return statements.map((statement) => {
       if (statement.sql.includes("DELETE FROM priority_rate_limits")) {
         return { success: true, meta: { changes: 0 } };
@@ -138,6 +152,10 @@ function env(db = new MockDB(), overrides = {}) {
 
 function request(payload = {}, options = {}) {
   const body = { ...VALID_PAYLOAD, form_started_at: Date.now() - 10_000, ...payload };
+  if (body.accessibility_request === true) {
+    delete body.phone_followup_consent;
+    delete body.phone_followup_consent_version;
+  }
   const method = options.method || "POST";
   return new Request(options.url || `${ORIGIN}/api/founding-consultation`, {
     method,
@@ -193,6 +211,8 @@ test("accepts only the minimal consultation contract", async () => {
     email: "not-an-email",
     contact_consent: false,
     accessibility_request: "yes",
+    phone_followup_consent: undefined,
+    phone_followup_consent_version: undefined,
   }));
   assert.equal(invalid.status, 422);
   assert.deepEqual((await invalid.json()).fields, [
@@ -229,6 +249,30 @@ test("normalizes common U.S. and Canada phone formats before storage", async () 
   const canadaDb = new MockDB();
   assert.equal((await call(request({ phone: "+1 416 555 0123" }), env(canadaDb))).status, 200);
   assert.equal(canadaDb.submissions[0].phone, "+14165550123");
+});
+
+test("records email permission and the separate optional manual-call choice", async () => {
+  const db = new MockDB();
+  const testEnv = env(db);
+  assert.equal((await call(request({ phone_followup_consent: false }), testEnv)).status, 200);
+  assert.equal(db.submissions[0].phoneFollowupConsent, 0);
+  assert.equal(db.consentEvents[0].emailConsentVersion, CONSENT_VERSION);
+  assert.equal(db.consentEvents[0].phoneConsent, 0);
+  assert.equal(db.consentEvents[0].phoneConsentVersion, "launch-manual-call-2026-10-26");
+
+  assert.equal((await call(request({ phone_followup_consent: true }), testEnv)).status, 200);
+  assert.equal(db.submissions[0].phoneFollowupConsent, 1);
+  assert.deepEqual(db.consentEvents.map((event) => event.phoneConsent), [0, 1]);
+  assert.equal(db.submissions[0].phone, "+12195550123");
+
+  const invalid = await call(request({
+    phone_followup_consent: "true",
+    phone_followup_consent_version: "old-version",
+  }), env(new MockDB()));
+  assert.equal(invalid.status, 422);
+  assert.deepEqual((await invalid.json()).fields, [
+    "phone_followup_consent", "phone_followup_consent_version",
+  ]);
 });
 
 test("requires the configured consent version and a strict boolean consent", async () => {
@@ -317,6 +361,9 @@ test("normalizes and stores a Founding Patient consent record without raw IP", a
   assert.equal(stored.requestKind, "founding_consultation");
   assert.equal(stored.contactConsent, 1);
   assert.equal(stored.consentVersion, CONSENT_VERSION);
+  assert.equal(stored.phoneFollowupConsent, 0);
+  assert.equal(stored.phoneFollowupVersion, "launch-manual-call-2026-10-26");
+  assert.equal(db.consentEvents[0].phoneConsent, 0);
   assert.match(stored.consentedAt, /^\d{4}-\d{2}-\d{2}T/);
   assert.match(stored.ipHash, /^[a-f0-9]{64}$/);
   assert.notEqual(stored.ipHash, "203.0.113.42");

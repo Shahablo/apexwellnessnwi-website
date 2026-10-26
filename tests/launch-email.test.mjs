@@ -25,6 +25,7 @@ test("branded launch emails retain action, consent and plain-text fallbacks", ()
   assert.match(verify.htmlContent, /Confirm my email/);
   assert.match(verify.htmlContent, /id=test&amp;token=sample/);
   assert.match(verify.textContent, /id=test&token=sample/);
+  assert.match(verify.htmlContent, /width="260" alt="Apex Wellness"/);
   for (const stage of ["welcome", "day3", "day10"]) {
     const email = renderLaunchEmail(stage, {
       unsubscribe: ORIGIN + "/api/launch-email/unsubscribe?id=test&token=sample",
@@ -35,6 +36,7 @@ test("branded launch emails retain action, consent and plain-text fallbacks", ()
     assert.match(email.htmlContent, /8550 Broadway, Suite B/);
     assert.doesNotMatch(email.htmlContent, /before-the-doors-open-apex-wellness/);
     assert.doesNotMatch(email.htmlContent, /Physician-led care|Atif|Wajeeh/);
+    assert.match(email.htmlContent, new RegExp(`width="${stage === "welcome" ? 330 : 260}" alt="Apex Wellness"`));
   }
 });
 

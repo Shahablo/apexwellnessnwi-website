@@ -2,13 +2,13 @@ export const midlifeLocalConversationArticle = Object.freeze({
   slug: '/blog/womens-midlife-care-merrillville-conversation/',
   status: 'published',
   editorialType: 'nonmedical',
-  title: 'Women’s Midlife Care in Merrillville | An Apex Introduction',
-  description: 'Following The Menopause Society’s 2026 meeting, meet one of the care areas Apex Wellness is preparing at its new Merrillville clinic.',
+  title: 'Women’s Midlife Care Is Part of the Apex Plan | Merrillville',
+  description: 'The Menopause Society met as Apex got its name on the door in Merrillville. Here is why women’s midlife care has its own place in our planned clinic.',
   eyebrow: 'Women’s midlife care',
   readTime: '2 minute read',
-  h1: 'Women’s midlife care has a place in the Apex plan.',
-  intro: 'The Menopause Society’s 2026 Annual Meeting ran October 20–24 under the theme “Bridging the Gap Between Research and Practice.” Closer to home, Apex Wellness is preparing a women’s midlife care area at our new Merrillville clinic. Here is what that means while we are still getting the doors ready.',
-  excerpt: 'An introduction to the women’s midlife care area Apex Wellness is preparing at its new Merrillville clinic.',
+  h1: 'A new name on the door. A place for midlife care.',
+  intro: 'The Menopause Society held its 2026 Annual Meeting October 20–24 under the theme “Bridging the Gap Between Research and Practice.” That same week, we got the Apex name onto the door of our new space in Merrillville.\n\nThose moments are very different in scale. Together, they make this a good time to introduce one of the areas we are preparing at Apex: women’s midlife care.',
+  excerpt: 'As Apex puts its name on the door in Merrillville, meet one of the four care areas planned for the new clinic.',
   published: '2026-10-26',
   modified: '2026-10-26',
   category: 'About Apex',
@@ -17,24 +17,24 @@ export const midlifeLocalConversationArticle = Object.freeze({
   relatedService: { label: 'Explore planned women’s midlife care', href: '/womens-midlife-care/' },
   sections: [
     {
-      heading: 'Named on purpose',
+      heading: 'Why it has its own place',
       paragraphs: [
-        'Women’s midlife care is one of four areas Apex plans to focus on. It has a dedicated page describing our intended approach to perimenopause and menopause. We want people in Northwest Indiana to know that this is part of the clinic we are building.',
-        'The page describes a plan. It does not settle what care is right for any one person, and it does not mean a visit is available today. The clinical team and the details of care must be confirmed before appointments begin.'
+        'Apex has chosen four areas to focus on, and women’s midlife care is one of them. We named it plainly and gave it a dedicated page about the approach we are preparing to perimenopause and menopause. If you are looking at a new clinic in Northwest Indiana, you should be able to tell whether this is part of its plan without decoding a vague “wellness” menu.',
+        'A short list gives us room to be specific about each area as the practice takes shape. It also gives you one place to check as the details are confirmed.'
       ]
     },
     {
-      heading: 'The real-world part',
+      heading: 'One door, plenty left to do',
       paragraphs: [
-        'The Apex name is now on the door at 8550 Broadway, Suite B, Merrillville, IN 46410. Seeing it there is a satisfying little milestone. We are still preparing the space, people and systems needed before in-person care can begin.',
-        'The location page shows where the clinic is taking shape and which visit details are still being finalized. A sign on the door is progress; appointment availability will be announced separately.'
+        'You can find us at 8550 Broadway, Suite B, Merrillville, IN 46410. Getting the name onto the door took some effort. The next steps—putting the people, equipment and systems in place—are harder to fit into a photo.',
+        'We want the plan you read online to have a real clinic behind it. We will keep sharing what is actually in place as that work moves forward.'
       ]
     },
     {
-      heading: 'Where to check next',
+      heading: 'Where to follow along',
       paragraphs: [
-        'Read the women’s midlife care page for the planned focus and the Merrillville page for the location. If you want opening, team, pricing and scheduling updates as they are confirmed, join the Launch List. It asks for a name and email; joining does not book an appointment or establish care.',
-        'Apex Wellness is Coming soon. For now, that means the work is underway and the visit calendar is still closed.'
+        'Our women’s midlife care page explains the planned focus. The Merrillville page shows the location. The Launch List is for opening, team, pricing and scheduling updates as those details are confirmed. It asks for a name and email.',
+        'Apex is Coming soon; appointments are not open. The door tells you where. The Launch List will tell you when there is more to share.'
       ]
     }
   ],

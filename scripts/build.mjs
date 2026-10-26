@@ -794,13 +794,13 @@ function renderSiteHelp(page) {
   </aside>` : '';
   return `${launchPrompt}
   <div class="site-help" data-launch-label="${escapeHtml(page.launchLabel || site.launch.label)}">
-    <button id="help-toggle" class="help-toggle" type="button" aria-expanded="false" aria-controls="site-help-panel" hidden><span aria-hidden="true">✦</span> Ask Apex</button>
+    <button id="help-toggle" class="help-toggle" type="button" aria-expanded="false" aria-controls="site-help-panel" aria-label="Ask Pexy, automated website guide" hidden><span aria-hidden="true">✦</span> Ask Pexy</button>
     <section id="site-help-panel" class="help-panel" aria-labelledby="help-heading" hidden>
-      <header class="help-header"><div><p class="eyebrow">Website guide · Automated</p><h2 id="help-heading">How can I help you?</h2></div><button id="help-close" class="widget-close" type="button" aria-label="Close website guide">×</button></header>
-      <p class="help-disclosure" id="help-disclosure">Ask about the clinic, launch list, or website. This is not a person or medical advice. Please do not enter personal or medical information. Questions stay in this page and are not sent to Apex or an AI service.</p>
-      <div id="help-answer" class="help-answer" role="status" aria-live="polite" aria-atomic="true"><p>Try “When do you open?” or “How do I join the launch list?”</p></div>
-      <div class="help-topics" aria-label="Common questions"><button type="button" data-help-question="When do you open?">Opening</button><button type="button" data-help-question="What care do you offer?">Care areas</button><button type="button" data-help-question="What does care cost?">Pricing</button></div>
-      <form id="site-help-form" aria-label="Ask a website question"><label for="help-question">Your website question</label><div class="help-input-row"><input id="help-question" type="text" maxlength="500" autocomplete="off" placeholder="Type a question…" aria-describedby="help-disclosure" required><button type="submit">Ask</button></div></form>
+      <header class="help-header"><div><p class="eyebrow">Apex website guide · Automated</p><h2 id="help-heading">Hi, I’m Pexy.</h2></div><button id="help-close" class="widget-close" type="button" aria-label="Close Pexy">×</button></header>
+      <p class="help-disclosure" id="help-disclosure">I can point you to Apex facts, not give medical advice or reach a live person. Please skip personal or medical details. Your question stays in this page and is not sent to Apex or an AI service.</p>
+      <div id="help-answer" class="help-answer" role="status" aria-live="polite" aria-atomic="true"><p>What can I help you find? Try a topic below or ask a general website question.</p></div>
+      <div class="help-topics" aria-label="Common questions"><button type="button" data-help-question="When do you open?">Opening</button><button type="button" data-help-question="What care do you offer?">Care areas</button><button type="button" data-help-question="How does the first 100 assessments offer work?">First 100</button><button type="button" data-help-question="What does care cost?">Pricing</button><button type="button" data-help-question="Can I request a visit?">Visit request</button><button type="button" data-help-question="Where is Apex located?">Location</button></div>
+      <form id="site-help-form" aria-label="Ask Pexy a website question"><label for="help-question">Your website question</label><div class="help-input-row"><input id="help-question" type="text" maxlength="500" autocomplete="off" placeholder="Type a general question…" aria-describedby="help-disclosure" required><button type="submit">Ask Pexy</button></div></form>
       <p class="widget-note">Not monitored. For a medical emergency, call 911. <a href="/faq/">All FAQs</a></p>
     </section>
   </div>`;

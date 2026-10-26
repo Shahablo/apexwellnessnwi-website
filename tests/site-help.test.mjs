@@ -33,6 +33,47 @@ test('the location answer preserves in-person-only launch plans without opening 
   assert.match(answer.text, /telehealth is not planned for launch/);
   assert.match(answer.text, /Scheduling is not open yet/);
 });
+
+test('Pexy separates the first-100 offer, visit request, and Launch List', () => {
+  const offer = answerWebsiteQuestion('How does the first 100 assessments offer work?');
+  assert.equal(offer.href, '/founding-patients/');
+  assert.match(offer.text, /selected baseline labs included when clinically appropriate/);
+  assert.match(offer.text, /One per person; no purchase required/);
+  assert.match(offer.text, /does not reserve/);
+
+  const request = answerWebsiteQuestion('Can I book an appointment?');
+  assert.equal(request.href, '/plan-your-visit/');
+  assert.match(request.text, /does not book a time/);
+  assert.match(request.text, /name, email, phone/);
+
+  const list = answerWebsiteQuestion('How do I join the launch list?');
+  assert.equal(list.href, '/founding-patients/');
+  assert.match(list.text, /does not book a visit/);
+});
+
+test('unpublished prices, hours, and clinician identity remain unresolved', () => {
+  const pricing = answerWebsiteQuestion('What does care cost?');
+  assert.equal(pricing.href, '/pricing/');
+  assert.match(pricing.text, /final prices.*not public yet/);
+  assert.doesNotMatch(pricing.text, /\$\d+/);
+
+  const hours = answerWebsiteQuestion('When are your hours?');
+  assert.equal(hours.href, '/merrillville/');
+  assert.match(hours.text, /have not been announced/);
+
+  const team = answerWebsiteQuestion('Who is the doctor?');
+  assert.equal(team.href, '/about/');
+  assert.match(team.text, /confirmed care team.*will be shared/);
+  assert.doesNotMatch(team.text, /Atif|Wajeeh/i);
+});
+
+test('the guide routes common logistics and keeps personal medical questions out of answers', () => {
+  assert.equal(answerWebsiteQuestion('Can I call you?').href, '/merrillville/');
+  assert.equal(answerWebsiteQuestion('Is there accessible website support?').href, '/accessibility/');
+  assert.equal(answerWebsiteQuestion('How does cancellation work?').href, '/cancellation-refunds/');
+  assert.equal(answerWebsiteQuestion('Are labs included?').href, '/founding-patients/');
+  assert.match(answerWebsiteQuestion('I have my lab results, can I book?').text, /cannot assess/);
+});
 test('medical and emergency questions take precedence over marketing answers', () => {
   assert.match(answerWebsiteQuestion('I have chest pain and want an appointment').text, /call 911/);
   assert.match(answerWebsiteQuestion('Should I take testosterone?').text, /cannot assess/);

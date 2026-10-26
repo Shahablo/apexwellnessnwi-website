@@ -3,6 +3,7 @@ import { webcrypto } from "node:crypto";
 import { readFile } from "node:fs/promises";
 import { DatabaseSync } from "node:sqlite";
 import test from "node:test";
+import { renderLaunchEmail } from "../src/launch-email-copy.mjs";
 import { onRequest as signup } from "../functions/api/founding-consultation.js";
 import {
   handleLaunchEmailAction,
@@ -15,6 +16,27 @@ if (!globalThis.crypto) globalThis.crypto = webcrypto;
 
 const ORIGIN = "https://apexwellnessnwi.com";
 const CONSENT_VERSION = "launch-list-split-2026-10-26";
+
+test("branded launch emails retain action, consent and plain-text fallbacks", () => {
+  const verify = renderLaunchEmail("verify", {
+    verify: ORIGIN + "/api/launch-email/verify?id=test&token=sample",
+  });
+  assert.match(verify.htmlContent, /apex-email-lockup\.png/);
+  assert.match(verify.htmlContent, /Confirm my email/);
+  assert.match(verify.htmlContent, /id=test&amp;token=sample/);
+  assert.match(verify.textContent, /id=test&token=sample/);
+  for (const stage of ["welcome", "day3", "day10"]) {
+    const email = renderLaunchEmail(stage, {
+      unsubscribe: ORIGIN + "/api/launch-email/unsubscribe?id=test&token=sample",
+    });
+    assert.match(email.htmlContent, /apex-email-lockup\.png/);
+    assert.match(email.htmlContent, /<a href="https:\/\/apexwellnessnwi\.com\/api\/launch-email\/unsubscribe/);
+    assert.match(email.textContent, /Unsubscribe from opening updates:/);
+    assert.match(email.htmlContent, /8550 Broadway, Suite B/);
+    assert.doesNotMatch(email.htmlContent, /before-the-doors-open-apex-wellness/);
+    assert.doesNotMatch(email.htmlContent, /Physician-led care|Atif|Wajeeh/);
+  }
+});
 
 class Statement {
   constructor(db, sql) {
@@ -450,7 +472,7 @@ test("Day 3 and Day 10 follow-ups wait for confirmation and respect their indepe
     assert.equal(sent.length, 1);
     env.LAUNCH_EMAIL_FOLLOWUPS_ENABLED = "true";
     await runLaunchEmailQueue(env, new Date(now.getTime() + 4 * 86_400_000), fakeBrevo);
-    assert.equal(sent[1].subject, "Before the doors open");
+    assert.equal(sent[1].subject, "Appointment requests are coming soon");
     await runLaunchEmailQueue(env, new Date(now.getTime() + 11 * 86_400_000), fakeBrevo);
     assert.equal(sent[2].subject, "Where you'll find Apex Wellness");
   } finally {

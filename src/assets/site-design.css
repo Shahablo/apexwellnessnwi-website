@@ -248,7 +248,8 @@ body{overflow-x:clip}
 .footer-signature>a{display:flex;justify-content:space-between;align-items:center;gap:2rem;text-decoration:none;color:#f6f4ed;font:400 clamp(4rem,9.5vw,12rem)/1 var(--font-display);letter-spacing:-.04em}
 .footer-signature>a img{display:block;width:min(46vw,32rem);max-width:calc(100% - 4rem);height:auto}
 .footer-signature>a span{font:400 clamp(2.5rem,6vw,6.8rem)/1 var(--font-body);color:#d5d8b9}
-.footer-signature>p{font-size:.87rem;letter-spacing:.02em;margin:1.8rem 0 0}
+/* The W starts about 16.8% into the approved lockup's rendered width. */
+.footer-signature>p{font-size:.87rem;letter-spacing:.02em;margin:1.8rem 0 0 min(7.73vw,5.38rem)}
 .footer-grid{grid-template-columns:1.6fr 1fr 1fr 1fr;gap:clamp(2rem,4vw,4rem)}
 .footer-grid p,.footer-grid a{font-size:.81rem;line-height:1.9}
 .footer-grid h2,.footer-grid .eyebrow{font:600 .7rem/1.7 var(--font-body);letter-spacing:.1em;text-transform:uppercase;color:#ddd8bb;margin:0 0 1.5rem}
@@ -312,6 +313,7 @@ body{overflow-x:clip}
   .introduction-grid h2{font-size:3.2rem}.section .section-heading h2{font-size:2.9rem}.local-section h2{font-size:3.5rem}
   .footer-signature>a{font-size:3.75rem}.footer-signature>a span{font-size:2rem}.footer-grid{gap:2.3rem 1rem}.footer-grid h2{font-size:.68rem}.footer-grid p,.footer-grid a{font-size:.78rem}
   .footer-signature>a img{width:min(55vw,20rem)}
+  .footer-signature>p{margin-left:min(9.24vw,3.36rem)}
   .landing-nav .nav-cta{display:none}.landing-nav a{font-size:.78rem}.conversion-form-card>h2{font-size:2.7rem}
   .article-body h2,.policy h2{font-size:2.3rem}.policy h1{font-size:3.4rem;overflow-wrap:break-word}
   .launch-prompt h2{font-size:1.65rem;line-height:1.1;margin:.4rem 0}.launch-prompt .eyebrow{font-size:.64rem;margin-bottom:.5rem}.launch-prompt p:not(.eyebrow){font-size:.77rem;line-height:1.55}.launch-prompt .button{min-height:2.75rem;padding:.65rem 1rem}

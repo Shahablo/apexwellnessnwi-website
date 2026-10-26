@@ -2,6 +2,18 @@
 'use strict';
 // Pexy is a browser-only guide to verified public information, not a clinical or live chat service.
 // Keep answers and destinations aligned with current site content before each release.
+function shouldOfferPexy({ elapsedMs, desktop, topExit = false, engaged = false, pageVisible = true, available = true }) {
+  return desktop && pageVisible && available &&
+    ((topExit && elapsedMs >= 15000) || (engaged && elapsedMs >= 40000));
+}
+
+function pexyNudgeCopy(pathname = '/') {
+  if (/^\/pricing\/?$/.test(pathname)) return 'Prices are being finalized. I can tell you what is confirmed now and where updates will appear.';
+  if (/^\/founding-patients\/?$/.test(pathname)) return 'Questions about the first-100 assessment offer? I can explain the terms and what joining the Launch List does.';
+  if (/^\/plan-your-visit\/?$/.test(pathname)) return 'Wondering what happens after a visit request? I can explain the process. A request does not book a time.';
+  return 'Need a quick answer? I can help with opening plans, care areas, pricing updates, and visit requests.';
+}
+
 function answerWebsiteQuestion(input, launchLabel = 'November 16, 2026') {
   const question = String(input || '').slice(0, 500).toLowerCase().normalize('NFKC');
   const plannedDate = String(launchLabel).replace(/\s*\(.*\)$/, '');
@@ -90,12 +102,33 @@ const toggle = document.querySelector('#help-toggle');
 const panel = document.querySelector('#site-help-panel');
 const input = document.querySelector('#help-question');
 const answer = document.querySelector('#help-answer');
-const launchPrompt = document.querySelector('#launch-prompt');
-const dismissalKey = 'apex-launch-invitation-dismissed-v1';
+const nudge = document.querySelector('#pexy-nudge');
+const nudgeSeenKey = 'apex-pexy-nudge-seen-v1';
+const pageStartedAt = performance.now();
+let nudgeSeen = false;
+try { nudgeSeen = sessionStorage.getItem(nudgeSeenKey) === 'true'; } catch { /* Optional preference only. */ }
 
-function dismissInvitation() {
-  if (launchPrompt) launchPrompt.hidden = true;
-  try { sessionStorage.setItem(dismissalKey, 'true'); } catch { /* Optional preference only. */ }
+function markNudgeSeen() {
+  nudgeSeen = true;
+  try { sessionStorage.setItem(nudgeSeenKey, 'true'); } catch { /* Optional preference only. */ }
+}
+
+function dismissPexyNudge() {
+  if (nudge) nudge.hidden = true;
+  markNudgeSeen();
+}
+
+function offerPexy({ topExit = false, engaged = false } = {}) {
+  if (!nudge || !toggle || !panel || nudgeSeen) return;
+  // Browser chrome and the search bar are outside the page. Leaving at the top is only a possible-exit signal.
+  const desktop = window.matchMedia('(hover: hover) and (pointer: fine) and (min-width: 48rem)').matches;
+  const focusedField = document.activeElement?.matches('input, textarea, select, [contenteditable="true"]');
+  const policyPage = /^\/(?:privacy|terms|communications-consent|cancellation-refunds|accessibility)\/?$/.test(window.location.pathname);
+  const available = !toggle.hidden && panel.hidden && !focusedField && !policyPage;
+  if (!shouldOfferPexy({ elapsedMs: performance.now() - pageStartedAt, desktop, topExit, engaged, pageVisible: document.visibilityState === 'visible', available })) return;
+  document.querySelector('#pexy-nudge-copy').textContent = pexyNudgeCopy(window.location.pathname);
+  nudge.hidden = false;
+  markNudgeSeen(); // One invitation per browsing session, across pages.
 }
 
 function setOpen(open, restoreFocus = false) {
@@ -103,7 +136,7 @@ function setOpen(open, restoreFocus = false) {
   panel.hidden = !open;
   toggle.setAttribute('aria-expanded', String(open));
   if (open) {
-    if (launchPrompt) launchPrompt.hidden = true;
+    dismissPexyNudge();
     input.focus();
   } else {
     input.value = '';
@@ -129,6 +162,8 @@ function respond(question) {
 if (widget && toggle && panel && input && answer) {
   toggle.hidden = false;
   toggle.addEventListener('click', () => setOpen(panel.hidden));
+  document.querySelector('#pexy-nudge-open')?.addEventListener('click', () => setOpen(true));
+  document.querySelector('#pexy-nudge-close')?.addEventListener('click', dismissPexyNudge);
   document.querySelector('#help-close').addEventListener('click', () => setOpen(false, true));
   document.querySelector('#site-help-form').addEventListener('submit', (event) => {
     event.preventDefault();
@@ -139,7 +174,21 @@ if (widget && toggle && panel && input && answer) {
   });
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape' && !panel.hidden) setOpen(false, true);
+    else if (event.key === 'Escape' && nudge && !nudge.hidden) {
+      const focusInside = nudge.contains(document.activeElement);
+      dismissPexyNudge();
+      if (focusInside) toggle.focus();
+    }
   });
+  document.addEventListener('mouseout', (event) => {
+    if (event.relatedTarget === null && event.clientY <= 0) offerPexy({ topExit: true });
+  });
+  const offerAfterEngagement = () => {
+    const engaged = window.scrollY > Math.min(360, window.innerHeight * 0.5);
+    offerPexy({ engaged });
+  };
+  window.setTimeout(offerAfterEngagement, 40000);
+  window.addEventListener('scroll', offerAfterEngagement, { passive: true });
   // Keep fixed controls away from the actual signup form and its feedback.
   const form = document.querySelector('#consultation-request');
   if (form && 'IntersectionObserver' in window) {
@@ -147,6 +196,7 @@ if (widget && toggle && panel && input && answer) {
       const hadFocus = widget.contains(document.activeElement);
       toggle.hidden = entry.isIntersecting;
       if (entry.isIntersecting) {
+        if (nudge) nudge.hidden = true;
         setOpen(false);
         if (hadFocus) form.focus({ preventScroll: true });
       }
@@ -154,22 +204,6 @@ if (widget && toggle && panel && input && answer) {
   }
 }
 
-if (launchPrompt) {
-  let dismissed = false;
-  try { dismissed = sessionStorage.getItem(dismissalKey) === 'true'; } catch { /* Storage may be blocked. */ }
-  document.querySelector('#dismiss-launch').addEventListener('click', dismissInvitation);
-  if (!dismissed) {
-    const showAfterEngagement = () => {
-      // On phones, the inline invitations remain available without covering answers.
-      if (window.matchMedia('(max-width: 48rem)').matches) return;
-      const progressed = window.scrollY > Math.min(500, window.innerHeight * 0.65);
-      if (!progressed) return;
-      window.removeEventListener('scroll', showAfterEngagement);
-      if (panel?.hidden && !document.activeElement?.matches('input, textarea, select')) launchPrompt.hidden = false;
-    };
-    window.addEventListener('scroll', showAfterEngagement, { passive: true });
-  }
-  document.addEventListener('consultation:success', dismissInvitation);
-}
+document.addEventListener('consultation:success', dismissPexyNudge);
 
 })();

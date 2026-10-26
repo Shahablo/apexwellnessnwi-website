@@ -1,5 +1,17 @@
 // Pexy is a browser-only guide to verified public information, not a clinical or live chat service.
 // Keep answers and destinations aligned with current site content before each release.
+export function shouldOfferPexy({ elapsedMs, desktop, topExit = false, engaged = false, pageVisible = true, available = true }) {
+  return desktop && pageVisible && available &&
+    ((topExit && elapsedMs >= 15000) || (engaged && elapsedMs >= 40000));
+}
+
+export function pexyNudgeCopy(pathname = '/') {
+  if (/^\/pricing\/?$/.test(pathname)) return 'Prices are being finalized. I can tell you what is confirmed now and where updates will appear.';
+  if (/^\/founding-patients\/?$/.test(pathname)) return 'Questions about the first-100 assessment offer? I can explain the terms and what joining the Launch List does.';
+  if (/^\/plan-your-visit\/?$/.test(pathname)) return 'Wondering what happens after a visit request? I can explain the process. A request does not book a time.';
+  return 'Need a quick answer? I can help with opening plans, care areas, pricing updates, and visit requests.';
+}
+
 export function answerWebsiteQuestion(input, launchLabel = 'November 16, 2026') {
   const question = String(input || '').slice(0, 500).toLowerCase().normalize('NFKC');
   const plannedDate = String(launchLabel).replace(/\s*\(.*\)$/, '');

@@ -618,6 +618,9 @@ test('all runtime scripts exist as deployable assets and the site guide stays lo
     assert.match(html, /id="help-toggle"[^>]*hidden/);
     assert.match(html, /Ask Pexy/);
     assert.match(html, /Hi, I’m Pexy\./);
+    assert.match(html, /id="pexy-nudge"[^>]*hidden/);
+    assert.match(html, /aria-label="Dismiss Pexy invitation"/);
+    assert.doesNotMatch(html, /id="launch-prompt"/, 'only one proactive invitation should remain');
     const helpForm = [...html.matchAll(/<form\b([^>]*)>([\s\S]*?)<\/form>/gi)].find((match) => attributes(match[1]).id === 'site-help-form');
     assert.ok(helpForm);
     assert.ok(!attributes(helpForm[1]).action, 'local guide must not post questions');

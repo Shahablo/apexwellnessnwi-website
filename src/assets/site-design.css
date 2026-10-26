@@ -261,7 +261,7 @@ body{overflow-x:clip}
 .footer-meta p:last-child{grid-column:1/-1;padding-top:.8rem}
 .launch-prompt{background:var(--color-canvas);border-radius:0;border:1px solid #d2d4c7;box-shadow:0 1rem 3rem #122b2526}
 .launch-prompt h2{font-weight:400;font-size:2.45rem;line-height:1.08}
-.help-toggle{background:#183d36;border:1px solid #ffffff50;font-size:.82rem;box-shadow:0 .4rem 1.5rem #122b2520}
+.help-toggle{background:#183d36;border:1px solid #ffffff50;font-size:1rem;box-shadow:0 .4rem 1.5rem #122b2520}
 .help-panel{border-radius:6px;background:var(--color-canvas)}
 .help-panel h2{font-weight:400;font-size:2rem}
 .help-topics button,.help-input-row input,.help-input-row button{border-radius:2px}

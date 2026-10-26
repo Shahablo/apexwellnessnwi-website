@@ -295,6 +295,54 @@ test("authenticated bounce webhook still suppresses recipients when sending is p
   }
 });
 
+test("documented Brevo hard-bounce and invalid-email payloads suppress later sends", async () => {
+  for (const [event, reason] of [["hard_bounce", "hard_bounce"], ["invalid_email", "invalid"]]) {
+    const db = await database();
+    try {
+      const env = environment(db);
+      await signup({ request: signupRequest(), env });
+      const verify = db.row("SELECT id FROM launch_email_outbox WHERE stage = 'verify'");
+      const callback = new Request(ORIGIN + "/api/launch-email/webhook", {
+        method: "POST",
+        headers: { Authorization: "Bearer " + env.BREVO_WEBHOOK_TOKEN, "Content-Type": "application/json" },
+        body: JSON.stringify({
+          event, tags: ["apex-launch-" + verify.id],
+          "message-id": "brevo-" + event, ts_epoch: Date.now(),
+        }),
+      });
+      assert.equal((await handleLaunchEmailWebhook(callback, env)).status, 204);
+      assert.equal(db.row("SELECT status FROM launch_email_subscriptions").status, "suppressed");
+      assert.equal(db.row("SELECT reason FROM launch_email_suppressions").reason, reason);
+      assert.equal(db.row("SELECT status FROM launch_email_outbox WHERE id = ?", verify.id).status, "suppressed");
+    } finally {
+      db.close();
+    }
+  }
+});
+
+test("documented Brevo unsubscribe tag string suppresses without a stored provider message ID", async () => {
+  const db = await database();
+  try {
+    const env = environment(db);
+    await signup({ request: signupRequest(), env });
+    const verify = db.row("SELECT id FROM launch_email_outbox WHERE stage = 'verify'");
+    const callback = new Request(ORIGIN + "/api/launch-email/webhook", {
+      method: "POST",
+      headers: { Authorization: "Bearer " + env.BREVO_WEBHOOK_TOKEN, "Content-Type": "application/json" },
+      body: JSON.stringify({
+        event: "unsubscribed", tag: JSON.stringify(["apex-launch-" + verify.id]),
+        "message-id": "brevo-unsubscribe", ts_epoch: Date.now(),
+      }),
+    });
+    assert.equal((await handleLaunchEmailWebhook(callback, env)).status, 204);
+    assert.equal(db.row("SELECT status FROM launch_email_subscriptions").status, "unsubscribed");
+    assert.equal(db.row("SELECT reason FROM launch_email_suppressions").reason, "unsubscribe");
+    assert.equal(db.row("SELECT status FROM launch_email_outbox WHERE id = ?", verify.id).status, "suppressed");
+  } finally {
+    db.close();
+  }
+});
+
 test("repeat signup retains legacy source consent version and time", async () => {
   const db = await database();
   try {

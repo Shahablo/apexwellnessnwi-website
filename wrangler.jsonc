@@ -42,7 +42,7 @@
     "LAUNCH_EMAIL_FOLLOWUPS_ENABLED": "false"
   },
   "triggers": {
-    "crons": []
+    "crons": ["*/5 * * * *"]
   },
   "observability": {
     "enabled": true

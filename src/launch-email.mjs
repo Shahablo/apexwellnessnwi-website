@@ -570,12 +570,25 @@ export async function handleLaunchEmailWebhook(request, env) {
   if (!payload || typeof payload !== "object" || Array.isArray(payload)) {
     return textResponse(400, "Invalid payload.");
   }
-  const event = payload.event;
+  // Brevo's webhook selector names differ from some documented payload names.
+  // Accept both so a bounce or invalid address always suppresses later sends.
+  const event = {
+    hard_bounce: "hardBounce",
+    invalid_email: "invalid",
+  }[payload.event] || payload.event;
   const eventTypes = new Set(["delivered", "hardBounce", "spam", "unsubscribed", "invalid", "blocked"]);
   if (!eventTypes.has(event)) return textResponse(204, "");
   const messageId = typeof payload["message-id"] === "string" ? payload["message-id"] : null;
-  const tag = Array.isArray(payload.tags)
-    ? payload.tags.find((value) => typeof value === "string" && /^apex-launch-[0-9a-f-]{36}$/i.test(value))
+  let tags = payload.tags;
+  if (!Array.isArray(tags) && typeof payload.tag === "string") {
+    try {
+      tags = JSON.parse(payload.tag);
+    } catch {
+      tags = [payload.tag];
+    }
+  }
+  const tag = Array.isArray(tags)
+    ? tags.find((value) => typeof value === "string" && /^apex-launch-[0-9a-f-]{36}$/i.test(value))
     : null;
   const outboxId = tag?.slice("apex-launch-".length) || null;
   if (!messageId && !outboxId) return textResponse(204, "");
@@ -598,7 +611,8 @@ export async function handleLaunchEmailWebhook(request, env) {
     ).bind(nowIso, row.id).run();
     return textResponse(204, "");
   }
-  const reason = event === "hardBounce" ? "hard_bounce" : event;
+  const reason = event === "hardBounce" ? "hard_bounce"
+    : event === "unsubscribed" ? "unsubscribe" : event;
   await env.DB.batch([
     env.DB.prepare(
       "INSERT INTO launch_email_suppressions (email_hash, reason, created_at) VALUES (?, ?, ?) "

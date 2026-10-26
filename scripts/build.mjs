@@ -905,6 +905,7 @@ async function prepareAssets() {
   await cp(join(sourceAssetsDirectory, "site.css"), join(publicAssetsDirectory, "site.css"));
   await cp(join(sourceAssetsDirectory, "site.js"), join(publicAssetsDirectory, "site.js"));
   await cp(join(sourceAssetsDirectory, 'site-design.css'), join(publicAssetsDirectory, 'site-design.css'));
+  await cp(join(sourceAssetsDirectory, 'launch-email-action.css'), join(publicAssetsDirectory, 'launch-email-action.css'));
   await cp(join(sourceAssetsDirectory, 'visit-planner.js'), join(publicAssetsDirectory, 'visit-planner.js'));
   const fontDirectory = join(publicAssetsDirectory, 'fonts');
   await mkdir(fontDirectory, { recursive: true });

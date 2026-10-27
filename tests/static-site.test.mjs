@@ -637,14 +637,14 @@ test('the confirmed clinic identity appears consistently without invented hours,
   }
 });
 
-test('measurement is loaded as an inert first-party interface with no vendor or network configuration', async () => {
+test('measurement is first-party, aggregate, and excludes advertising vendors and browser identifiers', async () => {
   const html = htmlBySlug.get('/');
   assert.match(html, /<script src="\/assets\/site-measurement\.js\?v=[a-f0-9]+" defer><\/script>/);
   const measurement = await readFile(join(publicRoot, 'assets', 'site-measurement.js'), 'utf8');
-  assert.match(measurement, /enabled:\s*false/);
-  assert.match(measurement, /provider:\s*null/);
-  assert.match(measurement, /endpoint:\s*null/);
-  assert.doesNotMatch(measurement, /fetch\s*\(|sendBeacon\s*\(|XMLHttpRequest|localStorage|sessionStorage|document\.cookie/);
+  assert.match(measurement, /enabled:\s*true/);
+  assert.match(measurement, /endpoint:\s*"\/api\/site-event"/);
+  assert.match(measurement, /sendBeacon/);
+  assert.doesNotMatch(measurement, /XMLHttpRequest|localStorage|sessionStorage|document\.cookie|referrer|userAgent|question|searchParams|formData/);
   assert.doesNotMatch(html, /googletagmanager|google-analytics|connect\.facebook\.net|clarity\.ms|hotjar|segment|mixpanel/i);
 });
 

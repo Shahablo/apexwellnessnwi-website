@@ -1026,12 +1026,12 @@ export const pages = Object.freeze({
     title: 'Privacy Policy | Apex Wellness',
     description:
       'Read how the Apex Wellness prelaunch website handles contact requests and optional Pexy website-question follow-ups.',
-    eyebrow: 'Updated October 26, 2026',
+    eyebrow: 'Updated October 27, 2026',
     h1: 'Privacy Policy',
     intro:
       'This prelaunch policy explains the limited information collected through the Apex Wellness website, its contact forms, and Pexy’s optional follow-up form. It may be updated as clinical services and secure patient systems are introduced.',
     cta: priorityListCta,
-    effectiveDate: 'October 26, 2026',
+    effectiveDate: 'October 27, 2026',
     sections: [
       {
         type: 'policySection',
@@ -1060,6 +1060,14 @@ export const pages = Object.freeze({
         paragraphs: [
           'Pexy uses fixed informational answers within your browser. Questions typed to Pexy are not sent to Apex or an external AI service, and Pexy does not save the conversation. If Pexy cannot answer a general question, you may choose to type a new question, name, and email into its separate follow-up form. Only that form submission is sent to Apex for a reply; the original Pexy question is not automatically copied or sent. Do not enter personal health information in either place.',
           'A temporary session preference remembers if you dismiss the launch invitation. It does not contain your questions or contact details. The Launch List, visit-request, and Pexy follow-up forms record information only when you choose to submit them with the consent shown for that form.'
+        ]
+      },
+      {
+        type: 'policySection',
+        heading: 'Privacy-minimized site measurement',
+        paragraphs: [
+          'Apex counts broad categories of page views and clicks to the Launch List, Plan Your Visit, phone, or email actions. These counts are sent only to an Apex website endpoint and stored as daily totals. The measurement does not set cookies, create visitor profiles, or store raw IP addresses, IP hashes, device identifiers, full URLs, query strings, referrers, form values, Pexy questions, or the specific care page viewed. All care pages are combined into one broad care-page category.',
+          'Google Analytics, Google Tag Manager, Meta Pixel, and other advertising tags are not currently installed on this website.'
         ]
       },
       {

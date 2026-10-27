@@ -1,8 +1,15 @@
-# Website measurement gate
+# Website measurement
 
-The website includes a first-party `window.apexMeasurement` interface, but it is deliberately disabled. It sends no requests, loads no vendor code, stores no identifiers and records no events.
+The website uses a first-party, cookie-free `window.apexMeasurement` interface. It sends a small same-origin request to `/api/site-event` and stores only daily aggregate counters in Apex's existing Cloudflare D1 database.
 
-Do not enable measurement by changing only the `enabled` value. Before any provider is connected, Apex must approve and document:
+Allowed measurements are limited to:
+
+- Page views grouped as `home`, `care`, `blog`, `visit`, or `general`. All care pages share one `care` group.
+- Clicks to the Launch List, Plan Your Visit, phone, or email actions.
+
+The endpoint rejects full paths, URLs, query strings, referrers, names, email addresses, phone numbers, form values, free text, Pexy questions, care-specific labels, and any extra fields. It stores no raw IP address, IP hash, device identifier, user agent, session identifier, or visitor-level event row. It does not set cookies or use local or session storage. Google Analytics, Google Tag Manager, Meta Pixel, and other advertising tags are not installed.
+
+Before any third-party analytics or advertising provider is connected, Apex must separately approve and document:
 
 1. The provider and account configuration, including who can access the data.
 2. The privacy, security and healthcare-data review, including whether a business associate agreement or consent mechanism is required.
@@ -11,4 +18,4 @@ Do not enable measurement by changing only the `enabled` value. Before any provi
 5. The production property or container identifiers and the exact domains that must be added to the Content Security Policy.
 6. A test plan showing that consent choices work and that form or assistant data never enters analytics logs.
 
-After those decisions are approved, replace the inert adapter with the reviewed implementation and test its network requests before release. Advertising pixels remain out of scope unless separately authorized.
+After those decisions are approved, add the reviewed integration and test its network requests before release. Do not reuse or expand the aggregate endpoint to collect visitor-level data.

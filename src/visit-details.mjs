@@ -18,7 +18,7 @@ export const visitDetails = Object.freeze({
 });
 
 export const merrillvillePage = Object.freeze({
-  slug: '/merrillville/', navLabel: 'Location', modified: '2026-10-25',
+  slug: '/merrillville/', navLabel: 'Location', modified: '2026-10-27',
   title: 'Merrillville Location & In-Person Care | Apex Wellness',
   description: 'Apex Wellness is coming soon to 8550 Broadway, Suite B, Merrillville, IN 46410. Find directions, planned in-person visit details and opening updates.',
   eyebrow: 'Our Merrillville location · Coming soon',
@@ -39,6 +39,7 @@ export const merrillvillePage = Object.freeze({
     ] },
     { type: 'faq', heading: 'Before planning a visit', items: [
       { question: 'Is the clinic open for appointments or walk-ins?', answer: 'Not yet. Apex is coming soon, and scheduling is not open. The Launch List is for updates; it does not reserve a visit or establish care.' },
+      { question: 'Do I have to live in Merrillville to visit?', answer: 'No. Neighbors in Munster and elsewhere in Northwest Indiana can follow opening updates too. Apex is preparing one location at 8550 Broadway, Suite B, Merrillville; planned visits will be in person there when scheduling opens.' },
       visitDetails.quickAnswers[1],
       { question: 'Can I ask about the location or access?', answer: 'Call (219) 207-2456 or email hello@apexwellnessnwi.com with a general location or accessibility question. Please keep medical details out of ordinary email and the Launch List form.' },
       { question: 'Where can I find fees and visit details?', answer: 'The Pricing and How It Works pages explain the planned process. Final fees, clinician details and appointment availability will be shared before scheduling opens.' }

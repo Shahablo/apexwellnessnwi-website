@@ -937,10 +937,10 @@ async function prepareAssets() {
   }));
 }
 
-function buildHeaders(jsonLdDocuments) {
-  const hashes = [...new Set(jsonLdDocuments.map((jsonLd) =>
-    `'sha256-${createHash("sha256").update(jsonLd).digest("base64")}'`
-  ))].join(" ");
+function buildHeaders() {
+  // JSON-LD is an HTML data block, not executable script. It does not need a
+  // script-src hash; collecting one per page would eventually exceed the
+  // Cloudflare _headers line limit as the site grows.
   const csp = [
     "default-src 'self'",
     "base-uri 'self'",
@@ -953,7 +953,7 @@ function buildHeaders(jsonLdDocuments) {
     "manifest-src 'self'",
     "media-src 'self'",
     "object-src 'none'",
-    `script-src 'self' ${hashes}`,
+    "script-src 'self'",
     "style-src 'self'",
     "upgrade-insecure-requests",
   ].join("; ");
@@ -1128,17 +1128,14 @@ async function build() {
   await rm(publicDirectory, { recursive: true, force: true });
   await prepareAssets();
 
-  const documents = [];
   for (const [pageKey, page] of Object.entries(pages)) {
     const jsonLd = pageJsonLd(page);
-    documents.push(jsonLd);
     await writeOutput(outputPathForSlug(page.slug), renderDocument(pageKey, page, jsonLd));
   }
 
   for (const post of publishedBlogPosts) {
     const page = { ...post, kind: "blogPost", navLabel: "Blog" };
     const jsonLd = pageJsonLd(page);
-    documents.push(jsonLd);
     await writeOutput(outputPathForSlug(page.slug), renderDocument("blog-post", page, jsonLd));
   }
 
@@ -1152,7 +1149,6 @@ async function build() {
     intro: "The address may have changed. Return home or review the planned areas of care.",
   };
   const notFoundJsonLd = pageJsonLd(notFoundPage);
-  documents.push(notFoundJsonLd);
   const notFoundMain = `<main id="main-content" class="page" tabindex="-1"><section class="hero" aria-labelledby="page-title"><div class="container section-narrow"><p class="eyebrow">${escapeHtml(notFoundPage.eyebrow)}</p><h1 id="page-title">${escapeHtml(notFoundPage.h1)}</h1><p>${escapeHtml(notFoundPage.intro)}</p><div class="button-row"><a class="button" href="/">Return home</a><a class="button-secondary" href="/founding-patients/">Join the Launch List</a></div></div></section></main>`;
   await writeOutput(join(publicDirectory, "404.html"), renderDocument("404", notFoundPage, notFoundJsonLd, { noIndex: true, mainOverride: notFoundMain }));
 
@@ -1161,7 +1157,7 @@ async function build() {
     writeOutput(join(publicDirectory, "sitemap.xml"), buildSitemap()),
     writeOutput(join(publicDirectory, "blog", "feed.xml"), buildRssFeed()),
     writeOutput(join(publicDirectory, ".assetsignore"), `.git\n.git/**\n**/.git\n**/.git/**\n.*\n**/.*\n*.map\n**/*.map\n*.log\n**/*.log\n**/*.md\n**/*.mjs\n**/*.cjs\n**/*.ts\n**/*.tsx\n**/*.jsx\n**/*.test.*\n**/*.spec.*\n`),
-    writeOutput(join(publicDirectory, "_headers"), buildHeaders(documents)),
+    writeOutput(join(publicDirectory, "_headers"), buildHeaders()),
     writeOutput(join(publicDirectory, "_redirects"), buildRedirects()),
     writeOutput(join(publicDirectory, "favicon.svg"), buildFavicon()),
     // Google Search Console ownership file for the clinic Google account. Do not remove.

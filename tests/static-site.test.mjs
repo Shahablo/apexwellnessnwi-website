@@ -518,6 +518,13 @@ test("deployment artifacts protect dotfiles and define site-wide security header
   assert.match(assetsIgnore, /(?:^|\n)\s*(?:\.git|\*\*\/\.git)(?:\/\*\*)?\s*(?:\n|$)/i, ".assetsignore must exclude .git");
   assert.match(assetsIgnore, /(?:^|\n)\s*(?:\.\*|\*\*\/\.\*|\*\*\/\.[^\n]*)\s*(?:\n|$)/, ".assetsignore must exclude dotfiles");
   assert.match(headers, /(?:^|\n)\/\*\s*(?:\n|$)/, "_headers needs a site-wide /* rule");
+  for (const [index, line] of headers.split(/\r?\n/).entries()) {
+    assert.ok(line.length <= 2000, `_headers line ${index + 1} exceeds Cloudflare's 2,000-character limit`);
+  }
+  const cspLines = headers.split(/\r?\n/).filter((line) => /^\s+Content-Security-Policy:/i.test(line));
+  assert.equal(cspLines.length, 1, "_headers must define one site-wide CSP");
+  assert.match(cspLines[0], /(?:^|;) script-src 'self'(?:;|$)/, "only same-origin executable scripts are allowed");
+  assert.doesNotMatch(cspLines[0], /'unsafe-inline'|'unsafe-eval'|'sha(?:256|384|512)-/i, "CSP must not allow inline execution or collect per-page JSON-LD hashes");
   assert.match(siteCss, /@media\s*\(scripting:\s*none\)[\s\S]*?\.nav-toggle\s*\{[\s\S]*?display:\s*none/i, "the no-JavaScript fallback must hide the inert menu toggle");
   assert.match(siteCss, /@media\s*\(scripting:\s*none\)[\s\S]*?\.site-nav\s*\{[\s\S]*?display:\s*flex[\s\S]*?max-height:\s*none[\s\S]*?overflow:\s*visible/i, "the no-JavaScript fallback must expose the complete mobile navigation");
   assert.equal(wrangler.assets?.directory, "./public/", "only public/ may be deployed as static assets");
@@ -544,6 +551,18 @@ test("deployment artifacts protect dotfiles and define site-wide security header
   for (const path of publishedFiles) {
     const publishedPath = relative(publicRoot, path).replaceAll("\\", "/");
     assert.doesNotMatch(publishedPath, /(?:^|\/)\.git(?:\/|$)|(?:^|\/)\.env(?:\.|$)/i, `sensitive file published: ${publishedPath}`);
+    if (publishedPath.endsWith(".html")) {
+      const html = await readFile(path, "utf8");
+      for (const [, rawAttrs, body] of html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)) {
+        const scriptAttrs = attributes(rawAttrs);
+        if (scriptAttrs.src) {
+          assert.equal(body.trim(), "", `${publishedPath} external script must have no inline body`);
+        } else {
+          assert.equal(scriptAttrs.type?.toLowerCase(), "application/ld+json", `${publishedPath} must not add executable inline script without updating CSP`);
+          assert.doesNotThrow(() => JSON.parse(body), `${publishedPath} JSON-LD must remain valid inline data`);
+        }
+      }
+    }
   }
 });
 

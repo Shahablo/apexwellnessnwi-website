@@ -20,6 +20,7 @@ const prelaunchNotice =
 export const site = Object.freeze({
   name: 'Apex Wellness',
   canonicalUrl: 'https://apexwellnessnwi.com',
+  googleBusinessUrl: 'https://www.google.com/maps/place/Apex+Wellness/data=!4m2!3m1!1s0x8811efe2ce1d593b:0x2689d71d9a9b7eeb?hl=en',
   region: 'Northwest Indiana',
   address: { streetAddress: '8550 Broadway, Suite B', addressLocality: 'Merrillville', addressRegion: 'IN', postalCode: '46410', addressCountry: 'US', label: clinicAddress },
   status: 'Prelaunch',
@@ -229,13 +230,13 @@ export const pages = Object.freeze({
 
   'weight-management': {
     slug: '/weight-management/',
-    modified: '2026-10-25',
+    modified: '2026-10-27',
     navLabel: 'Weight & Metabolic',
     title: 'Medical Weight Loss in Merrillville, IN | Apex Wellness',
     description:
       'Explore planned medical weight loss and metabolic care at Apex Wellness in Merrillville. Coming soon, with in-person visits and pricing before booking.',
     eyebrow: 'Coming soon to Merrillville · Weight & metabolic care',
-    h1: 'Weight care, with the whole person in mind.',
+    h1: 'Medical Weight Management in Merrillville, IN',
     intro:
       'The care model begins with evaluation, risks, goals, and relevant measurements. Medication may be discussed when clinically indicated, but it is never the only lever and is never guaranteed.',
     cta: priorityListCta,
@@ -325,13 +326,13 @@ export const pages = Object.freeze({
 
   'mens-hormone-health': {
     slug: '/mens-hormone-health/',
-    modified: '2026-10-25',
+    modified: '2026-10-27',
     navLabel: "Men's Hormone Health",
     title: 'Testosterone & Hormone Evaluation in Merrillville | Apex Wellness',
     description:
       'Explore planned men’s hormone and testosterone evaluation at Apex Wellness in Merrillville. Coming soon; treatment depends on an individual clinical evaluation.',
     eyebrow: 'Coming soon to Merrillville · Men’s hormone health',
-    h1: 'A fuller picture of your hormone health.',
+    h1: 'Men’s Hormone Health in Merrillville, IN',
     intro:
       'Symptoms, repeat testing when it matters, health risks, fertility goals and the alternatives all go into the plan. One lab number does not decide it.',
     cta: priorityListCta,
@@ -421,13 +422,13 @@ export const pages = Object.freeze({
 
   'womens-midlife-care': {
     slug: '/womens-midlife-care/',
-    modified: '2026-10-25',
+    modified: '2026-10-27',
     navLabel: "Women's Midlife Care",
     title: 'Menopause & Midlife Care in Merrillville, IN | Apex Wellness',
     description:
-      'Learn about the individualized approach to perimenopause, menopause, weight, sleep, and metabolic concerns at Apex Wellness.',
+      'Explore planned perimenopause and menopause care at Apex Wellness in Merrillville, with individualized discussion of weight, sleep, and metabolic concerns.',
     eyebrow: 'Coming soon to Merrillville · Women’s midlife care',
-    h1: 'Midlife care, built around your next chapter.',
+    h1: 'Women’s Midlife Care in Merrillville, IN',
     intro:
       'The approach is individualized rather than built around a generic “hormone balancing” promise. Hormonal and non-hormonal options may be discussed, and coordination or referral remains part of good care.',
     cta: priorityListCta,
@@ -517,13 +518,13 @@ export const pages = Object.freeze({
 
   'hair-loss-care': {
     slug: '/hair-loss-care/',
-    modified: '2026-10-25',
+    modified: '2026-10-27',
     navLabel: 'Hair-Loss Care',
     title: 'Hair-Loss Care in Merrillville & NWI | Apex Wellness',
     description:
       'Hair-loss care is coming to Apex Wellness in Merrillville, Northwest Indiana. Explore the planned service and join the Launch List.',
     eyebrow: 'Coming soon to Merrillville · Hair-loss care',
-    h1: 'Hair-loss concerns deserve a thoughtful conversation.',
+    h1: 'Hair-Loss Care in Merrillville, IN',
     intro:
       'Apex is preparing to offer clinical evaluation and treatment for adults with hair-loss concerns. Individual care decisions come first, with service details and pricing available before scheduling opens.',
     cta: priorityListCta,

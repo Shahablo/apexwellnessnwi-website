@@ -42,7 +42,7 @@ const imageCatalog = Object.freeze({
     file: "apex-hero-consultation.webp",
     width: 1199,
     height: 1312,
-    alt: "An illustrative clinician having a thoughtful conversation with an adult patient.",
+    alt: "Illustrative scene of a clinician having a thoughtful conversation with an adult patient.",
   },
   clinic: {
     file: "apex-clinic-interior.webp",
@@ -54,7 +54,7 @@ const imageCatalog = Object.freeze({
     file: "apex-mens-care.webp",
     width: 1713,
     height: 918,
-    alt: "An adult man discussing health goals during a medical consultation.",
+    alt: "Illustrative scene of an adult man discussing health goals during a medical consultation.",
   },
   shoreline: {
     file: "apex-nwi-shoreline.webp",
@@ -66,19 +66,19 @@ const imageCatalog = Object.freeze({
     file: "apex-physician-review.webp",
     width: 1386,
     height: 1135,
-    alt: "An illustrative clinician carefully reviewing clinical information.",
+    alt: "Illustrative scene of a clinician carefully reviewing clinical information.",
   },
   weight: {
     file: "apex-weight-care.webp",
     width: 1577,
     height: 997,
-    alt: "An adult patient discussing a weight and metabolic care plan.",
+    alt: "Illustrative scene of an adult patient discussing a weight and metabolic care plan.",
   },
   women: {
     file: "apex-womens-care.webp",
     width: 1729,
     height: 910,
-    alt: "An adult woman speaking with a clinician about midlife health concerns.",
+    alt: "Illustrative scene of an adult woman speaking with a clinician about midlife health concerns.",
   },
   architectural: {
     file: "background-option-architectural.webp",
@@ -172,12 +172,15 @@ function pageJsonLd(page) {
   const url = canonicalUrl(page.slug);
   const graph = [
     {
-      "@type": "Organization",
+      "@type": "MedicalClinic",
       "@id": `${site.canonicalUrl}/#organization`,
       name: site.name,
       url: `${site.canonicalUrl}/`,
       description: site.description,
-      sameAs: site.social.filter((profile) => !profile.href.includes('facebook.com/groups/')).map((profile) => profile.href),
+      sameAs: [
+        ...site.social.filter((profile) => !profile.href.includes('facebook.com/groups/')).map((profile) => profile.href),
+        site.googleBusinessUrl,
+      ],
       address: {
         "@type": "PostalAddress",
         streetAddress: site.address.streetAddress,
@@ -868,6 +871,7 @@ function renderDocument(pageKey, page, jsonLd, { noIndex = false, mainOverride =
   <link rel="preload" as="font" href="/assets/fonts/instrument-serif-latin-400-normal.woff2" type="font/woff2" crossorigin>
   <link rel="preload" as="font" href="/assets/fonts/manrope-latin-wght-normal.woff2" type="font/woff2" crossorigin>
   <script type="application/ld+json">${jsonLd}</script>
+  <script src="${escapeHtml(assetUrl("site-measurement.js"))}" defer></script>
   <script src="${escapeHtml(assetUrl("site.js"))}" defer></script>
   <script src="${escapeHtml(assetUrl("site-assistant.js"))}" defer></script>
   ${page.kind === 'visitPlanner' ? `<script src="${escapeHtml(assetUrl('visit-planner.js'))}" defer></script>` : ''}
@@ -904,6 +908,7 @@ async function prepareAssets() {
   await mkdir(publicAssetsDirectory, { recursive: true });
   await cp(join(sourceAssetsDirectory, "site.css"), join(publicAssetsDirectory, "site.css"));
   await cp(join(sourceAssetsDirectory, "site.js"), join(publicAssetsDirectory, "site.js"));
+  await cp(join(sourceAssetsDirectory, "site-measurement.js"), join(publicAssetsDirectory, "site-measurement.js"));
   await cp(join(sourceAssetsDirectory, 'site-design.css'), join(publicAssetsDirectory, 'site-design.css'));
   await cp(join(sourceAssetsDirectory, 'launch-email-action.css'), join(publicAssetsDirectory, 'launch-email-action.css'));
   await cp(join(sourceAssetsDirectory, 'visit-planner.js'), join(publicAssetsDirectory, 'visit-planner.js'));
@@ -923,6 +928,7 @@ async function prepareAssets() {
 
   assetVersions.set("site.css", await fingerprint(join(sourceAssetsDirectory, "site.css")));
   assetVersions.set("site.js", await fingerprint(join(sourceAssetsDirectory, "site.js")));
+  assetVersions.set("site-measurement.js", await fingerprint(join(sourceAssetsDirectory, "site-measurement.js")));
   assetVersions.set('site-design.css', await fingerprint(join(sourceAssetsDirectory, 'site-design.css')));
   assetVersions.set('visit-planner.js', await fingerprint(join(sourceAssetsDirectory, 'visit-planner.js')));
   assetVersions.set('site-assistant.js', await fingerprint(join(publicAssetsDirectory, 'site-assistant.js')));

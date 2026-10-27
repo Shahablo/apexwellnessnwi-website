@@ -6,6 +6,7 @@ import {
   handleLaunchEmailWebhook,
   runLaunchEmailQueue,
 } from "./launch-email.mjs";
+import { handleSiteEvent } from "./site-events.mjs";
 
 function notFound() {
   return new Response(JSON.stringify({
@@ -35,6 +36,10 @@ export async function handleWorkerRequest(request, env, ctx = {}) {
 
   if (url.pathname === '/api/appointment-contact') {
     return onAppointmentRequest({ request, env });
+  }
+
+  if (url.pathname === "/api/site-event") {
+    return handleSiteEvent(request, env);
   }
 
   if (url.pathname === "/api/launch-email/webhook") {

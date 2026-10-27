@@ -31,6 +31,11 @@ export const merrillvillePage = Object.freeze({
   sections: [
     { type: 'locationDetails', heading: 'Find Apex on Broadway.', eyebrow: '8550 Broadway · Suite B', body: 'Use the full address, including Suite B, when planning your trip. Opening hours and parking or arrival instructions will be shared before appointments begin.' },
     { type: 'detail', heading: 'One Merrillville location. Part of Northwest Indiana.', eyebrow: 'Our community', body: 'Our planned clinic is in Merrillville, with care intended for adults from Crown Point, Schererville, Munster, Dyer, St. John, Highland, Hobart and surrounding Northwest Indiana communities. These are nearby communities we hope to serve, not additional Apex locations.' },
+    { type: 'linkCards', heading: 'Coming from a nearby town?', eyebrow: 'Plan the trip', items: [
+      { title: 'From Munster', body: 'Start with the Calumet Avenue and US 30 connection, then check the live route to Suite B.', href: '/visit-from-munster/', label: 'Plan from Munster' },
+      { title: 'From Crown Point', body: 'Find the right Broadway address and check driving or current transit information.', href: '/visit-from-crown-point/', label: 'Plan from Crown Point' },
+      { title: 'From Schererville', body: 'Compare directions from the US 41/US 30 crossroads or downtown before you go.', href: '/visit-from-schererville/', label: 'Plan from Schererville' }
+    ] },
     { type: 'linkCards', heading: 'Explore the care we are preparing.', eyebrow: 'Four areas of care', items: [
       { title: 'Weight & metabolic care', body: 'Read about the planned approach to medical weight management.', href: '/weight-management/', label: 'Explore weight care' },
       { title: 'Men’s hormone health', body: 'Read about the planned approach to hormone evaluation.', href: '/mens-hormone-health/', label: 'Explore men’s care' },

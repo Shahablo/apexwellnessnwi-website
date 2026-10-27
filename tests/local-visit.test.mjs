@@ -32,3 +32,38 @@ test('each care page links to practical next steps and its own working FAQ ancho
   }
   assert.match(pages['weight-management'].sections.find(section => section.type === 'faq').items[1].answer, /included in a package or billed separately/);
 });
+
+test('nearby-town visitor pages have distinct route help and one truthful clinic location', async () => {
+  const townCases = [
+    { path: 'visit-from-munster', origin: 'Munster, IN', unique: /Calumet Avenue connects Munster to the US 30 corridor/ },
+    { path: 'visit-from-crown-point', origin: 'Crown Point, IN', unique: /Broadway Metro Express service through Crown Point and Merrillville/ },
+    { path: 'visit-from-schererville', origin: 'Schererville, IN', unique: /US 41\/US 30 crossroads/ }
+  ];
+  const location = await output('merrillville/index.html');
+  const sitemap = await output('sitemap.xml');
+  const titles = new Set();
+
+  for (const { path, origin, unique } of townCases) {
+    const html = await output(`${path}/index.html`);
+    const slug = `/${path}/`;
+    assert.match(location, new RegExp(`href="${slug}"`));
+    assert.match(sitemap, new RegExp(`<loc>https://apexwellnessnwi.com${slug}</loc>`));
+    assert.match(html, new RegExp(`<link rel="canonical" href="https://apexwellnessnwi.com${slug}"`));
+    assert.match(html, /<meta name="robots" content="index, follow/);
+    assert.match(html, /8550 Broadway, Suite B/);
+    assert.match(html, /Merrillville, IN 46410/);
+    assert.match(html, /Coming soon/);
+    assert.match(html, /href="\/merrillville\/"/);
+    assert.match(html, unique);
+    assert.doesNotMatch(html, /openingHours|aggregateRating|Book now|free parking|minutes from/i);
+    const title = html.match(/<title>([^<]+)<\/title>/)?.[1];
+    assert.ok(title && !titles.has(title), `${slug} needs a distinct title`);
+    titles.add(title);
+
+    const directionLinks = [...html.matchAll(/href="(https:\/\/www\.google\.com\/maps\/dir\/\?[^\"]+)"/g)]
+      .map((match) => new URL(match[1].replaceAll('&amp;', '&')));
+    assert.ok(directionLinks.length, `${slug} needs a live directions link`);
+    assert.ok(directionLinks.some((url) => url.searchParams.get('origin') === origin), `${slug} needs its town origin`);
+    assert.ok(directionLinks.every((url) => url.searchParams.get('destination') === site.address.label), `${slug} must point to Suite B`);
+  }
+});

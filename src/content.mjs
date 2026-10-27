@@ -1,5 +1,6 @@
 import { merrillvillePage, visitDetails } from './visit-details.mjs';
 import { visitPlannerPage } from './visit-planner.mjs';
+import { nearbyVisitPages } from './nearby-visit-pages.mjs';
 
 const priorityListCta = Object.freeze({
   label: 'Join the Launch List',
@@ -49,6 +50,9 @@ export const site = Object.freeze({
     { label: 'Plan Your Visit', href: '/plan-your-visit/' },
     { label: 'Pricing', href: '/pricing/' },
     { label: 'Location', href: '/merrillville/' },
+    { label: 'From Munster', href: '/visit-from-munster/', section: 'nearby' },
+    { label: 'From Crown Point', href: '/visit-from-crown-point/', section: 'nearby' },
+    { label: 'From Schererville', href: '/visit-from-schererville/', section: 'nearby' },
     { label: 'About', href: '/about/' },
     { label: 'Blog', href: '/blog/' },
     { label: 'FAQ', href: '/faq/' }
@@ -80,6 +84,9 @@ export const site = Object.freeze({
 export const pages = Object.freeze({
   'plan-your-visit': visitPlannerPage,
   merrillville: merrillvillePage,
+  'visit-from-munster': nearbyVisitPages.munster,
+  'visit-from-crown-point': nearbyVisitPages.crownPoint,
+  'visit-from-schererville': nearbyVisitPages.schererville,
   home: {
     slug: '/',
     navLabel: 'Home',

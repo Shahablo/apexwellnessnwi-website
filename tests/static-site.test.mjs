@@ -173,6 +173,23 @@ test('the new planned care area is discoverable without displacing information l
   assert.doesNotMatch(htmlBySlug.get('/founding-patients/'), /name="care_interest"/);
 });
 
+test('service pages use distinct local search titles, descriptions, and plain H1s', () => {
+  const expectations = new Map([
+    ['/weight-management/', /Medical Weight Management in Merrillville, IN/],
+    ['/mens-hormone-health/', /Men’s Hormone Health in Merrillville, IN/],
+    ['/womens-midlife-care/', /Women’s Midlife Care in Merrillville, IN/],
+    ['/hair-loss-care/', /Hair-Loss Care in Merrillville, IN/],
+  ]);
+
+  for (const [slug, h1Pattern] of expectations) {
+    const page = pageList.find((candidate) => candidate.slug === slug);
+    const html = htmlBySlug.get(slug);
+    assert.match(page.title, /Merrillville/i, `${slug} title needs the clinic location`);
+    assert.match(page.description, /Merrillville/i, `${slug} description needs the clinic location`);
+    assert.match(html, new RegExp(`<h1[^>]*>${h1Pattern.source}</h1>`, 'i'), `${slug} needs a clear service H1`);
+  }
+});
+
 test("build emits every content page with unique, route-specific metadata", () => {
   const observed = {
     title: [],
@@ -601,17 +618,34 @@ test('the About page distinguishes real team portraits, supplied interests, and 
   assert.match(html, /Keep your primary care doctor/);
 });
 
-test('the confirmed clinic address and LinkedIn Page appear consistently in visible copy and schema', () => {
+test('the confirmed clinic identity appears consistently without invented hours, coordinates, or reviews', () => {
   for (const [slug, html] of htmlBySlug) {
     assert.ok(html.includes(site.address.label), `${slug} needs the confirmed address`);
     const jsonLd = [...html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)]
       .find((match) => attributes(match[1]).type === 'application/ld+json');
-    const organization = JSON.parse(jsonLd[2])['@graph'].find((node) => node['@type'] === 'Organization');
-    assert.equal(organization.address.streetAddress, '8550 Broadway, Suite B');
-    assert.equal(organization.address.postalCode, '46410');
-    assert.ok(organization.sameAs.includes('https://www.linkedin.com/company/apex-wellness-nwi/'));
+    const clinic = JSON.parse(jsonLd[2])['@graph'].find((node) => node['@type'] === 'MedicalClinic');
+    assert.equal(clinic['@id'], 'https://apexwellnessnwi.com/#organization');
+    assert.equal(clinic.address.streetAddress, '8550 Broadway, Suite B');
+    assert.equal(clinic.address.postalCode, '46410');
+    assert.equal(clinic.telephone, '+12192072456');
+    assert.ok(clinic.sameAs.includes('https://www.linkedin.com/company/apex-wellness-nwi/'));
+    assert.ok(clinic.sameAs.includes(site.googleBusinessUrl));
+    for (const unsupported of ['aggregateRating', 'review', 'geo', 'openingHours', 'openingHoursSpecification']) {
+      assert.equal(clinic[unsupported], undefined, `${slug} must not invent ${unsupported}`);
+    }
     assert.doesNotMatch(html, /A confirmed street address|The confirmed clinic address|A confirmed address and visit-modality details/);
   }
+});
+
+test('measurement is loaded as an inert first-party interface with no vendor or network configuration', async () => {
+  const html = htmlBySlug.get('/');
+  assert.match(html, /<script src="\/assets\/site-measurement\.js\?v=[a-f0-9]+" defer><\/script>/);
+  const measurement = await readFile(join(publicRoot, 'assets', 'site-measurement.js'), 'utf8');
+  assert.match(measurement, /enabled:\s*false/);
+  assert.match(measurement, /provider:\s*null/);
+  assert.match(measurement, /endpoint:\s*null/);
+  assert.doesNotMatch(measurement, /fetch\s*\(|sendBeacon\s*\(|XMLHttpRequest|localStorage|sessionStorage|document\.cookie/);
+  assert.doesNotMatch(html, /googletagmanager|google-analytics|connect\.facebook\.net|clarity\.ms|hotjar|segment|mixpanel/i);
 });
 
 test("blog pages expose article semantics, dates, sources, and a valid RSS feed", async () => {

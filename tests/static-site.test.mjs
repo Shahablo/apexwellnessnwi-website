@@ -644,7 +644,10 @@ test('measurement is first-party, aggregate, and excludes advertising vendors an
   assert.match(measurement, /enabled:\s*true/);
   assert.match(measurement, /endpoint:\s*"\/api\/site-event"/);
   assert.match(measurement, /sendBeacon/);
-  assert.doesNotMatch(measurement, /XMLHttpRequest|localStorage|sessionStorage|document\.cookie|referrer|userAgent|question|searchParams|formData/);
+  assert.match(measurement, /referrer_domain/);
+  assert.match(measurement, /utm_campaign/);
+  assert.match(measurement, /form_submit_success/);
+  assert.doesNotMatch(measurement, /XMLHttpRequest|localStorage|sessionStorage|document\.cookie|userAgent|FormData|\.value|textContent/);
   assert.doesNotMatch(html, /googletagmanager|google-analytics|connect\.facebook\.net|clarity\.ms|hotjar|segment|mixpanel/i);
 });
 

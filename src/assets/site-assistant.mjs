@@ -131,6 +131,7 @@ async function submitFollowup(event) {
     followupForm.hidden = true;
     followupStartedAt = 0;
     followupStatus.textContent = data.message || 'Thanks. Apex received your general website question for follow-up.';
+    document.dispatchEvent(new CustomEvent('pexy-followup:success'));
   } catch {
     if (submissionId === followupSubmissionId) followupStatus.textContent = 'Your question could not be sent. Please try again later.';
   } finally {

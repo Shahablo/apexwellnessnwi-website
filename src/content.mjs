@@ -1026,12 +1026,12 @@ export const pages = Object.freeze({
     title: 'Privacy Policy | Apex Wellness',
     description:
       'Read how the Apex Wellness prelaunch website handles contact requests and optional Pexy website-question follow-ups.',
-    eyebrow: 'Updated October 27, 2026',
+    eyebrow: 'Updated October 28, 2026',
     h1: 'Privacy Policy',
     intro:
       'This prelaunch policy explains the limited information collected through the Apex Wellness website, its contact forms, and Pexy’s optional follow-up form. It may be updated as clinical services and secure patient systems are introduced.',
     cta: priorityListCta,
-    effectiveDate: 'October 27, 2026',
+    effectiveDate: 'October 28, 2026',
     sections: [
       {
         type: 'policySection',
@@ -1066,7 +1066,8 @@ export const pages = Object.freeze({
         type: 'policySection',
         heading: 'Privacy-minimized site measurement',
         paragraphs: [
-          'Apex counts broad categories of page views and clicks to the Launch List, Plan Your Visit, phone, or email actions. These counts are sent only to an Apex website endpoint and stored as daily totals. The measurement does not set cookies, create visitor profiles, or store raw IP addresses, IP hashes, device identifiers, full URLs, query strings, referrers, form values, Pexy questions, or the specific care page viewed. All care pages are combined into one broad care-page category.',
+          'Apex counts page views, clicks to the Launch List, Plan Your Visit, phone or email actions, and whether a website form was viewed, started or successfully submitted. These counts are sent only to an Apex website endpoint and stored as daily totals. Reports may separate the specific website page, originating page for an action, broad device category, broad geographic region, referring website domain, and normalized UTM source, medium and campaign labels supplied in an Apex marketing link.',
+          'The measurement does not set cookies, create visitor or session profiles, or store raw IP addresses, IP hashes, device identifiers, full URLs, query strings, exact locations, form values, Pexy questions, or the full referring-page address. Geographic reporting is limited to Indiana, elsewhere in the United States, outside the United States, or unknown. Referrer reporting keeps only the website domain. Form measurement records only the form category and funnel step, never what someone typed.',
           'Google Analytics, Google Tag Manager, Meta Pixel, and other advertising tags are not currently installed on this website.'
         ]
       },

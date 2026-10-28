@@ -9,8 +9,10 @@ import { cashPayFeePageArticle } from './cash-pay-fee-page-article.mjs';
 import { behindTheScenesArticle } from './behind-the-scenes-article.mjs';
 import { buildoutPartOneArticle } from './buildout-part-one-article.mjs';
 import { midlifeLocalConversationArticle } from './midlife-local-conversation-article.mjs';
+import { midwestObesityMapArticle } from './midwest-obesity-map-article.mjs';
 
 export const blogPosts = Object.freeze([
+  midwestObesityMapArticle,
   midlifeLocalConversationArticle,
   behindTheScenesArticle,
   buildoutPartOneArticle,

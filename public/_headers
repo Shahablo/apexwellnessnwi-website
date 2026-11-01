@@ -196,3 +196,9 @@
 
 /blog/feed.xml
   Cache-Control: public, max-age=3600, must-revalidate
+
+/womens-hormone-replacement-therapy/
+  Cache-Control: no-cache, max-age=0, must-revalidate
+
+/womens-hormone-replacement-therapy/index.html
+  Cache-Control: no-cache, max-age=0, must-revalidate

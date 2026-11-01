@@ -155,7 +155,8 @@ for (const page of pageList) {
 
 test('the new planned care area is discoverable without displacing information links or collecting health interests', () => {
   const carePaths = site.navigation.filter((item) => item.section === 'care').map((item) => item.href);
-  assert.equal(carePaths.length, 4);
+  assert.equal(carePaths.length, 5);
+  assert.ok(carePaths.includes('/womens-hormone-replacement-therapy/'));
   assert.ok(carePaths.includes('/hair-loss-care/'));
   for (const slug of ['/', '/hair-loss-care/']) {
     const html = htmlBySlug.get(slug);

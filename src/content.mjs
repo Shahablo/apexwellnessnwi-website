@@ -1,3 +1,4 @@
+import { womensHrtPage } from './womens-hrt-page.mjs';
 import { merrillvillePage, visitDetails } from './visit-details.mjs';
 import { visitPlannerPage } from './visit-planner.mjs';
 import { nearbyVisitPages } from './nearby-visit-pages.mjs';
@@ -46,6 +47,7 @@ export const site = Object.freeze({
     { label: 'Weight & Metabolic', href: '/weight-management/', section: 'care' },
     { label: "Men's Hormone Health", href: '/mens-hormone-health/', section: 'care' },
     { label: "Women's Midlife Care", href: '/womens-midlife-care/', section: 'care' },
+    { label: "Women's HRT", href: '/womens-hormone-replacement-therapy/', section: 'care' },
     { label: 'Hair-Loss Care', href: '/hair-loss-care/', section: 'care' },
     { label: 'How It Works', href: '/how-it-works/' },
     { label: 'Plan Your Visit', href: '/plan-your-visit/' },
@@ -83,6 +85,7 @@ export const site = Object.freeze({
 });
 
 export const pages = Object.freeze({
+  'womens-hormone-replacement-therapy': womensHrtPage,
   'plan-your-visit': visitPlannerPage,
   merrillville: merrillvillePage,
   'visit-from-munster': nearbyVisitPages.munster,
@@ -422,7 +425,7 @@ export const pages = Object.freeze({
 
   'womens-midlife-care': {
     slug: '/womens-midlife-care/',
-    modified: '2026-10-27',
+    modified: '2026-11-01',
     navLabel: "Women's Midlife Care",
     title: 'Menopause & Midlife Care in Merrillville, IN | Apex Wellness',
     description:
@@ -433,6 +436,17 @@ export const pages = Object.freeze({
       'The approach is individualized rather than built around a generic “hormone balancing” promise. Hormonal and non-hormonal options may be discussed, and coordination or referral remains part of good care.',
     cta: priorityListCta,
     sections: [
+      {
+        type: 'linkCards',
+        eyebrow: 'Explore hormone therapy',
+        heading: 'Could HRT be part of your plan?',
+        items: [{
+          title: 'Women’s hormone replacement therapy',
+          body: 'Review symptoms, potential benefits, treatment options and common questions about HRT.',
+          label: 'Explore women’s HRT',
+          href: '/womens-hormone-replacement-therapy/'
+        }]
+      },
       {
         type: 'audience',
         heading: 'Who this care may fit',

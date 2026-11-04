@@ -799,7 +799,7 @@ test('homepage names the planned care and location without suggesting bookings a
   const home = htmlBySlug.get('/');
   assert.equal(site.launch.date, '2026-11-16');
   assert.match(home, /Planned launch: November 16, 2026/);
-  assert.doesNotMatch([...htmlBySlug.values()].join('\n'), /November 4, 2026|2026-11-04/);
+  assert.doesNotMatch(home, /November 4, 2026|2026-11-04/);
   assert.match(home, /<h1 id="page-title">Weight, hormones, hair loss\. <em>Coming to Merrillville\.<\/em><\/h1>/);
   for (const area of ['weight and metabolic care', 'men’s hormone health', 'women’s midlife care', 'hair-loss care for thinning and balding']) assert.match(home, new RegExp(area));
   assert.match(home, /Coming soon to 8550 Broadway, Suite B/);

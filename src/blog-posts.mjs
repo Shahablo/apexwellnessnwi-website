@@ -6,12 +6,14 @@ import { readingClinicWebsiteArticle } from './reading-clinic-website-article.mj
 import { comingSoonStatusArticle } from './coming-soon-status-article.mjs';
 import { fourAreasArticle } from './four-areas-article.mjs';
 import { cashPayFeePageArticle } from './cash-pay-fee-page-article.mjs';
+import { movemberArticle } from './movember-article.mjs';
 import { behindTheScenesArticle } from './behind-the-scenes-article.mjs';
 import { buildoutPartOneArticle } from './buildout-part-one-article.mjs';
 import { midlifeLocalConversationArticle } from './midlife-local-conversation-article.mjs';
 import { midwestObesityMapArticle } from './midwest-obesity-map-article.mjs';
 
 export const blogPosts = Object.freeze([
+  movemberArticle,
   midwestObesityMapArticle,
   midlifeLocalConversationArticle,
   behindTheScenesArticle,

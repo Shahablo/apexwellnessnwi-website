@@ -615,9 +615,17 @@ function renderLaunchCta() {
   return `<section class="section launch-section" aria-labelledby="launch-heading"><div class="container launch-section-inner"><div><p class="eyebrow">${escapeHtml(site.launch.status)} · ${escapeHtml(site.launch.label)}</p><h2 id="launch-heading">Be part of<br><em>what comes next.</em></h2></div><div class="launch-section-copy"><p>Opening updates and future consultation availability, delivered to your inbox.</p>${buttonMarkup(site.cta)}<p class="quiet-note">Free to join. No appointment booked. Launch timing and availability may change.</p></div></div></section>`;
 }
 
+function renderBlogInline(paragraph, richText) {
+  if (!richText) return escapeHtml(paragraph);
+  return escapeHtml(paragraph)
+    .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+    .replace(/\[([^\]]+)\]\((https:\/\/[^\s)]+)\)/g, (_, label, href) =>
+      `<a href="${href}">${label}</a>`);
+}
+
 function renderBlogPost(page) {
   const image = imageForPage("blog-post", page);
-  const introParagraphs = page.intro.split(/\n\s*\n/).map((paragraph) => `<p class="article-deck">${escapeHtml(paragraph)}</p>`).join("\n");
+  const introParagraphs = page.intro.split(/\n\s*\n/).map((paragraph) => `<p class="article-deck">${renderBlogInline(paragraph, page.richText)}</p>`).join("\n");
   const sourceList = page.sources.map((source) => `<li><a href="${escapeHtml(source.href)}">${escapeHtml(source.label)}</a></li>`).join("\n");
   const video = page.video ? `<figure class="article-video">
     <video controls playsinline preload="metadata" width="1080" height="1920" poster="${escapeHtml(assetUrl(`images/${page.video.poster}`))}" aria-label="Behind-the-scenes Apex Wellness setup video">
@@ -631,7 +639,7 @@ function renderBlogPost(page) {
     const id = `${identifier(section.heading)}-${index + 1}`;
     return `<section aria-labelledby="${id}">
       <h2 id="${id}">${escapeHtml(section.heading)}</h2>
-      ${(section.paragraphs || []).map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join("\n")}
+      ${(section.paragraphs || []).map((paragraph) => `<p>${renderBlogInline(paragraph, page.richText)}</p>`).join("\n")}
       ${section.bullets ? `<ul>${section.bullets.map((item) => `<li>${escapeHtml(item)}</li>`).join("\n")}</ul>` : ""}
       ${section.image ? `<figure class="article-photo"><img data-photo-kind="representative" src="${escapeHtml(assetUrl(`images/${section.image.file}`))}" width="${section.image.width}" height="${section.image.height}" alt="${escapeHtml(section.image.alt)}" loading="lazy" decoding="async"><figcaption>${escapeHtml(section.image.caption)}</figcaption></figure>` : ''}
       ${(section.paragraphsAfterBullets || []).map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join("\n")}

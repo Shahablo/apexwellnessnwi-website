@@ -13,7 +13,7 @@ export function pexyNudgeCopy(pathname = '/') {
   return 'Need a quick answer? I can help with opening plans, care areas, pricing updates, and visit requests.';
 }
 
-export function answerWebsiteQuestion(input, launchLabel = 'November 19, 2026') {
+export function answerWebsiteQuestion(input, launchLabel = 'November 20, 2026') {
   const question = String(input || '').slice(0, 500).toLowerCase().normalize('NFKC');
   const plannedDate = String(launchLabel).replace(/\s*\(.*\)$/, '');
   const result = (text, label, href, followupEligible = false) => ({ text, label, href, followupEligible });

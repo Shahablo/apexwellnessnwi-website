@@ -1,4 +1,5 @@
 import { womensHrtPage } from './womens-hrt-page.mjs';
+import { hormoneCareHubPage } from './hormone-care-hub.mjs';
 import { merrillvillePage, visitDetails } from './visit-details.mjs';
 import { visitPlannerPage } from './visit-planner.mjs';
 import { nearbyVisitPages } from './nearby-visit-pages.mjs';
@@ -49,6 +50,7 @@ export const site = Object.freeze({
     { label: "Women's Midlife Care", href: '/womens-midlife-care/', section: 'care' },
     { label: "Women's HRT", href: '/womens-hormone-replacement-therapy/', section: 'care' },
     { label: 'Hair-Loss Care', href: '/hair-loss-care/', section: 'care' },
+    { label: 'Hormone Care Overview', href: '/hormone-care-merrillville/' },
     { label: 'How It Works', href: '/how-it-works/' },
     { label: 'Plan Your Visit', href: '/plan-your-visit/' },
     { label: 'Pricing', href: '/pricing/' },
@@ -85,6 +87,7 @@ export const site = Object.freeze({
 });
 
 export const pages = Object.freeze({
+  'hormone-care-merrillville': hormoneCareHubPage,
   'womens-hormone-replacement-therapy': womensHrtPage,
   'plan-your-visit': visitPlannerPage,
   merrillville: merrillvillePage,
@@ -94,7 +97,7 @@ export const pages = Object.freeze({
   home: {
     slug: '/',
     navLabel: 'Home',
-    modified: '2026-10-25',
+    modified: '2026-11-11',
     title: 'Weight, Hormone & Hair-Loss Care in Merrillville | Apex Wellness',
     description:
       'Weight, metabolic, hormone, and hair-loss care in Northwest Indiana. Coming soon to Merrillville. Join the Launch List for opening updates.',
@@ -162,6 +165,17 @@ export const pages = Object.freeze({
             href: '/hair-loss-care/'
           }
         ]
+      },
+      {
+        type: 'linkCards',
+        eyebrow: 'Looking for hormone care?',
+        heading: 'Find the right starting page.',
+        items: [{
+          title: 'Hormone care in Merrillville',
+          body: 'Compare the planned men’s hormone health and women’s midlife care paths, then choose how to get opening information.',
+          label: 'Explore hormone care',
+          href: '/hormone-care-merrillville/'
+        }]
       },
       {
         type: 'prelaunch',

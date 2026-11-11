@@ -329,7 +329,7 @@ export const pages = Object.freeze({
 
   'mens-hormone-health': {
     slug: '/mens-hormone-health/',
-    modified: '2026-10-27',
+    modified: '2026-11-11',
     navLabel: "Men's Hormone Health",
     title: 'Testosterone & Hormone Evaluation in Merrillville | Apex Wellness',
     description:
@@ -340,6 +340,17 @@ export const pages = Object.freeze({
       'Symptoms, repeat testing when it matters, health risks, fertility goals and the alternatives all go into the plan. One lab number does not decide it.',
     cta: priorityListCta,
     sections: [
+      {
+        type: 'linkCards',
+        eyebrow: 'From the Apex blog',
+        heading: 'A November introduction to men’s health.',
+        items: [{
+          title: 'The mustache is optional',
+          body: 'Read how Apex introduces its planned men’s health conversations in Merrillville.',
+          label: 'Read the Movember article',
+          href: '/blog/movember-mens-health-merrillville/'
+        }]
+      },
       {
         type: 'audience',
         heading: 'Who this care may fit',
@@ -425,17 +436,28 @@ export const pages = Object.freeze({
 
   'womens-midlife-care': {
     slug: '/womens-midlife-care/',
-    modified: '2026-11-01',
+    modified: '2026-11-11',
     navLabel: "Women's Midlife Care",
     title: 'Menopause & Midlife Care in Merrillville, IN | Apex Wellness',
     description:
-      'Explore planned perimenopause and menopause care at Apex Wellness in Merrillville, with individualized discussion of weight, sleep, and metabolic concerns.',
+      'Women’s midlife care is planned at Apex Wellness in Merrillville. Explore the care approach and opening updates before scheduling begins.',
     eyebrow: 'Coming soon to Merrillville · Women’s midlife care',
     h1: 'Women’s Midlife Care in Merrillville, IN',
     intro:
       'The approach is individualized rather than built around a generic “hormone balancing” promise. Hormonal and non-hormonal options may be discussed, and coordination or referral remains part of good care.',
     cta: priorityListCta,
     sections: [
+      {
+        type: 'linkCards',
+        eyebrow: 'From the Apex blog',
+        heading: 'Why this care area is part of the Apex plan.',
+        items: [{
+          title: 'Women’s midlife care in Merrillville',
+          body: 'Read the local introduction to this planned area of care and the clinic being prepared on Broadway.',
+          label: 'Read the introduction',
+          href: '/blog/womens-midlife-care-merrillville-conversation/'
+        }]
+      },
       {
         type: 'linkCards',
         eyebrow: 'Explore hormone therapy',
@@ -583,6 +605,7 @@ export const pages = Object.freeze({
 
   'how-it-works': {
     slug: '/how-it-works/',
+    modified: '2026-11-11',
     navLabel: 'How It Works',
     title: 'How Care Is Planned to Work | Apex Wellness',
     description:
@@ -593,6 +616,17 @@ export const pages = Object.freeze({
       'Apex is preparing a process in which evaluation, appropriate testing, clinical options, full costs, and follow-up expectations are reviewed before treatment begins.',
     cta: priorityListCta,
     sections: [
+      {
+        type: 'linkCards',
+        eyebrow: 'Why Apex is taking this approach',
+        heading: 'Four connected areas of care.',
+        items: [{
+          title: 'Why these four areas?',
+          body: 'Read the founder’s introduction to the areas Apex is preparing to offer in Merrillville.',
+          label: 'Read the Apex story',
+          href: '/blog/why-four-areas-of-care/'
+        }]
+      },
       {
         type: 'steps',
         heading: 'The care journey',

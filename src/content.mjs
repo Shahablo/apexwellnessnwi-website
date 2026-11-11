@@ -31,7 +31,7 @@ export const site = Object.freeze({
   phoneHref: 'tel:+12192072456',
   tagline: 'Thoughtful care. Built around you.',
   contentUpdated: '2026-11-11',
-  launch: { date: '2026-11-19', label: 'November 19, 2026', status: 'Planned launch' },
+  launch: { date: '2026-11-20', label: 'November 20, 2026', status: 'Planned launch' },
   social: [
     { label: 'Instagram', href: 'https://www.instagram.com/apexwellnessnwi/' },
     { label: 'Facebook', href: 'https://www.facebook.com/profile.php?id=61593954582564' },
@@ -41,7 +41,7 @@ export const site = Object.freeze({
   description:
     'Apex Wellness is preparing weight, metabolic, hormone, and hair-loss care for adults in Northwest Indiana.',
   announcement:
-    'Planned launch: November 19, 2026 · Northwest Indiana.',
+    'Planned launch: November 20, 2026 · Northwest Indiana.',
   cta: priorityListCta,
   navigation: [
     { label: 'Home', href: '/' },
@@ -101,7 +101,7 @@ export const pages = Object.freeze({
     title: 'Weight, Hormone & Hair-Loss Care in Merrillville | Apex Wellness',
     description:
       'Weight, metabolic, hormone, and hair-loss care in Northwest Indiana. Coming soon to Merrillville. Join the Launch List for opening updates.',
-    eyebrow: 'Planned launch · November 19, 2026 · Northwest Indiana',
+    eyebrow: 'Planned launch · November 20, 2026 · Northwest Indiana',
     h1: 'Weight, hormones, hair loss. Coming to Merrillville.',
     headlineLead: 'Weight, hormones, hair loss.',
     headlineEmphasis: 'Coming to Merrillville.',
@@ -232,7 +232,7 @@ export const pages = Object.freeze({
         eyebrow: 'Opening in Northwest Indiana',
         heading: 'Review the real details before deciding whether to book.',
         body:
-          `Coming soon to ${clinicAddress}. Our planned launch is November 19, 2026, subject to readiness. Find launch updates at apexwellnessnwi.com.`,
+          `Coming soon to ${clinicAddress}. Our planned launch is November 20, 2026, subject to readiness. Find launch updates at apexwellnessnwi.com.`,
         cta: priorityListCta
       },
       {
@@ -887,7 +887,7 @@ export const pages = Object.freeze({
           {
             question: 'When will appointments open?',
             answer:
-              'November 19, 2026 is our planned launch, subject to readiness. We will announce scheduling when it is confirmed. Join the Launch List for updates.'
+              'November 20, 2026 is our planned launch, subject to readiness. We will announce scheduling when it is confirmed. Join the Launch List for updates.'
           },
           {
             question: 'Does submitting a consultation request reserve an appointment?',
@@ -970,7 +970,7 @@ export const pages = Object.freeze({
     description:
       'Join the Apex Wellness Launch List for opening updates and details of the first 100 assessments offer. Coming soon to Merrillville.',
     announcement: 'Coming soon to Merrillville · Thoughtful care',
-    launchLabel: 'November 19, 2026 (planned; subject to readiness)',
+    launchLabel: 'November 20, 2026 (planned; subject to readiness)',
     eyebrow: 'Apex Wellness · Northwest Indiana',
     h1: 'Merrillville, meet Apex.',
     intro:
@@ -1087,7 +1087,7 @@ export const pages = Object.freeze({
           },
           {
             question: 'When and where will Apex open?',
-            answer: `We’re preparing to open at ${clinicAddress}. November 19, 2026 is the planned date, subject to readiness. We will announce clinical-evaluation availability when confirmed.`
+            answer: `We’re preparing to open at ${clinicAddress}. November 20, 2026 is the planned date, subject to readiness. We will announce clinical-evaluation availability when confirmed.`
           }
         ]
       }

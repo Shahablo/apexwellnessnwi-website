@@ -800,8 +800,8 @@ test('homepage replaces the generic introduction with one staff-neutral approach
 
 test('homepage names the planned care and location without suggesting bookings are open', async () => {
   const home = htmlBySlug.get('/');
-  assert.equal(site.launch.date, '2026-11-19');
-  assert.match(home, /Planned launch: November 19, 2026/);
+  assert.equal(site.launch.date, '2026-11-20');
+  assert.match(home, /Planned launch: November 20, 2026/);
   assert.doesNotMatch(home, /November 4, 2026|2026-11-04/);
   assert.match(home, /<h1 id="page-title">Weight, hormones, hair loss\. <em>Coming to Merrillville\.<\/em><\/h1>/);
   for (const area of ['weight and metabolic care', 'men’s hormone health', 'women’s midlife care', 'hair-loss care for thinning and balding']) assert.match(home, new RegExp(area));
@@ -843,7 +843,7 @@ test('the QR landing page explains the first 100 assessments offer without promi
   for (const phrase of ['First 100 assessments', 'After opening', 'on us', 'selected baseline labs', 'when clinically appropriate', 'not a reservation']) assert.ok(offer.includes(phrase));
   assert.doesNotMatch(html, /APEXNOV|Free initial in-house testosterone test/);
   assert.match(html, /No appointment has been booked/);
-  assert.match(html, /data-launch-label="November 19, 2026 \(planned; subject to readiness\)"/);
+  assert.match(html, /data-launch-label="November 20, 2026 \(planned; subject to readiness\)"/);
   assert.doesNotMatch(html, /before anywhere else|first access|Takes ten seconds/);
 });
 

@@ -40,7 +40,7 @@ test('site guide answers known questions using bounded local information', () =>
   ]) assert.equal(answerWebsiteQuestion(question).href, path);
 });
 test('launch date is supplied by site configuration', () => {
-  assert.match(answerWebsiteQuestion('When do you open?', 'November 19, 2026').text, /planned launch is November 19, 2026/);
+  assert.match(answerWebsiteQuestion('When do you open?', 'November 20, 2026').text, /planned launch is November 20, 2026/);
 });
 
 test('the location answer preserves in-person-only launch plans without opening bookings', () => {

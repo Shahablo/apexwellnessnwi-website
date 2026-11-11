@@ -7,10 +7,10 @@ export const comingSoonStatusArticle = Object.freeze({
   eyebrow: 'Apex Wellness updates',
   readTime: '3 minute read',
   h1: '“Coming soon” is doing a lot of work. Here is what it means.',
-  intro: 'A sign that says Coming soon raises more questions than it answers. Where? When? What kind of clinic? Can I book yet? This is the plain version, written in October 2026, with the confirmed parts separated from the parts still being finalized.\n\nIf you read nothing else: Apex is a new medical clinic in Merrillville focused on four areas of care, the planned opening is November 16, 2026, and nothing can be booked yet.',
+  intro: 'A sign that says Coming soon raises more questions than it answers. Where? When? What kind of clinic? Can I book yet? This is the plain version, first published in October 2026, with the confirmed parts separated from the parts still being finalized.\n\nIf you read nothing else: Apex is a new medical clinic in Merrillville focused on four areas of care, the planned opening is November 19, 2026, subject to readiness, and nothing can be booked yet.',
   excerpt: 'The confirmed facts about Apex Wellness in Merrillville, the parts still being finalized, and what the Launch List actually does.',
   published: '2026-10-20',
-  modified: '2026-10-26',
+  modified: '2026-11-11',
   category: 'Apex Wellness Updates',
   author: 'Apex Wellness Editorial Team',
   heroImage: 'clinic',
@@ -26,7 +26,7 @@ export const comingSoonStatusArticle = Object.freeze({
         'The four areas of care: weight and metabolic care, men’s hormone health, women’s midlife care, and hair-loss care for thinning and balding.',
         'The model: a cash-pay clinic. Apex will not bill insurance for its services, and final fees will be published before scheduling opens.',
         'The approach: an individual evaluation before any treatment is discussed. Nobody is handed a prescription at the door.',
-        'The planned opening date: November 16, 2026.'
+        'The planned opening date: November 19, 2026, subject to readiness.'
       ],
       paragraphsAfterBullets: [
         'A planned date is a target that depends on readiness: the clinical team, systems, supplies and the space itself. We will say so plainly if it moves.'
@@ -67,6 +67,6 @@ export const comingSoonStatusArticle = Object.freeze({
   ],
   disclaimerHeading: 'About this update',
   disclaimer: 'This is a status update about a clinic that has not yet opened. It is not medical advice and does not describe services that are currently available. Planned dates depend on readiness.',
-  editorialNote: 'Prepared by the Apex Wellness Editorial Team on October 20, 2026 from the clinic’s current confirmed plans. The hero image is a design preview of a consultation room, not a photograph of the finished Suite B space. No individual clinician review is claimed for this nonmedical update.',
+  editorialNote: 'Prepared by the Apex Wellness Editorial Team on October 20, 2026 and updated November 11 after the owner changed the planned opening date to November 19, subject to readiness. The hero image is a design preview of a consultation room, not a photograph of the finished Suite B space. No individual clinician review is claimed for this nonmedical update.',
   ctaBody: 'Join the Launch List with your name, email and phone number for updates as the details above are confirmed.'
 });

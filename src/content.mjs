@@ -30,8 +30,8 @@ export const site = Object.freeze({
   phone: '(219) 207-2456',
   phoneHref: 'tel:+12192072456',
   tagline: 'Thoughtful care. Built around you.',
-  contentUpdated: '2026-10-26',
-  launch: { date: '2026-11-16', label: 'November 16, 2026', status: 'Planned launch' },
+  contentUpdated: '2026-11-11',
+  launch: { date: '2026-11-19', label: 'November 19, 2026', status: 'Planned launch' },
   social: [
     { label: 'Instagram', href: 'https://www.instagram.com/apexwellnessnwi/' },
     { label: 'Facebook', href: 'https://www.facebook.com/profile.php?id=61593954582564' },
@@ -41,7 +41,7 @@ export const site = Object.freeze({
   description:
     'Apex Wellness is preparing weight, metabolic, hormone, and hair-loss care for adults in Northwest Indiana.',
   announcement:
-    'Planned launch: November 16, 2026 · Northwest Indiana.',
+    'Planned launch: November 19, 2026 · Northwest Indiana.',
   cta: priorityListCta,
   navigation: [
     { label: 'Home', href: '/' },
@@ -101,7 +101,7 @@ export const pages = Object.freeze({
     title: 'Weight, Hormone & Hair-Loss Care in Merrillville | Apex Wellness',
     description:
       'Weight, metabolic, hormone, and hair-loss care in Northwest Indiana. Coming soon to Merrillville. Join the Launch List for opening updates.',
-    eyebrow: 'Planned launch · November 16, 2026 · Northwest Indiana',
+    eyebrow: 'Planned launch · November 19, 2026 · Northwest Indiana',
     h1: 'Weight, hormones, hair loss. Coming to Merrillville.',
     headlineLead: 'Weight, hormones, hair loss.',
     headlineEmphasis: 'Coming to Merrillville.',
@@ -232,7 +232,7 @@ export const pages = Object.freeze({
         eyebrow: 'Opening in Northwest Indiana',
         heading: 'Review the real details before deciding whether to book.',
         body:
-          `Coming soon to ${clinicAddress}. Our planned launch is November 16, 2026, subject to readiness. Find launch updates at apexwellnessnwi.com.`,
+          `Coming soon to ${clinicAddress}. Our planned launch is November 19, 2026, subject to readiness. Find launch updates at apexwellnessnwi.com.`,
         cta: priorityListCta
       },
       {
@@ -773,18 +773,18 @@ export const pages = Object.freeze({
     navLabel: 'About',
     title: 'Meet the Team | Apex Wellness Northwest Indiana',
     description:
-      'Meet founder Shahab Siddique and learn about the personal motivations behind Apex Wellness in Northwest Indiana.',
+      'Meet founder Shahab Siddique and Alexandria Auriemma, the medical assistant joining Apex Wellness in Merrillville.',
     eyebrow: 'The people behind Apex',
-    h1: 'A personal reason to build Apex.',
+    h1: 'Meet the people behind Apex.',
     intro:
-      'Staying strong, capable, and involved in the things we love. Our reasons for building Apex are personal—and your reasons for seeking care should matter just as much.',
+      'Get to know the founder and the incoming medical assistant helping bring Apex Wellness to Merrillville. Coming soon.',
     cta: priorityListCta,
     sections: [
       {
         type: 'teamProfiles',
         eyebrow: 'Meet the team',
         heading: 'People first. In the practice, too.',
-        intro: 'A personal interest in staying active raised a question: how can thoughtful care support the life someone wants to keep living? You do not need to be an athlete to belong here. Your goals set the context.',
+        intro: 'Apex started with a personal reason to build a thoughtful clinic. The people joining the team bring their own reasons for caring about how visitors are welcomed and treated.',
         profiles: [
           {
             id: 'shahab-siddique',
@@ -798,6 +798,18 @@ export const pages = Object.freeze({
               'For Shahab, health is about more than a number on a scale. It is about another round on the mats, time under the bar, and staying engaged in a life that feels like yours.'
             ],
             aside: 'Birthdays can stay. Automatically retiring your favorite hobbies? Less appealing.'
+          },
+          {
+            id: 'alexandria-auriemma',
+            name: 'Alexandria Auriemma',
+            context: 'Incoming Medical Assistant',
+            headline: 'A warm welcome matters.',
+            image: { file: 'alexandria-auriemma.webp', width: 1167, height: 1348 },
+            paragraphs: [
+              'Alexandria is joining Apex as a medical assistant. She brings more than 10 years of healthcare experience and says her priority is helping people feel comfortable, supported, and treated with kindness and respect.',
+              'Away from work, she enjoys time with her family and her dog. Family is important to her, and she loves making memories with the people closest to her.'
+            ],
+            aside: 'Her dog has not submitted an application for a clinic badge.'
           }
         ],
         note: 'Apex focuses on weight, metabolic, hormone and hair-loss care. Keep your primary care doctor; we work alongside them, not instead of them.'
@@ -840,7 +852,7 @@ export const pages = Object.freeze({
         type: 'notice',
         eyebrow: 'Photography',
         heading: 'Real people. Clearly labeled photography.',
-        body: 'The portrait on this page is founder Shahab Siddique. Other photographs on the site are illustrative.'
+        body: 'The portraits on this page show Shahab Siddique and Alexandria Auriemma. Other images on the site may be illustrative.'
       }
     ]
   },
@@ -875,7 +887,7 @@ export const pages = Object.freeze({
           {
             question: 'When will appointments open?',
             answer:
-              'November 16, 2026 is our planned launch, subject to readiness. We will announce scheduling when it is confirmed. Join the Launch List for updates.'
+              'November 19, 2026 is our planned launch, subject to readiness. We will announce scheduling when it is confirmed. Join the Launch List for updates.'
           },
           {
             question: 'Does submitting a consultation request reserve an appointment?',
@@ -958,7 +970,7 @@ export const pages = Object.freeze({
     description:
       'Join the Apex Wellness Launch List for opening updates and details of the first 100 assessments offer. Coming soon to Merrillville.',
     announcement: 'Coming soon to Merrillville · Thoughtful care',
-    launchLabel: 'November 16, 2026 (planned; subject to readiness)',
+    launchLabel: 'November 19, 2026 (planned; subject to readiness)',
     eyebrow: 'Apex Wellness · Northwest Indiana',
     h1: 'Merrillville, meet Apex.',
     intro:
@@ -1075,7 +1087,7 @@ export const pages = Object.freeze({
           },
           {
             question: 'When and where will Apex open?',
-            answer: `We’re preparing to open at ${clinicAddress}. November 16, 2026 is the planned date, subject to readiness. We will announce clinical-evaluation availability when confirmed.`
+            answer: `We’re preparing to open at ${clinicAddress}. November 19, 2026 is the planned date, subject to readiness. We will announce clinical-evaluation availability when confirmed.`
           }
         ]
       }

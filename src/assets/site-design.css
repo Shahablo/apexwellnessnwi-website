@@ -51,6 +51,7 @@ h1,h2,h3{font-family:var(--font-display);font-weight:400;letter-spacing:-.035em;
 .team-profile{display:grid;grid-template-columns:minmax(15rem,.8fr) minmax(0,1.3fr);gap:clamp(2.5rem,7vw,8rem);padding-block:4.5rem;border-top:1px solid var(--color-border);align-items:center;scroll-margin-top:2rem}
 .team-portrait{margin:0 auto;width:100%;max-width:30rem}
 .team-portrait img{width:100%;height:auto;aspect-ratio:1;object-fit:cover;display:block;background:var(--color-surface-alt);border-radius:1.25rem;box-shadow:0 1rem 2.5rem #183d3612}
+#alexandria-auriemma .team-portrait img{object-position:center 25%}
 .team-portrait figcaption{font-size:.74rem;color:var(--color-muted);padding-top:.75rem;text-align:center}
 .team-biography{max-width:44rem;width:100%;justify-self:center;text-align:center}
 .team-biography .eyebrow{margin:0 0 1.1rem;font-size:.7rem}

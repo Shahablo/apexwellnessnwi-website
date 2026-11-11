@@ -610,12 +610,15 @@ test("sitemap, robots, and custom 404 cover the complete crawlable site", async 
 test('the About page distinguishes real team portraits, supplied interests, and physician credentials', () => {
   const html = htmlBySlug.get('/about/');
   const portraits = startTags(html, 'img').filter(({attrs}) => attrs['data-photo-kind'] === 'portrait');
-  assert.deepEqual(portraits.map(({attrs}) => attrs.alt), ['Shahab Siddique']);
+  assert.deepEqual(portraits.map(({attrs}) => attrs.alt), ['Shahab Siddique', 'Alexandria Auriemma']);
   assert.ok(portraits.every(({attrs}) => attrs.loading === 'lazy'));
   assert.doesNotMatch(html, /Atif|Muhammad/);
   assert.doesNotMatch(html, /Portrait coming soon/);
   for (const interest of ['wrestling', 'Brazilian jiu-jitsu', 'Muay Thai', 'boxing', 'weightlifter']) assert.ok(html.includes(interest));
   assert.doesNotMatch(html, /Shahab Siddique, MD|Dr\. Shahab/);
+  assert.match(html, /Incoming Medical Assistant/);
+  assert.match(html, /more than 10 years of healthcare experience/);
+  assert.doesNotMatch(html, /Alexandria Auriemma, MD|Dr\. Alexandria/);
   assert.match(html, /Keep your primary care doctor/);
 });
 
@@ -797,8 +800,8 @@ test('homepage replaces the generic introduction with one staff-neutral approach
 
 test('homepage names the planned care and location without suggesting bookings are open', async () => {
   const home = htmlBySlug.get('/');
-  assert.equal(site.launch.date, '2026-11-16');
-  assert.match(home, /Planned launch: November 16, 2026/);
+  assert.equal(site.launch.date, '2026-11-19');
+  assert.match(home, /Planned launch: November 19, 2026/);
   assert.doesNotMatch(home, /November 4, 2026|2026-11-04/);
   assert.match(home, /<h1 id="page-title">Weight, hormones, hair loss\. <em>Coming to Merrillville\.<\/em><\/h1>/);
   for (const area of ['weight and metabolic care', 'men’s hormone health', 'women’s midlife care', 'hair-loss care for thinning and balding']) assert.match(home, new RegExp(area));
@@ -840,7 +843,7 @@ test('the QR landing page explains the first 100 assessments offer without promi
   for (const phrase of ['First 100 assessments', 'After opening', 'on us', 'selected baseline labs', 'when clinically appropriate', 'not a reservation']) assert.ok(offer.includes(phrase));
   assert.doesNotMatch(html, /APEXNOV|Free initial in-house testosterone test/);
   assert.match(html, /No appointment has been booked/);
-  assert.match(html, /data-launch-label="November 16, 2026 \(planned; subject to readiness\)"/);
+  assert.match(html, /data-launch-label="November 19, 2026 \(planned; subject to readiness\)"/);
   assert.doesNotMatch(html, /before anywhere else|first access|Takes ten seconds/);
 });
 

@@ -804,7 +804,7 @@ export const pages = Object.freeze({
             name: 'Alexandria Auriemma',
             context: 'Incoming Medical Assistant',
             headline: 'A warm welcome matters.',
-            image: { file: 'alexandria-auriemma.webp', width: 1167, height: 1348 },
+            image: { file: 'alexandria-auriemma-warm-v2.webp', width: 1254, height: 1254 },
             paragraphs: [
               'Alexandria is joining Apex as a medical assistant. She brings more than 10 years of healthcare experience and says her priority is helping people feel comfortable, supported, and treated with kindness and respect.',
               'Away from work, she enjoys time with her family and her dog. Family is important to her, and she loves making memories with the people closest to her.'
@@ -852,7 +852,7 @@ export const pages = Object.freeze({
         type: 'notice',
         eyebrow: 'Photography',
         heading: 'Real people. Clearly labeled photography.',
-        body: 'The portraits on this page show Shahab Siddique and Alexandria Auriemma. Other images on the site may be illustrative.'
+        body: 'The portraits on this page show Shahab Siddique and Alexandria Auriemma with graphic backdrops. Other images on the site may be illustrative.'
       }
     ]
   },

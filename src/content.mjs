@@ -782,14 +782,12 @@ export const pages = Object.freeze({
     sections: [
       {
         type: 'teamProfiles',
-        eyebrow: 'Meet the team',
-        heading: 'People first. In the practice, too.',
-        intro: 'Apex started with a personal reason to build a thoughtful clinic. The people on the team bring their own reasons for caring about how visitors are welcomed and treated.',
+        label: 'Meet the team',
         profiles: [
           {
             id: 'shahab-siddique',
             name: 'Shahab Siddique',
-            context: 'Health technology · A personal reason to build Apex',
+            context: 'Founder',
             headline: 'More years doing the things you love.',
             image: { file: 'shahab-siddique-warm-v1.webp', width: 1254, height: 1254 },
             paragraphs: [

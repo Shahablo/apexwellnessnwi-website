@@ -773,18 +773,18 @@ export const pages = Object.freeze({
     navLabel: 'About',
     title: 'Meet the Team | Apex Wellness Northwest Indiana',
     description:
-      'Meet founder Shahab Siddique, incoming family nurse practitioner Shanon Mekola, and Alexandria Auriemma, the medical assistant joining Apex Wellness in Merrillville.',
+      'Meet founder Shahab Siddique, family nurse practitioner Shanon Mekola, and medical assistant Alexandria Auriemma of Apex Wellness in Merrillville.',
     eyebrow: 'The people behind Apex',
     h1: 'Meet the people behind Apex.',
     intro:
-      'Get to know the founder, the incoming family nurse practitioner and the incoming medical assistant helping bring Apex Wellness to Merrillville. Coming soon.',
+      'Get to know the founder, family nurse practitioner and medical assistant behind Apex Wellness in Merrillville.',
     cta: priorityListCta,
     sections: [
       {
         type: 'teamProfiles',
         eyebrow: 'Meet the team',
         heading: 'People first. In the practice, too.',
-        intro: 'Apex started with a personal reason to build a thoughtful clinic. The people joining the team bring their own reasons for caring about how visitors are welcomed and treated.',
+        intro: 'Apex started with a personal reason to build a thoughtful clinic. The people on the team bring their own reasons for caring about how visitors are welcomed and treated.',
         profiles: [
           {
             id: 'shahab-siddique',
@@ -802,11 +802,11 @@ export const pages = Object.freeze({
           {
             id: 'alexandria-auriemma',
             name: 'Alexandria Auriemma',
-            context: 'Incoming Medical Assistant',
+            context: 'Medical Assistant',
             headline: 'A warm welcome matters.',
             image: { file: 'alexandria-auriemma-warm-v2.webp', width: 1254, height: 1254 },
             paragraphs: [
-              'Alexandria is joining Apex as a medical assistant. She brings more than 10 years of healthcare experience and says her priority is helping people feel comfortable, supported, and treated with kindness and respect.',
+              'Alexandria is Apex’s medical assistant. She brings more than 10 years of healthcare experience and says her priority is helping people feel comfortable, supported, and treated with kindness and respect.',
               'Away from work, she enjoys time with her family and her dog. Family is important to her, and she loves making memories with the people closest to her.'
             ],
             aside: 'Her dog has not submitted an application for a clinic badge.'
@@ -814,11 +814,11 @@ export const pages = Object.freeze({
           {
             id: 'shanon-mekola',
             name: 'Shanon Mekola',
-            context: 'Incoming Family Nurse Practitioner',
+            context: 'Family Nurse Practitioner',
             headline: 'Twenty-seven years of care, and counting.',
             image: { file: 'shanon-mekola-warm-v1.webp', width: 1254, height: 1254 },
             paragraphs: [
-              'Shanon is joining Apex as a family nurse practitioner. Her nursing career began in 1999, and she has practiced as a family nurse practitioner since 2018.',
+              'Shanon is Apex’s family nurse practitioner. Her nursing career began in 1999, and she has practiced as a family nurse practitioner since 2018.',
               'Outside of healthcare, she is a proud mom of four grown children and grandma to two grandchildren. She hits the gym at least four days a week and is passionate about animal rescue, from fostering to helping animals get the second chance they deserve.',
               'She and her husband love to travel, and when time permits, she will happily disappear into a good book.'
             ],

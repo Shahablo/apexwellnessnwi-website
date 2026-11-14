@@ -616,10 +616,11 @@ test('the About page distinguishes real team portraits, supplied interests, and 
   assert.doesNotMatch(html, /Portrait coming soon/);
   for (const interest of ['wrestling', 'Brazilian jiu-jitsu', 'Muay Thai', 'boxing', 'weightlifter']) assert.ok(html.includes(interest));
   assert.doesNotMatch(html, /Shahab Siddique, MD|Dr\. Shahab/);
-  assert.match(html, /Incoming Medical Assistant/);
+  assert.match(html, /Medical Assistant/);
+  assert.doesNotMatch(html, /Incoming|joining Apex/i);
   assert.match(html, /more than 10 years of healthcare experience/);
   assert.doesNotMatch(html, /Alexandria Auriemma, MD|Dr\. Alexandria/);
-  assert.match(html, /Incoming Family Nurse Practitioner/);
+  assert.match(html, /Family Nurse Practitioner/);
   assert.match(html, /nursing career began in 1999/);
   assert.doesNotMatch(html, /Shanon Mekola, MD|Dr\. Shanon|Wajeeh|Bakhsh/);
   assert.match(html, /Keep your primary care doctor/);

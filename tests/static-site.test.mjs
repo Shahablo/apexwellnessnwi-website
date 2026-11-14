@@ -610,7 +610,7 @@ test("sitemap, robots, and custom 404 cover the complete crawlable site", async 
 test('the About page distinguishes real team portraits, supplied interests, and physician credentials', () => {
   const html = htmlBySlug.get('/about/');
   const portraits = startTags(html, 'img').filter(({attrs}) => attrs['data-photo-kind'] === 'portrait');
-  assert.deepEqual(portraits.map(({attrs}) => attrs.alt), ['Shahab Siddique', 'Alexandria Auriemma']);
+  assert.deepEqual(portraits.map(({attrs}) => attrs.alt), ['Shahab Siddique', 'Alexandria Auriemma', 'Shanon Mekola']);
   assert.ok(portraits.every(({attrs}) => attrs.loading === 'lazy'));
   assert.doesNotMatch(html, /Atif|Muhammad/);
   assert.doesNotMatch(html, /Portrait coming soon/);
@@ -619,6 +619,9 @@ test('the About page distinguishes real team portraits, supplied interests, and 
   assert.match(html, /Incoming Medical Assistant/);
   assert.match(html, /more than 10 years of healthcare experience/);
   assert.doesNotMatch(html, /Alexandria Auriemma, MD|Dr\. Alexandria/);
+  assert.match(html, /Incoming Family Nurse Practitioner/);
+  assert.match(html, /nursing career began in 1999/);
+  assert.doesNotMatch(html, /Shanon Mekola, MD|Dr\. Shanon|Wajeeh|Bakhsh/);
   assert.match(html, /Keep your primary care doctor/);
 });
 

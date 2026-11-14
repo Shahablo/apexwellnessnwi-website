@@ -773,11 +773,11 @@ export const pages = Object.freeze({
     navLabel: 'About',
     title: 'Meet the Team | Apex Wellness Northwest Indiana',
     description:
-      'Meet founder Shahab Siddique and Alexandria Auriemma, the medical assistant joining Apex Wellness in Merrillville.',
+      'Meet founder Shahab Siddique, incoming family nurse practitioner Shanon Mekola, and Alexandria Auriemma, the medical assistant joining Apex Wellness in Merrillville.',
     eyebrow: 'The people behind Apex',
     h1: 'Meet the people behind Apex.',
     intro:
-      'Get to know the founder and the incoming medical assistant helping bring Apex Wellness to Merrillville. Coming soon.',
+      'Get to know the founder, the incoming family nurse practitioner and the incoming medical assistant helping bring Apex Wellness to Merrillville. Coming soon.',
     cta: priorityListCta,
     sections: [
       {
@@ -810,6 +810,19 @@ export const pages = Object.freeze({
               'Away from work, she enjoys time with her family and her dog. Family is important to her, and she loves making memories with the people closest to her.'
             ],
             aside: 'Her dog has not submitted an application for a clinic badge.'
+          },
+          {
+            id: 'shanon-mekola',
+            name: 'Shanon Mekola',
+            context: 'Incoming Family Nurse Practitioner',
+            headline: 'Twenty-seven years of care, and counting.',
+            image: { file: 'shanon-mekola-warm-v1.webp', width: 1254, height: 1254 },
+            paragraphs: [
+              'Shanon is joining Apex as a family nurse practitioner. Her nursing career began in 1999, and she has practiced as a family nurse practitioner since 2018.',
+              'Outside of healthcare, she is a proud mom of four grown children and grandma to two grandchildren. She hits the gym at least four days a week and is passionate about animal rescue, from fostering to helping animals get the second chance they deserve.',
+              'She and her husband love to travel, and when time permits, she will happily disappear into a good book.'
+            ],
+            aside: 'Four kids, two grandkids, four gym days a week and a rotating cast of foster animals. A busy clinic day does not scare her.'
           }
         ],
         note: 'Apex focuses on weight, metabolic, hormone and hair-loss care. Keep your primary care doctor; we work alongside them, not instead of them.'
@@ -852,7 +865,7 @@ export const pages = Object.freeze({
         type: 'notice',
         eyebrow: 'Photography',
         heading: 'Real people. Clearly labeled photography.',
-        body: 'The portraits on this page show Shahab Siddique and Alexandria Auriemma with graphic backdrops. Other images on the site may be illustrative.'
+        body: 'The portraits on this page show Shahab Siddique, Alexandria Auriemma and Shanon Mekola with graphic backdrops. Other images on the site may be illustrative.'
       }
     ]
   },

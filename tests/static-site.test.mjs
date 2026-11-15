@@ -851,7 +851,7 @@ test('the QR landing page explains the $49 promotional labs offer without promis
     'Call (219) 207-2456 to schedule, or join the Launch List for updates.',
     'not a reservation'
   ]) assert.ok(offer.includes(phrase), `launch offer is missing: ${phrase}`);
-  assert.doesNotMatch(offer, /\bfree\b|on us|no charge|assessment|included|book online|online booking/i);
+  assert.doesNotMatch(offer, /\bfree\b|on us|no charge|assessment|included|appointments are available|book now/i);
   assert.ok(html.includes('$49'));
   assert.ok(html.includes('first visit'));
   assert.doesNotMatch(html, /first 100/i);
@@ -865,6 +865,42 @@ test('the QR landing page explains the $49 promotional labs offer without promis
   assert.match(html, /No appointment has been booked/);
   assert.match(html, /data-launch-label="November 20, 2026 \(planned; subject to readiness\)"/);
   assert.doesNotMatch(html, /before anywhere else|first access|Takes ten seconds/);
+});
+
+test('Book online opens the Tebra scheduling page in a new tab from the two launch-offer blocks only', async () => {
+  const bookingUrl = 'https://d2oe0ra32qx05a.cloudfront.net/?practiceKey=k_1_117405';
+  const button = `<a class="button" href="${bookingUrl}" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer" aria-describedby="book-online-note" data-book-online>Book online</a>`;
+  const note = '<p id="book-online-note" class="book-online-note">Online booking opens our secure scheduling page (Tebra) in a new tab. Prefer the phone? Call <a href="tel:+12192072456">(219) 207-2456</a>.</p>';
+  const offerPages = new Set(['/founding-patients/', '/plan-your-visit/']);
+
+  for (const [slug, html] of htmlBySlug) {
+    const mentions = html.split('cloudfront.net').length - 1;
+    if (!offerPages.has(slug)) {
+      assert.equal(mentions, 0, `${slug} must not link to online booking`);
+      assert.doesNotMatch(html, /data-book-online|Book online/, `${slug} must not show a Book online button`);
+      continue;
+    }
+    // One plain link: no script, frame, image, pixel or tracking parameter points at the booking host.
+    assert.equal(mentions, 1, `${slug} should reference the booking host exactly once`);
+    assert.ok(html.includes(`<p class="book-online">${button}</p>${note}`), `${slug} is missing the Book online button and note`);
+    assert.doesNotMatch(html, /cloudfront\.net[^"]*(?:utm_|&)/, `${slug} must not add parameters to the booking address`);
+  }
+
+  const landing = htmlBySlug.get('/founding-patients/');
+  const offer = landing.match(/<div class="launch-offer">([\s\S]*?)<\/div>/)?.[1];
+  assert.ok(offer.includes(button), 'the button belongs inside the $49 offer block');
+  assert.ok(offer.indexOf('Call (219) 207-2456 to schedule, or join the Launch List for updates.') < offer.indexOf(button));
+  assert.match(landing, /<form id="consultation-form" action="\/api\/founding-consultation"/);
+
+  const visit = htmlBySlug.get('/plan-your-visit/');
+  const costBox = visit.match(/<div class="visit-fact"><strong>Promotional labs for \$49\.<\/strong>([\s\S]*?)<\/div>/)?.[1];
+  assert.ok(costBox?.includes(button), 'the button belongs inside the Plan Your Visit cost box');
+  assert.match(visit, /<form id="consultation-form" action="\/api\/appointment-contact"/);
+  assert.doesNotMatch(visit, /Continue to Tebra|Continue to scheduling/);
+
+  const measurement = await readFile(join(publicRoot, 'assets', 'site-measurement.js'), 'utf8');
+  assert.match(measurement, /hasAttribute\("data-book-online"\)\) return "plan_visit";/);
+  assert.doesNotMatch(measurement, /cloudfront|book_online/);
 });
 
 test('the retired launch-offer wording is absent from every generated page', async () => {

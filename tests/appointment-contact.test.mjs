@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { DatabaseSync } from 'node:sqlite';
 import { readFile } from 'node:fs/promises';
 import { handleWorkerRequest } from '../src/worker.mjs';
-import { schedulingUrl } from '../src/visit-planner.mjs';
+import { bookOnlineUrl, scheduling, schedulingUrl } from '../src/visit-planner.mjs';
 
 const origin = 'https://apexwellnessnwi.com';
 const migrations = await Promise.all(['0001_priority.sql', '0002_founding_consultations.sql', '0003_appointment_contact_requests.sql'].map(file => readFile(new URL(`../migrations/${file}`, import.meta.url), 'utf8')));
@@ -74,5 +74,39 @@ test('unverified or unsafe scheduling destinations cannot become an active booki
   assert.equal(schedulingUrl({ ready: false, publicUrl: 'https://practice.kareo.com/synthetic' }), null);
   for (const publicUrl of ['http://practice.kareo.com/synthetic', 'https://tebra.com.attacker.example/a', 'https://practice.kareo.com/a?email=test', 'https://practice.kareo.com/', 'https://user:pass@practice.kareo.com/a']) {
     assert.throws(() => schedulingUrl({ ready: true, publicUrl }));
+  }
+});
+
+test('the Book online link accepts only the exact Tebra booking address', () => {
+  const bookingUrl = 'https://d2oe0ra32qx05a.cloudfront.net/?practiceKey=k_1_117405';
+  assert.equal(scheduling.publicUrl, bookingUrl);
+  assert.equal(bookOnlineUrl(), bookingUrl);
+  assert.equal(schedulingUrl(), null, 'the Plan Your Visit handoff stays off until readiness is confirmed');
+  assert.equal(schedulingUrl({ ready: true, publicUrl: bookingUrl }), bookingUrl);
+  assert.equal(bookOnlineUrl({ bookOnline: false, publicUrl: bookingUrl }), null);
+  assert.equal(bookOnlineUrl({ bookOnline: true, publicUrl: '' }), null);
+  assert.equal(schedulingUrl({ ready: true, publicUrl: 'https://practice.kareo.com/synthetic' }), 'https://practice.kareo.com/synthetic');
+  for (const publicUrl of [
+    'http://d2oe0ra32qx05a.cloudfront.net/?practiceKey=k_1_117405',
+    'https://d111111abcdef8.cloudfront.net/?practiceKey=k_1_117405',
+    'https://cloudfront.net/?practiceKey=k_1_117405',
+    'https://d2oe0ra32qx05a.cloudfront.net.attacker.example/?practiceKey=k_1_117405',
+    'https://user:pass@d2oe0ra32qx05a.cloudfront.net/?practiceKey=k_1_117405',
+    'https://d2oe0ra32qx05a.cloudfront.net:8443/?practiceKey=k_1_117405',
+    'https://d2oe0ra32qx05a.cloudfront.net/',
+    'https://d2oe0ra32qx05a.cloudfront.net/?key=k_1_117405',
+    'https://d2oe0ra32qx05a.cloudfront.net/?practiceKey=',
+    'https://d2oe0ra32qx05a.cloudfront.net/?practiceKey=%3Cscript%3E',
+    'https://d2oe0ra32qx05a.cloudfront.net/?practiceKey=k_1_117405&utm_source=facebook',
+    'https://d2oe0ra32qx05a.cloudfront.net/?practiceKey=k_1_117405&email=test',
+    'https://d2oe0ra32qx05a.cloudfront.net/?practiceKey=k_1_117405&practiceKey=k_2_2',
+    'https://d2oe0ra32qx05a.cloudfront.net/login?practiceKey=k_1_117405',
+    'https://d2oe0ra32qx05a.cloudfront.net/?practiceKey=k_1_117405#details',
+    'https://practice.kareo.com/?practiceKey=k_1_117405',
+    'https://practice.kareo.com/a?practiceKey=k_1_117405',
+    'https://practice.kareo.com:8443/synthetic'
+  ]) {
+    assert.throws(() => bookOnlineUrl({ bookOnline: true, publicUrl }), undefined, publicUrl);
+    assert.throws(() => schedulingUrl({ ready: true, publicUrl }), undefined, publicUrl);
   }
 });

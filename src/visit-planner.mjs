@@ -1,15 +1,35 @@
-// Add only the verified public Apex Tebra URL after practice readiness is confirmed.
-// No patient information or campaign query parameters are forwarded from this page.
-export const scheduling = Object.freeze({ publicUrl: '', ready: false });
+// The one place the public Apex Tebra online-booking address is kept.
+// No patient information or campaign query parameters are forwarded from this site.
+// - bookOnline: shows the "Book online" button in the launch-offer blocks. Set it to false to remove the button everywhere.
+// - ready: also replaces the Plan Your Visit contact step with the scheduling handoff. Keep it false until practice readiness is confirmed.
+export const scheduling = Object.freeze({
+  publicUrl: 'https://d2oe0ra32qx05a.cloudfront.net/?practiceKey=k_1_117405',
+  bookOnline: true,
+  ready: false
+});
 
-export function schedulingUrl(config = scheduling) {
-  if (!config.ready || !config.publicUrl) return null;
-  const url = new URL(config.publicUrl);
-  const approvedHosts = ['practice.kareo.com', 'www.tebra.com', 'tebra.com'];
-  if (url.protocol !== 'https:' || !approvedHosts.includes(url.hostname) || url.username || url.password || url.search || url.hash || url.pathname === '/') {
+const practicePageHosts = ['practice.kareo.com', 'www.tebra.com', 'tebra.com'];
+// Tebra serves its hosted online-booking page from this exact host, at the root path, keyed only by practiceKey.
+const bookingPageHost = 'd2oe0ra32qx05a.cloudfront.net';
+
+function verifiedSchedulingUrl(publicUrl) {
+  const url = new URL(publicUrl);
+  const practicePage = practicePageHosts.includes(url.hostname) && !url.search && url.pathname !== '/';
+  const bookingPage = url.hostname === bookingPageHost && url.pathname === '/' && /^\?practiceKey=k_\d+_\d+$/.test(url.search);
+  if (url.protocol !== 'https:' || url.username || url.password || url.port || url.hash || !(practicePage || bookingPage)) {
     throw new Error('Use a verified HTTPS Apex practice scheduling URL without credentials or tracking parameters.');
   }
   return url.href;
+}
+
+export function schedulingUrl(config = scheduling) {
+  if (!config.ready || !config.publicUrl) return null;
+  return verifiedSchedulingUrl(config.publicUrl);
+}
+
+export function bookOnlineUrl(config = scheduling) {
+  if (!config.bookOnline || !config.publicUrl) return null;
+  return verifiedSchedulingUrl(config.publicUrl);
 }
 
 export const visitPlannerPage = Object.freeze({

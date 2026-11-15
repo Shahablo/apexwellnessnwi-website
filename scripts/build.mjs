@@ -5,7 +5,7 @@ import { fileURLToPath } from "node:url";
 
 import { pages, site } from "../src/content.mjs";
 import { visitDetails } from "../src/visit-details.mjs";
-import { schedulingUrl } from "../src/visit-planner.mjs";
+import { bookOnlineUrl, schedulingUrl } from "../src/visit-planner.mjs";
 import { blogPosts } from "../src/blog-posts.mjs";
 
 const rootDirectory = fileURLToPath(new URL("../", import.meta.url));
@@ -288,6 +288,13 @@ function imageMarkup(image, { hero = false } = {}) {
 
 function buttonMarkup(cta, secondary = false) {
   return `<a class="${secondary ? "button-secondary" : "button"}" href="${escapeHtml(cta.href)}">${escapeHtml(cta.label)}</a>`;
+}
+
+// Off-site scheduling button for the launch-offer blocks. The address and its on/off switch live in src/visit-planner.mjs.
+function bookOnlineMarkup() {
+  const url = bookOnlineUrl();
+  if (!url) return "";
+  return `<p class="book-online"><a class="button" href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer" aria-describedby="book-online-note" data-book-online>Book online</a></p><p id="book-online-note" class="book-online-note">Online booking opens our secure scheduling page (Tebra) in a new tab. Prefer the phone? Call <a href="tel:+12192072456">(219) 207-2456</a>.</p>`;
 }
 
 function headingMarkup(section, id) {
@@ -677,7 +684,7 @@ function renderConversionHero(page) {
       <p class="eyebrow">${escapeHtml(page.eyebrow)}</p>
       <h1 id="page-title">${escapeHtml(page.h1).replace('. ', '.<br>')}</h1>
       <p>${escapeHtml(page.intro)}</p>
-      <div class="launch-offer"><p class="eyebrow">${escapeHtml(page.offer.eyebrow)}</p><h2>${escapeHtml(page.offer.heading)}</h2><p>${escapeHtml(page.offer.terms)}</p></div>
+      <div class="launch-offer"><p class="eyebrow">${escapeHtml(page.offer.eyebrow)}</p><h2>${escapeHtml(page.offer.heading)}</h2><p>${escapeHtml(page.offer.terms)}</p>${bookOnlineMarkup()}</div>
       <div class="hero-actions">${page.visitPlanner ? '<a class="button" href="/plan-your-visit/">Plan your first visit</a>' : ''}${buttonMarkup(page.cta)}</div>
       <p class="cta-note">${escapeHtml(page.ctaNote)}</p>
     </div>
@@ -729,7 +736,7 @@ function renderVisitPlanner(page) {
         </section>
         <section data-visit-step aria-labelledby="visit-step-two"><h2 id="visit-step-two" tabindex="-1">Know the costs before you commit.</h2>
           <p>Apex is a cash-pay practice. Final prices and what is included will be published before scheduling opens.</p>
-          <div class="visit-fact"><strong>Promotional labs for $49.</strong><p>$49 covers your first visit and the promotional labs. Labs as clinically appropriate. One per person. First 50 appointments scheduled. Additional testing or treatment is separate. Appointments subject to availability. Call <a href="tel:+12192072456">(219) 207-2456</a> to schedule, or join the Launch List for updates. A contact request or Launch List signup does not reserve this offer.</p></div>
+          <div class="visit-fact"><strong>Promotional labs for $49.</strong><p>$49 covers your first visit and the promotional labs. Labs as clinically appropriate. One per person. First 50 appointments scheduled. Additional testing or treatment is separate. Appointments subject to availability. Call <a href="tel:+12192072456">(219) 207-2456</a> to schedule, or join the Launch List for updates. A contact request or Launch List signup does not reserve this offer.</p>${bookOnlineMarkup()}</div>
           <p><a href="/pricing/">Review our pricing information</a></p>
           <div class="visit-actions"><button class="button-secondary" type="button" data-visit-back hidden>Back</button><button class="button" type="button" data-visit-next hidden>Next: your next step</button></div>
         </section>

@@ -54,7 +54,7 @@ test('Pexy separates the $49 promotional labs offer, visit request, and Launch L
   const offer = answerWebsiteQuestion('How does the $49 promotional labs offer work?');
   assert.equal(offer.href, '/founding-patients/');
   assert.match(offer.text, /promotional labs for \$49 for the first 50 appointments scheduled/);
-  assert.match(offer.text, /Labs as clinically appropriate\. One per person\. Appointments subject to availability\./);
+  assert.match(offer.text, /The \$49 covers your first visit and the promotional labs\. Labs as clinically appropriate\. One per person\. Additional testing or treatment is separate\. Appointments subject to availability\./);
   assert.match(offer.text, /call \(219\) 207-2456, or join the Launch List for updates/);
   assert.match(offer.text, /does not reserve/);
   assert.doesNotMatch(offer.text, /\bfree\b|no charge|first[ -]100|assessment|included|online/i);
@@ -65,7 +65,8 @@ test('Pexy separates the $49 promotional labs offer, visit request, and Launch L
   for (const question of ['Are labs included?', 'Do you do blood work?']) {
     const labs = answerWebsiteQuestion(question);
     assert.equal(labs.href, '/founding-patients/');
-    assert.match(labs.text, /promotional labs for \$49 for the first 50 appointments scheduled/);
+    assert.match(labs.text, /promotional labs for \$49 for the first 50 appointments scheduled\. The \$49 covers your first visit and the promotional labs\./);
+    assert.match(labs.text, /Additional testing or treatment is separate\./);
     assert.doesNotMatch(labs.text + labs.label, /\bfree\b|no charge|first[ -]100|selected baseline/i);
   }
 
@@ -102,6 +103,7 @@ test('the guide routes common logistics and keeps personal medical questions out
   assert.equal(answerWebsiteQuestion('Is there accessible website support?').href, '/accessibility/');
   assert.equal(answerWebsiteQuestion('How does cancellation work?').href, '/cancellation-refunds/');
   assert.equal(answerWebsiteQuestion('Are labs included?').href, '/founding-patients/');
+  assert.match(answerWebsiteQuestion('Are labs included?').text, /Outside the launch offer, do not assume testing is included in a visit fee/);
   assert.match(answerWebsiteQuestion('I have my lab results, can I book?').text, /cannot assess/);
 });
 test('medical and emergency questions take precedence over marketing answers', () => {

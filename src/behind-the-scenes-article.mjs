@@ -66,7 +66,7 @@ export const behindTheScenesArticle = Object.freeze({
       heading: 'Come along for the next part',
       paragraphs: [
         'There is still work ahead, and we are excited to bring you along as we get Apex ready. The name on the door feels good; the less visible checks still matter just as much.',
-        'Follow Apex Wellness NWI for opening updates. Our launch offer is promotional labs for $49 for the first 50 appointments scheduled. Labs as clinically appropriate. One per person. Appointments subject to availability. Call (219) 207-2456 to schedule, or join the Launch List for updates. We are still preparing to open, and joining the Launch List is not an appointment booking.'
+        'Follow Apex Wellness NWI for opening updates. Our launch offer is promotional labs for $49 for the first 50 appointments scheduled. The $49 covers your first visit and the promotional labs. Labs as clinically appropriate. One per person. Additional testing or treatment is separate. Appointments subject to availability. Call (219) 207-2456 to schedule, or join the Launch List for updates. We are still preparing to open, and joining the Launch List is not an appointment booking.'
       ]
     }
   ],

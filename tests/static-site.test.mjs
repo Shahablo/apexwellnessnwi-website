@@ -847,16 +847,19 @@ test('the QR landing page explains the $49 promotional labs offer without promis
   for (const phrase of [
     'First 50 appointments · $49 promotional labs',
     'Promotional labs for $49.',
-    'Labs as clinically appropriate. One per person. First 50 appointments scheduled. Appointments subject to availability.',
+    '$49 covers your first visit and the promotional labs. Labs as clinically appropriate. One per person. First 50 appointments scheduled. Additional testing or treatment is separate. Appointments subject to availability.',
     'Call (219) 207-2456 to schedule, or join the Launch List for updates.',
     'not a reservation'
   ]) assert.ok(offer.includes(phrase), `launch offer is missing: ${phrase}`);
   assert.doesNotMatch(offer, /\bfree\b|on us|no charge|assessment|included|book online|online booking/i);
   assert.ok(html.includes('$49'));
+  assert.ok(html.includes('first visit'));
   assert.doesNotMatch(html, /first 100/i);
-  assert.match(html, /<meta name="description" content="Promotional labs for \$49 for the first 50 appointments scheduled\. Call \(219\) 207-2456 to schedule, or join the Apex Launch List\. Coming soon to Merrillville\.">/);
+  assert.match(html, /<meta name="description" content="Promotional labs for \$49 for the first 50 appointments scheduled; the \$49 covers your first visit and the labs\. Call \(219\) 207-2456 or join the Apex Launch List\.">/);
   assert.match(html, /How does the \$49 promotional labs offer work\?/);
-  assert.match(html, /The launch offer is promotional labs for \$49 for the first 50 appointments scheduled\. Labs as clinically appropriate\. One per person\. Appointments subject to availability\./);
+  assert.match(html, /The launch offer is promotional labs for \$49 for the first 50 appointments scheduled\. The \$49 covers your first visit and the promotional labs\. Labs as clinically appropriate\. One per person\. Additional testing or treatment is separate\. Appointments subject to availability\./);
+  assert.match(html, /<p class="cta-note">The Launch List costs nothing to join\. No appointment booked\. No commitment to care\.<\/p>/);
+  assert.doesNotMatch(html, /<p class="cta-note">[^<]*\bfree\b/i);
   assert.match(html, /<form id="consultation-form" action="\/api\/founding-consultation"/);
   assert.doesNotMatch(html, /APEXNOV|Free initial in-house testosterone test/);
   assert.match(html, /No appointment has been booked/);
@@ -871,12 +874,12 @@ test('the retired launch-offer wording is absent from every generated page', asy
 
   const visit = htmlBySlug.get('/plan-your-visit/');
   assert.match(visit, /<strong>Promotional labs for \$49\.<\/strong>/);
-  assert.match(visit, /Labs as clinically appropriate\. One per person\. First 50 appointments scheduled\. Appointments subject to availability\./);
+  assert.match(visit, /\$49 covers your first visit and the promotional labs\. Labs as clinically appropriate\. One per person\. First 50 appointments scheduled\. Additional testing or treatment is separate\. Appointments subject to availability\./);
   assert.match(visit, /Call <a href="tel:\+12192072456">\(219\) 207-2456<\/a> to schedule, or join the Launch List for updates\./);
   assert.match(visit, /data-help-question="How does the \$49 promotional labs offer work\?">\$49 labs<\/button>/);
 
   const story = htmlBySlug.get('/blog/before-the-doors-open-apex-wellness/');
-  assert.match(story, /Our launch offer is promotional labs for \$49 for the first 50 appointments scheduled\./);
+  assert.match(story, /Our launch offer is promotional labs for \$49 for the first 50 appointments scheduled\. The \$49 covers your first visit and the promotional labs\. Labs as clinically appropriate\. One per person\. Additional testing or treatment is separate\. Appointments subject to availability\./);
 });
 
 test('all CSS assets and self-hosted fonts resolve without third-party runtime calls', async () => {

@@ -18,7 +18,7 @@ export function answerWebsiteQuestion(input, launchLabel = 'November 20, 2026') 
   const plannedDate = String(launchLabel).replace(/\s*\(.*\)$/, '');
   const result = (text, label, href, followupEligible = false) => ({ text, label, href, followupEligible });
   const asks = (pattern) => pattern.test(question);
-  const launchOffer = 'Apex’s launch offer is promotional labs for $49 for the first 50 appointments scheduled. Labs as clinically appropriate. One per person. Appointments subject to availability.';
+  const launchOffer = 'Apex’s launch offer is promotional labs for $49 for the first 50 appointments scheduled. The $49 covers your first visit and the promotional labs. Labs as clinically appropriate. One per person. Additional testing or treatment is separate. Appointments subject to availability.';
 
   // Safety and privacy take priority over promotional or navigation answers.
   if (asks(/\b(emergency|chest pain|trouble breathing|cannot breathe|can't breathe|suicid\w*|overdose|stroke)\b/)) {
@@ -52,7 +52,7 @@ export function answerWebsiteQuestion(input, launchLabel = 'November 20, 2026') 
   }
 
   if (asks(/\b(labs?|blood ?work|tests?|testing)\b/) && asks(/\b(included|free|covered|cost)\b/)) {
-    return result(`${launchOffer} Do not assume testing is included in a visit fee; final pricing will explain any separate costs. Pexy cannot determine which tests anyone needs.`, '$49 promotional labs details', '/founding-patients/');
+    return result(`${launchOffer} Outside the launch offer, do not assume testing is included in a visit fee; final pricing will explain any separate costs. Pexy cannot determine which tests anyone needs.`, '$49 promotional labs details', '/founding-patients/');
   }
   if (asks(/\b(price|pricing|cost|fees?|payment|pay|cash|insurance|medicare|medicaid|afford|included|billing)\b/)) {
     return result('Apex plans to be cash-pay. The final prices, what each fee includes, payment details, and any separate testing, medication, or outside costs are not public yet. They will be posted before scheduling or payment opens. The Launch List is free; no insurance coverage or reimbursement is promised.', 'Pricing and what to expect', '/pricing/');

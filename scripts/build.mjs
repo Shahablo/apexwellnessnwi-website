@@ -729,7 +729,7 @@ function renderVisitPlanner(page) {
         </section>
         <section data-visit-step aria-labelledby="visit-step-two"><h2 id="visit-step-two" tabindex="-1">Know the costs before you commit.</h2>
           <p>Apex is a cash-pay practice. Final prices and what is included will be published before scheduling opens.</p>
-          <div class="visit-fact"><strong>Promotional labs for $49.</strong><p>Labs as clinically appropriate. One per person. First 50 appointments scheduled. Appointments subject to availability. Call <a href="tel:+12192072456">(219) 207-2456</a> to schedule, or join the Launch List for updates. A contact request or Launch List signup does not reserve this offer.</p></div>
+          <div class="visit-fact"><strong>Promotional labs for $49.</strong><p>$49 covers your first visit and the promotional labs. Labs as clinically appropriate. One per person. First 50 appointments scheduled. Additional testing or treatment is separate. Appointments subject to availability. Call <a href="tel:+12192072456">(219) 207-2456</a> to schedule, or join the Launch List for updates. A contact request or Launch List signup does not reserve this offer.</p></div>
           <p><a href="/pricing/">Review our pricing information</a></p>
           <div class="visit-actions"><button class="button-secondary" type="button" data-visit-back hidden>Back</button><button class="button" type="button" data-visit-next hidden>Next: your next step</button></div>
         </section>

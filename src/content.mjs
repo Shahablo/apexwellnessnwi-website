@@ -979,7 +979,7 @@ export const pages = Object.freeze({
     navLabel: 'Launch List',
     title: 'Apex Wellness Launch List | Care Coming to Merrillville',
     description:
-      'Promotional labs for $49 for the first 50 appointments scheduled. Call (219) 207-2456 to schedule, or join the Apex Launch List. Coming soon to Merrillville.',
+      'Promotional labs for $49 for the first 50 appointments scheduled; the $49 covers your first visit and the labs. Call (219) 207-2456 or join the Apex Launch List.',
     announcement: 'Coming soon to Merrillville · Thoughtful care',
     launchLabel: 'November 20, 2026 (planned; subject to readiness)',
     eyebrow: 'Apex Wellness · Northwest Indiana',
@@ -993,9 +993,9 @@ export const pages = Object.freeze({
     offer: {
       eyebrow: 'First 50 appointments · $49 promotional labs',
       heading: 'Promotional labs for $49.',
-      terms: 'Labs as clinically appropriate. One per person. First 50 appointments scheduled. Appointments subject to availability. Call (219) 207-2456 to schedule, or join the Launch List for updates. The Launch List is not a reservation.'
+      terms: '$49 covers your first visit and the promotional labs. Labs as clinically appropriate. One per person. First 50 appointments scheduled. Additional testing or treatment is separate. Appointments subject to availability. Call (219) 207-2456 to schedule, or join the Launch List for updates. The Launch List is not a reservation.'
     },
-    ctaNote: 'Free to join. No appointment booked. No commitment to care.',
+    ctaNote: 'The Launch List costs nothing to join. No appointment booked. No commitment to care.',
     landing: true,
     visitPlanner: true,
     form: {
@@ -1090,7 +1090,7 @@ export const pages = Object.freeze({
           },
           {
             question: 'How does the $49 promotional labs offer work?',
-            answer: 'The launch offer is promotional labs for $49 for the first 50 appointments scheduled. Labs as clinically appropriate. One per person. Appointments subject to availability. To schedule, call (219) 207-2456, or join the Launch List for updates. Joining the Launch List does not schedule an appointment or reserve the offer.'
+            answer: 'The launch offer is promotional labs for $49 for the first 50 appointments scheduled. The $49 covers your first visit and the promotional labs. Labs as clinically appropriate. One per person. Additional testing or treatment is separate. Appointments subject to availability. To schedule, call (219) 207-2456, or join the Launch List for updates. Joining the Launch List does not schedule an appointment or reserve the offer.'
           },
           {
             question: 'Should I include medical information?',

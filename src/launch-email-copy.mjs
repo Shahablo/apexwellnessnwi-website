@@ -67,7 +67,7 @@ export function renderLaunchEmail(stage, links = {}) {
       "We're glad you're here. The Apex name is on the door in Merrillville, and we're excited to open it to our neighbors soon.",
       "Appointment requests are coming soon. We'll email you when scheduling opens and share pricing when it's published.",
     ];
-    note = "Joining this list does not book a visit or reserve one of the first 100 assessments.";
+    note = "Joining this list does not book a visit or reserve the $49 promotional labs offer.";
     paragraphs = [
       body[0],
       body[1],

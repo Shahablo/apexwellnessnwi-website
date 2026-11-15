@@ -729,7 +729,7 @@ function renderVisitPlanner(page) {
         </section>
         <section data-visit-step aria-labelledby="visit-step-two"><h2 id="visit-step-two" tabindex="-1">Know the costs before you commit.</h2>
           <p>Apex is a cash-pay practice. Final prices and what is included will be published before scheduling opens.</p>
-          <div class="visit-fact"><strong>First 100 assessments, on us.</strong><p>For the first 100 initial wellness assessments after opening, selected baseline labs are included when clinically appropriate. One per person; no purchase required. Additional care or testing may cost extra. A contact request or Launch List signup does not reserve this offer.</p></div>
+          <div class="visit-fact"><strong>Promotional labs for $49.</strong><p>Labs as clinically appropriate. One per person. First 50 appointments scheduled. Appointments subject to availability. Call <a href="tel:+12192072456">(219) 207-2456</a> to schedule, or join the Launch List for updates. A contact request or Launch List signup does not reserve this offer.</p></div>
           <p><a href="/pricing/">Review our pricing information</a></p>
           <div class="visit-actions"><button class="button-secondary" type="button" data-visit-back hidden>Back</button><button class="button" type="button" data-visit-next hidden>Next: your next step</button></div>
         </section>
@@ -832,7 +832,7 @@ function renderSiteHelp(page) {
         <button class="pexy-followup-submit" type="submit">Send general question</button>
       </form>
       <p id="pexy-followup-status" class="pexy-followup-status" role="status" aria-live="polite"></p>
-      <div class="help-topics" aria-label="Common questions"><button type="button" data-help-question="When do you open?">Opening</button><button type="button" data-help-question="What care do you offer?">Care areas</button><button type="button" data-help-question="How does the first 100 assessments offer work?">First 100</button><button type="button" data-help-question="What does care cost?">Pricing</button><button type="button" data-help-question="Can I request a visit?">Visit request</button><button type="button" data-help-question="Where is Apex located?">Location</button></div>
+      <div class="help-topics" aria-label="Common questions"><button type="button" data-help-question="When do you open?">Opening</button><button type="button" data-help-question="What care do you offer?">Care areas</button><button type="button" data-help-question="How does the $49 promotional labs offer work?">$49 labs</button><button type="button" data-help-question="What does care cost?">Pricing</button><button type="button" data-help-question="Can I request a visit?">Visit request</button><button type="button" data-help-question="Where is Apex located?">Location</button></div>
       <form id="site-help-form" aria-label="Ask Pexy a website question"><label for="help-question">Your website question</label><div class="help-input-row"><input id="help-question" type="text" maxlength="500" autocomplete="off" placeholder="Type a general question…" aria-describedby="help-disclosure" required><button type="submit">Ask Pexy</button></div></form>
       <p class="widget-note">Pexy is not live chat. For a medical emergency, call 911. <a href="/faq/">All FAQs</a></p>
     </section>

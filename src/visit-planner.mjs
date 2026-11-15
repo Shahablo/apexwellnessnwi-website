@@ -13,7 +13,7 @@ export function schedulingUrl(config = scheduling) {
 }
 
 export const visitPlannerPage = Object.freeze({
-  kind: 'visitPlanner', slug: '/plan-your-visit/', modified: '2026-10-25',
+  kind: 'visitPlanner', slug: '/plan-your-visit/', modified: '2026-11-15',
   navLabel: 'Plan your visit', title: 'Plan Your First Visit | Apex Wellness',
   description: 'Walk through the planned visit format, costs and next steps at Apex Wellness in Merrillville. Coming soon; appointment availability is not yet confirmed.',
   eyebrow: 'Your first step · Coming soon', h1: 'Let’s plan your first visit.',

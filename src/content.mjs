@@ -975,11 +975,11 @@ export const pages = Object.freeze({
 
   'founding-patients': {
     slug: '/founding-patients/',
-    modified: '2026-10-26',
+    modified: '2026-11-15',
     navLabel: 'Launch List',
     title: 'Apex Wellness Launch List | Care Coming to Merrillville',
     description:
-      'Join the Apex Wellness Launch List for opening updates and details of the first 100 assessments offer. Coming soon to Merrillville.',
+      'Promotional labs for $49 for the first 50 appointments scheduled. Call (219) 207-2456 to schedule, or join the Apex Launch List. Coming soon to Merrillville.',
     announcement: 'Coming soon to Merrillville · Thoughtful care',
     launchLabel: 'November 20, 2026 (planned; subject to readiness)',
     eyebrow: 'Apex Wellness · Northwest Indiana',
@@ -991,9 +991,9 @@ export const pages = Object.freeze({
       href: '#consultation-request'
     },
     offer: {
-      eyebrow: 'First 100 assessments · After opening',
-      heading: 'First 100 assessments, on us.',
-      terms: 'For the first 100 initial wellness assessments after opening, selected baseline labs are included when clinically appropriate. One per person; no purchase required. Additional care or testing may cost extra. The Launch List is not a reservation.'
+      eyebrow: 'First 50 appointments · $49 promotional labs',
+      heading: 'Promotional labs for $49.',
+      terms: 'Labs as clinically appropriate. One per person. First 50 appointments scheduled. Appointments subject to availability. Call (219) 207-2456 to schedule, or join the Launch List for updates. The Launch List is not a reservation.'
     },
     ctaNote: 'Free to join. No appointment booked. No commitment to care.',
     landing: true,
@@ -1089,8 +1089,8 @@ export const pages = Object.freeze({
             answer: 'No. Joining the Launch List is free, and you can unsubscribe at any time.'
           },
           {
-            question: 'How does the first 100 assessments offer work?',
-            answer: 'After opening, the first 100 initial assessments will include the assessment and selected baseline labs at no charge when clinically appropriate. One offer per person; no purchase required. The clinician determines which tests, if any, are appropriate; additional testing or care may have a cost. Joining the Launch List does not book an assessment or reserve the offer. We will share scheduling and full terms when confirmed.'
+            question: 'How does the $49 promotional labs offer work?',
+            answer: 'The launch offer is promotional labs for $49 for the first 50 appointments scheduled. Labs as clinically appropriate. One per person. Appointments subject to availability. To schedule, call (219) 207-2456, or join the Launch List for updates. Joining the Launch List does not schedule an appointment or reserve the offer.'
           },
           {
             question: 'Should I include medical information?',

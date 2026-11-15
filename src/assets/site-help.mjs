@@ -8,7 +8,7 @@ export function shouldOfferPexy({ elapsedMs, desktop, topExit = false, engaged =
 
 export function pexyNudgeCopy(pathname = '/') {
   if (/^\/pricing\/?$/.test(pathname)) return 'Prices are being finalized. I can tell you what is confirmed now and where updates will appear.';
-  if (/^\/founding-patients\/?$/.test(pathname)) return 'Questions about the first-100 assessment offer? I can explain the terms and what joining the Launch List does.';
+  if (/^\/founding-patients\/?$/.test(pathname)) return 'Questions about the $49 promotional labs offer? I can explain the terms and what joining the Launch List does.';
   if (/^\/plan-your-visit\/?$/.test(pathname)) return 'Wondering what happens after a visit request? I can explain the process. A request does not book a time.';
   return 'Need a quick answer? I can help with opening plans, care areas, pricing updates, and visit requests.';
 }
@@ -18,6 +18,7 @@ export function answerWebsiteQuestion(input, launchLabel = 'November 20, 2026') 
   const plannedDate = String(launchLabel).replace(/\s*\(.*\)$/, '');
   const result = (text, label, href, followupEligible = false) => ({ text, label, href, followupEligible });
   const asks = (pattern) => pattern.test(question);
+  const launchOffer = 'Apex’s launch offer is promotional labs for $49 for the first 50 appointments scheduled. Labs as clinically appropriate. One per person. Appointments subject to availability.';
 
   // Safety and privacy take priority over promotional or navigation answers.
   if (asks(/\b(emergency|chest pain|trouble breathing|cannot breathe|can't breathe|suicid\w*|overdose|stroke)\b/)) {
@@ -39,18 +40,19 @@ export function answerWebsiteQuestion(input, launchLabel = 'November 20, 2026') 
   }
 
   // Distinguish the public offer, contact request, and email list. None is a booking.
-  if (asks(/\b(first (?:100|hundred)|100 assessments?|free (?:initial |wellness )?assessments?|selected (?:baseline )?labs?|launch offer|poster offer)\b/)) {
-    return result('After opening, the first 100 initial wellness assessments are planned at no charge, with selected baseline labs included when clinically appropriate. One per person; no purchase required. Additional care or testing may cost extra. Joining the Launch List or sending a visit request does not reserve the offer or an appointment. Full terms and scheduling will be shared when confirmed.', 'Read the offer terms', '/founding-patients/');
+  // Questions that reuse wording from earlier printed materials still route to the current offer.
+  if (asks(/\$\s?49\b/) || asks(/\b(49 dollars?|first (?:50|fifty)|50 appointments?|promotional labs?|promo(?:tional|tion)? (?:offer|pricing|price|deal|special)|promos?|promotions?|labs? (?:offer|special|deal)|launch offer|poster offer|first (?:100|hundred)|(?:100|hundred) assessments?|free (?:initial |wellness )?assessments?|selected (?:baseline )?labs?)\b/)) {
+    return result(`${launchOffer} To schedule, call (219) 207-2456, or join the Launch List for updates. Joining the Launch List or sending a visit request does not reserve the offer or an appointment.`, 'Read the offer terms', '/founding-patients/');
   }
   if (asks(/\b(appointment|book|booking|schedule|scheduling|reserve|visit request|request a visit|first visit|consultation|tebra|walk.?in)\b/)) {
-    return result('Scheduling is not open yet. You can see how a first visit is expected to work and leave a contact request for manual follow-up. That form asks for name, email, phone, and separate contact consent; it does not book a time, start clinical intake, or reserve the first-100 offer. Please keep medical details out of the form.', 'Plan your visit', '/plan-your-visit/');
+    return result('Scheduling is not open yet. You can see how a first visit is expected to work and leave a contact request for manual follow-up. That form asks for name, email, phone, and separate contact consent; it does not book a time, start clinical intake, or reserve the $49 promotional labs offer. Please keep medical details out of the form.', 'Plan your visit', '/plan-your-visit/');
   }
   if (asks(/\b(launch list|sign ?up|join|newsletter|email updates|opening updates|founding patients|qr code|qr)\b/)) {
-    return result('The Launch List is a free way to get opening and scheduling updates by email. It asks for your name, email, phone number and consent. Apex may make a limited manual call about the request or confirmed scheduling availability; no texts or automated calls. It does not book a visit or hold a place in the first-100 offer. The printed Apex QR code leads to this page.', 'Join the Launch List', '/founding-patients/');
+    return result('The Launch List is a free way to get opening and scheduling updates by email. It asks for your name, email, phone number and consent. Apex may make a limited manual call about the request or confirmed scheduling availability; no texts or automated calls. It does not book a visit or hold a place in the $49 promotional labs offer. The printed Apex QR code leads to this page.', 'Join the Launch List', '/founding-patients/');
   }
 
   if (asks(/\b(labs?|blood ?work|tests?|testing)\b/) && asks(/\b(included|free|covered|cost)\b/)) {
-    return result('The first-100 offer includes selected baseline labs when clinically appropriate, after opening. Outside that offer, do not assume testing is included in a visit fee; final pricing will explain any separate costs. Pexy cannot determine which tests anyone needs.', 'First-100 offer details', '/founding-patients/');
+    return result(`${launchOffer} Do not assume testing is included in a visit fee; final pricing will explain any separate costs. Pexy cannot determine which tests anyone needs.`, '$49 promotional labs details', '/founding-patients/');
   }
   if (asks(/\b(price|pricing|cost|fees?|payment|pay|cash|insurance|medicare|medicaid|afford|included|billing)\b/)) {
     return result('Apex plans to be cash-pay. The final prices, what each fee includes, payment details, and any separate testing, medication, or outside costs are not public yet. They will be posted before scheduling or payment opens. The Launch List is free; no insurance coverage or reimbursement is promised.', 'Pricing and what to expect', '/pricing/');
@@ -88,7 +90,7 @@ export function answerWebsiteQuestion(input, launchLabel = 'November 20, 2026') 
     return result('Weight and metabolic care is a planned Apex area. Specific medications, prescriptions, eligibility, and outcomes cannot be promised through this site. The care page explains the planned evaluation-first approach.', 'Explore weight and metabolic care', '/weight-management/');
   }
   if (asks(/\b(labs?|blood ?work|tests?|testing)\b/)) {
-    return result('Testing decisions depend on a future clinical evaluation. The first-100 assessment offer includes selected baseline labs only when clinically appropriate; other testing may cost extra. Pexy cannot decide which tests someone needs.', 'Read the first-100 terms', '/founding-patients/');
+    return result(`Testing decisions depend on a future clinical evaluation. ${launchOffer} Pexy cannot decide which tests someone needs.`, 'Read the offer terms', '/founding-patients/');
   }
   if (asks(/\b(eligible|qualify|candidate|age|adult|children|child|teen|pediatric|refer\w*|primary care|urgent care)\b/)) {
     return result('Apex is preparing focused care for adults. A future qualified clinician will determine whether a service fits a person’s needs; Pexy cannot prequalify anyone. Apex will not replace primary, specialist, urgent, or emergency care.', 'How care is planned to work', '/how-it-works/');

@@ -21,7 +21,7 @@ test('Pexy invites only after a qualified desktop exit or engagement', () => {
 test('Pexy invitation reflects the page without inventing a price or booking', () => {
   assert.match(pexyNudgeCopy('/pricing/'), /being finalized/);
   assert.doesNotMatch(pexyNudgeCopy('/pricing/'), /\$\d+/);
-  assert.match(pexyNudgeCopy('/founding-patients/'), /first-100 assessment offer/);
+  assert.match(pexyNudgeCopy('/founding-patients/'), /\$49 promotional labs offer/);
   assert.match(pexyNudgeCopy('/plan-your-visit/'), /does not book a time/);
 });
 
@@ -50,12 +50,24 @@ test('the location answer preserves in-person-only launch plans without opening 
   assert.match(answer.text, /Scheduling is not open yet/);
 });
 
-test('Pexy separates the first-100 offer, visit request, and Launch List', () => {
-  const offer = answerWebsiteQuestion('How does the first 100 assessments offer work?');
+test('Pexy separates the $49 promotional labs offer, visit request, and Launch List', () => {
+  const offer = answerWebsiteQuestion('How does the $49 promotional labs offer work?');
   assert.equal(offer.href, '/founding-patients/');
-  assert.match(offer.text, /selected baseline labs included when clinically appropriate/);
-  assert.match(offer.text, /One per person; no purchase required/);
+  assert.match(offer.text, /promotional labs for \$49 for the first 50 appointments scheduled/);
+  assert.match(offer.text, /Labs as clinically appropriate\. One per person\. Appointments subject to availability\./);
+  assert.match(offer.text, /call \(219\) 207-2456, or join the Launch List for updates/);
   assert.match(offer.text, /does not reserve/);
+  assert.doesNotMatch(offer.text, /\bfree\b|no charge|first[ -]100|assessment|included|online/i);
+  // Questions that reuse wording from earlier printed materials get the current offer.
+  for (const question of ['What is the launch offer?', 'What are the promotional labs?', 'Is the first 100 offer still on?']) {
+    assert.equal(answerWebsiteQuestion(question).text, offer.text);
+  }
+  for (const question of ['Are labs included?', 'Do you do blood work?']) {
+    const labs = answerWebsiteQuestion(question);
+    assert.equal(labs.href, '/founding-patients/');
+    assert.match(labs.text, /promotional labs for \$49 for the first 50 appointments scheduled/);
+    assert.doesNotMatch(labs.text + labs.label, /\bfree\b|no charge|first[ -]100|selected baseline/i);
+  }
 
   const request = answerWebsiteQuestion('Can I book an appointment?');
   assert.equal(request.href, '/plan-your-visit/');

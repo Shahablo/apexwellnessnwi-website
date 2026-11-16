@@ -689,6 +689,12 @@ function renderBlogInline(paragraph, richText) {
       `<a href="${href}">${label}</a>`);
 }
 
+// Dated editorial update shown above an article or one of its sections (page.updateNote / section.updateNote).
+function updateNoteMarkup(note) {
+  if (!note) return "";
+  return `<p class="editorial-note">${escapeHtml(note.text)} <a href="${escapeHtml(note.href)}">${escapeHtml(note.linkLabel)}</a></p>`;
+}
+
 function renderBlogPost(page) {
   const image = imageForPage("blog-post", page);
   const introParagraphs = page.intro.split(/\n\s*\n/).map((paragraph) => `<p class="article-deck">${renderBlogInline(paragraph, page.richText)}</p>`).join("\n");
@@ -705,6 +711,7 @@ function renderBlogPost(page) {
     const id = `${identifier(section.heading)}-${index + 1}`;
     return `<section aria-labelledby="${id}">
       <h2 id="${id}">${escapeHtml(section.heading)}</h2>
+      ${updateNoteMarkup(section.updateNote)}
       ${(section.paragraphs || []).map((paragraph) => `<p>${renderBlogInline(paragraph, page.richText)}</p>`).join("\n")}
       ${section.bullets ? `<ul>${section.bullets.map((item) => `<li>${escapeHtml(item)}</li>`).join("\n")}</ul>` : ""}
       ${section.image ? `<figure class="article-photo"><img data-photo-kind="representative" src="${escapeHtml(assetUrl(`images/${section.image.file}`))}" width="${section.image.width}" height="${section.image.height}" alt="${escapeHtml(section.image.alt)}" loading="lazy" decoding="async"><figcaption>${escapeHtml(section.image.caption)}</figcaption></figure>` : ''}
@@ -725,6 +732,7 @@ function renderBlogPost(page) {
         ${image ? imageMarkup(image, { hero: true }) : ''}
       </header>
       <div class="article-body">
+        ${updateNoteMarkup(page.updateNote)}
         ${video}
         <nav class="article-contents" aria-label="In this article"><h2>In this article</h2><ul>${page.sections.map((section, index) => `<li><a href="#${identifier(section.heading)}-${index + 1}">${escapeHtml(section.heading)}</a></li>`).join('')}</ul></nav>
         ${articleSections}

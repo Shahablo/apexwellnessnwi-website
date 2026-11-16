@@ -11,6 +11,7 @@ export const fourAreasArticle = Object.freeze({
   excerpt: 'The thinking behind Apex’s four planned care areas, with a straightforward look at what is confirmed and what is still to come.',
   published: '2026-10-22',
   modified: '2026-11-16',
+  richText: true,
   category: 'About Apex',
   author: 'Apex Wellness Editorial Team',
   heroImage: null,
@@ -34,7 +35,7 @@ export const fourAreasArticle = Object.freeze({
       heading: 'What is confirmed, and what is not',
       paragraphs: [
         'The care focus and the location are confirmed: 8550 Broadway, Suite B, Merrillville, IN 46410. Apex is still Coming soon. Online booking is open for visits from November 20. The clinical team and final fees will be shared when they are confirmed. A date on a planning calendar is not an open door.',
-        'For now, the care pages explain the intended scope and the Launch List is a way to receive opening updates. Joining the list is free and does not reserve an appointment or establish care.'
+        'For now, the care pages explain the intended scope. Online booking is open for visits from November 20. [Book online](https://apexwellnessnwi.com/founding-patients/).'
       ]
     },
     {
@@ -49,7 +50,7 @@ export const fourAreasArticle = Object.freeze({
     { label: 'Apex Wellness: Men’s Hormone Health', href: 'https://apexwellnessnwi.com/mens-hormone-health/' },
     { label: 'Apex Wellness: Women’s Midlife Care', href: 'https://apexwellnessnwi.com/womens-midlife-care/' },
     { label: 'Apex Wellness: Hair-Loss Care', href: 'https://apexwellnessnwi.com/hair-loss-care/' },
-    { label: 'Apex Wellness: Launch List', href: 'https://apexwellnessnwi.com/founding-patients/' }
+    { label: 'Apex Wellness: Book online', href: 'https://apexwellnessnwi.com/founding-patients/' }
   ],
   disclaimerHeading: 'About this article',
   disclaimer: 'This is a description of Apex’s planned focus, not medical advice.',

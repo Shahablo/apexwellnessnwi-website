@@ -1297,7 +1297,7 @@ export const pages = Object.freeze({
         type: 'policySection',
         heading: 'Pre-opening consultation requests',
         paragraphs: [
-          'Submitting a Founding Patient consultation request is free. It is not an appointment, reservation, membership, deposit, or promise of treatment.',
+          'A consultation request is not an appointment, reservation, membership, deposit, or promise of treatment.',
           'You may unsubscribe from email using the link in any message. You may request deletion of your prelaunch contact information as described in the Privacy Policy.'
         ]
       },

@@ -6,6 +6,13 @@ export const openingDay = Object.freeze({ date: '2026-11-20', label: 'Friday, No
 // The clinic opens on opening day; online booking for visits from that day is already open.
 export const bookingStatus = 'Online booking is open for visits from November 20.';
 
+// Dated note for the articles written about the Launch List. The signup left the website on November 16, 2026.
+export const launchListClosedNote = Object.freeze({
+  text: `Update, November 16, 2026: the Launch List is closed to new signups. ${bookingStatus}`,
+  linkLabel: 'Book online',
+  href: '/founding-patients/'
+});
+
 export const clinicHours = Object.freeze({
   heading: 'Hours from November 20',
   rows: Object.freeze([

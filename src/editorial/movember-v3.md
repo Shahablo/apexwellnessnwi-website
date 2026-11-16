@@ -46,7 +46,7 @@ One of the best things an awareness month can do is make an awkward first senten
 
 You do not need a polished speech to ask your own healthcare professional a question. You do not need to know the right medical term before saying that something has changed or that you want to understand a concern better. Starting the conversation is allowed to look like starting.
 
-What a website cannot do is turn that first sentence into a personal assessment. Social comments, direct messages, and the Apex Launch List are not appropriate places for symptoms, medications, test results, or other private health information.
+What a website cannot do is turn that first sentence into a personal assessment. Social comments and direct messages are not appropriate places for symptoms, medications, test results, or other private health information.
 
 ## What Apex can offer right now
 
@@ -54,7 +54,7 @@ Right now, we can offer clarity about the practice we are preparing.
 
 You can read about our planned [men's hormone-health focus](https://apexwellnessnwi.com/mens-hormone-health/), review [how the future visit process is intended to work](https://apexwellnessnwi.com/how-it-works/), and see what is still being finalized on our [pricing page](https://apexwellnessnwi.com/pricing/).
 
-If you want confirmed opening updates, you can join the [Apex Launch List](https://apexwellnessnwi.com/founding-patients/). Joining is free. It does not reserve an appointment, establish care, or guarantee treatment. Please keep personal medical information out of the form.
+Online booking is open for visits from November 20. [Book a men's hormone health visit](https://apexwellnessnwi.com/book/hormone-health/). Booking does not guarantee treatment.
 
 Movember can start a conversation. We hope the useful ones continue long after the moustaches have retired.
 

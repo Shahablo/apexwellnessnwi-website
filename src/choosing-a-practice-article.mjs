@@ -88,5 +88,5 @@ export const choosingAPracticeArticle = Object.freeze({
   "disclaimerHeading": "A note about this worksheet",
   "disclaimer": "These are administrative and process questions for comparing practices. They are not a medical assessment or a treatment recommendation, and they do not describe Apex Wellness's final operating procedures. Keep personal health questions for a private conversation with a qualified clinician.",
   "editorialNote": "An original Apex Wellness planning worksheet, not medical advice. The NIDDK source informs only the cost and program-operation questions; no clinical recommendation is drawn from it.",
-  "ctaBody": "Thoughtful care. Coming soon to Merrillville. See how care is planned to work or join the Launch List for opening updates."
+  "ctaBody": "Thoughtful care. Coming soon to Merrillville. See how care is planned to work."
 });

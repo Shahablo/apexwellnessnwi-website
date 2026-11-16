@@ -35,7 +35,7 @@ test('October 24 owner-directed build-out articles use final media and exclude w
 });
 
 test('personal-goals release preserves the nonmedical version with October 12 staffing-neutral CTA', () => {
-  assert.equal(createHash('sha256').update(JSON.stringify(personalGoalsArticle)).digest('hex'), 'c66270968b1dabd1dd897ea5b950c2cef9f23a0287de54dd6b69c8fccebf4731');
+  assert.equal(createHash('sha256').update(JSON.stringify(personalGoalsArticle)).digest('hex'), '7966a7b3d8f9b4bd8fe678d7cf0c9378f6ce8c8073a9415aa8fea0db767e59c2');
   assert.equal(personalGoalsArticle.editorialType, 'nonmedical');
   assert.equal(personalGoalsArticle.published, '2026-09-20');
   assert.equal(personalGoalsArticle.sections.find(s => s.heading === 'Make a note you can use').bullets.length, 6);
@@ -145,6 +145,10 @@ async function allFiles(directory) {
 }
 
 assert.ok(existsSync(publicRoot), "public/ is missing; run `node scripts/build.mjs` before this test suite");
+
+// /founding-patients/ and the four ad booking pages: short landing header, booking announcement, no site navigation.
+const bookingSlugs = new Set(Object.values(pages).filter((page) => page.landing).map((page) => page.slug));
+const adBookingSlugs = ['/book/weight-loss/', '/book/hormone-health/', '/book/womens-midlife/', '/book/hair-loss/'];
 
 const htmlBySlug = new Map();
 for (const page of pageList) {
@@ -328,141 +332,14 @@ test("legacy priority-list routes redirect to the canonical founding-patients fu
   assert.ok(!existsSync(join(publicRoot, "priority-list", "index.html")), "retired priority-list page must not be generated");
 });
 
-test("founding consultation form matches the minimal API contract and accessible validation semantics", async () => {
+test("the booking page carries no signup form, and the kept Launch List client script still matches the API contract", async () => {
   const html = htmlBySlug.get("/founding-patients/");
   assert.ok(html, "the canonical /founding-patients/ page is missing");
 
-  const formMatches = [...html.matchAll(/<form\b([^>]*)>([\s\S]*?)<\/form>/gi)]
-    .filter((match) => attributes(match[1]).id === 'consultation-form');
-  assert.equal(formMatches.length, 1, "founding-patients page must contain exactly one consultation form");
-  const formAttrs = attributes(formMatches[0][1]);
-  const formHtml = formMatches[0][2];
-  const inputs = startTags(formHtml, "input");
-  const selects = startTags(formHtml, "select");
-  const controls = [...inputs, ...selects];
-  const namedControls = controls.filter(({ attrs }) => attrs.name);
-  const controlsByName = new Map(namedControls.map((control) => [control.attrs.name, control]));
-  const allowedNames = new Set([
-    "full_name",
-    "email",
-    "phone",
-    "phone_followup_consent",
-    "phone_followup_consent_version",
-    "contact_consent",
-    "consent_version",
-    "website",
-    "form_started_at",
-    "accessibility_request",
-    "turnstile_token",
-  ]);
-  const requiredStaticNames = [
-    "full_name",
-    "email",
-    "phone",
-    "phone_followup_consent",
-    "phone_followup_consent_version",
-    "contact_consent",
-    "consent_version",
-    "website",
-    "form_started_at",
-    "accessibility_request",
-  ];
-
-  assert.equal(formAttrs.id, "consultation-form");
-  assert.equal(formAttrs.action, "/api/founding-consultation");
-  assert.equal(formAttrs.method?.toLowerCase(), "post");
-  assert.ok(findElementWithId(html, "consultation-request"), "consultation request anchor target is missing");
-  assert.ok(
-    startTags(html, "a").some(({ attrs }) => attrs.href === "#consultation-request"),
-    "founding-patients page needs an in-page link to the request form",
-  );
-  assert.ok(formAttrs["aria-labelledby"] || formAttrs["aria-label"], "form needs an accessible name");
-  if (formAttrs["aria-labelledby"]) {
-    assert.ok(findElementWithId(html, formAttrs["aria-labelledby"]), "form aria-labelledby target is missing");
-  }
-
-  for (const name of requiredStaticNames) assert.ok(controlsByName.has(name), `missing ${name} control`);
-  for (const name of controlsByName.keys()) assert.ok(allowedNames.has(name), `unexpected API field ${name}`);
-  assert.equal(namedControls.length, controlsByName.size, "API field names must not be duplicated");
-  assert.equal(startTags(formHtml, "textarea").length, 0, "consultation form must not accept free text or PHI");
-  assert.equal(selects.length, 0, "consultation form must not collect care interest or other selections");
-
-  const fullName = controlsByName.get("full_name").attrs;
-  const email = controlsByName.get("email").attrs;
-  const phone = controlsByName.get("phone").attrs;
-  const phoneFollowup = controlsByName.get("phone_followup_consent").attrs;
-  const phoneFollowupVersion = controlsByName.get("phone_followup_consent_version").attrs;
-  const consent = controlsByName.get("contact_consent").attrs;
-  const accessibilityRequest = controlsByName.get("accessibility_request")?.attrs;
-  const honeypot = controlsByName.get("website").attrs;
-  const startedAt = controlsByName.get("form_started_at").attrs;
-  const consentVersion = controlsByName.get("consent_version").attrs;
-
-  assert.equal(fullName.type?.toLowerCase(), "text");
-  assert.equal(fullName.autocomplete, "name");
-  assert.equal(fullName.minlength, "2");
-  assert.equal(fullName.maxlength, "100");
-  assert.ok("required" in fullName);
-  assert.equal(email.type?.toLowerCase(), "email");
-  assert.equal(email.autocomplete, "email");
-  assert.equal(email.inputmode, "email");
-  assert.equal(email.maxlength, "254");
-  assert.ok("required" in email);
-  assert.equal(phone.type?.toLowerCase(), "tel");
-  assert.equal(phone.autocomplete, "tel");
-  assert.equal(phone.inputmode, "tel");
-  assert.equal(phone.minlength, "10");
-  assert.equal(phone.maxlength, "25");
-  assert.ok("required" in phone, "the Launch List requires phone in its default mode");
-  assert.equal(phoneFollowup.type?.toLowerCase(), "checkbox");
-  assert.ok(!("required" in phoneFollowup), "manual calls must remain optional");
-  assert.equal(phoneFollowupVersion.value, "launch-manual-call-2026-10-26");
-  assert.equal(consent.type?.toLowerCase(), "checkbox");
-  assert.equal(consent.value, "true");
-  assert.ok("required" in consent);
-  if (accessibilityRequest) {
-    assert.equal(accessibilityRequest.type?.toLowerCase(), "checkbox");
-    assert.equal(accessibilityRequest.value, "true");
-    assert.ok(!("required" in accessibilityRequest), "accessibility_request must remain optional");
-  }
-  assert.equal(honeypot.autocomplete, "off");
-  assert.equal(honeypot.tabindex, "-1");
-  assert.equal(honeypot["aria-hidden"], "true");
-  assert.equal(honeypot.maxlength, "200");
-  assert.equal(startedAt.type?.toLowerCase(), "hidden");
-  assert.ok(!startedAt.value, "form_started_at must be initialized at runtime");
-  assert.equal(consentVersion.type?.toLowerCase(), "hidden");
-  assert.equal(
-    consentVersion.value,
-    "launch-list-split-2026-10-26",
-    "consent_version needs the reviewed founding-consultation policy version",
-  );
-
-  const visibleNames = ["full_name", "email", "phone", "contact_consent", "phone_followup_consent"];
-  if (accessibilityRequest) visibleNames.push("accessibility_request");
-  for (const name of visibleNames) {
-    const control = controlsByName.get(name).attrs;
-    assert.ok(control.id, `${name} needs an id`);
-    assert.match(formHtml, new RegExp(`<label\\b[^>]*\\bfor=(?:"${control.id}"|'${control.id}')`, "i"), `${name} needs an associated label`);
-    assert.ok(control["aria-describedby"], `${name} needs descriptive/error text association`);
-    for (const describedBy of control["aria-describedby"].split(/\s+/)) {
-      assert.ok(findElementWithId(formHtml, describedBy), `${name} references missing #${describedBy}`);
-    }
-  }
-
-  const submitButtons = startTags(formHtml, "button").filter(({ attrs }) => (attrs.type || "submit").toLowerCase() === "submit");
-  assert.equal(submitButtons.length, 1, "consultation form needs one submit button");
-  assert.match(formHtml, /<[a-z][^>]*\baria-live=["']polite["'][^>]*>/i,
-    "consultation form needs a polite live region");
-
-  const fieldNames = [...controlsByName.keys()].join(" ");
-  assert.doesNotMatch(fieldNames, /care_interest|zip|symptom|diagnosis|medication|medical|message|notes?|request_kind|utm/i);
-  assert.match(formHtml, /data-launch-phone-field/, "phone needs a container for support-mode hiding");
-  assert.match(formHtml, /data-list-consent/, "Launch List email consent must be visible by default");
-  assert.match(formHtml, /data-phone-consent-field/, "optional manual-call consent must be separate");
-  assert.match(formHtml, /data-support-consent\s+hidden/, "support-specific consent should begin hidden");
-  assert.match(formHtml, /No text messages/i, "phone help and consent must not imply SMS permission");
-  assert.doesNotMatch(formHtml, /just your name and email/i, "remove the stale name/email-only claim");
+  // November 16, 2026: /founding-patients/ became the booking page. The Launch List form, its anchor and the links to it are gone from this page.
+  assert.equal(startTags(html, "form").filter(({ attrs }) => !["pexy-followup-form", "site-help-form"].includes(attrs.id)).length, 0, "the booking page must not carry a signup or request form");
+  assert.ok(!findElementWithId(html, "consultation-request"), "the Launch List anchor target is removed from the booking page");
+  assert.doesNotMatch(html, /#consultation-request|\/api\/founding-consultation|Launch List/, "the booking page must not point at the Launch List signup");
 
   const siteJs = await readFile(join(publicRoot, "assets", "site.js"), "utf8");
   assert.match(
@@ -596,7 +473,8 @@ test("sitemap, robots, and custom 404 cover the complete crawlable site", async 
   const robots = await readFile(robotsPath, "utf8");
   const notFound = await readFile(notFoundPath, "utf8");
   const sitemapUrls = [...sitemap.matchAll(/<loc>([\s\S]*?)<\/loc>/gi)].map((match) => decodeHtml(match[1].trim())).sort();
-  const expectedUrls = pageList.map(canonicalFor).sort();
+  // Ad booking pages are noindex and stay out of the sitemap.
+  const expectedUrls = pageList.filter((page) => !page.noindex).map(canonicalFor).sort();
   assert.deepEqual(sitemapUrls, expectedUrls, "sitemap must contain every page exactly once");
   assert.match(robots, /^User-agent:\s*\*/im);
   assert.match(robots, /^Allow:\s*\/$/im);
@@ -771,14 +649,14 @@ function escapeForTest(value) {
 
 test('editorial redesign preserves key content, semantic headings, and navigation fallbacks', () => {
   const home = htmlBySlug.get('/');
-  for (const phrase of ['Thoughtful care', 'Northwest Indiana', 'The Launch List costs nothing to join and does not book an appointment.', site.launch.label]) {
+  for (const phrase of ['Thoughtful care', 'Northwest Indiana', 'Launch timing and availability may change.', site.launch.label]) {
     assert.ok(home.includes(phrase), `homepage must retain ${phrase}`);
   }
   for (const [slug, html] of htmlBySlug) {
     assert.equal(startTags(html, 'h1').length, 1, `${slug} must have one H1`);
     const ids = [...html.matchAll(/\bid="([^"]+)"/g)].map((match) => match[1]);
     assert.equal(new Set(ids).size, ids.length, `${slug} duplicate IDs`);
-    if (slug !== '/founding-patients/') assert.match(html, /<noscript><nav[^>]*aria-label="Navigation without JavaScript"/);
+    if (!bookingSlugs.has(slug)) assert.match(html, /<noscript><nav[^>]*aria-label="Navigation without JavaScript"/);
   }
 });
 
@@ -818,7 +696,7 @@ test('homepage replaces the generic introduction with one staff-neutral approach
 test('homepage names the planned care and location, keeps the planned-launch status and offers online booking', async () => {
   const home = htmlBySlug.get('/');
   assert.match(home, /<meta name="description" content="[^"]*Coming soon to Merrillville\. Online booking is open for visits from November 20\.">/);
-  assert.match(home, /<div class="hero-actions"><a class="button" href="https:\/\/d2oe0ra32qx05a\.cloudfront\.net\/\?practiceKey=k_1_117405"[^>]*data-book-online>Book online<span class="visually-hidden"> \(opens a new tab\)<\/span><\/a><a class="hero-explore" href="\/founding-patients\/">Join the Launch List /);
+  assert.match(home, /<div class="hero-actions"><a class="button" href="https:\/\/d2oe0ra32qx05a\.cloudfront\.net\/\?practiceKey=k_1_117405"[^>]*data-book-online>Book online<span class="visually-hidden"> \(opens a new tab\)<\/span><\/a><a class="hero-explore" href="#care-areas">Explore care areas /);
   assert.match(home, /<h3>Book when you are ready\.<\/h3><p>Online booking is open for visits from November 20\. Book online or call \(219\) 207-2456\.<\/p>/);
   assert.equal(site.launch.date, '2026-11-20');
   assert.match(home, /Planned launch: November 20, 2026/);
@@ -829,14 +707,15 @@ test('homepage names the planned care and location, keeps the planned-launch sta
   assert.doesNotMatch(home, /A thoughtful(?:<br>|\s)+approach to/);
   assert.match(home, /class="signature-launch-note">Coming soon · Subject to readiness/);
   for (const [slug, html] of htmlBySlug) {
-    if (slug === '/founding-patients/') {
-      assert.match(html, /Coming soon to Merrillville · Thoughtful care/);
+    if (bookingSlugs.has(slug)) {
+      assert.match(html, /class="announcement-copy">Coming soon to Merrillville · Online booking is open for visits from November 20\.<\/span>/);
       assert.doesNotMatch(html, /November 1(?!\d)|2026-11-01/);
-      assert.match(html, /href="#consultation-request">Join the Launch List/);
+      assert.doesNotMatch(html, /Join the Launch List/);
       continue;
     }
     assert.match(html, /class="announcement-copy">Planned launch:/, `${slug} retains planned status`);
-    assert.match(html, /class="announcement-cta" href="(?:\/founding-patients\/|#consultation-request)">Join the Launch List/, `${slug} retains a working launch-list action`);
+    assert.match(html, /class="announcement-cta" href="\/founding-patients\/">Book online/, `${slug} announcement links to the booking page`);
+    assert.doesNotMatch(html, /Join the Launch List|Get opening updates/, `${slug} must not invite people to the removed Launch List signup`);
   }
   const css = await readFile(join(publicRoot, 'assets', 'site-design.css'), 'utf8');
   const readability = css.split('/* Readable launch information and confident, goal-focused hero. */')[1];
@@ -847,45 +726,103 @@ test('homepage names the planned care and location, keeps the planned-launch sta
   assert.match(readability, /\.announcement \.announcement-cta\{[^}]*min-height:3rem/);
 });
 
-test('the QR landing page leads with the grand-opening offer, keeps the reviewed fine print and does not treat the Launch List as a booking', () => {
+test('the QR landing page is a short booking page: the $49 offer, Book online, call, steps, care areas and the fine print', async () => {
   const html = htmlBySlug.get('/founding-patients/');
-  assert.match(html, /<h1 id="page-title">Merrillville, meet Apex\.<\/h1>/);
-  assert.match(html, /Join the Apex Launch List with your name, email and phone number/);
-  assert.match(html, /The Launch List asks for your name, email and phone number/);
-  assert.doesNotMatch(html, /Just your name and email|This is an email signup/i);
-  for (const area of ['weight and metabolic care', 'men’s hormone health', 'women’s midlife care', 'hair-loss care for thinning and balding']) assert.match(html, new RegExp(area));
-  assert.match(html, /signing up does not book a visit/);
-  assert.match(html, /src="\/assets\/images\/apex-clinic-interior\.webp/);
-  assert.match(html, /alt="Sneak preview! A warm consultation-space concept for Apex Wellness\."/);
-  assert.doesNotMatch(html, /src="\/assets\/images\/apex-hero-consultation\.webp/);
-  const offer = html.match(/<div class="launch-offer">([\s\S]*?)<\/div>/)?.[1];
-  assert.ok(offer);
-  assert.ok(
-    offer.startsWith('<h2>Grand opening: $49 for labs and your first visit</h2><p class="offer-limit">First 50 appointments scheduled.</p><p class="offer-terms">$49 covers your first visit and the promotional labs.'),
-    'the offer block must lead with the grand-opening headline, then the first-50 line, then the fine print',
-  );
-  for (const phrase of [
-    '$49 covers your first visit and the promotional labs. Labs as clinically appropriate. One per person. First 50 appointments scheduled. Additional testing or treatment is separate. Appointments subject to availability.',
-    'Book online or call (219) 207-2456 to schedule, or join the Launch List for updates.',
-    'not a reservation',
-    '<p class="clinic-hours"><strong>Hours from November 20</strong><br>Wednesday, Thursday and Friday: 11 a.m. to 5 p.m.<br>Saturday: 9 a.m. to 1 p.m.<br>Closed Sunday through Tuesday.<br>Closed Thanksgiving Day, November 26.</p>'
-  ]) assert.ok(offer.includes(phrase), `launch offer is missing: ${phrase}`);
-  assert.doesNotMatch(offer, /\bfree\b|on us|no charge|assessment|included|appointments are available|book now|!/i);
-  assert.ok(html.includes('$49'));
-  assert.ok(html.includes('first visit'));
-  assert.doesNotMatch(html, /first 100/i);
+  const main = html.match(/<main[\s\S]*?<\/main>/)?.[0];
+  assert.ok(main);
+  assert.match(html, /<title>Book Online \| \$49 Grand Opening \| Apex Wellness Merrillville<\/title>/);
   assert.match(html, /<meta name="description" content="Grand opening: promotional labs for \$49\. The \$49 covers your first visit and the labs, for the first 50 appointments scheduled\. Book online or call \(219\) 207-2456\.">/);
-  assert.match(html, /Online booking is open for visits from November 20\. You can also join the list for opening updates; signing up does not book a visit\./);
-  // The offer keeps its established name on the printed-QR page.
-  assert.match(html, /How does the \$49 promotional labs offer work\?/);
-  assert.match(html, /The grand-opening offer is promotional labs for \$49 for the first 50 appointments scheduled\. The \$49 covers your first visit and the promotional labs\. Labs as clinically appropriate\. One per person\. Additional testing or treatment is separate\. Appointments subject to availability\. To schedule, book online or call \(219\) 207-2456\./);
-  assert.match(html, /<p class="cta-note">The Launch List costs nothing to join\. Joining does not book an appointment\. No commitment to care\.<\/p>/);
-  assert.doesNotMatch(html, /<p class="cta-note">[^<]*\bfree\b/i);
-  assert.match(html, /<form id="consultation-form" action="\/api\/founding-consultation"/);
-  assert.doesNotMatch(html, /APEXNOV|Free initial in-house testosterone test/);
-  assert.match(html, /No appointment has been booked/);
+  assert.match(main, /<p class="eyebrow">Grand opening · Friday, November 20 · Merrillville<\/p>\s*<h1 id="page-title">Now booking <em>first visits\.<\/em><\/h1>/);
+  assert.match(main, /<p class="booking-offer"><strong>\$49 for labs and your first visit\.<\/strong> First 50 appointments only\.<\/p>/);
+  assert.match(main, /<p class="booking-badge" aria-hidden="true"><span>Grand opening<\/span><strong>\$49<\/strong><span>Labs \+ first visit<\/span><\/p>/);
+
+  // One action: Book online first, the phone second, in the hero and again at the end. Both keep what first-party measurement counts.
+  const bookOnline = '<a class="button" href="https://d2oe0ra32qx05a.cloudfront.net/?practiceKey=k_1_117405" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer" data-book-online>Book online<span class="visually-hidden"> (opens a new tab)</span></a>';
+  const call = '<a class="booking-call" href="tel:+12192072456">Call (219) 207-2456</a>';
+  assert.equal(main.split(bookOnline + call).length - 1, 2, 'hero and closing actions');
+  assert.ok(main.indexOf(bookOnline) < main.indexOf('booking-strip'), 'the first Book online button sits above the hours and address');
+  assert.ok(html.includes('<div class="booking-bar">' + bookOnline + '<a class="booking-bar-call" href="tel:+12192072456">Call</a></div>'), 'phone-width booking bar');
+  assert.match(html, /<nav class="landing-nav" aria-label="Booking">\s*<a class="nav-cta" href="https:\/\/d2oe0ra32qx05a\.cloudfront\.net\/\?practiceKey=k_1_117405"[^>]*data-book-online>Book online/);
+  assert.match(main, /<p class="booking-strip"><span>Wed–Fri 11 a\.m\.–5 p\.m\. · Sat 9 a\.m\.–1 p\.m\.<\/span> <span>8550 Broadway, Suite B, Merrillville, IN 46410<\/span><\/p>/);
+
+  const steps = [...main.matchAll(/<li><span class="booking-step-number" aria-hidden="true">\d<\/span><span>([^<]+)<\/span><\/li>/g)].map((match) => match[1]);
+  assert.deepEqual(steps, ['Book online in about a minute.', 'Come in for your first visit and labs.', 'Review your results and next steps with our care team.']);
+  // Four care cards, each with an id an ad can link to, one plain line and a link to its service page.
+  for (const [id, label, line, href] of [
+    ['weight', 'Medical weight loss', 'A plan built on your history and labs.', '/weight-management/'],
+    ['hormones', 'Men’s hormone health', 'Symptoms and testing reviewed before any plan.', '/mens-hormone-health/'],
+    ['midlife', 'Women’s midlife care', 'Support through perimenopause and menopause.', '/womens-midlife-care/'],
+    ['hair', 'Hair-loss care', 'Evaluation and care for hair loss and thinning.', '/hair-loss-care/'],
+  ]) {
+    assert.ok(main.includes('<li id="' + id + '"><a href="' + href + '"><strong>' + label + '</strong><span>' + line + '</span></a></li>'), 'care card ' + label);
+  }
+  // The care block is the "other services" destination of the ad booking pages: heading, four cards, then Book online.
+  assert.match(main, /<div class="booking-care" id="services">\s*<h2 id="booking-care-heading">What we help with<\/h2>\s*<ul class="booking-services"/);
+  assert.match(main, /<\/ul>\s*<\/div>\s*<div class="booking-actions booking-actions-close"><a class="button" href="https:\/\/d2oe0ra32qx05a\.cloudfront\.net\/\?practiceKey=k_1_117405"/);
+  assert.match(html, /<meta name="robots" content="index, follow, max-image-preview:large">/);
+  const visible = main.replace(/<[^>]+>/g, ' ');
+  for (const phrase of ['weight loss', 'hormone', 'menopause', 'hair loss']) assert.ok(visible.includes(phrase), 'visible text names ' + phrase);
+  assert.ok(main.indexOf('id="hair"') < main.lastIndexOf(bookOnline) && main.lastIndexOf(bookOnline) < main.indexOf('booking-fine-print'), 'Book online repeats right after the care cards');
+  assert.ok(main.includes('<p class="booking-fine-print">The $49 covers your first visit and the labs. Labs as clinically appropriate. One per person. First 50 appointments scheduled. Additional testing or treatment is separate. Appointments subject to availability. Closed Sunday through Tuesday. Closed Thanksgiving Day, November 26.</p>'));
+
+  // Nothing competes with booking: no signup, no form, no long sections, no image.
+  assert.doesNotMatch(html, /Launch List|consultation-form|#consultation-request|founding-consultation|class="faq-list"|<details/);
+  assert.doesNotMatch(main, /<form|<img|<input/);
+  assert.equal(startTags(main, 'section').length, 2);
+  // Public-copy rules for this page.
+  assert.doesNotMatch(main.replace(/<[^>]+>/g, ' '), /\bfree\b|on us|no charge|testosterone|\bPSA\b|vitamin D|\bTSH\b|\bT4\b|\bTRT\b|low T\b|semaglutide|tirzepatide|before and after|guarantee|\bdoctor\b|physician|nurse practitioner|Wajeeh|Atif|!/i);
+  assert.doesNotMatch(html, /first 100|APEXNOV/i);
   assert.match(html, /data-launch-label="November 20, 2026 \(planned; subject to readiness\)"/);
-  assert.doesNotMatch(html, /before anywhere else|first access|Takes ten seconds/);
+  const css = await readFile(join(publicRoot, 'assets', 'site-design.css'), 'utf8');
+  assert.match(css, /@media\(prefers-reduced-motion:no-preference\)\{\s*\.booking-hero-inner>\*\{animation:/, 'entrance motion only without a reduced-motion preference');
+});
+
+test('the four ad booking pages build from the shared booking template with the offer, fine print, booking link and noindex', async () => {
+  const bookOnline = '<a class="button" href="https://d2oe0ra32qx05a.cloudfront.net/?practiceKey=k_1_117405" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer" data-book-online>Book online<span class="visually-hidden"> (opens a new tab)</span></a>';
+  const call = '<a class="booking-call" href="tel:+12192072456">Call (219) 207-2456</a>';
+  const expected = new Map([
+    ['/book/weight-loss/', ['Medical weight loss in Merrillville. ', 'Learn more about medical weight loss', '/weight-management/']],
+    ['/book/hormone-health/', ['Men’s hormone health in Merrillville. ', 'Learn more about men’s hormone health', '/mens-hormone-health/']],
+    ['/book/womens-midlife/', ['Perimenopause and menopause care in Merrillville. ', 'Learn more about women’s midlife care', '/womens-midlife-care/']],
+    ['/book/hair-loss/', ['Hair-loss care in Merrillville. ', 'Learn more about hair-loss care', '/hair-loss-care/']],
+  ]);
+  assert.deepEqual([...bookingSlugs].sort(), [...adBookingSlugs, '/founding-patients/'].sort());
+  const sitemap = await readFile(join(publicRoot, 'sitemap.xml'), 'utf8');
+  assert.doesNotMatch(sitemap, /\/book\//, 'ad booking pages stay out of the sitemap');
+  assert.match(sitemap, /<loc>https:\/\/apexwellnessnwi\.com\/founding-patients\/<\/loc>/);
+  assert.ok(!site.navigation.some((item) => item.href.startsWith('/book/')), 'ad booking pages stay out of the navigation');
+
+  for (const slug of adBookingSlugs) {
+    const html = htmlBySlug.get(slug);
+    assert.ok(html, slug + ' is built');
+    const [headline, learnLabel, learnHref] = expected.get(slug);
+    const main = html.match(/<main[\s\S]*?<\/main>/)?.[0];
+    assert.match(html, /<meta name="robots" content="noindex,follow">/, slug + ' is noindex');
+    assert.ok(html.includes('<link rel="canonical" href="https://apexwellnessnwi.com' + slug + '">'), slug + ' canonical to itself');
+    assert.ok(main.includes('<h1 id="page-title">' + headline + '<em>Start for $49.</em></h1>'), slug + ' headline');
+    assert.match(main, /<p class="booking-lead">[^<]{20,120}<\/p>/, slug + ' one supporting sentence');
+    assert.ok(main.includes('<p class="booking-offer"><strong>$49 for labs and your first visit.</strong> First 50 appointments only.</p>'), slug + ' offer');
+    assert.equal(main.split(bookOnline + call).length - 1, 2, slug + ' hero and closing actions');
+    assert.ok(main.indexOf(bookOnline) < main.indexOf('booking-strip'), slug + ' first Book online button sits in the hero');
+    assert.equal(startTags(html, 'a').filter(({ attrs }) => 'data-book-online' in attrs).length, 4, slug + ' header, hero, closing row and phone bar');
+    assert.ok(html.includes('<div class="booking-bar">' + bookOnline), slug + ' phone-width booking bar');
+    assert.match(main, /<p class="booking-strip"><span>Wed–Fri 11 a\.m\.–5 p\.m\. · Sat 9 a\.m\.–1 p\.m\.<\/span> <span>8550 Broadway, Suite B, Merrillville, IN 46410<\/span><\/p>/);
+    assert.equal([...main.matchAll(/<ul class="booking-covers"[^>]*>((?:<li>[^<]+<\/li>){3})<\/ul>/g)].length, 1, slug + ' three points on the first visit');
+    assert.equal([...main.matchAll(/<span class="booking-step-number" aria-hidden="true">\d<\/span>/g)].length, 3, slug + ' three steps');
+    assert.ok(main.includes('The $49 covers your first visit and the labs. Labs as clinically appropriate. One per person. First 50 appointments scheduled. Additional testing or treatment is separate. Appointments subject to availability.'), slug + ' fine print');
+    // One secondary link to the other services, placed after the steps and the repeated Book online button.
+    const more = '<p class="booking-more"><a class="button-secondary" href="/founding-patients/#services">See our other services</a><a class="booking-learn" href="' + learnHref + '">' + learnLabel + '</a></p>';
+    assert.ok(main.includes(more), slug + ' other-services and learn-more links');
+    assert.ok(main.indexOf('booking-steps') < main.indexOf('booking-more'), slug + ' other services comes after the steps');
+    assert.doesNotMatch(main, /<form|<img|<input|booking-services|Also at Apex/);
+    assert.doesNotMatch(html, /Launch List|consultation-form|founding-consultation/);
+    assert.doesNotMatch(main.replace(/<[^>]+>/g, ' '), /\bfree\b|on us|no charge|testosterone|\bPSA\b|vitamin D|\bTSH\b|\bT4\b|\bTRT\b|low T\b|GLP|semaglutide|tirzepatide|pounds|\blbs\b|before and after|guarantee|\bdoctor\b|physician|nurse practitioner|Wajeeh|Atif|!/i, slug + ' copy rules');
+    assert.match(html, /Coming soon/);
+    // No third-party scripts or pixels: only the site's own three scripts.
+    const scripts = startTags(html, 'script').filter(({ attrs }) => attrs.src).map(({ attrs }) => attrs.src.replace(/\?.*$/, ''));
+    assert.deepEqual(scripts, ['/assets/site-measurement.js', '/assets/site.js', '/assets/site-assistant.js'], slug + ' scripts');
+  }
+  assert.ok(findElementWithId(htmlBySlug.get('/founding-patients/'), 'services'), 'the other-services link has a target');
 });
 
 const bookingUrl = 'https://d2oe0ra32qx05a.cloudfront.net/?practiceKey=k_1_117405';
@@ -920,12 +857,10 @@ test('every Book online link is the one exact Tebra address, opened in a new tab
     assert.doesNotMatch(htmlBySlug.get(slug), /data-book-online/, `${slug} must not carry a Book online link`);
   }
 
+  // The QR page is the booking page: four Book online links (header, hero, closing row, phone bar) and no form.
   const landing = htmlBySlug.get('/founding-patients/');
-  assert.equal(landing.split(`<p class="book-online">${offerButton}</p>${note}`).length - 1, 1, 'the QR page offer block has one Book online button and note');
-  const offer = landing.match(/<div class="launch-offer">([\s\S]*?)<\/div>/)?.[1];
-  assert.ok(offer.includes(offerButton), 'the button belongs inside the $49 offer block');
-  assert.ok(offer.indexOf('Book online or call (219) 207-2456 to schedule, or join the Launch List for updates.') < offer.indexOf(offerButton), 'the fine print comes before the button');
-  assert.match(landing, /<form id="consultation-form" action="\/api\/founding-consultation"/);
+  assert.equal(startTags(landing, 'a').filter(({ attrs }) => 'data-book-online' in attrs).length, 4);
+  assert.doesNotMatch(landing, /<form id="consultation-form"/);
 
   const visit = htmlBySlug.get('/plan-your-visit/');
   assert.equal(visit.split(`<p class="book-online">${offerButton}</p>${note}`).length - 1, 1, 'the Plan Your Visit cost box has one Book online button and note');
@@ -961,8 +896,8 @@ test('the ad landing pages open with the grand-opening offer band above the page
     assert.ok(html.indexOf('class="offer-band"') > html.indexOf('</header>'), `${slug} band follows the site header`);
     assert.ok(html.indexOf('class="offer-band"') < html.indexOf('<section class="hero"'), `${slug} band comes before the hero`);
     assert.equal(startTags(html, 'h1').length, 1, `${slug} keeps one H1`);
-    // The hero offers Book online first; the Launch List stays as the second option.
-    assert.match(html, new RegExp(`<div class="hero-actions">${bookOnline.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}<a class="button-secondary" href="/founding-patients/">(?:Join the Launch List|Get opening updates)</a></div>`), `${slug} hero actions`);
+    // The hero offers Book online; only the hormone hub adds its own phone action as a second button.
+    assert.match(html, new RegExp(`<div class="hero-actions">${bookOnline.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}(?:<a class="button-secondary" href="tel:\\+12192072456">Call Apex with a general question</a>)?</div>`), `${slug} hero actions`);
     assert.ok(html.includes(bookingStatus), `${slug} must say online booking is open`);
     assert.match(html, /Coming soon/, `${slug} keeps the clinic's Coming soon status`);
   }
@@ -987,7 +922,7 @@ test('no generated page, guide answer or email still says scheduling or booking 
     assert.ok(htmlBySlug.get(slug).includes(bookingStatus), `${slug} must say online booking is open`);
   }
   for (const [slug, html] of htmlBySlug) {
-    if (slug !== '/founding-patients/') assert.match(html, /class="announcement-copy">Planned launch: November 20, 2026/, `${slug} keeps the opening date`);
+    if (!bookingSlugs.has(slug)) assert.match(html, /class="announcement-copy">Planned launch: November 20, 2026/, `${slug} keeps the opening date`);
     assert.match(html, /Coming soon/, `${slug} keeps the clinic's Coming soon status`);
   }
 
@@ -1007,7 +942,7 @@ test('new booking and offer copy follows the public-copy rules', () => {
     assert.doesNotMatch(band.replace(/<[^>]+>/g, ' '), forbidden, `${slug} offer band copy`);
   }
   for (const [slug, pattern] of [
-    ['/founding-patients/', /<div class="launch-offer">[\s\S]*?<\/div>/],
+    ['/founding-patients/', /<main[\s\S]*?<\/main>/],
     ['/plan-your-visit/', /<div class="visit-fact"><strong>Grand opening[\s\S]*?<\/div>/],
   ]) {
     const block = htmlBySlug.get(slug).match(pattern)?.[0];
@@ -1028,7 +963,7 @@ test('the retired launch-offer wording is absent from every generated page', asy
   const visit = htmlBySlug.get('/plan-your-visit/');
   assert.match(visit, /<strong>Grand opening: \$49 for labs and your first visit<\/strong><p class="offer-limit">First 50 appointments scheduled\.<\/p>/);
   assert.match(visit, /\$49 covers your first visit and the promotional labs\. Labs as clinically appropriate\. One per person\. First 50 appointments scheduled\. Additional testing or treatment is separate\. Appointments subject to availability\./);
-  assert.match(visit, /Book online or call <a href="tel:\+12192072456">\(219\) 207-2456<\/a> to schedule, or join the Launch List for updates\./);
+  assert.match(visit, /Book online or call <a href="tel:\+12192072456">\(219\) 207-2456<\/a> to schedule\. A contact request does not reserve this offer\./);
   assert.match(visit, /data-help-question="How does the \$49 promotional labs offer work\?">\$49 labs<\/button>/);
   assert.match(visit, /data-help-question="How do I book a visit\?">Book a visit<\/button><button type="button" data-help-question="What are your hours\?">Hours<\/button>/);
 

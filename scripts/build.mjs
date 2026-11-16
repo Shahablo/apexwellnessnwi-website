@@ -422,6 +422,8 @@ function pricingMarkup(items) {
   </div>`;
 }
 
+// Launch List signup form. Not rendered on any page since November 16, 2026, when /founding-patients/ became
+// the booking page. Kept, with its endpoint and client script, so the signup can be placed on a page of its own.
 function foundingConsultationFormMarkup(form) {
   return `<div class="form-card conversion-form-card" id="consultation-request" tabindex="-1">
     <p class="eyebrow">The Apex Launch List</p>
@@ -530,7 +532,7 @@ function renderSection(section, index) {
 
     case "prelaunch":
       return `<section class="section${alternatingClass}" aria-labelledby="${id}"><div class="container section-narrow">
-        ${headingMarkup(section, id)}<p>${escapeHtml(section.body)}</p><div class="button-row">${section.bookOnline ? bookOnlineLinkMarkup("button") : ""}${buttonMarkup(section.cta, Boolean(section.bookOnline && bookOnlineUrl()))}</div>
+        ${headingMarkup(section, id)}<p>${escapeHtml(section.body)}</p><div class="button-row">${section.bookOnline && bookOnlineUrl() ? `${bookOnlineLinkMarkup("button")}${section.cta.href.startsWith("/founding-patients/") ? "" : buttonMarkup(section.cta, true)}` : buttonMarkup(section.cta)}</div>
       </div></section>`;
 
     case "serviceArea":
@@ -601,19 +603,20 @@ function renderHero(pageKey, page) {
     <div class="signature-image">${imageMarkup(imageCatalog.shoreline, { hero: true })}</div>
     <div class="container signature-content"><p class="eyebrow">Wellness · Northwest Indiana</p>
       <h1 id="page-title">${escapeHtml(page.headlineLead)} <em>${escapeHtml(page.headlineEmphasis)}</em></h1>
-      <div class="signature-bottom"><div><p>${escapeHtml(page.intro)}</p><div class="hero-actions">${bookOnlineUrl() ? `${bookOnlineLinkMarkup("button")}<a class="hero-explore" href="${escapeHtml(site.cta.href)}">${escapeHtml(site.cta.label)} <span aria-hidden="true">↗</span></a>` : buttonMarkup(site.cta)}<a class="hero-explore" href="#care-areas">Explore care areas <span aria-hidden="true">↗</span></a></div></div><p class="signature-launch"><span class="launch-dot" aria-hidden="true"></span>Planned launch<br><strong>${escapeHtml(site.launch.label)}</strong><span class="signature-launch-note">Coming soon · Subject to readiness</span></p></div>
+      <div class="signature-bottom"><div><p>${escapeHtml(page.intro)}</p><div class="hero-actions">${bookOnlineUrl() ? bookOnlineLinkMarkup("button") : buttonMarkup(site.cta)}<a class="hero-explore" href="#care-areas">Explore care areas <span aria-hidden="true">↗</span></a></div></div><p class="signature-launch"><span class="launch-dot" aria-hidden="true"></span>Planned launch<br><strong>${escapeHtml(site.launch.label)}</strong><span class="signature-launch-note">Coming soon · Subject to readiness</span></p></div>
     </div>
   </section>`;
   const image = imageForPage(pageKey, page);
-  // Ad landing pages (page.offerBand) offer Book online first here too; the Launch List stays as the second option.
+  // Ad landing pages (page.offerBand) offer Book online here too. A page whose own call to action is something else
+  // (the hormone hub's phone link) keeps it as the second button; a link to the booking page would only repeat Book online.
   const booking = page.offerBand ? bookOnlineLinkMarkup("button") : "";
-  const launchListCta = page.secondaryCta && page.secondaryCta.href.startsWith("/founding-patients/") ? page.secondaryCta : page.cta;
+  const secondAction = page.cta.href.startsWith("/founding-patients/") ? "" : buttonMarkup(page.cta, true);
   return `<section class="hero" aria-labelledby="page-title"><div class="container hero-grid">
     <div class="hero-copy">
       <p class="eyebrow">${escapeHtml(page.eyebrow)}</p>
       <h1 id="page-title">${escapeHtml(page.h1)}</h1>
       <p>${escapeHtml(page.intro)}</p>
-      <div class="hero-actions">${booking ? `${booking}${buttonMarkup(launchListCta, true)}` : `${buttonMarkup(page.cta)}${page.secondaryCta ? buttonMarkup(page.secondaryCta, true) : ""}`}</div>
+      <div class="hero-actions">${booking ? `${booking}${secondAction}` : `${buttonMarkup(page.cta)}${page.secondaryCta ? buttonMarkup(page.secondaryCta, true) : ""}`}</div>
       ${page.ctaNote ? `<p class="cta-note">${escapeHtml(page.ctaNote)}</p>` : ""}
     </div>
     <div class="hero-media">${imageMarkup(image, { hero: true })}</div>
@@ -675,7 +678,7 @@ function renderHome(page) {
 }
 
 function renderLaunchCta() {
-  return `<section class="section launch-section" aria-labelledby="launch-heading"><div class="container launch-section-inner"><div><p class="eyebrow">${escapeHtml(site.launch.status)} · ${escapeHtml(site.launch.label)}</p><h2 id="launch-heading">Be part of<br><em>what comes next.</em></h2></div><div class="launch-section-copy"><p>${escapeHtml(bookingStatus)} Or get opening updates in your inbox.</p><div class="button-row">${bookOnlineLinkMarkup("button")}${buttonMarkup(site.cta, Boolean(bookOnlineUrl()))}</div><p class="quiet-note">The Launch List costs nothing to join and does not book an appointment. Launch timing and availability may change.</p></div></div></section>`;
+  return `<section class="section launch-section" aria-labelledby="launch-heading"><div class="container launch-section-inner"><div><p class="eyebrow">${escapeHtml(site.launch.status)} · ${escapeHtml(site.launch.label)}</p><h2 id="launch-heading">Be part of<br><em>what comes next.</em></h2></div><div class="launch-section-copy"><p>${escapeHtml(bookingStatus)}</p><div class="button-row">${bookOnlineUrl() ? `${bookOnlineLinkMarkup("button")}<a class="button-secondary" href="/plan-your-visit/">Plan your first visit</a>` : buttonMarkup(site.cta)}</div><p class="quiet-note">Launch timing and availability may change.</p></div></div></section>`;
 }
 
 function renderBlogInline(paragraph, richText) {
@@ -727,25 +730,51 @@ function renderBlogPost(page) {
         ${articleSections}
         <aside class="medical-note" aria-labelledby="medical-disclaimer"><h2 id="medical-disclaimer">${escapeHtml(disclaimerHeading)}</h2><p>${escapeHtml(disclaimer)}</p></aside>
         <section class="article-sources" aria-labelledby="sources-reviewed"><h2 id="sources-reviewed">Sources reviewed</h2><ul>${sourceList}</ul><p class="editorial-note">${escapeHtml(page.editorialNote || "Published by Apex Wellness for general education. No individual physician medical review is claimed unless a reviewer is explicitly named. Sources and publication dates are provided so you can evaluate the information; your own care requires a clinical conversation.")}</p></section>
-        <section class="article-cta" aria-labelledby="keep-exploring"><p class="eyebrow">Keep exploring</p><h2 id="keep-exploring">Useful information is a start. Individual care is the next step.</h2><p>${escapeHtml(page.ctaBody || "Apex Wellness is preparing to open in Northwest Indiana. A consultation request is free and does not book an appointment, establish care, or guarantee treatment.")}</p>${bookOnlineUrl() ? `<p class="article-cta-booking">${escapeHtml(bookingStatus)} ${bookOnlineLinkMarkup()}</p>` : ""}<div class="button-row">${buttonMarkup(page.relatedService, true)}${buttonMarkup(site.cta)}</div></section>
+        <section class="article-cta" aria-labelledby="keep-exploring"><p class="eyebrow">Keep exploring</p><h2 id="keep-exploring">Useful information is a start. Individual care is the next step.</h2><p>${escapeHtml(page.ctaBody || "Apex Wellness is preparing to open in Northwest Indiana.")}</p>${bookOnlineUrl() ? `<p class="article-cta-booking">${escapeHtml(bookingStatus)} ${bookOnlineLinkMarkup()}</p>` : ""}<div class="button-row">${buttonMarkup(page.relatedService, true)}${buttonMarkup(site.cta)}</div></section>
       </div>
     </article>
   </main>`;
 }
 
-function renderConversionHero(page) {
-  return `<section class="hero conversion-hero" aria-labelledby="page-title"><div class="container conversion-grid">
-    <div class="hero-copy conversion-copy">
+// The booking page at /founding-patients/: offer, Book online, call, then steps, four care cards, Book online again and fine print.
+// Kept short on purpose. Booking links reuse bookOnlineLinkMarkup so first-party measurement counts them.
+function renderBookingLanding(page) {
+  const { booking } = page;
+  const accentStart = page.h1Accent && page.h1.endsWith(page.h1Accent) ? page.h1.length - page.h1Accent.length : page.h1.length;
+  const offerBreak = page.intro.indexOf('. ') + 1;
+  const call = `<a class="booking-call" href="${escapeHtml(site.phoneHref)}">${escapeHtml(booking.callLabel)}</a>`;
+  const list = (items) => items.map((item) => `<li>${escapeHtml(item)}</li>`).join("");
+  // Ad booking pages: three points on what the first visit covers for that concern.
+  const covers = booking.covers ? `<div class="booking-covers-block">
+        <h2 id="booking-covers-heading">${escapeHtml(booking.coversHeading)}</h2>
+        <ul class="booking-covers" aria-labelledby="booking-covers-heading">${list(booking.covers)}</ul>
+      </div>` : "";
+  // General page: the four care areas. Ads and the ad booking pages link to #services and to each card's id.
+  const care = booking.care ? `<div class="booking-care" id="services">
+        <h2 id="booking-care-heading">${escapeHtml(booking.careHeading)}</h2>
+        <ul class="booking-services" aria-labelledby="booking-care-heading">${booking.care.map((item) => `<li id="${escapeHtml(item.id)}"><a href="${escapeHtml(item.href)}"><strong>${escapeHtml(item.label)}</strong><span>${escapeHtml(item.line)}</span></a></li>`).join("")}</ul>
+      </div>` : "";
+  const more = booking.otherServices ? `<p class="booking-more"><a class="button-secondary" href="${escapeHtml(booking.otherServices.href)}">${escapeHtml(booking.otherServices.label)}</a><a class="booking-learn" href="${escapeHtml(booking.learnMore.href)}">${escapeHtml(booking.learnMore.label)}</a></p>` : "";
+  return `<section class="booking-hero${booking.covers ? " booking-hero-ad" : ""}" aria-labelledby="page-title"><div class="container booking-hero-inner">
       <p class="eyebrow">${escapeHtml(page.eyebrow)}</p>
-      <h1 id="page-title">${escapeHtml(page.h1).replace('. ', '.<br>')}</h1>
-      <p>${escapeHtml(page.intro)}</p>
-      <div class="launch-offer"><h2>${escapeHtml(page.offer.heading)}</h2><p class="offer-limit">${escapeHtml(page.offer.limit)}</p><p class="offer-terms">${escapeHtml(page.offer.terms)}</p>${bookOnlineMarkup()}${hoursMarkup()}</div>
-      <div class="hero-actions">${page.visitPlanner ? '<a class="button" href="/plan-your-visit/">Plan your first visit</a>' : ''}${buttonMarkup(page.cta)}</div>
-      <p class="cta-note">${escapeHtml(page.ctaNote)}</p>
-    </div>
-    ${foundingConsultationFormMarkup(page.form)}
-    <div class="conversion-image">${imageMarkup(imageCatalog.clinic)}</div>
-  </div></section>`;
+      <h1 id="page-title">${escapeHtml(page.h1.slice(0, accentStart))}<em>${escapeHtml(page.h1.slice(accentStart))}</em></h1>
+      <p class="booking-badge" aria-hidden="true"><span>${escapeHtml(booking.badge.top)}</span><strong>${escapeHtml(booking.badge.price)}</strong><span>${escapeHtml(booking.badge.bottom)}</span></p>
+      ${booking.lead ? `<p class="booking-lead">${escapeHtml(booking.lead)}</p>` : ""}
+      <p class="booking-offer"><strong>${escapeHtml(page.intro.slice(0, offerBreak))}</strong> ${escapeHtml(page.intro.slice(offerBreak + 1))}</p>
+      <div class="booking-actions">${bookOnlineLinkMarkup("button")}${call}</div>
+      <p class="booking-strip"><span>${escapeHtml(booking.hoursLine)}</span> <span>${escapeHtml(booking.addressLine)}</span></p>
+    </div></section>
+    <section class="booking-details" aria-labelledby="booking-steps-heading"><div class="container booking-details-inner">
+      ${covers}
+      <div class="booking-steps-block">
+        <h2 id="booking-steps-heading">${escapeHtml(booking.stepsHeading)}</h2>
+        <ol class="booking-steps">${booking.steps.map((step, index) => `<li><span class="booking-step-number" aria-hidden="true">${index + 1}</span><span>${escapeHtml(step)}</span></li>`).join("")}</ol>
+      </div>
+      ${care}
+      <div class="booking-actions booking-actions-close">${bookOnlineLinkMarkup("button")}${call}</div>
+      <p class="booking-fine-print">${escapeHtml(booking.finePrint)} ${escapeHtml(booking.closedNote)}</p>
+      ${more}
+    </div></section>`;
 }
 
 function renderMain(pageKey, page) {
@@ -767,7 +796,7 @@ function renderMain(pageKey, page) {
 
   return `<main id="main-content" class="page" tabindex="-1">
     ${page.offerBand ? offerBandMarkup() : ''}
-    ${page.landing ? renderConversionHero(page) : renderHero(pageKey, page)}
+    ${page.landing ? renderBookingLanding(page) : renderHero(pageKey, page)}
     ${site.navigation.some((item) => item.section === 'care' && item.href === page.slug) ? renderCareDetails(page) : ''}
     ${page.sections.map(renderSection).join("\n")}
     ${site.navigation.some((item) => item.section === 'care' && item.href === page.slug) ? renderSection({ type: 'linkCards', eyebrow: 'Plan your next step', heading: 'The details that help you decide.', items: visitDetails.planningLinks }, page.sections.length) : ''}
@@ -793,7 +822,7 @@ function renderVisitPlanner(page) {
         </section>
         <section data-visit-step aria-labelledby="visit-step-two"><h2 id="visit-step-two" tabindex="-1">Know the costs before you commit.</h2>
           <p>Apex is a cash-pay practice. Final prices and what is included will be published on the Pricing page.</p>
-          <div class="visit-fact"><strong>${escapeHtml(grandOpeningOffer.headline)}</strong><p class="offer-limit">${escapeHtml(grandOpeningOffer.limit)}</p><p>${escapeHtml(grandOpeningOffer.finePrint)} Book online or call <a href="tel:+12192072456">(219) 207-2456</a> to schedule, or join the Launch List for updates. A contact request or Launch List signup does not reserve this offer.</p>${bookOnlineMarkup()}</div>
+          <div class="visit-fact"><strong>${escapeHtml(grandOpeningOffer.headline)}</strong><p class="offer-limit">${escapeHtml(grandOpeningOffer.limit)}</p><p>${escapeHtml(grandOpeningOffer.finePrint)} Book online or call <a href="tel:+12192072456">(219) 207-2456</a> to schedule. A contact request does not reserve this offer.</p>${bookOnlineMarkup()}</div>
           <p><a href="/pricing/">Review our pricing information</a></p>
           <div class="visit-actions"><button class="button-secondary" type="button" data-visit-back hidden>Back</button><button class="button" type="button" data-visit-next hidden>Next: your next step</button></div>
         </section>
@@ -813,7 +842,6 @@ function renderVisitPlanner(page) {
             <p id="form-status" class="form-status" role="status" aria-live="polite" aria-atomic="true" tabindex="-1"></p>
             <noscript><p>JavaScript is required to send the form. You can call <a href="tel:+12192072456">(219) 207-2456</a> for general questions.</p></noscript>
           </form></div><p class="visit-note">This form does not book an appointment. No deposit. No commitment to care.</p>`}
-          <p>Only want opening news? <a href="/founding-patients/#consultation-request">Join the Launch List instead.</a></p>
           <div class="visit-actions"><button class="button-secondary" type="button" data-visit-back hidden>Back</button></div>
         </section>
       </div>
@@ -847,13 +875,15 @@ function renderLandingNavigation(page) {
   return `<header class="site-header landing-header">
     <div class="container site-header-inner">
       <a class="brand premium-brand" href="/" aria-label="Apex Wellness home"><img src="/assets/images/apex-icon-as-a-lockup-20261026.svg" width="172" height="98" alt="Apex Wellness"></a>
-      <nav class="landing-nav" aria-label="Launch List page navigation">
-        <a class="nav-cta" href="#consultation-request">${escapeHtml(page.cta.label)}</a>
+      <nav class="landing-nav" aria-label="Booking">
+        ${bookOnlineLinkMarkup("nav-cta")}
       </nav>
     </div>
   </header>`;
 }
 
+// The booking page (page.landing) gets a short footer: contact, hours, four information links, policies and notices.
+// Its care areas are linked in the page body.
 function renderFooter(page) {
   const footerLink = (item) => `<li><a href="${escapeHtml(item.href)}"${item.href === page.slug || (page.kind === "blogPost" && item.href === "/blog/") ? ' aria-current="page"' : ""}>${escapeHtml(item.label)}</a></li>`;
   const careLinks = site.navigation.filter((item) => item.section === 'care').map(footerLink).join("");
@@ -864,8 +894,8 @@ function renderFooter(page) {
     <div class="footer-signature"><a href="/" aria-label="Apex Wellness home"><img src="/assets/images/apex-icon-as-a-reversed-lockup-20261026.svg" width="860" height="490" alt="Apex Wellness"><span aria-hidden="true">↗</span></a><p>${escapeHtml(site.tagline)}</p></div>
     <div class="footer-grid">
       <div><p class="eyebrow">Northwest Indiana</p><p>${escapeHtml(site.footer.summary)}</p><p>${escapeHtml(site.footer.location)}</p>${hoursMarkup("footer-hours")}<p><a href="${escapeHtml(site.phoneHref)}">${escapeHtml(site.phone)}</a> · <a href="mailto:${escapeHtml(site.email)}">${escapeHtml(site.email)}</a></p><nav class="social-links" aria-label="Apex social profiles">${site.social.map((profile) => `<a href="${escapeHtml(profile.href)}" rel="me noreferrer" target="_blank">${escapeHtml(profile.label)}<span class="visually-hidden"> (opens a new tab)</span></a>`).join('')}</nav></div>
-      <nav aria-label="Care areas"><h2>Care areas</h2><ul>${careLinks}</ul></nav>
-      <nav aria-label="Site information"><h2>Information</h2><ul>${infoLinks}</ul></nav>
+      ${page.landing ? "" : `<nav aria-label="Care areas"><h2>Care areas</h2><ul>${careLinks}</ul></nav>`}
+      ${page.landing ? `<nav aria-label="Site information"><h2>Information</h2><ul>${[{ label: "Home", href: "/" }, { label: "Plan Your Visit", href: "/plan-your-visit/" }, { label: "Pricing", href: "/pricing/" }, { label: "FAQ", href: "/faq/" }].map(footerLink).join("")}</ul></nav>` : `<nav aria-label="Site information"><h2>Information</h2><ul>${infoLinks}</ul></nav>`}
       <nav aria-label="Policies"><h2>Policies</h2><ul>${policyLinks}</ul></nav>
     </div>
     <div class="footer-meta"><p>${escapeHtml(site.notices.prelaunch)}</p><p>${escapeHtml(site.notices.medical)}</p><p>${escapeHtml(site.notices.emergency)}</p><p>${escapeHtml(site.footer.copyright)}</p></div>
@@ -917,7 +947,7 @@ function renderDocument(pageKey, page, jsonLd, { noIndex = false, mainOverride =
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>${escapeHtml(page.title)}</title>
   <meta name="description" content="${escapeHtml(page.description)}">
-  <meta name="robots" content="${noIndex ? "noindex, nofollow" : "index, follow, max-image-preview:large"}">
+  <meta name="robots" content="${noIndex ? "noindex, nofollow" : page.noindex ? "noindex,follow" : "index, follow, max-image-preview:large"}">
   <link rel="canonical" href="${escapeHtml(canonical)}">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="manifest" href="/site.webmanifest">
@@ -957,7 +987,7 @@ function renderDocument(pageKey, page, jsonLd, { noIndex = false, mainOverride =
   ${page.landing ? renderLandingNavigation(page) : renderNavigation(page)}
   ${mainOverride || renderMain(pageKey, page)}
   ${renderFooter(page)}
-  ${page.landing ? `<a class="mobile-conversion-cta" href="#consultation-request">${escapeHtml(page.cta.label)}</a>` : ""}
+  ${page.landing && bookOnlineUrl() ? `<div class="booking-bar">${bookOnlineLinkMarkup("button")}<a class="booking-bar-call" href="${escapeHtml(site.phoneHref)}">Call</a></div>` : ""}
   ${renderSiteHelp(page)}
 </body>
 </html>
@@ -1100,7 +1130,8 @@ function buildRedirects() {
 }
 
 function buildSitemap() {
-  const entries = [...Object.values(pages), ...publishedBlogPosts]
+  // Ad booking pages (page.noindex) overlap the service pages and stay out of the sitemap.
+  const entries = [...Object.values(pages).filter((page) => !page.noindex), ...publishedBlogPosts]
     .map((page) => `  <url><loc>${escapeXml(canonicalUrl(page.slug))}</loc><lastmod>${escapeXml(page.modified || site.contentUpdated)}</lastmod></url>`)
     .join("\n");
   return `<?xml version="1.0" encoding="UTF-8"?>
@@ -1230,7 +1261,7 @@ async function build() {
     intro: "The address may have changed. Return home or review the planned areas of care.",
   };
   const notFoundJsonLd = pageJsonLd(notFoundPage);
-  const notFoundMain = `<main id="main-content" class="page" tabindex="-1"><section class="hero" aria-labelledby="page-title"><div class="container section-narrow"><p class="eyebrow">${escapeHtml(notFoundPage.eyebrow)}</p><h1 id="page-title">${escapeHtml(notFoundPage.h1)}</h1><p>${escapeHtml(notFoundPage.intro)}</p><div class="button-row"><a class="button" href="/">Return home</a><a class="button-secondary" href="/founding-patients/">Join the Launch List</a></div></div></section></main>`;
+  const notFoundMain = `<main id="main-content" class="page" tabindex="-1"><section class="hero" aria-labelledby="page-title"><div class="container section-narrow"><p class="eyebrow">${escapeHtml(notFoundPage.eyebrow)}</p><h1 id="page-title">${escapeHtml(notFoundPage.h1)}</h1><p>${escapeHtml(notFoundPage.intro)}</p><div class="button-row"><a class="button" href="/">Return home</a><a class="button-secondary" href="/founding-patients/">Book online</a></div></div></section></main>`;
   await writeOutput(join(publicDirectory, "404.html"), renderDocument("404", notFoundPage, notFoundJsonLd, { noIndex: true, mainOverride: notFoundMain }));
 
   await Promise.all([

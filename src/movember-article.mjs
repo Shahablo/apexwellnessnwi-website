@@ -51,5 +51,5 @@ export const movemberArticle = Object.freeze({
   disclaimerHeading: 'About this article',
   disclaimer: 'This article describes a planned care area at a clinic preparing to open. It provides general information, not medical advice, diagnosis, treatment, screening guidance, or an assessment of any individual concern.',
   editorialNote: 'Prepared by the Apex Wellness Editorial Team. The Movember campaign date and purpose are attributed to Movember; Apex does not claim partnership or participation. Updated November 16, 2026 for booking status only: online booking is open for visits from November 20.',
-  ctaBody: 'Read about the planned care area and join the Launch List for confirmed opening updates. Joining does not reserve an appointment.'
+  ctaBody: 'Read about the planned care area.'
 });

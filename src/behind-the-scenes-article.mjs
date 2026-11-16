@@ -27,7 +27,7 @@ export const behindTheScenesArticle = Object.freeze({
       'We got our posters and our QR codes up, and the place is starting to look like Apex. There’s still work ahead, but we’re excited to bring you along.'
     ]
   },
-  relatedService: { label: 'Follow opening updates', href: '/founding-patients/' },
+  relatedService: { label: 'Plan your first visit', href: '/plan-your-visit/' },
   sections: [
     {
       heading: 'The lettering put up a fight',
@@ -66,7 +66,7 @@ export const behindTheScenesArticle = Object.freeze({
       heading: 'Come along for the next part',
       paragraphs: [
         'There is still work ahead, and we are excited to bring you along as we get Apex ready. The name on the door feels good; the less visible checks still matter just as much.',
-        'Follow Apex Wellness NWI for opening updates. Our grand-opening offer is promotional labs for $49 for the first 50 appointments scheduled. The $49 covers your first visit and the promotional labs. Labs as clinically appropriate. One per person. Additional testing or treatment is separate. Appointments subject to availability. Book online or call (219) 207-2456 to schedule, or join the Launch List for updates. We are still preparing to open, and joining the Launch List is not an appointment booking.'
+        'Follow Apex Wellness NWI for opening updates. Our grand-opening offer is promotional labs for $49 for the first 50 appointments scheduled. The $49 covers your first visit and the promotional labs. Labs as clinically appropriate. One per person. Additional testing or treatment is separate. Appointments subject to availability. Book online or call (219) 207-2456 to schedule. We are still preparing to open.'
       ]
     }
   ],
@@ -77,5 +77,5 @@ export const behindTheScenesArticle = Object.freeze({
   disclaimerHeading: 'About this update',
   disclaimer: 'This is a behind-the-scenes look at clinic setup. Apex Wellness is still preparing to open; it is not a statement that visits or services are available today.',
   editorialNote: 'Based on owner-supplied October 24 photos, video and setup notes. No individual clinician review is claimed.',
-  ctaBody: 'Apex Wellness is coming soon. Join the Launch List for opening updates; it does not book an appointment.'
+  ctaBody: 'Apex Wellness is coming soon to Merrillville.'
 });

@@ -6,18 +6,18 @@ const destination = '8550 Broadway, Suite B, Merrillville, IN 46410';
 const directionsFrom = (origin) =>
   `https://www.google.com/maps/dir/?${new URLSearchParams({ api: '1', origin, destination })}`;
 
-const launchList = Object.freeze({ label: 'Get opening updates', href: '/founding-patients/' });
+const bookingPage = Object.freeze({ label: 'Book online', href: '/founding-patients/' });
 
 export const nearbyVisitPages = Object.freeze({
   munster: Object.freeze({
     slug: '/visit-from-munster/', navLabel: 'From Munster', modified: '2026-11-16',
     title: 'From Munster to Apex Wellness in Merrillville | Visit Details',
-    description: 'Coming from Munster? Apex Wellness is preparing one in-person clinic in Merrillville. Save the Suite B address, check your route and get opening updates.',
+    description: 'Coming from Munster? Apex Wellness is preparing one in-person clinic in Merrillville. Save the Suite B address, check your route and book online.',
     eyebrow: 'For Munster neighbors · Coming soon',
     h1: 'From Munster, find us in Merrillville.',
     intro: 'Apex Wellness is preparing for in-person visits at 8550 Broadway, Suite B, in Merrillville. If you live or work in Munster, that is the one Apex location to save. Online booking is open for visits from November 20.',
     heroImage: 'behindPosters',
-    cta: launchList,
+    cta: bookingPage,
     secondaryCta: { label: 'Directions from Munster', href: directionsFrom('Munster, IN') },
     ctaNote: 'Coming soon. No appointment is booked by joining the list. Photo: posters in the Apex Merrillville windows, October 2026.',
     sections: [
@@ -29,7 +29,7 @@ export const nearbyVisitPages = Object.freeze({
       ] },
       { type: 'faq', heading: 'Questions from Munster', items: [
         { question: 'Does Apex have a Munster office?', answer: 'No. Apex is preparing one clinic at 8550 Broadway, Suite B, Merrillville, IN 46410. This page helps Munster visitors plan for that location.' },
-        { question: 'Can I reserve a visit from this page?', answer: 'Yes. Online booking is open for visits from November 20, or call (219) 207-2456. The Launch List shares confirmed opening updates; it does not reserve an appointment or establish care.', bookOnline: true }
+        { question: 'Can I reserve a visit from this page?', answer: 'Yes. Online booking is open for visits from November 20, or call (219) 207-2456.', bookOnline: true }
       ] }
     ]
   }),
@@ -41,7 +41,7 @@ export const nearbyVisitPages = Object.freeze({
     h1: 'Crown Point to Apex: find the right Broadway address.',
     intro: 'Broadway runs through Crown Point and toward Merrillville. Apex is preparing one clinic farther north at 8550 Broadway, Suite B, Merrillville. Save the full address before your visit. Online booking is open for visits from November 20.',
     heroImage: 'behindWindow',
-    cta: launchList,
+    cta: bookingPage,
     secondaryCta: { label: 'Directions from Crown Point', href: directionsFrom('Crown Point, IN') },
     ctaNote: 'Coming soon. Directions are for planning, not a booked visit. Photo: Shahab preparing the Apex storefront in Merrillville, October 2026.',
     sections: [
@@ -65,7 +65,7 @@ export const nearbyVisitPages = Object.freeze({
     h1: 'Coming from Schererville? Start where you are.',
     intro: 'A route from the US 41/US 30 crossroads may look different from one starting in downtown Schererville. Both lead to the same planned Apex clinic at 8550 Broadway, Suite B, Merrillville. Use a live map before traveling. Online booking is open for visits from November 20.',
     heroImage: 'behindPosters',
-    cta: launchList,
+    cta: bookingPage,
     secondaryCta: { label: 'Directions from Schererville', href: directionsFrom('Schererville, IN') },
     ctaNote: 'Coming soon. No appointment is booked by joining the list. Photo: posters in the Apex Merrillville windows, October 2026.',
     sections: [

@@ -48,7 +48,7 @@ export const readingClinicWebsiteArticle = Object.freeze({
       heading: 'Keep the unanswered question visible',
       paragraphs: [
         'Make a four-line note: the statement that caught your eye, its source, the author and review details, and what remains unclear. “I should ask who reviews this” is more useful than a vague feeling that a site seemed credible.',
-        'Apply the same habit here. Read the credits and limits on each Apex article, not just our About page. Apex Wellness is Coming soon to 8550 Broadway, Suite B, Merrillville, IN 46410. For current opening information, see the FAQ and Launch List.'
+        'Apply the same habit here. Read the credits and limits on each Apex article, not just our About page. Apex Wellness is Coming soon to 8550 Broadway, Suite B, Merrillville, IN 46410. For current opening information, see the FAQ.'
       ]
     }
   ],

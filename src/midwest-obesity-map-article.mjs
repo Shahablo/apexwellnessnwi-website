@@ -46,5 +46,5 @@ export const midwestObesityMapArticle = Object.freeze({
   disclaimerHeading: 'About this article',
   disclaimer: 'This article explains a population statistic and Apex’s planned care focus. It is not medical advice or a Merrillville prevalence estimate.',
   editorialNote: 'Prepared by the Apex Wellness Editorial Team. The CDC’s September 24, 2026 source was rechecked October 28. No individual clinical review or local prevalence estimate is claimed.',
-  ctaBody: 'Read about the planned weight and metabolic care area, or join the Launch List for confirmed opening updates.'
+  ctaBody: 'Read about the planned weight and metabolic care area.'
 });

@@ -15,7 +15,7 @@ export const buildoutPartOneArticle = Object.freeze({
   category: 'Build-out journal',
   author: 'Apex Wellness Editorial Team',
   heroImage: 'behindWindow',
-  relatedService: { label: 'Follow opening updates', href: '/founding-patients/' },
+  relatedService: { label: 'Plan your first visit', href: '/plan-your-visit/' },
   sections: [
     {
       heading: 'A name on the door is the visible part',
@@ -48,7 +48,7 @@ export const buildoutPartOneArticle = Object.freeze({
     {
       heading: 'To be continued',
       paragraphs: [
-        'We are still preparing to open Apex Wellness at 8550 Broadway, Suite B, Merrillville. For now, follow along or join the Launch List for opening updates. It asks for contact information, not medical history, and signing up does not reserve an appointment.',
+        'We are still preparing to open Apex Wellness at 8550 Broadway, Suite B, Merrillville. For now, follow along for opening updates.',
         'For this first installment, we are happy to report that the name is on the door and that the donuts did their job. The to-do list, of course, had no comment.'
       ]
     }
@@ -60,5 +60,5 @@ export const buildoutPartOneArticle = Object.freeze({
   disclaimerHeading: 'About this journal',
   disclaimer: 'This journal describes setup work, not clinic or appointment availability. Apex Wellness is still preparing to open.',
   editorialNote: 'Based on the owner’s October 24 setup report and direct confirmation of a Comcast conversation. No service-installation outcome or individual clinician review is claimed.',
-  ctaBody: 'Apex Wellness is coming soon. Join the Launch List for opening updates; it does not book an appointment.'
+  ctaBody: 'Apex Wellness is coming soon to Merrillville.'
 });

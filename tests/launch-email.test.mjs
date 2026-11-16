@@ -50,7 +50,8 @@ test("branded launch emails retain action, consent and plain-text fallbacks", ()
       assert.match(email.textContent, /The Apex name is on the door in Merrillville/);
       assert.match(email.textContent, /Appointment requests are coming soon/);
       assert.match(email.textContent, /share pricing when it's published/);
-      assert.match(email.textContent, /does not book a visit or reserve one of the first 100 assessments/);
+      assert.match(email.textContent, /does not book a visit or reserve the \$49 promotional labs offer/);
+      assert.doesNotMatch(email.htmlContent + email.textContent, /first 100|\bfree\b/i);
       assert.doesNotMatch(email.htmlContent + email.textContent, /\bthanks\b/i);
       assert.doesNotMatch(email.htmlContent + email.textContent, /one step at a time|behind-the-scenes updates/i);
     }

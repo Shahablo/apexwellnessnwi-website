@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { answerWebsiteQuestion, pexyNudgeCopy, shouldOfferPexy } from '../src/assets/site-help.mjs';
 import { site } from '../src/content.mjs';
+import { bookingStatus, clinicHours, grandOpeningOffer } from '../src/clinic-facts.mjs';
 
 test('the guide gives the owner-confirmed address while preserving prelaunch status', () => {
   const answer = answerWebsiteQuestion('Where is your clinic?');
@@ -21,7 +22,7 @@ test('Pexy invites only after a qualified desktop exit or engagement', () => {
 test('Pexy invitation reflects the page without inventing a price or booking', () => {
   assert.match(pexyNudgeCopy('/pricing/'), /being finalized/);
   assert.doesNotMatch(pexyNudgeCopy('/pricing/'), /\$\d+/);
-  assert.match(pexyNudgeCopy('/founding-patients/'), /first-100 assessment offer/);
+  assert.match(pexyNudgeCopy('/founding-patients/'), /\$49 promotional labs offer/);
   assert.match(pexyNudgeCopy('/plan-your-visit/'), /does not book a time/);
 });
 
@@ -43,31 +44,75 @@ test('launch date is supplied by site configuration', () => {
   assert.match(answerWebsiteQuestion('When do you open?', 'November 20, 2026').text, /planned launch is November 20, 2026/);
 });
 
-test('the location answer preserves in-person-only launch plans without opening bookings', () => {
+test('the location answer preserves in-person-only launch plans and says online booking is open', () => {
   const answer = answerWebsiteQuestion('Do you offer telehealth?');
   assert.equal(answer.href, '/merrillville/');
   assert.match(answer.text, /telehealth is not planned for launch/);
-  assert.match(answer.text, /Scheduling is not open yet/);
+  assert.match(answer.text, /Coming soon/);
+  assert.ok(answer.text.includes(bookingStatus));
+  assert.ok(answer.text.includes(clinicHours.sentence));
 });
 
-test('Pexy separates the first-100 offer, visit request, and Launch List', () => {
-  const offer = answerWebsiteQuestion('How does the first 100 assessments offer work?');
+test('Pexy repeats the owner-confirmed booking, hours and offer wording exactly', () => {
+  // site-help.mjs is compiled into a browser script and cannot import src/clinic-facts.mjs, so its copies are checked here.
+  const offer = answerWebsiteQuestion('What is the grand opening offer?');
   assert.equal(offer.href, '/founding-patients/');
-  assert.match(offer.text, /selected baseline labs included when clinically appropriate/);
-  assert.match(offer.text, /One per person; no purchase required/);
+  for (const sentence of grandOpeningOffer.finePrint.split('. ').filter((part) => !part.startsWith('First 50'))) {
+    assert.ok(offer.text.includes(sentence.replace(/\.$/, '')), `offer answer is missing: ${sentence}`);
+  }
+  assert.match(offer.text, /first 50 appointments scheduled/);
+  const hours = answerWebsiteQuestion('What are your hours?');
+  assert.equal(hours.href, '/merrillville/');
+  assert.ok(hours.text.startsWith(clinicHours.sentence));
+  assert.ok(hours.text.includes(bookingStatus));
+  for (const question of ['Are you open on Thanksgiving?', 'Are you open Saturday?', 'Are you closed Mondays?']) {
+    assert.ok(answerWebsiteQuestion(question).text.includes(clinicHours.sentence), question);
+  }
+  for (const question of ['Can I book an appointment?', 'When do you open?', 'What care do you offer?', 'Do you offer weight care?', 'Do you offer hair-loss treatment?', 'What about menopause care?', 'Do you offer care for men?']) {
+    const answer = answerWebsiteQuestion(question);
+    assert.ok(answer.text.includes(bookingStatus), question);
+    assert.doesNotMatch(answer.text, /scheduling is not open|scheduling has not opened|not available yet|before scheduling opens/i, question);
+  }
+});
+
+test('Pexy separates the $49 promotional labs offer, online booking, contact request, and Launch List', () => {
+  const offer = answerWebsiteQuestion('How does the $49 promotional labs offer work?');
+  assert.equal(offer.href, '/founding-patients/');
+  assert.match(offer.text, /grand-opening offer is promotional labs for \$49 for the first 50 appointments scheduled/);
+  assert.match(offer.text, /The \$49 covers your first visit and the promotional labs\. Labs as clinically appropriate\. One per person\. Additional testing or treatment is separate\. Appointments subject to availability\./);
+  assert.match(offer.text, /To schedule, use the Book online button on the offer page or call \(219\) 207-2456\./);
   assert.match(offer.text, /does not reserve/);
+  assert.doesNotMatch(offer.text, /\bfree\b|no charge|first[ -]100|assessment|included/i);
+  // Questions that reuse wording from earlier printed materials get the current offer.
+  for (const question of ['What is the launch offer?', 'What is the grand opening offer?', 'What are the promotional labs?', 'Is the first 100 offer still on?']) {
+    assert.equal(answerWebsiteQuestion(question).text, offer.text);
+  }
+  for (const question of ['Are labs included?', 'Do you do blood work?']) {
+    const labs = answerWebsiteQuestion(question);
+    assert.equal(labs.href, '/founding-patients/');
+    assert.match(labs.text, /promotional labs for \$49 for the first 50 appointments scheduled\. The \$49 covers your first visit and the promotional labs\./);
+    assert.match(labs.text, /Additional testing or treatment is separate\./);
+    assert.doesNotMatch(labs.text + labs.label, /\bfree\b|no charge|first[ -]100|selected baseline/i);
+  }
 
   const request = answerWebsiteQuestion('Can I book an appointment?');
   assert.equal(request.href, '/plan-your-visit/');
+  assert.match(request.text, /^Online booking is open for visits from November 20\. Use the Book online button on the Plan Your Visit page, or call \(219\) 207-2456\./);
   assert.match(request.text, /does not book a time/);
   assert.match(request.text, /name, email, phone/);
+  assert.equal(answerWebsiteQuestion('How do I book a visit?').text, request.text);
 
   const list = answerWebsiteQuestion('How do I join the launch list?');
   assert.equal(list.href, '/founding-patients/');
   assert.match(list.text, /does not book a visit/);
+  assert.match(list.text, /To book, use the Book online button on the same page or call \(219\) 207-2456\./);
+
+  const cancel = answerWebsiteQuestion('How does cancellation work?');
+  assert.match(cancel.text, /^To change or cancel a visit you booked, call \(219\) 207-2456\./);
+  assert.doesNotMatch(cancel.text, /not open/i);
 });
 
-test('unpublished prices, hours, and clinician identity remain unresolved', () => {
+test('prices and clinician identity remain unresolved while the confirmed hours are given', () => {
   const pricing = answerWebsiteQuestion('What does care cost?');
   assert.equal(pricing.href, '/pricing/');
   assert.match(pricing.text, /final prices.*not public yet/);
@@ -75,7 +120,8 @@ test('unpublished prices, hours, and clinician identity remain unresolved', () =
 
   const hours = answerWebsiteQuestion('When are your hours?');
   assert.equal(hours.href, '/merrillville/');
-  assert.match(hours.text, /have not been announced/);
+  assert.match(hours.text, /Wednesday, Thursday and Friday, 11 a\.m\. to 5 p\.m\. Saturday, 9 a\.m\. to 1 p\.m\. Closed Sunday through Tuesday\. Closed Thanksgiving Day, November 26\./);
+  assert.match(answerWebsiteQuestion('Where is parking?').text, /Parking details have not been announced/);
 
   const team = answerWebsiteQuestion('Who is the doctor?');
   assert.equal(team.href, '/about/');
@@ -90,6 +136,7 @@ test('the guide routes common logistics and keeps personal medical questions out
   assert.equal(answerWebsiteQuestion('Is there accessible website support?').href, '/accessibility/');
   assert.equal(answerWebsiteQuestion('How does cancellation work?').href, '/cancellation-refunds/');
   assert.equal(answerWebsiteQuestion('Are labs included?').href, '/founding-patients/');
+  assert.match(answerWebsiteQuestion('Are labs included?').text, /Outside the grand-opening offer, do not assume testing is included in a visit fee/);
   assert.match(answerWebsiteQuestion('I have my lab results, can I book?').text, /cannot assess/);
 });
 test('medical and emergency questions take precedence over marketing answers', () => {

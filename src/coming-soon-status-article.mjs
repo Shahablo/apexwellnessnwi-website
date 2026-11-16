@@ -7,10 +7,10 @@ export const comingSoonStatusArticle = Object.freeze({
   eyebrow: 'Apex Wellness updates',
   readTime: '3 minute read',
   h1: '“Coming soon” is doing a lot of work. Here is what it means.',
-  intro: 'A sign that says Coming soon raises more questions than it answers. Where? When? What kind of clinic? Can I book yet? This is the plain version, first published in October 2026, with the confirmed parts separated from the parts still being finalized.\n\nIf you read nothing else: Apex is a new medical clinic in Merrillville focused on four areas of care, the planned opening is November 20, 2026, subject to readiness, and nothing can be booked yet.',
+  intro: 'A sign that says Coming soon raises more questions than it answers. Where? When? What kind of clinic? Can I book yet? This is the plain version, first published in October 2026, with the confirmed parts separated from the parts still being finalized.\n\nIf you read nothing else: Apex is a new medical clinic in Merrillville focused on four areas of care, the planned opening is November 20, 2026, subject to readiness, and online booking is open for visits from November 20.',
   excerpt: 'The confirmed facts about Apex Wellness in Merrillville, the parts still being finalized, and what the Launch List actually does.',
   published: '2026-10-20',
-  modified: '2026-11-11',
+  modified: '2026-11-16',
   category: 'Apex Wellness Updates',
   author: 'Apex Wellness Editorial Team',
   heroImage: 'clinic',
@@ -24,9 +24,11 @@ export const comingSoonStatusArticle = Object.freeze({
       bullets: [
         'The address: 8550 Broadway, Suite B, Merrillville, IN 46410.',
         'The four areas of care: weight and metabolic care, men’s hormone health, women’s midlife care, and hair-loss care for thinning and balding.',
-        'The model: a cash-pay clinic. Apex will not bill insurance for its services, and final fees will be published before scheduling opens.',
+        'The model: a cash-pay clinic. Apex will not bill insurance for its services, and final fees will be published on this site.',
         'The approach: an individual evaluation before any treatment is discussed. Nobody is handed a prescription at the door.',
-        'The planned opening date: November 20, 2026, subject to readiness.'
+        'The planned opening date: November 20, 2026, subject to readiness.',
+        'Clinic hours from November 20: Wednesday, Thursday and Friday, 11 a.m. to 5 p.m., and Saturday, 9 a.m. to 1 p.m. Closed Sunday through Tuesday, and closed Thanksgiving Day, November 26.',
+        'Booking: online booking is open for visits from November 20. You can also call (219) 207-2456.'
       ],
       paragraphsAfterBullets: [
         'A planned date is a target that depends on readiness: the clinical team, systems, supplies and the space itself. We will say so plainly if it moves.'
@@ -40,7 +42,6 @@ export const comingSoonStatusArticle = Object.freeze({
       bullets: [
         'Fees. The visit fee, how lab work is handled, and how any medication cost is shown separately.',
         'The care team. Clinician names and credentials will be published once they are confirmed, not before.',
-        'Hours and scheduling. Online booking will open only after fees and the team are set.',
         'The space. The interior images on this site are design previews, not photographs of the finished suite.'
       ]
     },
@@ -67,6 +68,6 @@ export const comingSoonStatusArticle = Object.freeze({
   ],
   disclaimerHeading: 'About this update',
   disclaimer: 'This is a status update about a clinic that has not yet opened. It is not medical advice and does not describe services that are currently available. Planned dates depend on readiness.',
-  editorialNote: 'Prepared by the Apex Wellness Editorial Team on October 20, 2026 and updated November 11 after the owner changed the planned opening date to November 20, subject to readiness. The hero image is a design preview of a consultation room, not a photograph of the finished Suite B space. No individual clinician review is claimed for this nonmedical update.',
+  editorialNote: 'Prepared by the Apex Wellness Editorial Team on October 20, 2026 and updated November 11 after the owner changed the planned opening date to November 20, subject to readiness. Updated November 16 after clinic hours were set and online booking opened. The hero image is a design preview of a consultation room, not a photograph of the finished Suite B space. No individual clinician review is claimed for this nonmedical update.',
   ctaBody: 'Join the Launch List with your name, email and phone number for updates as the details above are confirmed.'
 });

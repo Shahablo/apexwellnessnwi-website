@@ -1,12 +1,15 @@
+import { bookingStatus, clinicHours } from './clinic-facts.mjs';
+
 export const hormoneCareHubPage = {
   slug: '/hormone-care-merrillville/',
-  modified: '2026-11-11',
+  modified: '2026-11-16',
+  offerBand: true,
   navLabel: 'Hormone Care',
   title: 'Hormone Care in Merrillville, IN | Apex Wellness',
-  description: 'Explore planned men’s hormone health and women’s midlife care at Apex Wellness in Merrillville. Compare the care areas, call with general questions, or get opening updates.',
+  description: 'Explore planned men’s hormone health and women’s midlife care at Apex Wellness in Merrillville. Compare the care areas. Online booking is open for visits from November 20.',
   eyebrow: 'Coming soon · Merrillville, Indiana',
   h1: 'Hormone care in Merrillville starts with a clear path.',
-  intro: 'Apex Wellness is preparing two distinct hormone-focused care paths at one Northwest Indiana clinic. Choose the page that fits what you want to explore, then decide whether to call with a general clinic question or receive opening updates. Scheduling is not open yet.',
+  intro: 'Apex Wellness is preparing two distinct hormone-focused care paths at one Northwest Indiana clinic. Choose the page that fits what you want to explore. You can book a first visit online, call with a general clinic question, or get opening updates.',
   heroImage: 'behindWindow',
   cta: { label: 'Call Apex with a general question', href: 'tel:+12192072456' },
   secondaryCta: { label: 'Get opening updates', href: '/founding-patients/' },
@@ -25,7 +28,7 @@ export const hormoneCareHubPage = {
         },
         {
           title: 'Women’s midlife care',
-          body: 'See the planned midlife care area and read about the approach before scheduling becomes available.',
+          body: 'See the planned midlife care area and read about the approach before you book.',
           label: 'Explore women’s midlife care',
           href: '/womens-midlife-care/'
         }
@@ -35,22 +38,28 @@ export const hormoneCareHubPage = {
       type: 'detail',
       eyebrow: 'One local location',
       heading: 'The clinic is planned for Broadway in Merrillville.',
-      body: 'Apex Wellness is preparing in-person visits at 8550 Broadway, Suite B, Merrillville, IN 46410. Visit availability, care-team details, fees and hours will be shared before scheduling opens.'
+      body: `Apex Wellness is preparing in-person visits at 8550 Broadway, Suite B, Merrillville, IN 46410. ${bookingStatus} ${clinicHours.sentence} Fees will be posted on the Pricing page.`
     },
     {
       type: 'linkCards',
       eyebrow: 'Choose a next step',
-      heading: 'Questions now, or updates later.',
+      heading: 'Book, ask, or get updates.',
       items: [
         {
+          title: 'Plan a first visit',
+          body: `${bookingStatus} See the location, clinic hours, costs and the Book online button.`,
+          label: 'Plan your first visit',
+          href: '/plan-your-visit/'
+        },
+        {
           title: 'Ask a general clinic question',
-          body: 'Call the published Apex number about the location, opening or where to find more information. Scheduling is not open yet.',
+          body: 'Call the published Apex number about the location, the opening or booking a visit.',
           label: 'Call (219) 207-2456',
           href: 'tel:+12192072456'
         },
         {
-          title: 'Hear when scheduling is confirmed',
-          body: 'Join the free Launch List for opening and scheduling updates. The list does not book or hold a visit.',
+          title: 'Get opening updates',
+          body: 'Join the free Launch List for opening updates. The list does not book or hold a visit.',
           label: 'Join the Launch List',
           href: '/founding-patients/'
         }
@@ -62,7 +71,8 @@ export const hormoneCareHubPage = {
       items: [
         {
           question: 'Can I book hormone care today?',
-          answer: 'Not yet. Apex is coming soon, and appointment scheduling is not open. The Launch List is for updates, not a reservation.'
+          answer: `You can book a first visit. Apex is coming soon. ${bookingStatus} You can also call (219) 207-2456. The Launch List is for updates, not a reservation.`,
+          bookOnline: true
         },
         {
           question: 'What should I share when I call or join the list?',
@@ -70,7 +80,7 @@ export const hormoneCareHubPage = {
         },
         {
           question: 'Where can I learn more about the planned visit process?',
-          answer: 'The How It Works page explains the planned steps. Final clinician availability, fees and hours will be published before booking opens.'
+          answer: 'The How It Works page explains the planned steps. Clinic hours are on the Location page, and fees will be posted on the Pricing page.'
         }
       ]
     },
@@ -81,13 +91,13 @@ export const hormoneCareHubPage = {
       items: [
         {
           title: 'How Apex plans to work',
-          body: 'See the planned process and what will be confirmed before appointments open.',
+          body: 'See the planned process, from a first visit to a written plan.',
           label: 'See how it works',
           href: '/how-it-works/'
         },
         {
           title: 'Find the Merrillville location',
-          body: 'Check the Suite B address and directions for the one planned clinic location.',
+          body: 'Check the Suite B address, clinic hours and directions for the one planned clinic location.',
           label: 'View location details',
           href: '/merrillville/'
         }

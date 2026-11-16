@@ -52,6 +52,8 @@
     const href = anchor.getAttribute("href") || "";
     if (href.startsWith("tel:")) return "call";
     if (href.startsWith("mailto:")) return "email";
+    // The off-site "Book online" button is counted with Plan Your Visit. Its address is never sent.
+    if (anchor.hasAttribute("data-book-online")) return "plan_visit";
 
     let url;
     try {

@@ -10,7 +10,7 @@ export const fourAreasArticle = Object.freeze({
   intro: 'Apex Wellness is coming soon to Merrillville with a deliberately short list: weight and metabolic care, men’s hormone health, women’s midlife care, and hair-loss care. Those are the areas the clinic plans to focus on, not a promise that every service or appointment is available today.\n\nWhy these four? They reflect the questions the practice was created to make room for. A shorter list also makes it easier to say clearly what Apex intends to do, and what still needs to be confirmed before opening.',
   excerpt: 'The thinking behind Apex’s four planned care areas, with a straightforward look at what is confirmed and what is still to come.',
   published: '2026-10-22',
-  modified: '2026-10-22',
+  modified: '2026-11-16',
   category: 'About Apex',
   author: 'Apex Wellness Editorial Team',
   heroImage: null,
@@ -33,7 +33,7 @@ export const fourAreasArticle = Object.freeze({
     {
       heading: 'What is confirmed, and what is not',
       paragraphs: [
-        'The care focus and the location are confirmed: 8550 Broadway, Suite B, Merrillville, IN 46410. Apex is still Coming soon. The clinical team, appointment availability and final fees will be shared when they are confirmed. A date on a planning calendar is not an open door.',
+        'The care focus and the location are confirmed: 8550 Broadway, Suite B, Merrillville, IN 46410. Apex is still Coming soon. Online booking is open for visits from November 20. The clinical team and final fees will be shared when they are confirmed. A date on a planning calendar is not an open door.',
         'For now, the care pages explain the intended scope and the Launch List is a way to receive opening updates. Joining the list is free and does not reserve an appointment or establish care.'
       ]
     },
@@ -52,7 +52,7 @@ export const fourAreasArticle = Object.freeze({
     { label: 'Apex Wellness: Launch List', href: 'https://apexwellnessnwi.com/founding-patients/' }
   ],
   disclaimerHeading: 'About this article',
-  disclaimer: 'This is a description of Apex’s planned focus, not medical advice or a statement that appointments are currently available.',
+  disclaimer: 'This is a description of Apex’s planned focus, not medical advice.',
   editorialNote: 'Prepared by the Apex Wellness Editorial Team from the clinic’s confirmed care-area and location information. No individual clinician review is claimed.',
   ctaBody: 'Explore the care pages or join the Launch List for opening updates.'
 });

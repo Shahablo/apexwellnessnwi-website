@@ -1,6 +1,9 @@
 const ADDRESS = "8550 Broadway, Suite B, Merrillville, IN 46410";
 const SITE = "https://apexwellnessnwi.com";
 const LOGO = SITE + "/assets/images/apex-icon-as-a-email-20261026.png";
+// Owner-confirmed November 16, 2026. Emails link to the site's own offer page, which carries the Book online button.
+const BOOKING = "Online booking is open for visits from November 20. Book from our website or call (219) 207-2456.";
+const BOOKING_PAGE = { url: SITE + "/founding-patients/", label: "See how to book" };
 
 function escapeHtml(value) {
   return String(value).replace(/[&<>"']/g, (character) => ({
@@ -49,7 +52,7 @@ export function renderLaunchEmail(stage, links = {}) {
     title = "Confirm your email.";
     body = [
       "One quick click and you're on the Apex Wellness Launch List.",
-      "We'll share opening news and let you know when appointment requests become available.",
+      "We'll share opening news and clinic updates by email.",
     ];
     action = { url: links.verify, label: "Confirm my email" };
     note = "If you didn't request this, you can ignore this email. Joining the list does not book an appointment or reserve an offer. Please don't send medical information by reply.";
@@ -65,28 +68,31 @@ export function renderLaunchEmail(stage, links = {}) {
     title = "You're on the list.";
     body = [
       "We're glad you're here. The Apex name is on the door in Merrillville, and we're excited to open it to our neighbors soon.",
-      "Appointment requests are coming soon. We'll email you when scheduling opens and share pricing when it's published.",
+      BOOKING + " We'll share pricing when it's published.",
     ];
+    action = BOOKING_PAGE;
     note = "Joining this list does not book a visit or reserve the $49 promotional labs offer.";
     paragraphs = [
       body[0],
       body[1],
+      BOOKING_PAGE.label + ": " + BOOKING_PAGE.url,
       note,
     ];
   } else if (stage === "day3") {
-    subject = "Appointment requests are coming soon";
+    subject = "Online booking is open at Apex Wellness";
     title = "We're getting close.";
     body = [
       "Apex Wellness is preparing to welcome our Merrillville neighbors.",
-      "Appointment requests are coming soon. We'll send you the confirmed next steps when scheduling opens; you don't need to keep checking back.",
+      BOOKING,
     ];
-    paragraphs = [body[0], body[1]];
+    action = BOOKING_PAGE;
+    paragraphs = [body[0], body[1], BOOKING_PAGE.label + ": " + BOOKING_PAGE.url];
   } else if (stage === "day10") {
     subject = "Where you'll find Apex Wellness";
     title = "Where you'll find us.";
     body = [
       "Apex Wellness is preparing to open at " + ADDRESS + ". We're looking forward to welcoming our Northwest Indiana neighbors.",
-      "We'll send the confirmed appointment-request link when scheduling opens. Pricing will be shared when it's published.",
+      BOOKING + " Pricing will be shared when it's published.",
     ];
     action = { url: SITE + "/", label: "Visit Apex Wellness" };
     paragraphs = [body[0], body[1], "For current updates, visit " + SITE + "/."];

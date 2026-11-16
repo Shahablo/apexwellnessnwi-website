@@ -5,17 +5,21 @@ import { pages, site } from '../src/content.mjs';
 
 const output = (path) => readFile(new URL(`../public/${path}`, import.meta.url), 'utf8');
 
-test('the location route is discoverable and keeps future visits distinct from current availability', async () => {
+const bookOnlineLink = '<a href="https://d2oe0ra32qx05a.cloudfront.net/?practiceKey=k_1_117405" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer" data-book-online>Book online<span class="visually-hidden"> (opens a new tab)</span></a>';
+
+test('the location route is discoverable and shows clinic hours, opening status and online booking', async () => {
   const location = await output('merrillville/index.html');
   const home = await output('index.html');
   const sitemap = await output('sitemap.xml');
   assert.match(home, /href="\/merrillville\/"/);
   assert.match(sitemap, /<loc>https:\/\/apexwellnessnwi.com\/merrillville\/<\/loc>/);
   assert.match(location, /8550 Broadway, Suite B/);
-  assert.match(location, /Scheduling is not open/);
+  assert.ok(location.includes(`<dt>Availability</dt><dd>Coming soon. Online booking is open for visits from November 20. ${bookOnlineLink}</dd>`));
+  assert.ok(location.includes('<dt>Hours from November 20</dt><dd>Wednesday, Thursday and Friday: 11 a.m. to 5 p.m.<br>Saturday: 9 a.m. to 1 p.m.<br>Closed Sunday through Tuesday.<br>Closed Thanksgiving Day, November 26.</dd>'));
+  assert.match(location, /Walk-in visits have not been announced/);
   assert.match(location, /Visits are planned to be in person at launch/);
   assert.match(location, /data-photo-kind="documentary"/);
-  assert.doesNotMatch(location, /<iframe|<form[^>]*action="https?:|openingHours|aggregateRating|Book now/i);
+  assert.doesNotMatch(location, /<iframe|<form[^>]*action="https?:|aggregateRating|Book now|Scheduling is not open/i);
   const mapLink = [...location.matchAll(/href="([^"]+)"/g)].map(m => m[1].replaceAll('&amp;', '&')).find(href => href.startsWith('https://www.google.com/maps/dir/'));
   assert.equal(new URL(mapLink).searchParams.get('destination'), site.address.label);
 });
@@ -25,6 +29,8 @@ test('each care page links to practical next steps and its own working FAQ ancho
     const html = await output(`${item.href.slice(1)}index.html`);
     for (const href of ['/merrillville/', '/pricing/', '/how-it-works/']) assert.ok(html.includes(`href="${href}"`), `${item.href}: ${href}`);
     assert.match(html, /In-person visits at launch/);
+    assert.ok(html.includes('<dt>Hours from November 20</dt><dd>Wednesday, Thursday and Friday: 11 a.m. to 5 p.m.<br>Saturday: 9 a.m. to 1 p.m.</dd>'), `${item.href}: clinic hours`);
+    assert.ok(html.includes(`<p class="visit-details-note">Coming soon. Online booking is open for visits from November 20. ${bookOnlineLink}<a href="#`), `${item.href}: booking status`);
     const anchor = html.match(/href="#([^"]+)">Jump to common questions/);
     assert.ok(anchor, item.href);
     assert.ok(html.includes(`id="${anchor[1]}"`), `${item.href}: resolved FAQ target`);
@@ -55,7 +61,8 @@ test('nearby-town visitor pages have distinct route help and one truthful clinic
     assert.match(html, /Coming soon/);
     assert.match(html, /href="\/merrillville\/"/);
     assert.match(html, unique);
-    assert.doesNotMatch(html, /openingHours|aggregateRating|Book now|free parking|minutes from/i);
+    assert.match(html, /Online booking is open for visits from November 20\./);
+    assert.doesNotMatch(html, /aggregateRating|Book now|free parking|minutes from|Scheduling is not open|not being scheduled/i);
     const title = html.match(/<title>([^<]+)<\/title>/)?.[1];
     assert.ok(title && !titles.has(title), `${slug} needs a distinct title`);
     titles.add(title);

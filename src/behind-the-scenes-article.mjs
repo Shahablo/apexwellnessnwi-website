@@ -11,7 +11,7 @@ export const behindTheScenesArticle = Object.freeze({
   intro: 'Getting Apex Wellness ready has meant making progress in all kinds of ways. Some of it is easy to see: our name on the door, posters in place, and a space that is starting to look like Apex. Some of it happens between those pictures, in pickup arrangements, equipment orders and trips back and forth to the printer.\n\nWe wanted to share a little of that part of the story. We are still getting ready at 8550 Broadway, Suite B, in Merrillville. This was a day of practical jobs, a few stubborn obstacles and some genuinely enjoyable introductions around the neighborhood.',
   excerpt: 'A stubborn window, plenty of errands and a few good local donuts. Come behind the scenes as Apex gets ready in Merrillville.',
   published: '2026-10-24',
-  modified: '2026-11-15',
+  modified: '2026-11-16',
   category: 'Behind Apex',
   author: 'Apex Wellness Editorial Team',
   heroImage: 'behindPosters',
@@ -66,7 +66,7 @@ export const behindTheScenesArticle = Object.freeze({
       heading: 'Come along for the next part',
       paragraphs: [
         'There is still work ahead, and we are excited to bring you along as we get Apex ready. The name on the door feels good; the less visible checks still matter just as much.',
-        'Follow Apex Wellness NWI for opening updates. Our launch offer is promotional labs for $49 for the first 50 appointments scheduled. The $49 covers your first visit and the promotional labs. Labs as clinically appropriate. One per person. Additional testing or treatment is separate. Appointments subject to availability. Call (219) 207-2456 to schedule, or join the Launch List for updates. We are still preparing to open, and joining the Launch List is not an appointment booking.'
+        'Follow Apex Wellness NWI for opening updates. Our grand-opening offer is promotional labs for $49 for the first 50 appointments scheduled. The $49 covers your first visit and the promotional labs. Labs as clinically appropriate. One per person. Additional testing or treatment is separate. Appointments subject to availability. Book online or call (219) 207-2456 to schedule, or join the Launch List for updates. We are still preparing to open, and joining the Launch List is not an appointment booking.'
       ]
     }
   ],

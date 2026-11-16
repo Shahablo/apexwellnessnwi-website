@@ -3,6 +3,7 @@ import { hormoneCareHubPage } from './hormone-care-hub.mjs';
 import { merrillvillePage, visitDetails } from './visit-details.mjs';
 import { visitPlannerPage } from './visit-planner.mjs';
 import { nearbyVisitPages } from './nearby-visit-pages.mjs';
+import { bookingAdPages } from './booking-pages.mjs';
 import { bookingStatus, clinicHours, grandOpeningOffer } from './clinic-facts.mjs';
 
 const priorityListCta = Object.freeze({
@@ -86,6 +87,32 @@ export const site = Object.freeze({
       `Coming soon to ${clinicAddress}.`,
     copyright: '© 2026 Apex Wellness.'
   }
+});
+
+// Booking block shared by /founding-patients/ and the four ad booking pages in src/booking-pages.mjs.
+const generalBooking = Object.freeze({
+  badge: { top: 'Grand opening', price: '$49', bottom: 'Labs + first visit' },
+  callLabel: 'Call (219) 207-2456',
+  hoursLine: 'Wed–Fri 11 a.m.–5 p.m. · Sat 9 a.m.–1 p.m.',
+  addressLine: clinicAddress,
+  stepsHeading: 'How it works',
+  steps: [
+    'Book online in about a minute.',
+    'Come in for your first visit and labs.',
+    'Review your results and next steps with our care team.'
+  ],
+  careHeading: 'What we help with',
+  // The four ad groups land here. Each card has an id so an ad can link straight to it (/founding-patients/#weight).
+  care: [
+    { id: 'weight', label: 'Medical weight loss', line: 'A plan built on your history and labs.', href: '/weight-management/' },
+    { id: 'hormones', label: 'Men’s hormone health', line: 'Symptoms and testing reviewed before any plan.', href: '/hormone-care-merrillville/' },
+    { id: 'midlife', label: 'Women’s midlife care', line: 'Support through perimenopause and menopause.', href: '/womens-midlife-care/' },
+    { id: 'hair', label: 'Hair-loss care', line: 'Evaluation and care for hair loss and thinning.', href: '/hair-loss-care/' }
+  ],
+  // Owner-supplied fine print for this page, word for word.
+  finePrint:
+    'The $49 covers your first visit and the labs. Labs as clinically appropriate. One per person. First 50 appointments scheduled. Additional testing or treatment is separate. Appointments subject to availability.',
+  closedNote: `${clinicHours.closed} ${clinicHours.holiday.note}`
 });
 
 export const pages = Object.freeze({
@@ -985,140 +1012,28 @@ export const pages = Object.freeze({
     ]
   },
 
+  // The printed-QR, ad and profile-link destination. Since November 16, 2026 it is a short booking page:
+  // the offer, one Book online action, and nothing that competes with it. The route must not change.
   'founding-patients': {
     slug: '/founding-patients/',
     modified: '2026-11-16',
-    navLabel: 'Launch List',
-    title: 'Apex Wellness Launch List | Care Coming to Merrillville',
+    navLabel: 'Book online',
+    title: 'Book Online | $49 Grand Opening | Apex Wellness Merrillville',
     description:
       'Grand opening: promotional labs for $49. The $49 covers your first visit and the labs, for the first 50 appointments scheduled. Book online or call (219) 207-2456.',
-    announcement: 'Coming soon to Merrillville · Thoughtful care',
+    announcement: `Coming soon to Merrillville · ${bookingStatus}`,
     launchLabel: 'November 20, 2026 (planned; subject to readiness)',
-    eyebrow: 'Apex Wellness · Northwest Indiana',
-    h1: 'Merrillville, meet Apex.',
-    intro:
-      'We’re preparing to open with weight and metabolic care, men’s hormone health, women’s midlife care, and hair-loss care for thinning and balding. Online booking is open for visits from November 20. You can also join the list for opening updates; signing up does not book a visit.',
-    cta: {
-      label: 'Join the Launch List',
-      href: '#consultation-request'
-    },
-    // The offer block leads with the grand-opening headline; the fine print is the reviewed wording, unchanged.
-    offer: {
-      heading: grandOpeningOffer.headline,
-      limit: grandOpeningOffer.limit,
-      terms: `${grandOpeningOffer.finePrint} Book online or call (219) 207-2456 to schedule, or join the Launch List for updates. The Launch List is not a reservation.`
-    },
-    ctaNote: 'The Launch List costs nothing to join. Joining does not book an appointment. No commitment to care.',
+    eyebrow: 'Grand opening · Friday, November 20 · Merrillville',
+    h1: 'Now booking first visits.',
+    h1Accent: 'first visits.',
+    // Offer line under the headline: the first sentence is set large, the second beside it.
+    intro: '$49 for labs and your first visit. First 50 appointments only.',
     landing: true,
-    visitPlanner: true,
-    form: {
-      action: '/api/founding-consultation',
-      method: 'post',
-      heading: 'Get opening updates.',
-      submitLabel: 'Join the Launch List',
-      consentVersion: 'launch-list-split-2026-10-26',
-      phoneConsentVersion: 'launch-manual-call-2026-10-26',
-      consentLabel:
-        'Email me opening updates from Apex Wellness. I can unsubscribe anytime, and I have read the Privacy Policy and Communications Consent.',
-      accessibilityLabel: 'This is a website or accessibility question, not a Launch List signup.',
-      privacyNote:
-        'Join the Apex Launch List with your name, email and phone number. A manual call is optional and requires the separate permission below. No texts. Save medical details for a future secure clinical intake.',
-      successMessage:
-        'You’re on the Apex Launch List. We’ll share opening news by email. No appointment has been booked. Online booking is open for visits from November 20; book online or call (219) 207-2456.'
-    },
-    sections: [
-      {
-        type: 'trustPoints',
-        items: [
-          'Free to join',
-          'Thoughtful care',
-          'No commitment to care',
-          'Merrillville · Northwest Indiana'
-        ]
-      },
-      {
-        type: 'detail',
-        eyebrow: 'A thoughtful first step',
-        heading: 'Your questions. A thoughtful conversation.',
-        body:
-          'Apex is preparing to bring weight, metabolic, hormone and hair-loss care to Merrillville. Joining the list lets you follow our opening plans and decide whether an evaluation is right for you.'
-      },
-      {
-        type: 'cards',
-        eyebrow: 'Care areas',
-        heading: 'Explore whether Apex may fit what you are looking for.',
-        cards: [
-          {
-            title: 'Weight & metabolic care',
-            body: 'An individualized approach to evaluation, meaningful measurements, sustainable habits, and medication only when clinically indicated.',
-            href: '/weight-management/'
-          },
-          {
-            title: "Men’s hormone health",
-            body: 'A risk-aware evaluation of symptoms and appropriate testing before any treatment decision.',
-            href: '/mens-hormone-health/'
-          },
-          {
-            title: "Women’s midlife care",
-            body: 'An individualized discussion of perimenopause, menopause, weight, sleep, and metabolic concerns.',
-            href: '/womens-midlife-care/'
-          },
-          {
-            title: 'Hair-loss care',
-            body: 'Clinical evaluation and treatment for thinning and balding, for men and women.',
-            href: '/hair-loss-care/'
-          }
-        ]
-      },
-      {
-        type: 'steps',
-        eyebrow: 'What happens next',
-        heading: 'Stay in the loop. Decide in your own time.',
-        items: [
-          {
-            title: 'Join the list.',
-            body: 'Leave your name, email and phone number, and choose to receive opening updates.'
-          },
-          {
-            title: 'Get the details.',
-            body: 'Watch for opening news and clinic updates as plans are confirmed.'
-          },
-          {
-            title: 'Book if it fits.',
-            body: `${bookingStatus} Book online or call (219) 207-2456 when you are ready. Joining the list does not reserve an appointment.`
-          }
-        ]
-      },
-      {
-        type: 'faq',
-        heading: 'A few things to know.',
-        items: [
-          {
-            question: 'Does this reserve an appointment?',
-            answer: 'No. The Launch List asks for your name, email and phone number, with separate optional permission for a manual call. We’ll send opening news by email. Joining does not reserve an appointment or guarantee treatment. To reserve a time, book online or call (219) 207-2456.',
-            bookOnline: true
-          },
-          {
-            question: 'Does it cost anything?',
-            answer: 'No. Joining the Launch List is free, and you can unsubscribe at any time.'
-          },
-          {
-            question: 'How does the $49 promotional labs offer work?',
-            answer: 'The grand-opening offer is promotional labs for $49 for the first 50 appointments scheduled. The $49 covers your first visit and the promotional labs. Labs as clinically appropriate. One per person. Additional testing or treatment is separate. Appointments subject to availability. To schedule, book online or call (219) 207-2456. Joining the Launch List does not schedule an appointment or reserve the offer.',
-            bookOnline: true
-          },
-          {
-            question: 'Should I include medical information?',
-            answer: 'No. The form asks for your name, email and phone number. Keep your medical history for a secure clinical intake after a visit is arranged.'
-          },
-          {
-            question: 'When and where will Apex open?',
-            answer: `We’re preparing to open at ${clinicAddress}. November 20, 2026 is the planned date, subject to readiness. ${bookingStatus} ${clinicHours.sentence}`
-          }
-        ]
-      }
-    ]
+    booking: generalBooking,
+    sections: []
   },
+
+  ...bookingAdPages(generalBooking),
 
   privacy: {
     slug: '/privacy/',

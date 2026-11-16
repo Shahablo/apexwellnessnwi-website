@@ -18,7 +18,7 @@ Production website for [apexwellnessnwi.com](https://apexwellnessnwi.com), deplo
 
 The repository root is never a public asset directory. `public/.assetsignore` adds a second safeguard against dotfiles, repository metadata, source maps, and development files.
 
-The canonical conversion page is `/founding-patients/`. Legacy `/priority` and `/priority-list` page URLs redirect permanently to it. The form submits JSON to `POST /api/founding-consultation`; `GET` is not allowed, and the retired `/api/priority` endpoint returns `410 Gone`.
+The canonical conversion page is `/founding-patients/` (the printed-QR destination). Since November 16, 2026 it is a short booking page with no form, and four noindex ad booking pages under `/book/` share its template (`src/booking-pages.mjs`). Legacy `/priority` and `/priority-list` page URLs redirect permanently to `/founding-patients/`. The Launch List form is no longer rendered on any page; its markup, client script and endpoint remain. That form submits JSON to `POST /api/founding-consultation`; `GET` is not allowed, and the retired `/api/priority` endpoint returns `410 Gone`.
 
 The current endpoint stores requests and consent records in D1; it does not send automatic emails or notify the clinic. An operational review and follow-up process must be in place before promising delivery or response times. The website guide is not a clinical messaging channel.
 

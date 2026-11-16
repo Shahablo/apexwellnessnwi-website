@@ -422,6 +422,8 @@ function pricingMarkup(items) {
   </div>`;
 }
 
+// Launch List signup form. Not rendered on any page since November 16, 2026, when /founding-patients/ became
+// the booking page. Kept, with its endpoint and client script, so the signup can be placed on a page of its own.
 function foundingConsultationFormMarkup(form) {
   return `<div class="form-card conversion-form-card" id="consultation-request" tabindex="-1">
     <p class="eyebrow">The Apex Launch List</p>
@@ -733,19 +735,45 @@ function renderBlogPost(page) {
   </main>`;
 }
 
-function renderConversionHero(page) {
-  return `<section class="hero conversion-hero" aria-labelledby="page-title"><div class="container conversion-grid">
-    <div class="hero-copy conversion-copy">
+// The booking page at /founding-patients/: offer, Book online, call, then steps, four care cards, Book online again and fine print.
+// Kept short on purpose. Booking links reuse bookOnlineLinkMarkup so first-party measurement counts them.
+function renderBookingLanding(page) {
+  const { booking } = page;
+  const accentStart = page.h1Accent && page.h1.endsWith(page.h1Accent) ? page.h1.length - page.h1Accent.length : page.h1.length;
+  const offerBreak = page.intro.indexOf('. ') + 1;
+  const call = `<a class="booking-call" href="${escapeHtml(site.phoneHref)}">${escapeHtml(booking.callLabel)}</a>`;
+  const list = (items) => items.map((item) => `<li>${escapeHtml(item)}</li>`).join("");
+  // Ad booking pages: three points on what the first visit covers for that concern.
+  const covers = booking.covers ? `<div class="booking-covers-block">
+        <h2 id="booking-covers-heading">${escapeHtml(booking.coversHeading)}</h2>
+        <ul class="booking-covers" aria-labelledby="booking-covers-heading">${list(booking.covers)}</ul>
+      </div>` : "";
+  // General page: the four care areas. Ads and the ad booking pages link to #services and to each card's id.
+  const care = booking.care ? `<div class="booking-care" id="services">
+        <h2 id="booking-care-heading">${escapeHtml(booking.careHeading)}</h2>
+        <ul class="booking-services" aria-labelledby="booking-care-heading">${booking.care.map((item) => `<li id="${escapeHtml(item.id)}"><a href="${escapeHtml(item.href)}"><strong>${escapeHtml(item.label)}</strong><span>${escapeHtml(item.line)}</span></a></li>`).join("")}</ul>
+      </div>` : "";
+  const more = booking.otherServices ? `<p class="booking-more"><a class="button-secondary" href="${escapeHtml(booking.otherServices.href)}">${escapeHtml(booking.otherServices.label)}</a><a class="booking-learn" href="${escapeHtml(booking.learnMore.href)}">${escapeHtml(booking.learnMore.label)}</a></p>` : "";
+  return `<section class="booking-hero${booking.covers ? " booking-hero-ad" : ""}" aria-labelledby="page-title"><div class="container booking-hero-inner">
       <p class="eyebrow">${escapeHtml(page.eyebrow)}</p>
-      <h1 id="page-title">${escapeHtml(page.h1).replace('. ', '.<br>')}</h1>
-      <p>${escapeHtml(page.intro)}</p>
-      <div class="launch-offer"><h2>${escapeHtml(page.offer.heading)}</h2><p class="offer-limit">${escapeHtml(page.offer.limit)}</p><p class="offer-terms">${escapeHtml(page.offer.terms)}</p>${bookOnlineMarkup()}${hoursMarkup()}</div>
-      <div class="hero-actions">${page.visitPlanner ? '<a class="button" href="/plan-your-visit/">Plan your first visit</a>' : ''}${buttonMarkup(page.cta)}</div>
-      <p class="cta-note">${escapeHtml(page.ctaNote)}</p>
-    </div>
-    ${foundingConsultationFormMarkup(page.form)}
-    <div class="conversion-image">${imageMarkup(imageCatalog.clinic)}</div>
-  </div></section>`;
+      <h1 id="page-title">${escapeHtml(page.h1.slice(0, accentStart))}<em>${escapeHtml(page.h1.slice(accentStart))}</em></h1>
+      <p class="booking-badge" aria-hidden="true"><span>${escapeHtml(booking.badge.top)}</span><strong>${escapeHtml(booking.badge.price)}</strong><span>${escapeHtml(booking.badge.bottom)}</span></p>
+      ${booking.lead ? `<p class="booking-lead">${escapeHtml(booking.lead)}</p>` : ""}
+      <p class="booking-offer"><strong>${escapeHtml(page.intro.slice(0, offerBreak))}</strong> ${escapeHtml(page.intro.slice(offerBreak + 1))}</p>
+      <div class="booking-actions">${bookOnlineLinkMarkup("button")}${call}</div>
+      <p class="booking-strip"><span>${escapeHtml(booking.hoursLine)}</span> <span>${escapeHtml(booking.addressLine)}</span></p>
+    </div></section>
+    <section class="booking-details" aria-labelledby="booking-steps-heading"><div class="container booking-details-inner">
+      ${covers}
+      <div class="booking-steps-block">
+        <h2 id="booking-steps-heading">${escapeHtml(booking.stepsHeading)}</h2>
+        <ol class="booking-steps">${booking.steps.map((step, index) => `<li><span class="booking-step-number" aria-hidden="true">${index + 1}</span><span>${escapeHtml(step)}</span></li>`).join("")}</ol>
+      </div>
+      ${care}
+      <div class="booking-actions booking-actions-close">${bookOnlineLinkMarkup("button")}${call}</div>
+      <p class="booking-fine-print">${escapeHtml(booking.finePrint)} ${escapeHtml(booking.closedNote)}</p>
+      ${more}
+    </div></section>`;
 }
 
 function renderMain(pageKey, page) {
@@ -767,7 +795,7 @@ function renderMain(pageKey, page) {
 
   return `<main id="main-content" class="page" tabindex="-1">
     ${page.offerBand ? offerBandMarkup() : ''}
-    ${page.landing ? renderConversionHero(page) : renderHero(pageKey, page)}
+    ${page.landing ? renderBookingLanding(page) : renderHero(pageKey, page)}
     ${site.navigation.some((item) => item.section === 'care' && item.href === page.slug) ? renderCareDetails(page) : ''}
     ${page.sections.map(renderSection).join("\n")}
     ${site.navigation.some((item) => item.section === 'care' && item.href === page.slug) ? renderSection({ type: 'linkCards', eyebrow: 'Plan your next step', heading: 'The details that help you decide.', items: visitDetails.planningLinks }, page.sections.length) : ''}
@@ -813,7 +841,6 @@ function renderVisitPlanner(page) {
             <p id="form-status" class="form-status" role="status" aria-live="polite" aria-atomic="true" tabindex="-1"></p>
             <noscript><p>JavaScript is required to send the form. You can call <a href="tel:+12192072456">(219) 207-2456</a> for general questions.</p></noscript>
           </form></div><p class="visit-note">This form does not book an appointment. No deposit. No commitment to care.</p>`}
-          <p>Only want opening news? <a href="/founding-patients/#consultation-request">Join the Launch List instead.</a></p>
           <div class="visit-actions"><button class="button-secondary" type="button" data-visit-back hidden>Back</button></div>
         </section>
       </div>
@@ -847,13 +874,15 @@ function renderLandingNavigation(page) {
   return `<header class="site-header landing-header">
     <div class="container site-header-inner">
       <a class="brand premium-brand" href="/" aria-label="Apex Wellness home"><img src="/assets/images/apex-icon-as-a-lockup-20261026.svg" width="172" height="98" alt="Apex Wellness"></a>
-      <nav class="landing-nav" aria-label="Launch List page navigation">
-        <a class="nav-cta" href="#consultation-request">${escapeHtml(page.cta.label)}</a>
+      <nav class="landing-nav" aria-label="Booking">
+        ${bookOnlineLinkMarkup("nav-cta")}
       </nav>
     </div>
   </header>`;
 }
 
+// The booking page (page.landing) gets a short footer: contact, hours, four information links, policies and notices.
+// Its care areas are linked in the page body.
 function renderFooter(page) {
   const footerLink = (item) => `<li><a href="${escapeHtml(item.href)}"${item.href === page.slug || (page.kind === "blogPost" && item.href === "/blog/") ? ' aria-current="page"' : ""}>${escapeHtml(item.label)}</a></li>`;
   const careLinks = site.navigation.filter((item) => item.section === 'care').map(footerLink).join("");
@@ -864,8 +893,8 @@ function renderFooter(page) {
     <div class="footer-signature"><a href="/" aria-label="Apex Wellness home"><img src="/assets/images/apex-icon-as-a-reversed-lockup-20261026.svg" width="860" height="490" alt="Apex Wellness"><span aria-hidden="true">↗</span></a><p>${escapeHtml(site.tagline)}</p></div>
     <div class="footer-grid">
       <div><p class="eyebrow">Northwest Indiana</p><p>${escapeHtml(site.footer.summary)}</p><p>${escapeHtml(site.footer.location)}</p>${hoursMarkup("footer-hours")}<p><a href="${escapeHtml(site.phoneHref)}">${escapeHtml(site.phone)}</a> · <a href="mailto:${escapeHtml(site.email)}">${escapeHtml(site.email)}</a></p><nav class="social-links" aria-label="Apex social profiles">${site.social.map((profile) => `<a href="${escapeHtml(profile.href)}" rel="me noreferrer" target="_blank">${escapeHtml(profile.label)}<span class="visually-hidden"> (opens a new tab)</span></a>`).join('')}</nav></div>
-      <nav aria-label="Care areas"><h2>Care areas</h2><ul>${careLinks}</ul></nav>
-      <nav aria-label="Site information"><h2>Information</h2><ul>${infoLinks}</ul></nav>
+      ${page.landing ? "" : `<nav aria-label="Care areas"><h2>Care areas</h2><ul>${careLinks}</ul></nav>`}
+      ${page.landing ? `<nav aria-label="Site information"><h2>Information</h2><ul>${[{ label: "Home", href: "/" }, { label: "Plan Your Visit", href: "/plan-your-visit/" }, { label: "Pricing", href: "/pricing/" }, { label: "FAQ", href: "/faq/" }].map(footerLink).join("")}</ul></nav>` : `<nav aria-label="Site information"><h2>Information</h2><ul>${infoLinks}</ul></nav>`}
       <nav aria-label="Policies"><h2>Policies</h2><ul>${policyLinks}</ul></nav>
     </div>
     <div class="footer-meta"><p>${escapeHtml(site.notices.prelaunch)}</p><p>${escapeHtml(site.notices.medical)}</p><p>${escapeHtml(site.notices.emergency)}</p><p>${escapeHtml(site.footer.copyright)}</p></div>
@@ -917,7 +946,7 @@ function renderDocument(pageKey, page, jsonLd, { noIndex = false, mainOverride =
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>${escapeHtml(page.title)}</title>
   <meta name="description" content="${escapeHtml(page.description)}">
-  <meta name="robots" content="${noIndex ? "noindex, nofollow" : "index, follow, max-image-preview:large"}">
+  <meta name="robots" content="${noIndex ? "noindex, nofollow" : page.noindex ? "noindex,follow" : "index, follow, max-image-preview:large"}">
   <link rel="canonical" href="${escapeHtml(canonical)}">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="manifest" href="/site.webmanifest">
@@ -957,7 +986,7 @@ function renderDocument(pageKey, page, jsonLd, { noIndex = false, mainOverride =
   ${page.landing ? renderLandingNavigation(page) : renderNavigation(page)}
   ${mainOverride || renderMain(pageKey, page)}
   ${renderFooter(page)}
-  ${page.landing ? `<a class="mobile-conversion-cta" href="#consultation-request">${escapeHtml(page.cta.label)}</a>` : ""}
+  ${page.landing && bookOnlineUrl() ? `<div class="booking-bar">${bookOnlineLinkMarkup("button")}<a class="booking-bar-call" href="${escapeHtml(site.phoneHref)}">Call</a></div>` : ""}
   ${renderSiteHelp(page)}
 </body>
 </html>
@@ -1100,7 +1129,8 @@ function buildRedirects() {
 }
 
 function buildSitemap() {
-  const entries = [...Object.values(pages), ...publishedBlogPosts]
+  // Ad booking pages (page.noindex) overlap the service pages and stay out of the sitemap.
+  const entries = [...Object.values(pages).filter((page) => !page.noindex), ...publishedBlogPosts]
     .map((page) => `  <url><loc>${escapeXml(canonicalUrl(page.slug))}</loc><lastmod>${escapeXml(page.modified || site.contentUpdated)}</lastmod></url>`)
     .join("\n");
   return `<?xml version="1.0" encoding="UTF-8"?>

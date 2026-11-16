@@ -11,6 +11,7 @@ export const midlifeLocalConversationArticle = Object.freeze({
   excerpt: 'As Apex puts its name on the door in Merrillville, meet one of the four care areas planned for the new clinic.',
   published: '2026-10-26',
   modified: '2026-11-16',
+  richText: true,
   category: 'About Apex',
   author: 'Apex Wellness Editorial Team',
   heroImage: null,
@@ -33,8 +34,8 @@ export const midlifeLocalConversationArticle = Object.freeze({
     {
       heading: 'Where to follow along',
       paragraphs: [
-        'Our women’s midlife care page explains the planned focus. The Merrillville page shows the location. The Launch List is for opening, team and pricing updates as those details are confirmed. It asks for a name, email and phone number.',
-        'Apex is Coming soon, and online booking is open for visits from November 20. The door tells you where. The Launch List will tell you when there is more to share.'
+        'Our women’s midlife care page explains the planned focus. The Merrillville page shows the location. Online booking is open for visits from November 20. [Book a women’s midlife care visit](https://apexwellnessnwi.com/book/womens-midlife/).',
+        'Apex is Coming soon, and online booking is open for visits from November 20. The door tells you where.'
       ]
     }
   ],
@@ -43,7 +44,7 @@ export const midlifeLocalConversationArticle = Object.freeze({
     { label: 'Apex Wellness: Women’s Midlife Care', href: 'https://apexwellnessnwi.com/womens-midlife-care/' },
     { label: 'Apex Wellness: Merrillville Location', href: 'https://apexwellnessnwi.com/merrillville/' },
     { label: 'Apex Wellness: Behind the Scenes at the Merrillville Space', href: 'https://apexwellnessnwi.com/blog/before-the-doors-open-apex-wellness/' },
-    { label: 'Apex Wellness: Launch List', href: 'https://apexwellnessnwi.com/founding-patients/' }
+    { label: 'Apex Wellness: Book online', href: 'https://apexwellnessnwi.com/founding-patients/' }
   ],
   disclaimerHeading: 'About this introduction',
   disclaimer: 'This article describes a planned care area at a clinic that is still preparing to open. It does not offer medical advice.',

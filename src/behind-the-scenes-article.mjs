@@ -71,7 +71,7 @@ export const behindTheScenesArticle = Object.freeze({
     }
   ],
   sources: [
-    { label: 'Apex Wellness: Launch List and offer details', href: 'https://apexwellnessnwi.com/founding-patients/' },
+    { label: 'Apex Wellness: Book online and offer details', href: 'https://apexwellnessnwi.com/founding-patients/' },
     { label: 'Apex Wellness: About the practice', href: 'https://apexwellnessnwi.com/about/' }
   ],
   disclaimerHeading: 'About this update',

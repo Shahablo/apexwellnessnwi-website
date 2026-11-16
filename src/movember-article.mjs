@@ -46,7 +46,7 @@ export const movemberArticle = Object.freeze({
   sources: [
     { label: 'Movember: Raise funds. Save lives. (September 30, 2026)', href: 'https://movember.com/articles/raise-funds-save-lives' },
     { label: 'Apex Wellness: Planned men’s hormone health', href: 'https://apexwellnessnwi.com/mens-hormone-health/' },
-    { label: 'Apex Wellness: Launch List', href: 'https://apexwellnessnwi.com/founding-patients/' }
+    { label: 'Apex Wellness: Book online', href: 'https://apexwellnessnwi.com/founding-patients/' }
   ],
   disclaimerHeading: 'About this article',
   disclaimer: 'This article describes a planned care area at a clinic preparing to open. It provides general information, not medical advice, diagnosis, treatment, screening guidance, or an assessment of any individual concern.',

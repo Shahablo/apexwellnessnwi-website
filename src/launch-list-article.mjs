@@ -1,3 +1,5 @@
+import { launchListClosedNote } from './clinic-facts.mjs';
+
 export const launchListArticle = {
   slug: '/blog/launch-list-what-to-share/',
   status: 'published',
@@ -10,7 +12,8 @@ export const launchListArticle = {
   intro: 'A launch signup has one job. It should not need a plot summary of your medical history.\n\nAt Apex Wellness, the Launch List is for opening updates. It asks for your name, email and phone number. A question about your own health deserves a different, private conversation, not a public comment or an extra paragraph in a signup box.',
   excerpt: 'The Launch List asks for contact details, not medical history. Here is how to keep a useful question for later without putting private health details in the wrong place.',
   published: '2026-09-27',
-  modified: '2026-10-26',
+  modified: '2026-11-16',
+  updateNote: launchListClosedNote,
   category: 'Getting to Know Apex',
   author: 'Apex Wellness Editorial Team',
   heroImage: 'shoreline',
@@ -52,7 +55,7 @@ export const launchListArticle = {
     }
   ],
   sources: [
-    { label: 'Apex Wellness: Launch List', href: 'https://apexwellnessnwi.com/founding-patients/' },
+    { label: 'Apex Wellness: Book online', href: 'https://apexwellnessnwi.com/founding-patients/' },
     { label: 'Apex Wellness: Privacy Policy', href: 'https://apexwellnessnwi.com/privacy/' },
     { label: 'Apex Wellness: FAQ', href: 'https://apexwellnessnwi.com/faq/' }
   ],

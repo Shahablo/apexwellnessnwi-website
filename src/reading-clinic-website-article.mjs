@@ -56,7 +56,7 @@ export const readingClinicWebsiteArticle = Object.freeze({
     { label: 'MedlinePlus: Evaluating Health Information', href: 'https://medlineplus.gov/evaluatinghealthinformation.html' },
     { label: 'NCCIH: Are You Reading News or Advertising?', href: 'https://www.nccih.nih.gov/health/know-science/finding-and-evaluating-online-resources/are-you-reading-news-or-advertising' },
     { label: 'Apex Wellness: FAQ', href: 'https://apexwellnessnwi.com/faq/' },
-    { label: 'Apex Wellness: Launch List', href: 'https://apexwellnessnwi.com/founding-patients/' }
+    { label: 'Apex Wellness: Book online', href: 'https://apexwellnessnwi.com/founding-patients/' }
   ],
   disclaimerHeading: 'About this guide',
   disclaimer: 'This is a guide to reading published information, not medical advice or an endorsement of another site. Discuss personal health decisions with a qualified clinician.',

@@ -1,14 +1,16 @@
+import { launchListClosedNote } from './clinic-facts.mjs';
+
 export const comingSoonStatusArticle = Object.freeze({
   slug: '/blog/what-coming-soon-means-at-apex/',
   status: 'published',
   editorialType: 'nonmedical',
   title: 'What “Coming Soon” Means at Apex Wellness, Merrillville | Apex Wellness',
-  description: 'A plain status update from Apex Wellness: what is confirmed about the Merrillville clinic today, what is still being finalized, and what the Launch List does.',
+  description: 'A plain status update from Apex Wellness: what is confirmed about the Merrillville clinic today, what is still being finalized, and how to book a visit.',
   eyebrow: 'Apex Wellness updates',
   readTime: '3 minute read',
   h1: '“Coming soon” is doing a lot of work. Here is what it means.',
   intro: 'A sign that says Coming soon raises more questions than it answers. Where? When? What kind of clinic? Can I book yet? This is the plain version, first published in October 2026, with the confirmed parts separated from the parts still being finalized.\n\nIf you read nothing else: Apex is a new medical clinic in Merrillville focused on four areas of care, the planned opening is November 20, 2026, subject to readiness, and online booking is open for visits from November 20.',
-  excerpt: 'The confirmed facts about Apex Wellness in Merrillville, the parts still being finalized, and what the Launch List actually does.',
+  excerpt: 'The confirmed facts about Apex Wellness in Merrillville, the parts still being finalized, and how to book a visit.',
   published: '2026-10-20',
   modified: '2026-11-16',
   category: 'Apex Wellness Updates',
@@ -47,6 +49,7 @@ export const comingSoonStatusArticle = Object.freeze({
     },
     {
       heading: 'What the Launch List does, and does not do',
+      updateNote: launchListClosedNote,
       paragraphs: [
         'The Launch List asks for a name, email address and phone number. Apex may use that number for a limited manual follow-up about the signup or confirmed scheduling availability; the form does not authorize texts or automated calls. It is not an appointment request, a waitlist with a number, or a place to describe symptoms. Medical information belongs in a secure intake process after an appointment is confirmed, not in a form on a website.',
         'When something on the list above moves from “being finalized” to “confirmed,” the list is how we tell you. If you want to see the kind of email you would receive, the earlier article on what a launch list should ask for explains the standard we hold ourselves to.'
@@ -63,7 +66,7 @@ export const comingSoonStatusArticle = Object.freeze({
   sources: [
     { label: 'Apex Wellness: How It Works', href: 'https://apexwellnessnwi.com/how-it-works/' },
     { label: 'Apex Wellness: Pricing', href: 'https://apexwellnessnwi.com/pricing/' },
-    { label: 'Apex Wellness: Launch List', href: 'https://apexwellnessnwi.com/founding-patients/' },
+    { label: 'Apex Wellness: Book online', href: 'https://apexwellnessnwi.com/founding-patients/' },
     { label: 'Apex Wellness: A launch list needs your email, not your medical history', href: 'https://apexwellnessnwi.com/blog/launch-list-what-to-share/' }
   ],
   disclaimerHeading: 'About this update',

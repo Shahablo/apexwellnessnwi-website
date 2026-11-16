@@ -11,6 +11,7 @@ export const midwestObesityMapArticle = Object.freeze({
   excerpt: 'The CDC’s Midwest figure is useful context for a planned Apex care area, but it is not a scorecard for Merrillville or for any one person.',
   published: '2026-10-28',
   modified: '2026-11-16',
+  richText: true,
   category: 'About Apex',
   author: 'Apex Wellness Editorial Team',
   heroImage: null,
@@ -34,14 +35,14 @@ export const midwestObesityMapArticle = Object.freeze({
       heading: 'One useful way to read the next headline',
       paragraphs: [
         'When a health statistic sounds close to home, look for three things: the year, the place and the method. Here, the year is 2025, the place is the broader Midwest, and the method is self-reported height and weight in a survey. Those details make the figure more useful, not less.',
-        'If you are getting to know Apex, our weight and metabolic care page describes the planned area. The Launch List is for confirmed opening updates; joining does not book an appointment or establish care. Please keep personal health details out of the form.'
+        'If you are getting to know Apex, our weight and metabolic care page describes the planned area. Online booking is open for visits from November 20. [Book a medical weight loss visit](https://apexwellnessnwi.com/book/weight-loss/).'
       ]
     }
   ],
   sources: [
     { label: 'CDC: 2025 Adult Obesity Prevalence Maps, updated September 24, 2026', href: 'https://www.cdc.gov/obesity/data-and-statistics/adult-obesity-prevalence-maps.html' },
     { label: 'Apex Wellness: Weight & Metabolic Care', href: 'https://apexwellnessnwi.com/weight-management/' },
-    { label: 'Apex Wellness: Launch List', href: 'https://apexwellnessnwi.com/founding-patients/' }
+    { label: 'Apex Wellness: Book online', href: 'https://apexwellnessnwi.com/founding-patients/' }
   ],
   disclaimerHeading: 'About this article',
   disclaimer: 'This article explains a population statistic and Apex’s planned care focus. It is not medical advice or a Merrillville prevalence estimate.',

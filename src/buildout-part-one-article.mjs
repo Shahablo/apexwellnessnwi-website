@@ -54,7 +54,7 @@ export const buildoutPartOneArticle = Object.freeze({
     }
   ],
   sources: [
-    { label: 'Apex Wellness: Launch List', href: 'https://apexwellnessnwi.com/founding-patients/' },
+    { label: 'Apex Wellness: Book online', href: 'https://apexwellnessnwi.com/founding-patients/' },
     { label: 'Apex Wellness: Planned care areas', href: 'https://apexwellnessnwi.com/how-it-works/' }
   ],
   disclaimerHeading: 'About this journal',

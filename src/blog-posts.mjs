@@ -100,7 +100,7 @@ export const blogPosts = Object.freeze([
         "href": "https://apexwellnessnwi.com/about/"
       },
       {
-        "label": "Apex Wellness: Launch List",
+        "label": "Apex Wellness: Book online",
         "href": "https://apexwellnessnwi.com/founding-patients/"
       }
     ],

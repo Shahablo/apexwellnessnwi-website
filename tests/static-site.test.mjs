@@ -35,7 +35,7 @@ test('October 24 owner-directed build-out articles use final media and exclude w
 });
 
 test('personal-goals release preserves the nonmedical version with October 12 staffing-neutral CTA', () => {
-  assert.equal(createHash('sha256').update(JSON.stringify(personalGoalsArticle)).digest('hex'), 'c66270968b1dabd1dd897ea5b950c2cef9f23a0287de54dd6b69c8fccebf4731');
+  assert.equal(createHash('sha256').update(JSON.stringify(personalGoalsArticle)).digest('hex'), '7966a7b3d8f9b4bd8fe678d7cf0c9378f6ce8c8073a9415aa8fea0db767e59c2');
   assert.equal(personalGoalsArticle.editorialType, 'nonmedical');
   assert.equal(personalGoalsArticle.published, '2026-09-20');
   assert.equal(personalGoalsArticle.sections.find(s => s.heading === 'Make a note you can use').bullets.length, 6);
@@ -649,7 +649,7 @@ function escapeForTest(value) {
 
 test('editorial redesign preserves key content, semantic headings, and navigation fallbacks', () => {
   const home = htmlBySlug.get('/');
-  for (const phrase of ['Thoughtful care', 'Northwest Indiana', 'The Launch List costs nothing to join and does not book an appointment.', site.launch.label]) {
+  for (const phrase of ['Thoughtful care', 'Northwest Indiana', 'Launch timing and availability may change.', site.launch.label]) {
     assert.ok(home.includes(phrase), `homepage must retain ${phrase}`);
   }
   for (const [slug, html] of htmlBySlug) {
@@ -696,7 +696,7 @@ test('homepage replaces the generic introduction with one staff-neutral approach
 test('homepage names the planned care and location, keeps the planned-launch status and offers online booking', async () => {
   const home = htmlBySlug.get('/');
   assert.match(home, /<meta name="description" content="[^"]*Coming soon to Merrillville\. Online booking is open for visits from November 20\.">/);
-  assert.match(home, /<div class="hero-actions"><a class="button" href="https:\/\/d2oe0ra32qx05a\.cloudfront\.net\/\?practiceKey=k_1_117405"[^>]*data-book-online>Book online<span class="visually-hidden"> \(opens a new tab\)<\/span><\/a><a class="hero-explore" href="\/founding-patients\/">Join the Launch List /);
+  assert.match(home, /<div class="hero-actions"><a class="button" href="https:\/\/d2oe0ra32qx05a\.cloudfront\.net\/\?practiceKey=k_1_117405"[^>]*data-book-online>Book online<span class="visually-hidden"> \(opens a new tab\)<\/span><\/a><a class="hero-explore" href="#care-areas">Explore care areas /);
   assert.match(home, /<h3>Book when you are ready\.<\/h3><p>Online booking is open for visits from November 20\. Book online or call \(219\) 207-2456\.<\/p>/);
   assert.equal(site.launch.date, '2026-11-20');
   assert.match(home, /Planned launch: November 20, 2026/);
@@ -714,7 +714,8 @@ test('homepage names the planned care and location, keeps the planned-launch sta
       continue;
     }
     assert.match(html, /class="announcement-copy">Planned launch:/, `${slug} retains planned status`);
-    assert.match(html, /class="announcement-cta" href="(?:\/founding-patients\/|#consultation-request)">Join the Launch List/, `${slug} retains a working launch-list action`);
+    assert.match(html, /class="announcement-cta" href="\/founding-patients\/">Book online/, `${slug} announcement links to the booking page`);
+    assert.doesNotMatch(html, /Join the Launch List|Get opening updates/, `${slug} must not invite people to the removed Launch List signup`);
   }
   const css = await readFile(join(publicRoot, 'assets', 'site-design.css'), 'utf8');
   const readability = css.split('/* Readable launch information and confident, goal-focused hero. */')[1];
@@ -749,7 +750,7 @@ test('the QR landing page is a short booking page: the $49 offer, Book online, c
   // Four care cards, each with an id an ad can link to, one plain line and a link to its service page.
   for (const [id, label, line, href] of [
     ['weight', 'Medical weight loss', 'A plan built on your history and labs.', '/weight-management/'],
-    ['hormones', 'Men’s hormone health', 'Symptoms and testing reviewed before any plan.', '/hormone-care-merrillville/'],
+    ['hormones', 'Men’s hormone health', 'Symptoms and testing reviewed before any plan.', '/mens-hormone-health/'],
     ['midlife', 'Women’s midlife care', 'Support through perimenopause and menopause.', '/womens-midlife-care/'],
     ['hair', 'Hair-loss care', 'Evaluation and care for hair loss and thinning.', '/hair-loss-care/'],
   ]) {
@@ -781,7 +782,7 @@ test('the four ad booking pages build from the shared booking template with the 
   const call = '<a class="booking-call" href="tel:+12192072456">Call (219) 207-2456</a>';
   const expected = new Map([
     ['/book/weight-loss/', ['Medical weight loss in Merrillville. ', 'Learn more about medical weight loss', '/weight-management/']],
-    ['/book/hormone-health/', ['Men’s hormone health in Merrillville. ', 'Learn more about hormone care', '/hormone-care-merrillville/']],
+    ['/book/hormone-health/', ['Men’s hormone health in Merrillville. ', 'Learn more about men’s hormone health', '/mens-hormone-health/']],
     ['/book/womens-midlife/', ['Perimenopause and menopause care in Merrillville. ', 'Learn more about women’s midlife care', '/womens-midlife-care/']],
     ['/book/hair-loss/', ['Hair-loss care in Merrillville. ', 'Learn more about hair-loss care', '/hair-loss-care/']],
   ]);
@@ -895,8 +896,8 @@ test('the ad landing pages open with the grand-opening offer band above the page
     assert.ok(html.indexOf('class="offer-band"') > html.indexOf('</header>'), `${slug} band follows the site header`);
     assert.ok(html.indexOf('class="offer-band"') < html.indexOf('<section class="hero"'), `${slug} band comes before the hero`);
     assert.equal(startTags(html, 'h1').length, 1, `${slug} keeps one H1`);
-    // The hero offers Book online first; the Launch List stays as the second option.
-    assert.match(html, new RegExp(`<div class="hero-actions">${bookOnline.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}<a class="button-secondary" href="/founding-patients/">(?:Join the Launch List|Get opening updates)</a></div>`), `${slug} hero actions`);
+    // The hero offers Book online; only the hormone hub adds its own phone action as a second button.
+    assert.match(html, new RegExp(`<div class="hero-actions">${bookOnline.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}(?:<a class="button-secondary" href="tel:\\+12192072456">Call Apex with a general question</a>)?</div>`), `${slug} hero actions`);
     assert.ok(html.includes(bookingStatus), `${slug} must say online booking is open`);
     assert.match(html, /Coming soon/, `${slug} keeps the clinic's Coming soon status`);
   }
@@ -962,7 +963,7 @@ test('the retired launch-offer wording is absent from every generated page', asy
   const visit = htmlBySlug.get('/plan-your-visit/');
   assert.match(visit, /<strong>Grand opening: \$49 for labs and your first visit<\/strong><p class="offer-limit">First 50 appointments scheduled\.<\/p>/);
   assert.match(visit, /\$49 covers your first visit and the promotional labs\. Labs as clinically appropriate\. One per person\. First 50 appointments scheduled\. Additional testing or treatment is separate\. Appointments subject to availability\./);
-  assert.match(visit, /Book online or call <a href="tel:\+12192072456">\(219\) 207-2456<\/a> to schedule, or join the Launch List for updates\./);
+  assert.match(visit, /Book online or call <a href="tel:\+12192072456">\(219\) 207-2456<\/a> to schedule\. A contact request does not reserve this offer\./);
   assert.match(visit, /data-help-question="How does the \$49 promotional labs offer work\?">\$49 labs<\/button>/);
   assert.match(visit, /data-help-question="How do I book a visit\?">Book a visit<\/button><button type="button" data-help-question="What are your hours\?">Hours<\/button>/);
 

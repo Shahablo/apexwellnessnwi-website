@@ -6,8 +6,9 @@ import { nearbyVisitPages } from './nearby-visit-pages.mjs';
 import { bookingAdPages } from './booking-pages.mjs';
 import { bookingStatus, clinicHours, grandOpeningOffer } from './clinic-facts.mjs';
 
-const priorityListCta = Object.freeze({
-  label: 'Join the Launch List',
+// Sitewide call to action. Since November 16, 2026 it opens the booking page; the Launch List signup is no longer on the site.
+const bookingPageCta = Object.freeze({
+  label: 'Book online',
   href: '/founding-patients/'
 });
 
@@ -45,7 +46,7 @@ export const site = Object.freeze({
     'Apex Wellness is preparing weight, metabolic, hormone, and hair-loss care for adults in Northwest Indiana.',
   announcement:
     'Planned launch: November 20, 2026 · Northwest Indiana.',
-  cta: priorityListCta,
+  cta: bookingPageCta,
   navigation: [
     { label: 'Home', href: '/' },
     { label: 'Weight & Metabolic', href: '/weight-management/', section: 'care' },
@@ -105,7 +106,7 @@ const generalBooking = Object.freeze({
   // The four ad groups land here. Each card has an id so an ad can link straight to it (/founding-patients/#weight).
   care: [
     { id: 'weight', label: 'Medical weight loss', line: 'A plan built on your history and labs.', href: '/weight-management/' },
-    { id: 'hormones', label: 'Men’s hormone health', line: 'Symptoms and testing reviewed before any plan.', href: '/hormone-care-merrillville/' },
+    { id: 'hormones', label: 'Men’s hormone health', line: 'Symptoms and testing reviewed before any plan.', href: '/mens-hormone-health/' },
     { id: 'midlife', label: 'Women’s midlife care', line: 'Support through perimenopause and menopause.', href: '/womens-midlife-care/' },
     { id: 'hair', label: 'Hair-loss care', line: 'Evaluation and care for hair loss and thinning.', href: '/hair-loss-care/' }
   ],
@@ -136,7 +137,7 @@ export const pages = Object.freeze({
     headlineEmphasis: 'Coming to Merrillville.',
     intro:
       'Apex Wellness is preparing to open with weight and metabolic care, men’s hormone health, women’s midlife care, and hair-loss care for thinning and balding. Coming soon to 8550 Broadway, Suite B.',
-    cta: priorityListCta,
+    cta: bookingPageCta,
     secondaryCta: {
       label: 'Explore care options',
       href: '/weight-management/'
@@ -150,8 +151,7 @@ export const pages = Object.freeze({
       processHeading: 'A simple first step.\nSpace to decide.',
       process: [
         { title: 'See the details.', body: 'Review the care areas, clinic hours and our Merrillville location. Ask questions before you decide.' },
-        { title: 'Book when you are ready.', body: `${bookingStatus} Book online or call (219) 207-2456.` },
-        { title: 'Or stay in the know.', body: 'Join the Launch List with your name, email and phone number for opening updates. Keep medical details for a future secure clinical intake.' }
+        { title: 'Book when you are ready.', body: `${bookingStatus} Book online or call (219) 207-2456.` }
       ]
     },
     sections: [
@@ -208,11 +208,11 @@ export const pages = Object.freeze({
       },
       {
         type: 'prelaunch',
-        eyebrow: 'Stay in the know',
+        eyebrow: 'Book a first visit',
         heading: 'Your next step starts with clear information.',
         body:
-          'Join the Launch List with your name, email and phone number for opening updates from Apex.',
-        cta: priorityListCta
+          `${bookingStatus} Book online or call (219) 207-2456.`,
+        cta: bookingPageCta
       },
       {
         type: 'steps',
@@ -262,7 +262,7 @@ export const pages = Object.freeze({
         heading: 'Review the real details before deciding whether to book.',
         body:
           `Coming soon to ${clinicAddress}. Our planned launch is November 20, 2026, subject to readiness. Find launch updates at apexwellnessnwi.com.`,
-        cta: priorityListCta
+        cta: bookingPageCta
       },
       {
         type: 'serviceArea',
@@ -286,7 +286,7 @@ export const pages = Object.freeze({
     h1: 'Medical Weight Management in Merrillville, IN',
     intro:
       'The care model begins with evaluation, risks, goals, and relevant measurements. Medication may be discussed when clinically indicated, but it is never the only lever and is never guaranteed.',
-    cta: priorityListCta,
+    cta: bookingPageCta,
     sections: [
       {
         type: 'audience',
@@ -383,7 +383,7 @@ export const pages = Object.freeze({
     h1: 'Men’s Hormone Health in Merrillville, IN',
     intro:
       'Symptoms, repeat testing when it matters, health risks, fertility goals and the alternatives all go into the plan. One lab number does not decide it.',
-    cta: priorityListCta,
+    cta: bookingPageCta,
     sections: [
       {
         type: 'linkCards',
@@ -491,7 +491,7 @@ export const pages = Object.freeze({
     h1: 'Women’s Midlife Care in Merrillville, IN',
     intro:
       'The approach is individualized rather than built around a generic “hormone balancing” promise. Hormonal and non-hormonal options may be discussed, and coordination or referral remains part of good care.',
-    cta: priorityListCta,
+    cta: bookingPageCta,
     sections: [
       {
         type: 'linkCards',
@@ -610,7 +610,7 @@ export const pages = Object.freeze({
     h1: 'Hair-Loss Care in Merrillville, IN',
     intro:
       'Apex is preparing to offer clinical evaluation and treatment for adults with hair-loss concerns. Individual care decisions come first, with service details and pricing explained before treatment.',
-    cta: priorityListCta,
+    cta: bookingPageCta,
     sections: [
       {
         type: 'detail',
@@ -633,7 +633,7 @@ export const pages = Object.freeze({
           {
             question: 'Can I book hair-loss care now?',
             answer:
-              `Yes. ${bookingStatus} You can also call (219) 207-2456. Hair-loss care is planned for opening, and the Launch List is there if you only want updates.`,
+              `Yes. ${bookingStatus} You can also call (219) 207-2456. Hair-loss care is planned for opening.`,
             bookOnline: true
           },
           {
@@ -642,9 +642,9 @@ export const pages = Object.freeze({
               'Hair-loss treatment is part of the planned care offering. Specific options and service details are being finalized; an individual evaluation will determine whether a treatment is appropriate.'
           },
           {
-            question: 'Should I send photos or medical details through the launch form?',
+            question: 'Should I send photos or medical details through the website?',
             answer:
-              'No. The Launch List collects your name, email and phone number for opening updates. A separate optional checkbox permits a limited manual call. Medical information and photographs belong in a secure clinical intake process after an appointment is confirmed.'
+              'No. Website forms ask only for contact details. Medical information and photographs belong in a secure clinical intake process after an appointment is confirmed.'
           }
         ]
       }
@@ -662,7 +662,7 @@ export const pages = Object.freeze({
     h1: 'Thoughtful care, from the first conversation.',
     intro:
       'Apex is preparing a process in which evaluation, appropriate testing, clinical options, full costs, and follow-up expectations are reviewed before treatment begins.',
-    cta: priorityListCta,
+    cta: bookingPageCta,
     sections: [
       {
         type: 'linkCards',
@@ -717,9 +717,9 @@ export const pages = Object.freeze({
         type: 'prelaunch',
         heading: 'What is available today',
         body:
-          `Apex is coming soon to Merrillville. ${bookingStatus} You can also join the Launch List for opening updates.`,
+          `Apex is coming soon to Merrillville. ${bookingStatus}`,
         bookOnline: true,
-        cta: priorityListCta
+        cta: bookingPageCta
       }
     ]
   },
@@ -734,13 +734,13 @@ export const pages = Object.freeze({
     h1: 'Clarity before commitment.',
     intro:
       'Apex plans to publish the evaluation fee, care-area fees, common outside costs, billing cadence, and cancellation terms together. Final amounts are still being confirmed, so no placeholder prices are displayed.',
-    cta: priorityListCta,
+    cta: bookingPageCta,
     sections: [
       {
         type: 'status',
         heading: 'Pricing is coming before we open.',
         body:
-          'Apex is cash-pay. Fees will be posted here, with what is included spelled out. Joining the Launch List is free.'
+          'Apex is cash-pay. Fees will be posted here, with what is included spelled out.'
       },
       {
         type: 'pricingPrinciples',
@@ -814,7 +814,7 @@ export const pages = Object.freeze({
     h1: 'Meet the people behind Apex.',
     intro:
       'Get to know the founder, family nurse practitioner and medical assistant behind Apex Wellness in Merrillville.',
-    cta: priorityListCta,
+    cta: bookingPageCta,
     sections: [
       {
         type: 'teamProfiles',
@@ -915,7 +915,7 @@ export const pages = Object.freeze({
     h1: 'Questions, answered before you commit.',
     intro:
       'Get to know our care areas, location, and approach. Coming soon to Merrillville. Find launch updates at apexwellnessnwi.com.',
-    cta: priorityListCta,
+    cta: bookingPageCta,
     sections: [
       {
         type: 'faqGroup',
@@ -924,7 +924,7 @@ export const pages = Object.freeze({
           {
             question: 'Is Apex Wellness open?',
             answer:
-              `Coming soon. ${bookingStatus} Find launch updates at apexwellnessnwi.com or join the Launch List to hear from us by email.`,
+              `Coming soon. ${bookingStatus} Find launch updates at apexwellnessnwi.com.`,
             bookOnline: true
           },
           {
@@ -935,13 +935,13 @@ export const pages = Object.freeze({
           {
             question: 'When can I book an appointment?',
             answer:
-              `${bookingStatus} November 20, 2026 is our planned launch, subject to readiness. You can also call (219) 207-2456 to schedule, or join the Launch List for updates.`,
+              `${bookingStatus} November 20, 2026 is our planned launch, subject to readiness. You can also call (219) 207-2456 to schedule.`,
             bookOnline: true
           },
           {
-            question: 'Does submitting a consultation request reserve an appointment?',
+            question: 'Does sending a contact request reserve an appointment?',
             answer:
-              'No. It puts you on the list for opening updates. It is free. To reserve a time, book online or call (219) 207-2456.',
+              'No. A contact request asks Apex to call or email you about arranging a visit. To reserve a time, book online or call (219) 207-2456.',
             bookOnline: true
           }
         ]
@@ -1000,7 +1000,7 @@ export const pages = Object.freeze({
           {
             question: 'How will clinical information and messages be handled?',
             answer:
-              'The pre-opening Launch List form collects a name, email address, phone number, consent record and an optional website-accessibility flag. It is not clinical intake. Details about secure clinical intake, record handling, response times and patient communications will be published before care opens.'
+              'Website forms collect contact details and a consent record. They are not clinical intake. Details about secure clinical intake, record handling, response times and patient communications will be published before care opens.'
           }
         ]
       },
@@ -1045,7 +1045,7 @@ export const pages = Object.freeze({
     h1: 'Privacy Policy',
     intro:
       'This prelaunch policy explains the limited information collected through the Apex Wellness website, its contact forms, and Pexy’s optional follow-up form. It may be updated as clinical services and secure patient systems are introduced.',
-    cta: priorityListCta,
+    cta: bookingPageCta,
     effectiveDate: 'October 28, 2026',
     sections: [
       {
@@ -1106,7 +1106,7 @@ export const pages = Object.freeze({
         type: 'policySection',
         heading: 'Your choices',
         paragraphs: [
-          'You may unsubscribe from marketing using the link in an email. You may also use the Founding Patient form, check the website or accessibility support option, and request access, correction, or deletion of your prelaunch contact or Pexy follow-up information. Do not include medical details in that request.',
+          'You may unsubscribe from marketing using the link in an email. You may also call (219) 207-2456 or email hello@apexwellnessnwi.com to request access, correction, or deletion of your prelaunch contact or Pexy follow-up information. Do not include medical details in that request.',
           'Browser privacy controls may limit cookies or similar technologies. Essential security and form-protection functions may still be required for the site to operate.'
         ]
       },
@@ -1131,7 +1131,7 @@ export const pages = Object.freeze({
     h1: 'Terms of Use',
     intro:
       'These terms apply to the prelaunch Apex Wellness website. The site currently provides general information, contact request forms and a link to a separate online booking page. The site itself does not provide payment, clinical intake, or medical care.',
-    cta: priorityListCta,
+    cta: bookingPageCta,
     effectiveDate,
     sections: [
       {
@@ -1193,8 +1193,8 @@ export const pages = Object.freeze({
     eyebrow: 'Updated October 26, 2026',
     h1: 'Communications Consent',
     intro:
-      'Separate permissions apply to Launch List emails, optional manual Launch List calls, appointment follow-up and Pexy’s general-question follow-up. The Launch List requires a phone number, but Apex will not call from that signup unless the separate optional call box is checked. Website or accessibility support through the Launch List page requires no phone number. Pexy’s form requests an email for a reply to one general question. None of these forms authorizes text messages, automated calls or unrelated promotional calls.',
-    cta: priorityListCta,
+      'Separate permissions apply to Launch List emails, optional manual Launch List calls, appointment follow-up and Pexy’s general-question follow-up. The Launch List requires a phone number, but Apex will not call from that signup unless the separate optional call box is checked. For website or accessibility support, call (219) 207-2456 or email hello@apexwellnessnwi.com. Pexy’s form requests an email for a reply to one general question. None of these forms authorizes text messages, automated calls or unrelated promotional calls.',
+    cta: bookingPageCta,
     effectiveDate: 'October 26, 2026',
     sections: [
       {
@@ -1243,7 +1243,7 @@ export const pages = Object.freeze({
     h1: 'Accessibility Statement',
     intro:
       'Apex Wellness is working to make its website understandable and usable for people with a wide range of abilities, devices, browsers, and assistive technologies.',
-    cta: priorityListCta,
+    cta: bookingPageCta,
     effectiveDate,
     sections: [
       {
@@ -1258,7 +1258,7 @@ export const pages = Object.freeze({
         type: 'policySection',
         heading: 'Request help or report a barrier',
         paragraphs: [
-          'Until a dedicated accessibility contact is published, use the Founding Patient form and check the website or accessibility support option. That option asks for your name and email, not a phone number. Do not add health details; Apex can request only the minimum additional information needed when responding.',
+          'Until a dedicated accessibility contact is published, call (219) 207-2456 or email hello@apexwellnessnwi.com. Do not add health details; Apex can request only the minimum additional information needed when responding.',
           'Do not include medical or other sensitive information. Apex will use the email address you provide to respond and work toward a reasonable accessible alternative.'
         ]
       },
@@ -1290,7 +1290,7 @@ export const pages = Object.freeze({
     h1: 'Cancellation and Refunds',
     intro:
       'Apex Wellness is in prelaunch. Online booking is open for visits from November 20, 2026. This website does not accept enrollment or payment, so there is presently no payment made through it to refund. To change or cancel a visit you booked, call (219) 207-2456.',
-    cta: priorityListCta,
+    cta: bookingPageCta,
     effectiveDate,
     sections: [
       {
@@ -1337,7 +1337,7 @@ export const pages = Object.freeze({
     h1: 'Health has enough fine print.',
     intro:
       'We read past the bold claims and ask the useful questions about weight, hormones, hair loss and staying active. Straight answers from a practice in Northwest Indiana, with sources you can check.',
-    cta: priorityListCta,
+    cta: bookingPageCta,
     kind: 'blogIndex',
     modified: '2026-09-25',
     sections: []

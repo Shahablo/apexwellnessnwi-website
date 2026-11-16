@@ -40,7 +40,7 @@ export const fourAreasArticle = Object.freeze({
     {
       heading: 'Start with the area that interests you',
       paragraphs: [
-        'Read the individual care page that brought you here. If you want to know when the clinic is ready to share more, join the Launch List. Questions welcome, but please keep personal health details out of the form and social comments.'
+        'Read the individual care page that brought you here. Questions welcome, but please keep personal health details out of social comments.'
       ]
     }
   ],
@@ -54,5 +54,5 @@ export const fourAreasArticle = Object.freeze({
   disclaimerHeading: 'About this article',
   disclaimer: 'This is a description of Apex’s planned focus, not medical advice.',
   editorialNote: 'Prepared by the Apex Wellness Editorial Team from the clinic’s confirmed care-area and location information. No individual clinician review is claimed.',
-  ctaBody: 'Explore the care pages or join the Launch List for opening updates.'
+  ctaBody: 'Explore the care pages.'
 });

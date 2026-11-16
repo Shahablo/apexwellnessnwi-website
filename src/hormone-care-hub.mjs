@@ -9,10 +9,9 @@ export const hormoneCareHubPage = {
   description: 'Explore planned men’s hormone health and women’s midlife care at Apex Wellness in Merrillville. Compare the care areas. Online booking is open for visits from November 20.',
   eyebrow: 'Coming soon · Merrillville, Indiana',
   h1: 'Hormone care in Merrillville starts with a clear path.',
-  intro: 'Apex Wellness is preparing two distinct hormone-focused care paths at one Northwest Indiana clinic. Choose the page that fits what you want to explore. You can book a first visit online, call with a general clinic question, or get opening updates.',
+  intro: 'Apex Wellness is preparing two distinct hormone-focused care paths at one Northwest Indiana clinic. Choose the page that fits what you want to explore. You can book a first visit online or call with a general clinic question.',
   heroImage: 'behindWindow',
   cta: { label: 'Call Apex with a general question', href: 'tel:+12192072456' },
-  secondaryCta: { label: 'Get opening updates', href: '/founding-patients/' },
   ctaNote: 'Coming soon at 8550 Broadway, Suite B. Please save personal medical details for a secure clinical process.',
   sections: [
     {
@@ -56,12 +55,6 @@ export const hormoneCareHubPage = {
           body: 'Call the published Apex number about the location, the opening or booking a visit.',
           label: 'Call (219) 207-2456',
           href: 'tel:+12192072456'
-        },
-        {
-          title: 'Get opening updates',
-          body: 'Join the free Launch List for opening updates. The list does not book or hold a visit.',
-          label: 'Join the Launch List',
-          href: '/founding-patients/'
         }
       ]
     },
@@ -71,12 +64,12 @@ export const hormoneCareHubPage = {
       items: [
         {
           question: 'Can I book hormone care today?',
-          answer: `You can book a first visit. Apex is coming soon. ${bookingStatus} You can also call (219) 207-2456. The Launch List is for updates, not a reservation.`,
+          answer: `You can book a first visit. Apex is coming soon. ${bookingStatus} You can also call (219) 207-2456.`,
           bookOnline: true
         },
         {
-          question: 'What should I share when I call or join the list?',
-          answer: 'Use the public number for general clinic questions. The Launch List asks for contact information and consent. Please keep symptoms, medications, test results and other private medical details for a secure clinical process after a visit is arranged.'
+          question: 'What should I share when I call?',
+          answer: 'Use the public number for general clinic questions. Please keep symptoms, medications, test results and other private medical details for a secure clinical process after a visit is arranged.'
         },
         {
           question: 'Where can I learn more about the planned visit process?',

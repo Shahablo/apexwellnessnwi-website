@@ -9,10 +9,10 @@ export const womensHrtPage = {
   "intro": "Hot flashes. Restless nights. Changes in comfort and intimacy. Perimenopause and menopause can affect everyday life. You deserve a thoughtful conversation about your symptoms and the options that may help. Apex is preparing to offer individualized women's midlife care in Merrillville. Hormone replacement therapy (HRT) may be one option, depending on your goals and health history.",
   "heroImage": "women",
   "cta": {
-    "label": "Get women's HRT opening updates",
+    "label": "Book online",
     "href": "/founding-patients/"
   },
-  "ctaNote": "Coming soon. Online booking is open for visits from November 20. Joining the Launch List does not book an appointment.",
+  "ctaNote": "Coming soon. Online booking is open for visits from November 20.",
   "sections": [
     {
       "type": "options",
@@ -119,7 +119,7 @@ export const womensHrtPage = {
         },
         {
           "question": "What will care cost?",
-          "answer": "Fees and what they include will be posted on the Pricing page. Join the Launch List for updates."
+          "answer": "Fees and what they include will be posted on the Pricing page."
         }
       ]
     },
@@ -129,7 +129,7 @@ export const womensHrtPage = {
       "eyebrow": "8550 Broadway, Suite B · Merrillville",
       "body": "Start with information, space to ask questions and a plan built around you.",
       "cta": {
-        "label": "Join the Launch List",
+        "label": "Book online",
         "href": "/founding-patients/"
       }
     },

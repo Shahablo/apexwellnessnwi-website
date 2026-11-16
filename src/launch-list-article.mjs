@@ -59,5 +59,5 @@ export const launchListArticle = {
   disclaimerHeading: 'A note on the signup',
   disclaimer: 'The Launch List is for opening updates, not personal health information or medical advice. Keep health details for an appropriate private clinical conversation.',
   editorialNote: 'Apex Wellness Editorial Team updated the Launch List contact-field description and checked the Privacy Policy and FAQ on October 26, 2026. This is administrative guidance; no individual physician medical review is claimed.',
-  ctaBody: 'Find opening updates through the free Apex Launch List. It asks for your name, email and phone number.',
+  ctaBody: 'The FAQ and Privacy Policy have current practical details.',
 };

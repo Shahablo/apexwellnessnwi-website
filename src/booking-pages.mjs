@@ -38,7 +38,7 @@ const adPages = [
       'Testing as clinically appropriate, based on your history.',
       'What the numbers may mean, the alternatives and next steps.'
     ],
-    learnMore: { label: 'Learn more about hormone care', href: '/hormone-care-merrillville/' }
+    learnMore: { label: 'Learn more about men’s hormone health', href: '/mens-hormone-health/' }
   },
   {
     key: 'book-womens-midlife',

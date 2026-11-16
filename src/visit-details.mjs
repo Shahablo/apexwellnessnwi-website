@@ -10,9 +10,8 @@ export const visitDetails = Object.freeze({
   directionsUrl: 'https://www.google.com/maps/dir/?api=1&destination=8550%20Broadway%2C%20Suite%20B%2C%20Merrillville%2C%20IN%2046410',
   quickAnswers: [
     { question: 'Where will visits take place?', answer: `At 8550 Broadway, Suite B, Merrillville, IN 46410. Apex is coming soon, with in-person visits planned at launch. ${bookingStatus}`, bookOnline: true },
-    { question: 'Will Apex offer telehealth at launch?', answer: 'No. Visits are planned to be in person at launch. Join the Launch List for opening updates; joining does not book an appointment.' },
-    { question: 'What will care cost, and is insurance accepted?', answer: 'Apex is planning a cash-pay model. Final prices will be published on the Pricing page, with package inclusions and any separate costs explained. Joining the Launch List is free.' },
-    { question: 'What happens after I join the Launch List?', answer: `You can receive opening updates and pricing details when they are ready. Joining does not book a visit. ${bookingStatus} The Launch List asks for your name, email and phone number. Keep health information for the secure clinical intake process after an appointment is confirmed.`, bookOnline: true }
+    { question: 'Will Apex offer telehealth at launch?', answer: 'No. Visits are planned to be in person at launch.' },
+    { question: 'What will care cost, and is insurance accepted?', answer: 'Apex is planning a cash-pay model. Final prices will be published on the Pricing page, with package inclusions and any separate costs explained.' }
   ],
   planningLinks: [
     { title: 'Costs and inclusions', body: 'See what is still being finalized, what fees will explain, and how to compare the full cost of care.', href: '/pricing/', label: 'Review pricing details' },
@@ -29,7 +28,7 @@ export const merrillvillePage = Object.freeze({
   h1: 'A local place to take your next step.',
   intro: 'We are getting Apex Wellness ready at 8550 Broadway, Suite B, in Merrillville. Weight and metabolic care, men’s hormone health, women’s midlife care and hair-loss care are planned, with visits in person at launch.',
   heroImage: 'behindWindow',
-  cta: { label: 'Join the Launch List', href: '/founding-patients/' },
+  cta: { label: 'Book online', href: '/founding-patients/' },
   secondaryCta: { label: 'Open directions', href: visitDetails.directionsUrl },
   ctaNote: `Coming soon. ${bookingStatus} Photo: preparing our Merrillville space, October 2026.`,
   sections: [
@@ -47,10 +46,10 @@ export const merrillvillePage = Object.freeze({
       { title: 'Hair-loss care', body: 'Read about the planned evaluation of hair-loss concerns.', href: '/hair-loss-care/', label: 'Explore hair-loss care' }
     ] },
     { type: 'faq', heading: 'Before planning a visit', items: [
-      { question: 'Is the clinic open for appointments or walk-ins?', answer: `Apex is coming soon. ${bookingStatus} Walk-in visits have not been announced, so please book ahead or call (219) 207-2456. The Launch List is for updates; it does not reserve a visit or establish care.`, bookOnline: true },
+      { question: 'Is the clinic open for appointments or walk-ins?', answer: `Apex is coming soon. ${bookingStatus} Walk-in visits have not been announced, so please book ahead or call (219) 207-2456.`, bookOnline: true },
       { question: 'Do I have to live in Merrillville to visit?', answer: 'No. Neighbors in Munster and elsewhere in Northwest Indiana can follow opening updates too. Apex is preparing one location at 8550 Broadway, Suite B, Merrillville; planned visits will be in person there.' },
       visitDetails.quickAnswers[1],
-      { question: 'Can I ask about the location or access?', answer: 'Call (219) 207-2456 or email hello@apexwellnessnwi.com with a general location or accessibility question. Please keep medical details out of ordinary email and the Launch List form.' },
+      { question: 'Can I ask about the location or access?', answer: 'Call (219) 207-2456 or email hello@apexwellnessnwi.com with a general location or accessibility question. Please keep medical details out of ordinary email.' },
       { question: 'Where can I find fees and visit details?', answer: `The Pricing and How It Works pages explain the planned process. Final fees will be posted on the Pricing page. ${bookingStatus}`, bookOnline: true }
     ] }
   ]

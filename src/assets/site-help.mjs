@@ -10,7 +10,7 @@ export function shouldOfferPexy({ elapsedMs, desktop, topExit = false, engaged =
 
 export function pexyNudgeCopy(pathname = '/') {
   if (/^\/pricing\/?$/.test(pathname)) return 'Prices are being finalized. I can tell you what is confirmed now and where updates will appear.';
-  if (/^\/founding-patients\/?$/.test(pathname)) return 'Questions about the $49 promotional labs offer? I can explain the terms, how to book and what joining the Launch List does.';
+  if (/^\/founding-patients\/?$/.test(pathname)) return 'Questions about the $49 promotional labs offer? I can explain the terms and how to book.';
   if (/^\/plan-your-visit\/?$/.test(pathname)) return 'Wondering how to book a first visit? I can explain online booking and the contact request form. A request does not book a time.';
   return 'Need a quick answer? I can help with opening plans, care areas, booking, clinic hours, and pricing updates.';
 }
@@ -46,20 +46,20 @@ export function answerWebsiteQuestion(input, launchLabel = 'November 20, 2026') 
   // Distinguish the public offer, online booking, contact request, and email list. Only online booking or a call books a visit.
   // Questions that reuse wording from earlier printed materials still route to the current offer.
   if (asks(/\$\s?49\b/) || asks(/\b(49 dollars?|first (?:50|fifty)|50 appointments?|promotional labs?|promo(?:tional|tion)? (?:offer|pricing|price|deal|special)|promos?|promotions?|labs? (?:offer|special|deal)|launch offer|grand.?opening|opening offer|poster offer|first (?:100|hundred)|(?:100|hundred) assessments?|free (?:initial |wellness )?assessments?|selected (?:baseline )?labs?)\b/)) {
-    return result(`${launchOffer} To schedule, use the Book online button on the offer page or call (219) 207-2456. Joining the Launch List or sending a contact request does not reserve the offer or an appointment.`, 'Offer terms and Book online', '/founding-patients/');
+    return result(`${launchOffer} To schedule, use the Book online button on the offer page or call (219) 207-2456. Sending a contact request does not reserve the offer or an appointment.`, 'Offer terms and Book online', '/founding-patients/');
   }
   if (asks(/\b(appointment|book|booking|schedule|scheduling|reserve|visit request|request a visit|first visit|consultation|tebra|walk.?in)\b/)) {
     return result(`${bookingOpen} Use the Book online button on the Plan Your Visit page, or call (219) 207-2456. That page also has a contact request form for manual follow-up. The form asks for name, email, phone, and separate contact consent; it does not book a time, start clinical intake, or reserve the $49 promotional labs offer. Please keep medical details out of the form.`, 'Plan your visit and book online', '/plan-your-visit/');
   }
   if (asks(/\b(launch list|sign ?up|join|newsletter|email updates|opening updates|founding patients|qr code|qr)\b/)) {
-    return result('The Launch List is a free way to get opening updates by email. It asks for your name, email, phone number and consent. Apex may make a limited manual call about the request or confirmed scheduling availability; no texts or automated calls. It does not book a visit or hold a place in the $49 promotional labs offer. To book, use the Book online button on the same page or call (219) 207-2456. The printed Apex QR code leads to this page.', 'Join the Launch List', '/founding-patients/');
+    return result(`${bookingOpen} To book, use the Book online button on the booking page or call (219) 207-2456. The printed Apex QR code leads to this page.`, 'Book online', '/founding-patients/');
   }
 
   if (asks(/\b(labs?|blood ?work|tests?|testing)\b/) && asks(/\b(included|free|covered|cost)\b/)) {
     return result(`${launchOffer} Outside the grand-opening offer, do not assume testing is included in a visit fee; final pricing will explain any separate costs. Pexy cannot determine which tests anyone needs.`, '$49 promotional labs details', '/founding-patients/');
   }
   if (asks(/\b(price|pricing|cost|fees?|payment|pay|cash|insurance|medicare|medicaid|afford|included|billing)\b/)) {
-    return result('Apex plans to be cash-pay. The final prices, what each fee includes, payment details, and any separate testing, medication, or outside costs are not public yet. They will be posted on the Pricing page. The Launch List is free; no insurance coverage or reimbursement is promised.', 'Pricing and what to expect', '/pricing/');
+    return result('Apex plans to be cash-pay. The final prices, what each fee includes, payment details, and any separate testing, medication, or outside costs are not public yet. They will be posted on the Pricing page. No insurance coverage or reimbursement is promised.', 'Pricing and what to expect', '/pricing/');
   }
   if (asks(/\b(call|text|phone|email|contact|reach|talk to (?:someone|staff)|speak to (?:someone|staff))\b/)) {
     return result('You can call or text (219) 207-2456, or email hello@apexwellnessnwi.com with general questions. Please do not send medical records or sensitive health details through those public contact routes. Pexy does not automatically forward your question to staff.', 'Contact and location', '/merrillville/');
@@ -71,7 +71,7 @@ export function answerWebsiteQuestion(input, launchLabel = 'November 20, 2026') 
     return result(`Coming soon to 8550 Broadway, Suite B, Merrillville, IN 46410. ${plannedDate} is the planned date, subject to readiness. Visits are planned in person at launch; telehealth is not planned for launch. ${clinicHours} Parking details have not been announced. ${bookingOpen}`, 'Location and visit details', '/merrillville/');
   }
   if (asks(/\b(open|opening|launch|november|date|when)\b/)) {
-    return result(`Apex is coming soon to Merrillville. The planned launch is ${plannedDate}, subject to clinic readiness. ${bookingOpen} Use the Book online button on the Launch List page or call (219) 207-2456.`, 'Book online or get updates', '/founding-patients/');
+    return result(`Apex is coming soon to Merrillville. The planned launch is ${plannedDate}, subject to clinic readiness. ${bookingOpen} Use the Book online button on the booking page or call (219) 207-2456.`, 'Book online', '/founding-patients/');
   }
   if (asks(/\b(accessib\w*|screen reader|website problem|site problem)\b/)) {
     return result('If something on the website is hard to use, the accessibility page explains how to report it. Pexy cannot send a report for you, so please use the contact route on that page.', 'Website accessibility', '/accessibility/');

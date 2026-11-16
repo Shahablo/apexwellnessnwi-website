@@ -69,5 +69,5 @@ export const comingSoonStatusArticle = Object.freeze({
   disclaimerHeading: 'About this update',
   disclaimer: 'This is a status update about a clinic that has not yet opened. It is not medical advice and does not describe services that are currently available. Planned dates depend on readiness.',
   editorialNote: 'Prepared by the Apex Wellness Editorial Team on October 20, 2026 and updated November 11 after the owner changed the planned opening date to November 20, subject to readiness. Updated November 16 after clinic hours were set and online booking opened. The hero image is a design preview of a consultation room, not a photograph of the finished Suite B space. No individual clinician review is claimed for this nonmedical update.',
-  ctaBody: 'Join the Launch List with your name, email and phone number for updates as the details above are confirmed.'
+  ctaBody: 'See how care is planned to work as the details above are confirmed.'
 });

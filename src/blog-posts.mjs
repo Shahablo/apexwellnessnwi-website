@@ -78,7 +78,7 @@ export const blogPosts = Object.freeze([
       {
         "heading": "Follow the launch",
         "paragraphs": [
-          "Join the Launch List with your name, email and phone number to receive opening updates. You can also find launch updates at apexwellnessnwi.com.",
+          "Find launch updates at apexwellnessnwi.com.",
           "Keep medical history, symptoms, and test results out of the signup form. It is designed for contact details, so you can hear from us as the practice takes shape."
         ]
       },

@@ -48,5 +48,5 @@ export const midlifeLocalConversationArticle = Object.freeze({
   disclaimerHeading: 'About this introduction',
   disclaimer: 'This article describes a planned care area at a clinic that is still preparing to open. It does not offer medical advice.',
   editorialNote: 'Prepared by the Apex Wellness Editorial Team. Meeting dates and theme come from The Menopause Society; clinic details come from Apex’s current pages. No meeting participation, clinical study findings or individual clinician review are claimed.',
-  ctaBody: 'Read about the planned women’s midlife care area and join the Launch List for confirmed opening updates.'
+  ctaBody: 'Read about the planned women’s midlife care area.'
 });

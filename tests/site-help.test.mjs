@@ -104,8 +104,10 @@ test('Pexy separates the $49 promotional labs offer, online booking, contact req
 
   const list = answerWebsiteQuestion('How do I join the launch list?');
   assert.equal(list.href, '/founding-patients/');
-  assert.match(list.text, /does not book a visit/);
-  assert.match(list.text, /To book, use the Book online button on the same page or call \(219\) 207-2456\./);
+  // The Launch List signup left the website on November 16, 2026; the answer now points to booking.
+  assert.match(list.text, /^Online booking is open for visits from November 20\. To book, use the Book online button on the booking page or call \(219\) 207-2456\./);
+  assert.equal(list.label, 'Book online');
+  assert.doesNotMatch(list.text, /Launch List/);
 
   const cancel = answerWebsiteQuestion('How does cancellation work?');
   assert.match(cancel.text, /^To change or cancel a visit you booked, call \(219\) 207-2456\./);

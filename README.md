@@ -5,6 +5,7 @@ Production website for [apexwellnessnwi.com](https://apexwellnessnwi.com), deplo
 ## Architecture
 
 - `src/content.mjs` is the reviewed page and policy content.
+- `src/clinic-facts.mjs` holds the owner-confirmed clinic hours, the online-booking status line and the grand-opening offer wording that several pages repeat. `src/visit-planner.mjs` holds the one Tebra booking address and the `bookOnline` switch for every Book online link. A page with `offerBand: true` opens with the offer band under the site header.
 - `src/assets/` contains the shared responsive CSS and progressive-enhancement JavaScript.
 - `src/assets/site-design.css` defines the editorial visual system: Instrument Serif, Manrope, warm mineral surfaces, and deep green. Licensed fonts are self-hosted; no third-party font request is made.
 - `src/assets/site-help.mjs` and `site-assistant.mjs` compile to a local website guide. Questions typed to Pexy stay in the browser; a separately consented, retyped general question can be saved for staff follow-up. No generative model answers these questions. Keep analytics and session replay away from these inputs and the signup form.

@@ -329,14 +329,16 @@ body{overflow-x:clip}
 }
 @media(forced-colors:active){.signature-hero::before{display:none}.signature-content{background:Canvas;color:CanvasText}.signature-content h1,.signature-content h1 em,.signature-content p,.hero-explore{color:CanvasText}.signature-bottom .button{background:ButtonFace;color:ButtonText;border:1px solid ButtonText}.physician-section,.team-section{background:Canvas;color:CanvasText}.physician-content h2,.physician-content p,.physician-content .text-link{color:CanvasText}}
 
-/* Window campaign: one promise, one signup action, with offer terms beside it. */
+/* Window campaign: the grand-opening offer with its terms, online booking and the Launch List signup. */
 .landing-page .conversion-copy h1{max-width:12ch}
 .landing-page .conversion-copy>p:not(.eyebrow):not(.cta-note){max-width:42ch}
 .landing-page .site-help{display:none}
 .launch-offer{margin:1.8rem 0;padding:1.35rem 1.5rem;border-left:3px solid #a46d4b;background:#f6f4ed}
 .launch-offer .eyebrow{font-size:.68rem;line-height:1.6;letter-spacing:.07em;margin:0 0 .65rem}
 .launch-offer h2{font-size:clamp(1.8rem,2.7vw,2.5rem);line-height:1.1;margin:0 0 .8rem;max-width:24ch}
-.launch-offer>h2+p{font-size:.9rem;line-height:1.65;margin:0;max-width:46ch}
+.launch-offer .offer-limit{font-size:1.05rem;font-weight:700;line-height:1.5;margin:0 0 .7rem;color:var(--color-ink)}
+.launch-offer .offer-terms{font-size:.9rem;line-height:1.65;margin:0;max-width:46ch}
+.launch-offer>.clinic-hours{font-size:.9rem;line-height:1.65;margin:1rem 0 0;padding-top:.9rem;border-top:1px solid var(--color-border);max-width:46ch}
 .launch-offer>.book-online,.visit-fact>.book-online{margin:1rem 0 .6rem}
 .launch-offer>.book-online-note,.visit-fact>.book-online-note{font-size:.85rem;line-height:1.6;margin:0;max-width:46ch}
 .landing-page .conversion-copy .cta-note{font-size:.8rem;line-height:1.65}
@@ -474,9 +476,9 @@ h1,h2,h3{letter-spacing:-.042em}
 .approach-section p:not(.eyebrow){font-size:1.08rem;line-height:1.85;max-width:47ch;color:#e2e8dd}
 @media(max-width:760px){.approach-grid{grid-template-columns:1fr;gap:1.25rem}}
 
-/* Local visit information stays useful before booking opens. */
+/* Local visit information: location, visit format, clinic hours and cost. */
 .care-visit-details{background:#eeeee4;border-block:1px solid var(--color-border);padding:1.65rem 0}
-.visit-facts{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:1.5rem;margin:0}
+.visit-facts{display:grid;grid-template-columns:1.3fr 1fr 1.5fr 1fr;gap:1.5rem;margin:0}
 .visit-facts dt,.location-facts dt{font-size:.78rem;text-transform:uppercase;letter-spacing:.09em;font-weight:700;color:var(--color-muted)}
 .visit-facts dd{margin:.35rem 0 0;font-size:1.02rem;font-weight:650;line-height:1.6;color:var(--color-ink)}
 .visit-details-note{margin:1.2rem 0 0;padding-top:1rem;border-top:1px solid var(--color-border);font-size:.92rem}
@@ -519,3 +521,24 @@ h1,h2,h3{letter-spacing:-.042em}
 .visit-planner form .consent { font-size: .88rem; }
 .visit-planner h2:focus { outline: 2px solid #657c6b; outline-offset: .4rem; }
 @media (max-width: 35rem) { .visit-actions .button, .visit-planner form > .button { width: 100%; } }
+
+/* Grand-opening offer band and online booking links (owner-confirmed November 16, 2026). */
+.visit-fact .offer-limit{font-weight:700;margin:.2rem 0 .6rem}
+.visit-fact .clinic-hours{margin:0}
+.offer-band{background:#fffdf8;border-top:3px solid #a46d4b;border-bottom:1px solid var(--color-border)}
+.offer-band-inner{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1rem 3rem;padding-block:1.15rem}
+.offer-band-headline{font-family:var(--font-display);font-size:clamp(1.75rem,2.5vw,2.3rem);line-height:1.12;letter-spacing:-.01em;margin:0 0 .3rem;color:var(--color-ink)}
+.offer-band-limit{font-size:1rem;font-weight:700;line-height:1.5;margin:0;color:var(--color-ink)}
+.offer-band-limit a{margin-left:.6rem;font-weight:600;white-space:nowrap}
+.offer-band-actions{display:flex;flex-wrap:wrap;gap:.7rem}
+.offer-band-actions .button,.offer-band-actions .button-secondary{min-height:3.25rem}
+.process-actions{margin-top:2.2rem}
+.article-cta-booking{font-weight:650}
+.faq-list a[data-book-online],.article-cta-booking a,.location-facts a[data-book-online]{font-weight:700;white-space:nowrap}
+@media(max-width:40rem){
+  .offer-band-inner{padding-block:1rem;gap:.9rem}
+  .offer-band-headline{font-size:1.7rem}
+  .offer-band-actions{width:100%}
+  .offer-band-actions .button,.offer-band-actions .button-secondary{flex:1 1 100%}
+}
+@media(forced-colors:active){.offer-band,.launch-offer{border:1px solid CanvasText}}

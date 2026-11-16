@@ -10,7 +10,7 @@ export const midwestObesityMapArticle = Object.freeze({
   intro: 'A number with one decimal place can sound very local. The CDC’s latest adult obesity maps put the Midwest at 35.5% for 2025. But the figure covers a large region, not Merrillville or Lake County.\n\nThat distinction matters to Apex Wellness because weight and metabolic care is one of the areas we plan to offer when the clinic opens. We want to pay attention to credible information without asking one statistic to speak for everyone who might walk through our door.',
   excerpt: 'The CDC’s Midwest figure is useful context for a planned Apex care area, but it is not a scorecard for Merrillville or for any one person.',
   published: '2026-10-28',
-  modified: '2026-10-28',
+  modified: '2026-11-16',
   category: 'About Apex',
   author: 'Apex Wellness Editorial Team',
   heroImage: null,
@@ -27,7 +27,7 @@ export const midwestObesityMapArticle = Object.freeze({
       heading: 'Why Apex is paying attention',
       paragraphs: [
         'Weight and metabolic health is part of Apex’s planned focus at 8550 Broadway, Suite B. We are interested in the regional picture because it shows why the subject deserves a clear place in the conversation. A large estimate can point to a topic worth understanding; it cannot tell us what someone wants from care or which services would be appropriate for them.',
-        'That is why our website names the care area plainly and keeps its current status clear. Apex is still preparing to open. We will publish the clinical team, exact services, prices and appointment availability when those details are confirmed.'
+        'That is why our website names the care area plainly and keeps its current status clear. Apex is still preparing to open. We will publish the clinical team, exact services and prices when those details are confirmed. Online booking is open for visits from November 20.'
       ]
     },
     {
@@ -44,7 +44,7 @@ export const midwestObesityMapArticle = Object.freeze({
     { label: 'Apex Wellness: Launch List', href: 'https://apexwellnessnwi.com/founding-patients/' }
   ],
   disclaimerHeading: 'About this article',
-  disclaimer: 'This article explains a population statistic and Apex’s planned care focus. It is not medical advice, a Merrillville prevalence estimate, or a statement that appointments are available.',
+  disclaimer: 'This article explains a population statistic and Apex’s planned care focus. It is not medical advice or a Merrillville prevalence estimate.',
   editorialNote: 'Prepared by the Apex Wellness Editorial Team. The CDC’s September 24, 2026 source was rechecked October 28. No individual clinical review or local prevalence estimate is claimed.',
   ctaBody: 'Read about the planned weight and metabolic care area, or join the Launch List for confirmed opening updates.'
 });

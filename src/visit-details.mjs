@@ -1,14 +1,18 @@
-// Owner-confirmed October 25 launch format; no booking or clinical eligibility promise.
+import { bookingStatus } from './clinic-facts.mjs';
+
+// Owner-confirmed October 25 launch format. Online booking and clinic hours were
+// owner-confirmed November 16; no clinical eligibility promise.
+// An FAQ item with bookOnline: true gets the Book online link after its answer.
 export const visitDetails = Object.freeze({
   format: 'In-person visits at launch',
   formatNote: 'Apex is preparing for in-person care in Merrillville. Telehealth is not planned for launch.',
   locationPath: '/merrillville/',
   directionsUrl: 'https://www.google.com/maps/dir/?api=1&destination=8550%20Broadway%2C%20Suite%20B%2C%20Merrillville%2C%20IN%2046410',
   quickAnswers: [
-    { question: 'Where will visits take place?', answer: 'At 8550 Broadway, Suite B, Merrillville, IN 46410. Apex is coming soon, with in-person visits planned at launch. Appointment availability will be announced when it is confirmed.' },
+    { question: 'Where will visits take place?', answer: `At 8550 Broadway, Suite B, Merrillville, IN 46410. Apex is coming soon, with in-person visits planned at launch. ${bookingStatus}`, bookOnline: true },
     { question: 'Will Apex offer telehealth at launch?', answer: 'No. Visits are planned to be in person at launch. Join the Launch List for opening updates; joining does not book an appointment.' },
-    { question: 'What will care cost, and is insurance accepted?', answer: 'Apex is planning a cash-pay model. Final prices will be published before scheduling opens, with package inclusions and any separate costs explained. Joining the Launch List is free.' },
-    { question: 'What happens after I join the Launch List?', answer: 'You can receive opening updates and details about pricing and how to book when they are ready. The Launch List asks for your name, email and phone number. Keep health information for the secure clinical intake process after an appointment is confirmed.' }
+    { question: 'What will care cost, and is insurance accepted?', answer: 'Apex is planning a cash-pay model. Final prices will be published on the Pricing page, with package inclusions and any separate costs explained. Joining the Launch List is free.' },
+    { question: 'What happens after I join the Launch List?', answer: `You can receive opening updates and pricing details when they are ready. Joining does not book a visit. ${bookingStatus} The Launch List asks for your name, email and phone number. Keep health information for the secure clinical intake process after an appointment is confirmed.`, bookOnline: true }
   ],
   planningLinks: [
     { title: 'Costs and inclusions', body: 'See what is still being finalized, what fees will explain, and how to compare the full cost of care.', href: '/pricing/', label: 'Review pricing details' },
@@ -18,18 +22,18 @@ export const visitDetails = Object.freeze({
 });
 
 export const merrillvillePage = Object.freeze({
-  slug: '/merrillville/', navLabel: 'Location', modified: '2026-10-27',
+  slug: '/merrillville/', navLabel: 'Location', modified: '2026-11-16',
   title: 'Merrillville Location & In-Person Care | Apex Wellness',
-  description: 'Apex Wellness is coming soon to 8550 Broadway, Suite B, Merrillville, IN 46410. Find directions, planned in-person visit details and opening updates.',
+  description: 'Apex Wellness is coming soon to 8550 Broadway, Suite B, Merrillville, IN 46410. Find directions, clinic hours, in-person visit details and online booking.',
   eyebrow: 'Our Merrillville location · Coming soon',
   h1: 'A local place to take your next step.',
   intro: 'We are getting Apex Wellness ready at 8550 Broadway, Suite B, in Merrillville. Weight and metabolic care, men’s hormone health, women’s midlife care and hair-loss care are planned, with visits in person at launch.',
   heroImage: 'behindWindow',
   cta: { label: 'Join the Launch List', href: '/founding-patients/' },
   secondaryCta: { label: 'Open directions', href: visitDetails.directionsUrl },
-  ctaNote: 'Coming soon. Scheduling is not open yet. Photo: preparing our Merrillville space, October 2026.',
+  ctaNote: `Coming soon. ${bookingStatus} Photo: preparing our Merrillville space, October 2026.`,
   sections: [
-    { type: 'locationDetails', heading: 'Find Apex on Broadway.', eyebrow: '8550 Broadway · Suite B', body: 'Use the full address, including Suite B, when planning your trip. Opening hours and parking or arrival instructions will be shared before appointments begin.' },
+    { type: 'locationDetails', heading: 'Find Apex on Broadway.', eyebrow: '8550 Broadway · Suite B', body: 'Use the full address, including Suite B, when planning your trip. Parking and arrival instructions will be shared before appointments begin.' },
     { type: 'detail', heading: 'One Merrillville location. Part of Northwest Indiana.', eyebrow: 'Our community', body: 'Our planned clinic is in Merrillville, with care intended for adults from Crown Point, Schererville, Munster, Dyer, St. John, Highland, Hobart and surrounding Northwest Indiana communities. These are nearby communities we hope to serve, not additional Apex locations.' },
     { type: 'linkCards', heading: 'Coming from a nearby town?', eyebrow: 'Plan the trip', items: [
       { title: 'From Munster', body: 'Start with the Calumet Avenue and US 30 connection, then check the live route to Suite B.', href: '/visit-from-munster/', label: 'Plan from Munster' },
@@ -43,11 +47,11 @@ export const merrillvillePage = Object.freeze({
       { title: 'Hair-loss care', body: 'Read about the planned evaluation of hair-loss concerns.', href: '/hair-loss-care/', label: 'Explore hair-loss care' }
     ] },
     { type: 'faq', heading: 'Before planning a visit', items: [
-      { question: 'Is the clinic open for appointments or walk-ins?', answer: 'Not yet. Apex is coming soon, and scheduling is not open. The Launch List is for updates; it does not reserve a visit or establish care.' },
-      { question: 'Do I have to live in Merrillville to visit?', answer: 'No. Neighbors in Munster and elsewhere in Northwest Indiana can follow opening updates too. Apex is preparing one location at 8550 Broadway, Suite B, Merrillville; planned visits will be in person there when scheduling opens.' },
+      { question: 'Is the clinic open for appointments or walk-ins?', answer: `Apex is coming soon. ${bookingStatus} Walk-in visits have not been announced, so please book ahead or call (219) 207-2456. The Launch List is for updates; it does not reserve a visit or establish care.`, bookOnline: true },
+      { question: 'Do I have to live in Merrillville to visit?', answer: 'No. Neighbors in Munster and elsewhere in Northwest Indiana can follow opening updates too. Apex is preparing one location at 8550 Broadway, Suite B, Merrillville; planned visits will be in person there.' },
       visitDetails.quickAnswers[1],
       { question: 'Can I ask about the location or access?', answer: 'Call (219) 207-2456 or email hello@apexwellnessnwi.com with a general location or accessibility question. Please keep medical details out of ordinary email and the Launch List form.' },
-      { question: 'Where can I find fees and visit details?', answer: 'The Pricing and How It Works pages explain the planned process. Final fees, clinician details and appointment availability will be shared before scheduling opens.' }
+      { question: 'Where can I find fees and visit details?', answer: `The Pricing and How It Works pages explain the planned process. Final fees will be posted on the Pricing page. ${bookingStatus}`, bookOnline: true }
     ] }
   ]
 });

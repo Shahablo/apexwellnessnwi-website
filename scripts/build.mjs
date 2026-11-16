@@ -5,6 +5,7 @@ import { fileURLToPath } from "node:url";
 
 import { pages, site } from "../src/content.mjs";
 import { visitDetails } from "../src/visit-details.mjs";
+import { bookingStatus, clinicHours, grandOpeningOffer, openingDay } from "../src/clinic-facts.mjs";
 import { bookOnlineUrl, schedulingUrl } from "../src/visit-planner.mjs";
 import { blogPosts } from "../src/blog-posts.mjs";
 
@@ -196,6 +197,22 @@ function pageJsonLd(page) {
         "@type": "AdministrativeArea",
         name: site.region,
       },
+      // Owner-confirmed hours. They apply from opening day, so each row carries validFrom.
+      openingHoursSpecification: clinicHours.rows.map((row) => ({
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: [...row.days],
+        opens: row.opens,
+        closes: row.closes,
+        validFrom: openingDay.date,
+      })),
+      // Closed all day: opens and closes are both midnight on the holiday.
+      specialOpeningHoursSpecification: [{
+        "@type": "OpeningHoursSpecification",
+        validFrom: clinicHours.holiday.date,
+        validThrough: clinicHours.holiday.date,
+        opens: "00:00",
+        closes: "00:00",
+      }],
     },
     {
       "@type": "WebSite",
@@ -290,6 +307,39 @@ function buttonMarkup(cta, secondary = false) {
   return `<a class="${secondary ? "button-secondary" : "button"}" href="${escapeHtml(cta.href)}">${escapeHtml(cta.label)}</a>`;
 }
 
+// The same booking address as a plain link or a button, for places outside the two offer blocks.
+// It opens in a new tab and sends no referrer; data-book-online is what first-party measurement counts.
+function bookOnlineLinkMarkup(className = "") {
+  const url = bookOnlineUrl();
+  if (!url) return "";
+  return `<a${className ? ` class="${className}"` : ""} href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer" data-book-online>Book online<span class="visually-hidden"> (opens a new tab)</span></a>`;
+}
+
+// Owner-confirmed clinic hours as a short block. The heading says they start on opening day.
+function hoursMarkup(className = "clinic-hours") {
+  const lines = [
+    ...clinicHours.rows.map((row) => `${row.label}: ${row.hours}`),
+    clinicHours.closed,
+    clinicHours.holiday.note,
+  ];
+  return `<p class="${className}"><strong>${escapeHtml(clinicHours.heading)}</strong><br>${lines.map(escapeHtml).join("<br>")}</p>`;
+}
+
+// Grand-opening offer with Book online for the ad landing pages (page.offerBand). It sits directly under the
+// site header, above the page title, so the offer and the button show without scrolling on a phone and a laptop.
+// The fine print stays on /founding-patients/, which the Offer details link opens.
+function offerBandMarkup() {
+  const booking = bookOnlineLinkMarkup("button");
+  if (!booking) return "";
+  return `<aside class="offer-band" aria-label="Grand opening offer"><div class="container offer-band-inner">
+      <div class="offer-band-copy">
+        <p class="offer-band-headline">${escapeHtml(grandOpeningOffer.headline)}</p>
+        <p class="offer-band-limit">${escapeHtml(grandOpeningOffer.limit)} <a href="/founding-patients/">Offer details</a></p>
+      </div>
+      <div class="offer-band-actions">${booking}<a class="button-secondary" href="${escapeHtml(site.phoneHref)}">Call 219-207-2456</a></div>
+    </div></aside>`;
+}
+
 // Off-site scheduling button for the launch-offer blocks. The address and its on/off switch live in src/visit-planner.mjs.
 function bookOnlineMarkup() {
   const url = bookOnlineUrl();
@@ -308,7 +358,7 @@ function faqMarkup(items) {
   return `<div class="faq-list">
     ${items.map((item) => `<details>
       <summary>${escapeHtml(item.question)}</summary>
-      <p>${escapeHtml(item.answer)}</p>
+      <p>${escapeHtml(item.answer)}${item.bookOnline && bookOnlineUrl() ? ` ${bookOnlineLinkMarkup()}` : ""}</p>
     </details>`).join("\n")}
   </div>`;
 }
@@ -325,9 +375,10 @@ function renderCareDetails(page) {
     <dl class="visit-facts">
       <div><dt>Location</dt><dd><a href="/merrillville/">Merrillville · 8550 Broadway, Suite B</a></dd></div>
       <div><dt>Visit format</dt><dd>${escapeHtml(visitDetails.format)}</dd></div>
-      <div><dt>Cost</dt><dd><a href="/pricing/">Cash-pay · Fees before booking</a></dd></div>
+      <div><dt>${escapeHtml(clinicHours.heading)}</dt><dd>${clinicHours.rows.map((row) => `${escapeHtml(row.label)}: ${escapeHtml(row.hours)}`).join("<br>")}</dd></div>
+      <div><dt>Cost</dt><dd><a href="/pricing/">Cash-pay · Pricing details</a></dd></div>
     </dl>
-    <p class="visit-details-note">Coming soon. Scheduling is not open yet. <a href="${escapeHtml(faqHref)}">Jump to common questions <span aria-hidden="true">↓</span></a></p>
+    <p class="visit-details-note">Coming soon. ${escapeHtml(bookingStatus)} ${bookOnlineLinkMarkup()}<a href="${escapeHtml(faqHref)}">Jump to common questions <span aria-hidden="true">↓</span></a></p>
   </div></aside>`;
 }
 
@@ -355,7 +406,7 @@ function careCardsMarkup(items) {
 
 function pricingMarkup(items) {
   return `<table class="pricing-table">
-    <caption>Pricing details Apex will publish before accepting appointments or payment.</caption>
+    <caption>Pricing details Apex will publish before accepting payment.</caption>
     <thead>
       <tr><th scope="col">Pricing detail</th><th scope="col">What will be published</th></tr>
     </thead>
@@ -429,7 +480,7 @@ function renderSection(section, index) {
     case 'locationDetails':
       return `<section class="section location-details" aria-labelledby="${id}"><div class="container editorial-row">
         ${headingMarkup(section, id)}<div class="editorial-copy"><address>${escapeHtml(site.address.streetAddress)}<br>${escapeHtml(site.address.addressLocality)}, ${escapeHtml(site.address.addressRegion)} ${escapeHtml(site.address.postalCode)}</address><p>${escapeHtml(section.body)}</p>
-        <dl class="location-facts"><div><dt>Visits</dt><dd>${escapeHtml(visitDetails.format)}</dd></div><div><dt>Availability</dt><dd>Coming soon. Scheduling is not open.</dd></div><div><dt>General questions</dt><dd><a href="${escapeHtml(site.phoneHref)}">${escapeHtml(site.phone)}</a><br><a href="mailto:${escapeHtml(site.email)}">${escapeHtml(site.email)}</a></dd></div></dl>
+        <dl class="location-facts"><div><dt>Visits</dt><dd>${escapeHtml(visitDetails.format)}</dd></div><div><dt>${escapeHtml(clinicHours.heading)}</dt><dd>${[...clinicHours.rows.map((row) => `${row.label}: ${row.hours}`), clinicHours.closed, clinicHours.holiday.note].map(escapeHtml).join("<br>")}</dd></div><div><dt>Availability</dt><dd>Coming soon. ${escapeHtml(bookingStatus)} ${bookOnlineLinkMarkup()}</dd></div><div><dt>General questions</dt><dd><a href="${escapeHtml(site.phoneHref)}">${escapeHtml(site.phone)}</a><br><a href="mailto:${escapeHtml(site.email)}">${escapeHtml(site.email)}</a></dd></div></dl>
         <a class="text-link" href="${escapeHtml(visitDetails.directionsUrl)}">Open directions in Google Maps <span aria-hidden="true">↗</span></a></div>
       </div></section>`;
 
@@ -479,7 +530,7 @@ function renderSection(section, index) {
 
     case "prelaunch":
       return `<section class="section${alternatingClass}" aria-labelledby="${id}"><div class="container section-narrow">
-        ${headingMarkup(section, id)}<p>${escapeHtml(section.body)}</p><div class="button-row">${buttonMarkup(section.cta)}</div>
+        ${headingMarkup(section, id)}<p>${escapeHtml(section.body)}</p><div class="button-row">${section.bookOnline ? bookOnlineLinkMarkup("button") : ""}${buttonMarkup(section.cta, Boolean(section.bookOnline && bookOnlineUrl()))}</div>
       </div></section>`;
 
     case "serviceArea":
@@ -550,16 +601,19 @@ function renderHero(pageKey, page) {
     <div class="signature-image">${imageMarkup(imageCatalog.shoreline, { hero: true })}</div>
     <div class="container signature-content"><p class="eyebrow">Wellness · Northwest Indiana</p>
       <h1 id="page-title">${escapeHtml(page.headlineLead)} <em>${escapeHtml(page.headlineEmphasis)}</em></h1>
-      <div class="signature-bottom"><div><p>${escapeHtml(page.intro)}</p><div class="hero-actions">${buttonMarkup(site.cta)}<a class="hero-explore" href="#care-areas">Explore care areas <span aria-hidden="true">↗</span></a></div></div><p class="signature-launch"><span class="launch-dot" aria-hidden="true"></span>Planned launch<br><strong>${escapeHtml(site.launch.label)}</strong><span class="signature-launch-note">Coming soon · Subject to readiness</span></p></div>
+      <div class="signature-bottom"><div><p>${escapeHtml(page.intro)}</p><div class="hero-actions">${bookOnlineUrl() ? `${bookOnlineLinkMarkup("button")}<a class="hero-explore" href="${escapeHtml(site.cta.href)}">${escapeHtml(site.cta.label)} <span aria-hidden="true">↗</span></a>` : buttonMarkup(site.cta)}<a class="hero-explore" href="#care-areas">Explore care areas <span aria-hidden="true">↗</span></a></div></div><p class="signature-launch"><span class="launch-dot" aria-hidden="true"></span>Planned launch<br><strong>${escapeHtml(site.launch.label)}</strong><span class="signature-launch-note">Coming soon · Subject to readiness</span></p></div>
     </div>
   </section>`;
   const image = imageForPage(pageKey, page);
+  // Ad landing pages (page.offerBand) offer Book online first here too; the Launch List stays as the second option.
+  const booking = page.offerBand ? bookOnlineLinkMarkup("button") : "";
+  const launchListCta = page.secondaryCta && page.secondaryCta.href.startsWith("/founding-patients/") ? page.secondaryCta : page.cta;
   return `<section class="hero" aria-labelledby="page-title"><div class="container hero-grid">
     <div class="hero-copy">
       <p class="eyebrow">${escapeHtml(page.eyebrow)}</p>
       <h1 id="page-title">${escapeHtml(page.h1)}</h1>
       <p>${escapeHtml(page.intro)}</p>
-      <div class="hero-actions">${buttonMarkup(page.cta)}${page.secondaryCta ? buttonMarkup(page.secondaryCta, true) : ""}</div>
+      <div class="hero-actions">${booking ? `${booking}${buttonMarkup(launchListCta, true)}` : `${buttonMarkup(page.cta)}${page.secondaryCta ? buttonMarkup(page.secondaryCta, true) : ""}`}</div>
       ${page.ctaNote ? `<p class="cta-note">${escapeHtml(page.ctaNote)}</p>` : ""}
     </div>
     <div class="hero-media">${imageMarkup(image, { hero: true })}</div>
@@ -608,6 +662,7 @@ function renderHome(page) {
     <section class="section home-process" aria-labelledby="process-heading"><div class="container">
       <div class="section-heading heading-with-aside"><div><p class="eyebrow">Your next step</p><h2 id="process-heading">${multiline(editorial.processHeading)}</h2></div><a class="text-link" href="/how-it-works/">How it works <span aria-hidden="true">↗</span></a></div>
       <ol class="steps">${editorial.process.map((step, index) => `<li class="step"><span class="step-number" aria-hidden="true">0${index + 1}</span><h3>${escapeHtml(step.title)}</h3><p>${escapeHtml(step.body)}</p></li>`).join('')}</ol>
+      ${bookOnlineUrl() ? `<div class="button-row process-actions">${bookOnlineLinkMarkup("button")}<a class="button-secondary" href="/plan-your-visit/">Plan your first visit</a></div>` : ""}
     </div></section>
     <section class="section faq-section home-quick-answers" aria-labelledby="quick-answers-heading"><div class="container editorial-row"><div class="section-heading"><p class="eyebrow">Before you decide</p><h2 id="quick-answers-heading">The practical questions, answered.</h2><a class="text-link" href="/faq/">Read all FAQs <span aria-hidden="true">↗</span></a></div>${faqMarkup(visitDetails.quickAnswers)}</div></section>
     ${latest ? `<section class="section home-journal" aria-labelledby="journal-heading"><div class="container">
@@ -620,7 +675,7 @@ function renderHome(page) {
 }
 
 function renderLaunchCta() {
-  return `<section class="section launch-section" aria-labelledby="launch-heading"><div class="container launch-section-inner"><div><p class="eyebrow">${escapeHtml(site.launch.status)} · ${escapeHtml(site.launch.label)}</p><h2 id="launch-heading">Be part of<br><em>what comes next.</em></h2></div><div class="launch-section-copy"><p>Opening updates and future consultation availability, delivered to your inbox.</p>${buttonMarkup(site.cta)}<p class="quiet-note">Free to join. No appointment booked. Launch timing and availability may change.</p></div></div></section>`;
+  return `<section class="section launch-section" aria-labelledby="launch-heading"><div class="container launch-section-inner"><div><p class="eyebrow">${escapeHtml(site.launch.status)} · ${escapeHtml(site.launch.label)}</p><h2 id="launch-heading">Be part of<br><em>what comes next.</em></h2></div><div class="launch-section-copy"><p>${escapeHtml(bookingStatus)} Or get opening updates in your inbox.</p><div class="button-row">${bookOnlineLinkMarkup("button")}${buttonMarkup(site.cta, Boolean(bookOnlineUrl()))}</div><p class="quiet-note">The Launch List costs nothing to join and does not book an appointment. Launch timing and availability may change.</p></div></div></section>`;
 }
 
 function renderBlogInline(paragraph, richText) {
@@ -672,7 +727,7 @@ function renderBlogPost(page) {
         ${articleSections}
         <aside class="medical-note" aria-labelledby="medical-disclaimer"><h2 id="medical-disclaimer">${escapeHtml(disclaimerHeading)}</h2><p>${escapeHtml(disclaimer)}</p></aside>
         <section class="article-sources" aria-labelledby="sources-reviewed"><h2 id="sources-reviewed">Sources reviewed</h2><ul>${sourceList}</ul><p class="editorial-note">${escapeHtml(page.editorialNote || "Published by Apex Wellness for general education. No individual physician medical review is claimed unless a reviewer is explicitly named. Sources and publication dates are provided so you can evaluate the information; your own care requires a clinical conversation.")}</p></section>
-        <section class="article-cta" aria-labelledby="keep-exploring"><p class="eyebrow">Keep exploring</p><h2 id="keep-exploring">Useful information is a start. Individual care is the next step.</h2><p>${escapeHtml(page.ctaBody || "Apex Wellness is preparing to open in Northwest Indiana. A consultation request is free and does not book an appointment, establish care, or guarantee treatment.")}</p><div class="button-row">${buttonMarkup(page.relatedService, true)}${buttonMarkup(site.cta)}</div></section>
+        <section class="article-cta" aria-labelledby="keep-exploring"><p class="eyebrow">Keep exploring</p><h2 id="keep-exploring">Useful information is a start. Individual care is the next step.</h2><p>${escapeHtml(page.ctaBody || "Apex Wellness is preparing to open in Northwest Indiana. A consultation request is free and does not book an appointment, establish care, or guarantee treatment.")}</p>${bookOnlineUrl() ? `<p class="article-cta-booking">${escapeHtml(bookingStatus)} ${bookOnlineLinkMarkup()}</p>` : ""}<div class="button-row">${buttonMarkup(page.relatedService, true)}${buttonMarkup(site.cta)}</div></section>
       </div>
     </article>
   </main>`;
@@ -684,7 +739,7 @@ function renderConversionHero(page) {
       <p class="eyebrow">${escapeHtml(page.eyebrow)}</p>
       <h1 id="page-title">${escapeHtml(page.h1).replace('. ', '.<br>')}</h1>
       <p>${escapeHtml(page.intro)}</p>
-      <div class="launch-offer"><p class="eyebrow">${escapeHtml(page.offer.eyebrow)}</p><h2>${escapeHtml(page.offer.heading)}</h2><p>${escapeHtml(page.offer.terms)}</p>${bookOnlineMarkup()}</div>
+      <div class="launch-offer"><h2>${escapeHtml(page.offer.heading)}</h2><p class="offer-limit">${escapeHtml(page.offer.limit)}</p><p class="offer-terms">${escapeHtml(page.offer.terms)}</p>${bookOnlineMarkup()}${hoursMarkup()}</div>
       <div class="hero-actions">${page.visitPlanner ? '<a class="button" href="/plan-your-visit/">Plan your first visit</a>' : ''}${buttonMarkup(page.cta)}</div>
       <p class="cta-note">${escapeHtml(page.ctaNote)}</p>
     </div>
@@ -711,6 +766,7 @@ function renderMain(pageKey, page) {
   }
 
   return `<main id="main-content" class="page" tabindex="-1">
+    ${page.offerBand ? offerBandMarkup() : ''}
     ${page.landing ? renderConversionHero(page) : renderHero(pageKey, page)}
     ${site.navigation.some((item) => item.section === 'care' && item.href === page.slug) ? renderCareDetails(page) : ''}
     ${page.sections.map(renderSection).join("\n")}
@@ -730,19 +786,22 @@ function renderVisitPlanner(page) {
         <section data-visit-step aria-labelledby="visit-step-one"><h2 id="visit-step-one" tabindex="-1">Start close to home.</h2>
           <p>Visits will be in person at our Merrillville clinic.</p>
           <div class="visit-fact"><strong>8550 Broadway, Suite B</strong><br>Merrillville, IN 46410<br><a href="/merrillville/">Location and directions</a></div>
+          <div class="visit-fact">${hoursMarkup()}</div>
           <p>We are preparing weight and metabolic care, men’s hormone health, women’s midlife care, and hair-loss care for adults.</p>
-          <p class="visit-note">Coming soon. Appointment availability and clinician details will be shared when confirmed.</p>
+          <p class="visit-note">Coming soon. ${escapeHtml(bookingStatus)} ${bookOnlineLinkMarkup()}</p>
           <div class="visit-actions"><button class="button" type="button" data-visit-next hidden>Next: costs</button></div>
         </section>
         <section data-visit-step aria-labelledby="visit-step-two"><h2 id="visit-step-two" tabindex="-1">Know the costs before you commit.</h2>
-          <p>Apex is a cash-pay practice. Final prices and what is included will be published before scheduling opens.</p>
-          <div class="visit-fact"><strong>Promotional labs for $49.</strong><p>$49 covers your first visit and the promotional labs. Labs as clinically appropriate. One per person. First 50 appointments scheduled. Additional testing or treatment is separate. Appointments subject to availability. Call <a href="tel:+12192072456">(219) 207-2456</a> to schedule, or join the Launch List for updates. A contact request or Launch List signup does not reserve this offer.</p>${bookOnlineMarkup()}</div>
+          <p>Apex is a cash-pay practice. Final prices and what is included will be published on the Pricing page.</p>
+          <div class="visit-fact"><strong>${escapeHtml(grandOpeningOffer.headline)}</strong><p class="offer-limit">${escapeHtml(grandOpeningOffer.limit)}</p><p>${escapeHtml(grandOpeningOffer.finePrint)} Book online or call <a href="tel:+12192072456">(219) 207-2456</a> to schedule, or join the Launch List for updates. A contact request or Launch List signup does not reserve this offer.</p>${bookOnlineMarkup()}</div>
           <p><a href="/pricing/">Review our pricing information</a></p>
           <div class="visit-actions"><button class="button-secondary" type="button" data-visit-back hidden>Back</button><button class="button" type="button" data-visit-next hidden>Next: your next step</button></div>
         </section>
         <section data-visit-step aria-labelledby="visit-step-three"><h2 id="visit-step-three" tabindex="-1">${booking ? 'Continue to scheduling.' : 'Your next chapter starts here.'}</h2>
-          ${booking ? `<p>Continue to Apex’s Tebra scheduling page to review available appointments. A request is not booked until Apex confirms it.</p><a class="button" href="${escapeHtml(booking)}" rel="noreferrer" referrerpolicy="no-referrer">Continue to Tebra</a>` : `<p>Apex is coming to Merrillville. Leave your name, email and phone number, and we’ll reach out when visits are ready to schedule.</p>
-          <div id="consultation-request"><form id="consultation-form" action="/api/appointment-contact" method="post" aria-labelledby="visit-step-three" aria-describedby="appointment-guidance" data-success-message="Thanks for taking the first step. Your request is saved, and Apex can call or email you when visits are ready to schedule. No appointment is booked, and you have not joined the newsletter.">
+          ${booking ? `<p>Continue to Apex’s Tebra scheduling page to review available appointments. A request is not booked until Apex confirms it.</p><a class="button" href="${escapeHtml(booking)}" rel="noreferrer" referrerpolicy="no-referrer">Continue to Tebra</a>` : `<p>Apex is coming to Merrillville. ${escapeHtml(bookingStatus)} Book online, or call <a href="tel:+12192072456">(219) 207-2456</a>.</p>
+          ${bookOnlineUrl() ? `<p class="book-online">${bookOnlineLinkMarkup("button")}</p>` : ""}
+          <p>Prefer that we reach out? Leave your name, email and phone number, and we’ll call or email you about arranging a visit.</p>
+          <div id="consultation-request"><form id="consultation-form" action="/api/appointment-contact" method="post" aria-labelledby="visit-step-three" aria-describedby="appointment-guidance" data-success-message="Thanks for taking the first step. Your request is saved, and Apex can call or email you about arranging a visit. This form has not booked an appointment, and you have not joined the newsletter.">
             <p id="appointment-guidance" class="visit-note">Contact details only. Please do not enter symptoms, medications or medical history. This form is not monitored for urgent concerns.</p>
             <div class="field field-full"><label for="full-name">Name</label><input id="full-name" name="full_name" type="text" autocomplete="name" minlength="2" maxlength="100" required></div>
             <div class="field field-full"><label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" inputmode="email" maxlength="254" required></div>
@@ -750,10 +809,10 @@ function renderVisitPlanner(page) {
             <div class="field-honeypot" aria-hidden="true"><label for="website">Leave this field blank</label><input id="website" name="website" type="text" tabindex="-1" autocomplete="off" maxlength="200" aria-hidden="true"></div>
             <input name="consent_version" type="hidden" value="appointment-contact-2026-10-25"><input name="form_started_at" type="hidden">
             <label class="consent field-full" for="contact-consent"><input id="contact-consent" name="contact_consent" type="checkbox" value="true" required><span>Apex may call or email me about this request and arranging a future visit. This does not subscribe me to marketing emails or text messages. I have read the <a href="/privacy/">Privacy Policy</a> and <a href="/communications-consent/">Communications Consent</a>.</span></label>
-            <button class="button" type="submit" data-loading-label="Saving…">Keep me in the loop</button>
+            <button class="button" type="submit" data-loading-label="Saving…">Ask Apex to contact me</button>
             <p id="form-status" class="form-status" role="status" aria-live="polite" aria-atomic="true" tabindex="-1"></p>
             <noscript><p>JavaScript is required to send the form. You can call <a href="tel:+12192072456">(219) 207-2456</a> for general questions.</p></noscript>
-          </form></div><p class="visit-note">No appointment booked. No deposit. No commitment to care.</p>`}
+          </form></div><p class="visit-note">This form does not book an appointment. No deposit. No commitment to care.</p>`}
           <p>Only want opening news? <a href="/founding-patients/#consultation-request">Join the Launch List instead.</a></p>
           <div class="visit-actions"><button class="button-secondary" type="button" data-visit-back hidden>Back</button></div>
         </section>
@@ -804,7 +863,7 @@ function renderFooter(page) {
   return `<footer class="site-footer"><div class="container">
     <div class="footer-signature"><a href="/" aria-label="Apex Wellness home"><img src="/assets/images/apex-icon-as-a-reversed-lockup-20261026.svg" width="860" height="490" alt="Apex Wellness"><span aria-hidden="true">↗</span></a><p>${escapeHtml(site.tagline)}</p></div>
     <div class="footer-grid">
-      <div><p class="eyebrow">Northwest Indiana</p><p>${escapeHtml(site.footer.summary)}</p><p>${escapeHtml(site.footer.location)}</p><p><a href="${escapeHtml(site.phoneHref)}">${escapeHtml(site.phone)}</a> · <a href="mailto:${escapeHtml(site.email)}">${escapeHtml(site.email)}</a></p><nav class="social-links" aria-label="Apex social profiles">${site.social.map((profile) => `<a href="${escapeHtml(profile.href)}" rel="me noreferrer" target="_blank">${escapeHtml(profile.label)}<span class="visually-hidden"> (opens a new tab)</span></a>`).join('')}</nav></div>
+      <div><p class="eyebrow">Northwest Indiana</p><p>${escapeHtml(site.footer.summary)}</p><p>${escapeHtml(site.footer.location)}</p>${hoursMarkup("footer-hours")}<p><a href="${escapeHtml(site.phoneHref)}">${escapeHtml(site.phone)}</a> · <a href="mailto:${escapeHtml(site.email)}">${escapeHtml(site.email)}</a></p><nav class="social-links" aria-label="Apex social profiles">${site.social.map((profile) => `<a href="${escapeHtml(profile.href)}" rel="me noreferrer" target="_blank">${escapeHtml(profile.label)}<span class="visually-hidden"> (opens a new tab)</span></a>`).join('')}</nav></div>
       <nav aria-label="Care areas"><h2>Care areas</h2><ul>${careLinks}</ul></nav>
       <nav aria-label="Site information"><h2>Information</h2><ul>${infoLinks}</ul></nav>
       <nav aria-label="Policies"><h2>Policies</h2><ul>${policyLinks}</ul></nav>
@@ -818,7 +877,7 @@ function renderSiteHelp(page) {
     <aside id="pexy-nudge" class="pexy-nudge" aria-label="Pexy website guide invitation" hidden>
       <button id="pexy-nudge-close" class="widget-close" type="button" aria-label="Dismiss Pexy invitation">×</button>
       <p class="eyebrow">A quick question?</p>
-      <p id="pexy-nudge-copy">Need a quick answer? I can help with opening plans, care areas, pricing updates, and visit requests.</p>
+      <p id="pexy-nudge-copy">Need a quick answer? I can help with opening plans, care areas, booking, clinic hours, and pricing updates.</p>
       <button id="pexy-nudge-open" class="pexy-nudge-action" type="button">Ask Pexy <span aria-hidden="true">↗</span></button>
     </aside>
     <button id="help-toggle" class="help-toggle" type="button" aria-expanded="false" aria-controls="site-help-panel" aria-label="Ask Pexy, automated website guide" hidden><span aria-hidden="true">✦</span> Ask Pexy</button>
@@ -839,7 +898,7 @@ function renderSiteHelp(page) {
         <button class="pexy-followup-submit" type="submit">Send general question</button>
       </form>
       <p id="pexy-followup-status" class="pexy-followup-status" role="status" aria-live="polite"></p>
-      <div class="help-topics" aria-label="Common questions"><button type="button" data-help-question="When do you open?">Opening</button><button type="button" data-help-question="What care do you offer?">Care areas</button><button type="button" data-help-question="How does the $49 promotional labs offer work?">$49 labs</button><button type="button" data-help-question="What does care cost?">Pricing</button><button type="button" data-help-question="Can I request a visit?">Visit request</button><button type="button" data-help-question="Where is Apex located?">Location</button></div>
+      <div class="help-topics" aria-label="Common questions"><button type="button" data-help-question="When do you open?">Opening</button><button type="button" data-help-question="What care do you offer?">Care areas</button><button type="button" data-help-question="How does the $49 promotional labs offer work?">$49 labs</button><button type="button" data-help-question="What does care cost?">Pricing</button><button type="button" data-help-question="How do I book a visit?">Book a visit</button><button type="button" data-help-question="What are your hours?">Hours</button><button type="button" data-help-question="Where is Apex located?">Location</button></div>
       <form id="site-help-form" aria-label="Ask Pexy a website question"><label for="help-question">Your website question</label><div class="help-input-row"><input id="help-question" type="text" maxlength="500" autocomplete="off" placeholder="Type a general question…" aria-describedby="help-disclosure" required><button type="submit">Ask Pexy</button></div></form>
       <p class="widget-note">Pexy is not live chat. For a medical emergency, call 911. <a href="/faq/">All FAQs</a></p>
     </section>

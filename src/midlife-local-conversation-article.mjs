@@ -10,7 +10,7 @@ export const midlifeLocalConversationArticle = Object.freeze({
   intro: 'The Menopause Society held its 2026 Annual Meeting October 20–24 under the theme “Bridging the Gap Between Research and Practice.” That same week, we got the Apex name onto the door of our new space in Merrillville.\n\nThose moments are very different in scale. Together, they make this a good time to introduce one of the areas we are preparing at Apex: women’s midlife care.',
   excerpt: 'As Apex puts its name on the door in Merrillville, meet one of the four care areas planned for the new clinic.',
   published: '2026-10-26',
-  modified: '2026-10-26',
+  modified: '2026-11-16',
   category: 'About Apex',
   author: 'Apex Wellness Editorial Team',
   heroImage: null,
@@ -33,8 +33,8 @@ export const midlifeLocalConversationArticle = Object.freeze({
     {
       heading: 'Where to follow along',
       paragraphs: [
-        'Our women’s midlife care page explains the planned focus. The Merrillville page shows the location. The Launch List is for opening, team, pricing and scheduling updates as those details are confirmed. It asks for a name, email and phone number.',
-        'Apex is Coming soon; appointments are not open. The door tells you where. The Launch List will tell you when there is more to share.'
+        'Our women’s midlife care page explains the planned focus. The Merrillville page shows the location. The Launch List is for opening, team and pricing updates as those details are confirmed. It asks for a name, email and phone number.',
+        'Apex is Coming soon, and online booking is open for visits from November 20. The door tells you where. The Launch List will tell you when there is more to share.'
       ]
     }
   ],
@@ -46,7 +46,7 @@ export const midlifeLocalConversationArticle = Object.freeze({
     { label: 'Apex Wellness: Launch List', href: 'https://apexwellnessnwi.com/founding-patients/' }
   ],
   disclaimerHeading: 'About this introduction',
-  disclaimer: 'This article describes a planned care area at a clinic that is still preparing to open. It does not offer medical advice or indicate that appointments are available.',
+  disclaimer: 'This article describes a planned care area at a clinic that is still preparing to open. It does not offer medical advice.',
   editorialNote: 'Prepared by the Apex Wellness Editorial Team. Meeting dates and theme come from The Menopause Society; clinic details come from Apex’s current pages. No meeting participation, clinical study findings or individual clinician review are claimed.',
   ctaBody: 'Read about the planned women’s midlife care area and join the Launch List for confirmed opening updates.'
 });

@@ -167,7 +167,7 @@ test('the new planned care area is discoverable without displacing information l
     assert.match(html, /Coming soon/i);
   }
   const hair = htmlBySlug.get('/hair-loss-care/');
-  assert.match(hair, /Hair-loss care is planned for opening, but scheduling is not available/);
+  assert.match(hair, /Yes\. Online booking is open for visits from November 20\. You can also call \(219\) 207-2456\. Hair-loss care is planned for opening/);
   assert.match(hair, /8550 Broadway, Suite B/);
   assert.doesNotMatch(hair, /minoxidil|finasteride|dutasteride|PRP|transplant|guaranteed regrowth/i);
   assert.match(htmlBySlug.get('/founding-patients/'), /href="\/hair-loss-care\/"/);
@@ -626,8 +626,18 @@ test('the About page distinguishes real team portraits, supplied interests, and 
   assert.match(html, /Keep your primary care doctor/);
 });
 
-test('the confirmed clinic identity appears consistently without invented hours, coordinates, or reviews', () => {
+test('the confirmed clinic identity and owner-confirmed hours appear consistently without invented coordinates or reviews', () => {
+  // Owner-confirmed November 16, 2026: Wed-Fri 11-5, Sat 9-1, from opening day; closed Thanksgiving.
+  const confirmedHours = [
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Wednesday', 'Thursday', 'Friday'], opens: '11:00', closes: '17:00', validFrom: '2026-11-20' },
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Saturday'], opens: '09:00', closes: '13:00', validFrom: '2026-11-20' },
+  ];
+  const thanksgivingClosure = [
+    { '@type': 'OpeningHoursSpecification', validFrom: '2026-11-26', validThrough: '2026-11-26', opens: '00:00', closes: '00:00' },
+  ];
+  const footerHours = '<p class="footer-hours"><strong>Hours from November 20</strong><br>Wednesday, Thursday and Friday: 11 a.m. to 5 p.m.<br>Saturday: 9 a.m. to 1 p.m.<br>Closed Sunday through Tuesday.<br>Closed Thanksgiving Day, November 26.</p>';
   for (const [slug, html] of htmlBySlug) {
+    assert.ok(html.includes(footerHours), `${slug} footer needs the confirmed clinic hours`);
     assert.ok(html.includes(site.address.label), `${slug} needs the confirmed address`);
     const jsonLd = [...html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)]
       .find((match) => attributes(match[1]).type === 'application/ld+json');
@@ -638,7 +648,10 @@ test('the confirmed clinic identity appears consistently without invented hours,
     assert.equal(clinic.telephone, '+12192072456');
     assert.ok(clinic.sameAs.includes('https://www.linkedin.com/company/apex-wellness-nwi/'));
     assert.ok(clinic.sameAs.includes(site.googleBusinessUrl));
-    for (const unsupported of ['aggregateRating', 'review', 'geo', 'openingHours', 'openingHoursSpecification']) {
+    assert.equal(clinic['@type'], 'MedicalClinic', `${slug} keeps the existing clinic schema type`);
+    assert.deepEqual(clinic.openingHoursSpecification, confirmedHours, `${slug} structured hours must match the confirmed hours`);
+    assert.deepEqual(clinic.specialOpeningHoursSpecification, thanksgivingClosure, `${slug} must mark the Thanksgiving closure`);
+    for (const unsupported of ['aggregateRating', 'review', 'geo', 'openingHours']) {
       assert.equal(clinic[unsupported], undefined, `${slug} must not invent ${unsupported}`);
     }
     assert.doesNotMatch(html, /A confirmed street address|The confirmed clinic address|A confirmed address and visit-modality details/);
@@ -758,7 +771,7 @@ function escapeForTest(value) {
 
 test('editorial redesign preserves key content, semantic headings, and navigation fallbacks', () => {
   const home = htmlBySlug.get('/');
-  for (const phrase of ['Thoughtful care', 'Northwest Indiana', 'No appointment booked', site.launch.label]) {
+  for (const phrase of ['Thoughtful care', 'Northwest Indiana', 'The Launch List costs nothing to join and does not book an appointment.', site.launch.label]) {
     assert.ok(home.includes(phrase), `homepage must retain ${phrase}`);
   }
   for (const [slug, html] of htmlBySlug) {
@@ -802,8 +815,11 @@ test('homepage replaces the generic introduction with one staff-neutral approach
   assert.match(home, /href="\/about\/">Our approach to care/);
 });
 
-test('homepage names the planned care and location without suggesting bookings are open', async () => {
+test('homepage names the planned care and location, keeps the planned-launch status and offers online booking', async () => {
   const home = htmlBySlug.get('/');
+  assert.match(home, /<meta name="description" content="[^"]*Coming soon to Merrillville\. Online booking is open for visits from November 20\.">/);
+  assert.match(home, /<div class="hero-actions"><a class="button" href="https:\/\/d2oe0ra32qx05a\.cloudfront\.net\/\?practiceKey=k_1_117405"[^>]*data-book-online>Book online<span class="visually-hidden"> \(opens a new tab\)<\/span><\/a><a class="hero-explore" href="\/founding-patients\/">Join the Launch List /);
+  assert.match(home, /<h3>Book when you are ready\.<\/h3><p>Online booking is open for visits from November 20\. Book online or call \(219\) 207-2456\.<\/p>/);
   assert.equal(site.launch.date, '2026-11-20');
   assert.match(home, /Planned launch: November 20, 2026/);
   assert.doesNotMatch(home, /November 4, 2026|2026-11-04/);
@@ -831,7 +847,7 @@ test('homepage names the planned care and location without suggesting bookings a
   assert.match(readability, /\.announcement \.announcement-cta\{[^}]*min-height:3rem/);
 });
 
-test('the QR landing page explains the $49 promotional labs offer without promising a reserved appointment', () => {
+test('the QR landing page leads with the grand-opening offer, keeps the reviewed fine print and does not treat the Launch List as a booking', () => {
   const html = htmlBySlug.get('/founding-patients/');
   assert.match(html, /<h1 id="page-title">Merrillville, meet Apex\.<\/h1>/);
   assert.match(html, /Join the Apex Launch List with your name, email and phone number/);
@@ -844,21 +860,26 @@ test('the QR landing page explains the $49 promotional labs offer without promis
   assert.doesNotMatch(html, /src="\/assets\/images\/apex-hero-consultation\.webp/);
   const offer = html.match(/<div class="launch-offer">([\s\S]*?)<\/div>/)?.[1];
   assert.ok(offer);
+  assert.ok(
+    offer.startsWith('<h2>Grand opening: $49 for labs and your first visit</h2><p class="offer-limit">First 50 appointments scheduled.</p><p class="offer-terms">$49 covers your first visit and the promotional labs.'),
+    'the offer block must lead with the grand-opening headline, then the first-50 line, then the fine print',
+  );
   for (const phrase of [
-    'First 50 appointments · $49 promotional labs',
-    'Promotional labs for $49.',
     '$49 covers your first visit and the promotional labs. Labs as clinically appropriate. One per person. First 50 appointments scheduled. Additional testing or treatment is separate. Appointments subject to availability.',
-    'Call (219) 207-2456 to schedule, or join the Launch List for updates.',
-    'not a reservation'
+    'Book online or call (219) 207-2456 to schedule, or join the Launch List for updates.',
+    'not a reservation',
+    '<p class="clinic-hours"><strong>Hours from November 20</strong><br>Wednesday, Thursday and Friday: 11 a.m. to 5 p.m.<br>Saturday: 9 a.m. to 1 p.m.<br>Closed Sunday through Tuesday.<br>Closed Thanksgiving Day, November 26.</p>'
   ]) assert.ok(offer.includes(phrase), `launch offer is missing: ${phrase}`);
-  assert.doesNotMatch(offer, /\bfree\b|on us|no charge|assessment|included|appointments are available|book now/i);
+  assert.doesNotMatch(offer, /\bfree\b|on us|no charge|assessment|included|appointments are available|book now|!/i);
   assert.ok(html.includes('$49'));
   assert.ok(html.includes('first visit'));
   assert.doesNotMatch(html, /first 100/i);
-  assert.match(html, /<meta name="description" content="Promotional labs for \$49 for the first 50 appointments scheduled; the \$49 covers your first visit and the labs\. Call \(219\) 207-2456 or join the Apex Launch List\.">/);
+  assert.match(html, /<meta name="description" content="Grand opening: promotional labs for \$49\. The \$49 covers your first visit and the labs, for the first 50 appointments scheduled\. Book online or call \(219\) 207-2456\.">/);
+  assert.match(html, /Online booking is open for visits from November 20\. You can also join the list for opening updates; signing up does not book a visit\./);
+  // The offer keeps its established name on the printed-QR page.
   assert.match(html, /How does the \$49 promotional labs offer work\?/);
-  assert.match(html, /The launch offer is promotional labs for \$49 for the first 50 appointments scheduled\. The \$49 covers your first visit and the promotional labs\. Labs as clinically appropriate\. One per person\. Additional testing or treatment is separate\. Appointments subject to availability\./);
-  assert.match(html, /<p class="cta-note">The Launch List costs nothing to join\. No appointment booked\. No commitment to care\.<\/p>/);
+  assert.match(html, /The grand-opening offer is promotional labs for \$49 for the first 50 appointments scheduled\. The \$49 covers your first visit and the promotional labs\. Labs as clinically appropriate\. One per person\. Additional testing or treatment is separate\. Appointments subject to availability\. To schedule, book online or call \(219\) 207-2456\./);
+  assert.match(html, /<p class="cta-note">The Launch List costs nothing to join\. Joining does not book an appointment\. No commitment to care\.<\/p>/);
   assert.doesNotMatch(html, /<p class="cta-note">[^<]*\bfree\b/i);
   assert.match(html, /<form id="consultation-form" action="\/api\/founding-consultation"/);
   assert.doesNotMatch(html, /APEXNOV|Free initial in-house testosterone test/);
@@ -867,34 +888,49 @@ test('the QR landing page explains the $49 promotional labs offer without promis
   assert.doesNotMatch(html, /before anywhere else|first access|Takes ten seconds/);
 });
 
-test('Book online opens the Tebra scheduling page in a new tab from the two launch-offer blocks only', async () => {
-  const bookingUrl = 'https://d2oe0ra32qx05a.cloudfront.net/?practiceKey=k_1_117405';
-  const button = `<a class="button" href="${bookingUrl}" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer" aria-describedby="book-online-note" data-book-online>Book online</a>`;
+const bookingUrl = 'https://d2oe0ra32qx05a.cloudfront.net/?practiceKey=k_1_117405';
+const bookingStatus = 'Online booking is open for visits from November 20.';
+// The four ad landing pages, the men's page that shares their template, and nothing else.
+const offerBandPages = new Set(['/weight-management/', '/hormone-care-merrillville/', '/womens-midlife-care/', '/hair-loss-care/', '/mens-hormone-health/']);
+
+test('every Book online link is the one exact Tebra address, opened in a new tab without a referrer', async () => {
+  const offerButton = `<a class="button" href="${bookingUrl}" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer" aria-describedby="book-online-note" data-book-online>Book online</a>`;
   const note = '<p id="book-online-note" class="book-online-note">Online booking opens our secure scheduling page (Tebra) in a new tab. Prefer the phone? Call <a href="tel:+12192072456">(219) 207-2456</a>.</p>';
-  const offerPages = new Set(['/founding-patients/', '/plan-your-visit/']);
 
   for (const [slug, html] of htmlBySlug) {
     const mentions = html.split('cloudfront.net').length - 1;
-    if (!offerPages.has(slug)) {
-      assert.equal(mentions, 0, `${slug} must not link to online booking`);
-      assert.doesNotMatch(html, /data-book-online|Book online/, `${slug} must not show a Book online button`);
-      continue;
-    }
-    // One plain link: no script, frame, image, pixel or tracking parameter points at the booking host.
-    assert.equal(mentions, 1, `${slug} should reference the booking host exactly once`);
-    assert.ok(html.includes(`<p class="book-online">${button}</p>${note}`), `${slug} is missing the Book online button and note`);
+    const bookingLinks = startTags(html, 'a').filter(({ attrs }) => 'data-book-online' in attrs);
+    // Plain links only: no script, frame, image, pixel, form or tracking parameter points at the booking host.
+    assert.equal(mentions, bookingLinks.length, `${slug} may reference the booking host only in Book online links`);
     assert.doesNotMatch(html, /cloudfront\.net[^"]*(?:utm_|&)/, `${slug} must not add parameters to the booking address`);
+    for (const { attrs, raw } of bookingLinks) {
+      assert.equal(attrs.href, bookingUrl, `${slug} Book online must use the exact booking address`);
+      assert.equal(attrs.target, '_blank', `${slug} Book online opens a new tab`);
+      assert.equal(attrs.rel, 'noopener noreferrer', `${slug} Book online must not expose the opener or referrer`);
+      assert.equal(attrs.referrerpolicy, 'no-referrer', `${slug} Book online sends no referrer`);
+      assert.ok(attrs['aria-describedby'] === 'book-online-note' || html.includes(`${raw}Book online<span class="visually-hidden"> (opens a new tab)</span></a>`), `${slug} Book online must say it opens a new tab`);
+    }
+    for (const { attrs } of startTags(html, 'a').filter(({ attrs }) => (attrs.href || '').includes('cloudfront.net'))) {
+      assert.ok('data-book-online' in attrs, `${slug} booking links must carry data-book-online so first-party measurement counts them`);
+    }
+  }
+
+  // Blog index and policy pages stay informational: no booking link.
+  for (const slug of ['/blog/', '/privacy/', '/terms/', '/communications-consent/', '/accessibility/', '/cancellation-refunds/']) {
+    assert.doesNotMatch(htmlBySlug.get(slug), /data-book-online/, `${slug} must not carry a Book online link`);
   }
 
   const landing = htmlBySlug.get('/founding-patients/');
+  assert.equal(landing.split(`<p class="book-online">${offerButton}</p>${note}`).length - 1, 1, 'the QR page offer block has one Book online button and note');
   const offer = landing.match(/<div class="launch-offer">([\s\S]*?)<\/div>/)?.[1];
-  assert.ok(offer.includes(button), 'the button belongs inside the $49 offer block');
-  assert.ok(offer.indexOf('Call (219) 207-2456 to schedule, or join the Launch List for updates.') < offer.indexOf(button));
+  assert.ok(offer.includes(offerButton), 'the button belongs inside the $49 offer block');
+  assert.ok(offer.indexOf('Book online or call (219) 207-2456 to schedule, or join the Launch List for updates.') < offer.indexOf(offerButton), 'the fine print comes before the button');
   assert.match(landing, /<form id="consultation-form" action="\/api\/founding-consultation"/);
 
   const visit = htmlBySlug.get('/plan-your-visit/');
-  const costBox = visit.match(/<div class="visit-fact"><strong>Promotional labs for \$49\.<\/strong>([\s\S]*?)<\/div>/)?.[1];
-  assert.ok(costBox?.includes(button), 'the button belongs inside the Plan Your Visit cost box');
+  assert.equal(visit.split(`<p class="book-online">${offerButton}</p>${note}`).length - 1, 1, 'the Plan Your Visit cost box has one Book online button and note');
+  const costBox = visit.match(/<div class="visit-fact"><strong>Grand opening: \$49 for labs and your first visit<\/strong>([\s\S]*?)<\/div>/)?.[1];
+  assert.ok(costBox?.includes(offerButton), 'the button belongs inside the Plan Your Visit cost box');
   assert.match(visit, /<form id="consultation-form" action="\/api\/appointment-contact"/);
   assert.doesNotMatch(visit, /Continue to Tebra|Continue to scheduling/);
 
@@ -903,19 +939,101 @@ test('Book online opens the Tebra scheduling page in a new tab from the two laun
   assert.doesNotMatch(measurement, /cloudfront|book_online/);
 });
 
+test('the ad landing pages open with the grand-opening offer band above the page title', () => {
+  const bookOnline = `<a class="button" href="${bookingUrl}" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer" data-book-online>Book online<span class="visually-hidden"> (opens a new tab)</span></a>`;
+  const band = `<aside class="offer-band" aria-label="Grand opening offer"><div class="container offer-band-inner">
+      <div class="offer-band-copy">
+        <p class="offer-band-headline">Grand opening: $49 for labs and your first visit</p>
+        <p class="offer-band-limit">First 50 appointments scheduled. <a href="/founding-patients/">Offer details</a></p>
+      </div>
+      <div class="offer-band-actions">${bookOnline}<a class="button-secondary" href="tel:+12192072456">Call 219-207-2456</a></div>
+    </div></aside>`;
+
+  for (const [slug, html] of htmlBySlug) {
+    const bands = html.split('class="offer-band"').length - 1;
+    if (!offerBandPages.has(slug)) {
+      assert.equal(bands, 0, `${slug} must not carry the offer band`);
+      continue;
+    }
+    assert.equal(bands, 1, `${slug} needs exactly one offer band`);
+    assert.ok(html.replace(/\r\n/g, '\n').includes(band), `${slug} offer band content changed`);
+    // Directly under the site header and before the hero, so it shows without scrolling on a phone.
+    assert.ok(html.indexOf('class="offer-band"') > html.indexOf('</header>'), `${slug} band follows the site header`);
+    assert.ok(html.indexOf('class="offer-band"') < html.indexOf('<section class="hero"'), `${slug} band comes before the hero`);
+    assert.equal(startTags(html, 'h1').length, 1, `${slug} keeps one H1`);
+    // The hero offers Book online first; the Launch List stays as the second option.
+    assert.match(html, new RegExp(`<div class="hero-actions">${bookOnline.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}<a class="button-secondary" href="/founding-patients/">(?:Join the Launch List|Get opening updates)</a></div>`), `${slug} hero actions`);
+    assert.ok(html.includes(bookingStatus), `${slug} must say online booking is open`);
+    assert.match(html, /Coming soon/, `${slug} keeps the clinic's Coming soon status`);
+  }
+  assert.equal([...offerBandPages].filter((slug) => htmlBySlug.has(slug)).length, 5);
+
+  const css = htmlBySlug.get('/weight-management/').match(/href="(\/assets\/site-design\.css[^"]*)"/)?.[1];
+  assert.ok(css, 'the band is styled by the shared stylesheet, not a new asset');
+});
+
+test('no generated page, guide answer or email still says scheduling or booking is not open', async () => {
+  const notOpen = /scheduling is not (?:open|available)|scheduling has not opened|not open yet|not booking appointments|appointments are not (?:open|available)|appointments and care are not available|nothing can be booked|not being scheduled|(?:when|before|once|after|until) scheduling (?:opens|begins|becomes|is confirmed)|before (?:booking|appointments) (?:opens?|become)|ready to schedule|appointment requests are coming soon|first access to booking|will open only after/i;
+  for (const [slug, html] of htmlBySlug) assert.doesNotMatch(html, notOpen, `${slug} still says booking is not open`);
+  for (const file of ['404.html', 'assets/site-assistant.js', 'assets/site.js', 'blog/feed.xml']) {
+    assert.doesNotMatch(await readFile(join(publicRoot, ...file.split('/')), 'utf8'), notOpen, `${file} still says booking is not open`);
+  }
+  for (const name of ['content.mjs', 'visit-details.mjs', 'visit-planner.mjs', 'nearby-visit-pages.mjs', 'hormone-care-hub.mjs', 'womens-hrt-page.mjs', 'launch-email-copy.mjs', 'launch-email.mjs']) {
+    assert.doesNotMatch(await readFile(join(projectRoot, 'src', name), 'utf8'), notOpen, `src/${name} still says booking is not open`);
+  }
+
+  // The true state is stated where people look for it, and the clinic's own opening status stays.
+  for (const slug of ['/', '/founding-patients/', '/plan-your-visit/', '/merrillville/', '/faq/', '/how-it-works/', '/pricing/', '/visit-from-munster/', '/visit-from-crown-point/', '/visit-from-schererville/', '/womens-hormone-replacement-therapy/', ...offerBandPages]) {
+    assert.ok(htmlBySlug.get(slug).includes(bookingStatus), `${slug} must say online booking is open`);
+  }
+  for (const [slug, html] of htmlBySlug) {
+    if (slug !== '/founding-patients/') assert.match(html, /class="announcement-copy">Planned launch: November 20, 2026/, `${slug} keeps the opening date`);
+    assert.match(html, /Coming soon/, `${slug} keeps the clinic's Coming soon status`);
+  }
+
+  // Clinic hours where the site talks about visiting or booking.
+  const hours = '<strong>Hours from November 20</strong><br>Wednesday, Thursday and Friday: 11 a.m. to 5 p.m.<br>Saturday: 9 a.m. to 1 p.m.<br>Closed Sunday through Tuesday.<br>Closed Thanksgiving Day, November 26.';
+  assert.ok(htmlBySlug.get('/plan-your-visit/').includes(`<div class="visit-fact"><p class="clinic-hours">${hours}</p></div>`), 'Plan Your Visit lists the hours');
+  assert.match(htmlBySlug.get('/merrillville/'), /<dt>Hours from November 20<\/dt><dd>Wednesday, Thursday and Friday: 11 a\.m\. to 5 p\.m\.<br>Saturday: 9 a\.m\. to 1 p\.m\.<br>Closed Sunday through Tuesday\.<br>Closed Thanksgiving Day, November 26\.<\/dd>/);
+  assert.match(htmlBySlug.get('/faq/'), /Hours from November 20: Wednesday, Thursday and Friday, 11 a\.m\. to 5 p\.m\. Saturday, 9 a\.m\. to 1 p\.m\. Closed Sunday through Tuesday\. Closed Thanksgiving Day, November 26\./);
+});
+
+test('new booking and offer copy follows the public-copy rules', () => {
+  // No "free" offer, no named lab tests or prescription drugs, no outcome promises, no clinician claims, no exclamation marks.
+  const forbidden = /\bfree\b|testosterone|\bPSA\b|vitamin D|\bTSH\b|\bT4\b|\bTRT\b|low T\b|semaglutide|tirzepatide|before and after|guarantee|\bdoctor\b|physician|!/i;
+  for (const slug of offerBandPages) {
+    const band = htmlBySlug.get(slug).match(/<aside class="offer-band"[\s\S]*?<\/aside>/)?.[0];
+    assert.ok(band, `${slug} offer band`);
+    assert.doesNotMatch(band.replace(/<[^>]+>/g, ' '), forbidden, `${slug} offer band copy`);
+  }
+  for (const [slug, pattern] of [
+    ['/founding-patients/', /<div class="launch-offer">[\s\S]*?<\/div>/],
+    ['/plan-your-visit/', /<div class="visit-fact"><strong>Grand opening[\s\S]*?<\/div>/],
+  ]) {
+    const block = htmlBySlug.get(slug).match(pattern)?.[0];
+    assert.ok(block, `${slug} offer block`);
+    assert.doesNotMatch(block.replace(/<[^>]+>/g, ' '), forbidden, `${slug} offer block copy`);
+  }
+  for (const [slug, html] of htmlBySlug) {
+    // Nothing on the site says who a patient will see at a first visit or how results are reviewed.
+    assert.doesNotMatch(html, /you(?:’|')ll (?:see|meet with) (?:our|the|a) (?:nurse practitioner|provider|clinician)|your first visit is with|results (?:are|will be) reviewed by/i, `${slug} must not state who is seen or how results are reviewed`);
+  }
+});
+
 test('the retired launch-offer wording is absent from every generated page', async () => {
   const retired = /first[ -]100|100 assessments|free initial|free (?:wellness )?assessment|selected (?:baseline )?labs|baseline labs|no purchase|assessments, on us/i;
   for (const [slug, html] of htmlBySlug) assert.doesNotMatch(html, retired, `${slug} still carries the retired offer wording`);
   assert.doesNotMatch(await readFile(join(publicRoot, '404.html'), 'utf8'), retired);
 
   const visit = htmlBySlug.get('/plan-your-visit/');
-  assert.match(visit, /<strong>Promotional labs for \$49\.<\/strong>/);
+  assert.match(visit, /<strong>Grand opening: \$49 for labs and your first visit<\/strong><p class="offer-limit">First 50 appointments scheduled\.<\/p>/);
   assert.match(visit, /\$49 covers your first visit and the promotional labs\. Labs as clinically appropriate\. One per person\. First 50 appointments scheduled\. Additional testing or treatment is separate\. Appointments subject to availability\./);
-  assert.match(visit, /Call <a href="tel:\+12192072456">\(219\) 207-2456<\/a> to schedule, or join the Launch List for updates\./);
+  assert.match(visit, /Book online or call <a href="tel:\+12192072456">\(219\) 207-2456<\/a> to schedule, or join the Launch List for updates\./);
   assert.match(visit, /data-help-question="How does the \$49 promotional labs offer work\?">\$49 labs<\/button>/);
+  assert.match(visit, /data-help-question="How do I book a visit\?">Book a visit<\/button><button type="button" data-help-question="What are your hours\?">Hours<\/button>/);
 
   const story = htmlBySlug.get('/blog/before-the-doors-open-apex-wellness/');
-  assert.match(story, /Our launch offer is promotional labs for \$49 for the first 50 appointments scheduled\. The \$49 covers your first visit and the promotional labs\. Labs as clinically appropriate\. One per person\. Additional testing or treatment is separate\. Appointments subject to availability\./);
+  assert.match(story, /Our grand-opening offer is promotional labs for \$49 for the first 50 appointments scheduled\. The \$49 covers your first visit and the promotional labs\. Labs as clinically appropriate\. One per person\. Additional testing or treatment is separate\. Appointments subject to availability\. Book online or call \(219\) 207-2456 to schedule/);
 });
 
 test('all CSS assets and self-hosted fonts resolve without third-party runtime calls', async () => {

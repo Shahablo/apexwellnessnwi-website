@@ -1,6 +1,6 @@
 export const womensHrtPage = {
   "slug": "/womens-hormone-replacement-therapy/",
-  "modified": "2026-11-01",
+  "modified": "2026-11-16",
   "navLabel": "Women's HRT",
   "title": "Women's Hormone Replacement Therapy in Merrillville | Apex Wellness",
   "description": "Explore planned women’s hormone replacement therapy at Apex Wellness in Merrillville, including menopause symptoms, potential benefits, options and FAQs.",
@@ -12,7 +12,7 @@ export const womensHrtPage = {
     "label": "Get women's HRT opening updates",
     "href": "/founding-patients/"
   },
-  "ctaNote": "Coming soon. Joining the Launch List does not book an appointment.",
+  "ctaNote": "Coming soon. Online booking is open for visits from November 20. Joining the Launch List does not book an appointment.",
   "sections": [
     {
       "type": "options",
@@ -89,7 +89,7 @@ export const womensHrtPage = {
       "type": "detail",
       "heading": "What might treatment involve?",
       "eyebrow": "Know your options",
-      "body": "Depending on the evaluation, options may include estrogen patches, gels or tablets; progesterone or another form of uterine protection when needed; local vaginal treatment; or non-hormonal care. Exact Apex treatment availability will be confirmed before booking."
+      "body": "Depending on the evaluation, options may include estrogen patches, gels or tablets; progesterone or another form of uterine protection when needed; local vaginal treatment; or non-hormonal care. Exact Apex treatment availability is still being confirmed."
     },
     {
       "type": "detail",
@@ -115,11 +115,11 @@ export const womensHrtPage = {
         },
         {
           "question": "Will Apex offer hormone pellets?",
-          "answer": "Pellet procedures are not confirmed. Available treatments and follow-up arrangements will be explained before scheduling."
+          "answer": "Pellet procedures are not confirmed. Available treatments and follow-up arrangements will be explained before treatment."
         },
         {
           "question": "What will care cost?",
-          "answer": "Fees and what they include will be shared before booking. Join the Launch List for updates."
+          "answer": "Fees and what they include will be posted on the Pricing page. Join the Launch List for updates."
         }
       ]
     },

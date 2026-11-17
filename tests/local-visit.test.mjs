@@ -17,7 +17,7 @@ test('the location route is discoverable and shows clinic hours, opening status 
   assert.ok(location.includes(`<dt>Availability</dt><dd>Coming soon. Online booking is open for visits from November 20. ${bookOnlineLink}</dd>`));
   assert.ok(location.includes('<dt>Hours from November 20</dt><dd>Wednesday, Thursday and Friday: 11 a.m. to 5 p.m.<br>Saturday: 9 a.m. to 1 p.m.<br>Closed Sunday through Tuesday.<br>Closed Thanksgiving Day, November 26.</dd>'));
   assert.match(location, /Walk-in visits have not been announced/);
-  assert.match(location, /Visits are planned to be in person at launch/);
+  assert.match(location, /Visits are in person/);
   assert.match(location, /data-photo-kind="documentary"/);
   assert.doesNotMatch(location, /<iframe|<form[^>]*action="https?:|aggregateRating|Book now|Scheduling is not open/i);
   const mapLink = [...location.matchAll(/href="([^"]+)"/g)].map(m => m[1].replaceAll('&amp;', '&')).find(href => href.startsWith('https://www.google.com/maps/dir/'));

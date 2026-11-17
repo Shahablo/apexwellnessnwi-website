@@ -25,7 +25,7 @@ export const nearbyVisitPages = Object.freeze({
       { type: 'linkCards', eyebrow: 'Before a future visit', heading: 'Keep the useful details together.', items: [
         { title: 'Check the drive', body: 'Start with Munster, then replace the map origin with your actual address. No townwide drive time is promised.', href: directionsFrom('Munster, IN'), label: 'Open live directions' },
         { title: 'Considering transit?', body: 'Check current GPTC routes and the final part of the trip yourself. Apex has not verified a direct Munster-to-Suite B connection.', href: 'https://gptcbus.com/routes/', label: 'Check GPTC routes' },
-        { title: 'One clinic address', body: 'See the Merrillville location, clinic hours, planned in-person format and what Apex still needs to confirm before visits begin.', href: '/merrillville/', label: 'See our location' }
+        { title: 'One clinic address', body: 'See the Merrillville location, clinic hours, in-person format and what Apex still needs to confirm before visits begin.', href: '/merrillville/', label: 'See our location' }
       ] },
       { type: 'faq', heading: 'Questions from Munster', items: [
         { question: 'Does Apex have a Munster office?', answer: 'No. Apex is preparing one clinic at 8550 Broadway, Suite B, Merrillville, IN 46410. This page helps Munster visitors plan for that location.' },
@@ -45,14 +45,14 @@ export const nearbyVisitPages = Object.freeze({
     secondaryCta: { label: 'Directions from Crown Point', href: directionsFrom('Crown Point, IN') },
     ctaNote: 'Coming soon. Directions are for planning, not a booked visit. Photo: Shahab preparing the Apex storefront in Merrillville, October 2026.',
     sections: [
-      { type: 'detail', eyebrow: 'The Broadway connection', heading: 'One road name, one Apex address.', body: 'Crown Point’s street map labels Broadway/State Road 53. Apex’s planned clinic is on Broadway in Merrillville, so the town name and Suite B matter when you enter directions. Check the live route for your starting point and any roadwork instead of relying on a fixed travel-time estimate.' },
+      { type: 'detail', eyebrow: 'The Broadway connection', heading: 'One road name, one Apex address.', body: 'Crown Point’s street map labels Broadway/State Road 53. Apex’s clinic is on Broadway in Merrillville, so the town name and Suite B matter when you enter directions. Check the live route for your starting point and any roadwork instead of relying on a fixed travel-time estimate.' },
       { type: 'linkCards', eyebrow: 'Drive or transit', heading: 'Choose the trip you can verify.', items: [
         { title: 'Driving from Crown Point', body: 'Open current directions to the exact Merrillville address, then replace the suggested origin with your own starting point.', href: directionsFrom('Crown Point, IN'), label: 'Open live directions' },
         { title: 'Checking the Broadway bus', body: 'GPTC lists Broadway Metro Express service through Crown Point and Merrillville. Confirm the current schedule, nearest stop and final walking route; Apex has not verified a stop at Suite B.', href: 'https://gptcbus.com/routes/', label: 'Check GPTC service' },
         { title: 'The actual clinic', body: 'See the one Merrillville location, clinic hours and what arrival details remain to be confirmed.', href: '/merrillville/', label: 'See our location' }
       ] },
       { type: 'faq', heading: 'Questions from Crown Point', items: [
-        { question: 'Is Apex located in Crown Point?', answer: 'No. Apex has one planned clinic at 8550 Broadway, Suite B, Merrillville, IN 46410. This page is for people coming from Crown Point.' },
+        { question: 'Is Apex located in Crown Point?', answer: 'No. Apex has one clinic at 8550 Broadway, Suite B, Merrillville, IN 46410. This page is for people coming from Crown Point.' },
         { question: 'Will the Broadway bus drop me at the clinic?', answer: 'We have not verified a stop or accessible final walk at Suite B. Check GPTC’s current route information before planning a transit trip. Apex will share confirmed arrival details before appointments begin.' }
       ] }
     ]
@@ -63,7 +63,7 @@ export const nearbyVisitPages = Object.freeze({
     description: 'Starting in Schererville? Compare live routes from the US 41/US 30 crossroads or downtown to Apex Wellness at its one Merrillville clinic.',
     eyebrow: 'For Schererville neighbors · Coming soon',
     h1: 'Coming from Schererville? Start where you are.',
-    intro: 'A route from the US 41/US 30 crossroads may look different from one starting in downtown Schererville. Both lead to the same planned Apex clinic at 8550 Broadway, Suite B, Merrillville. Use a live map before traveling. Online booking is open for visits from November 20.',
+    intro: 'A route from the US 41/US 30 crossroads may look different from one starting in downtown Schererville. Both lead to the same Apex clinic at 8550 Broadway, Suite B, Merrillville. Use a live map before traveling. Online booking is open for visits from November 20.',
     heroImage: 'behindPosters',
     cta: bookingPage,
     secondaryCta: { label: 'Directions from Schererville', href: directionsFrom('Schererville, IN') },
@@ -76,7 +76,7 @@ export const nearbyVisitPages = Object.freeze({
         { title: 'Where the trip ends', body: 'Apex is preparing one Merrillville office, not a Schererville branch. See the confirmed address and opening status.', href: '/merrillville/', label: 'See our location' }
       ] },
       { type: 'faq', heading: 'Questions from Schererville', items: [
-        { question: 'Is there an Apex office at the US 41/US 30 crossroads?', answer: 'No. The crossroads is only a suggested starting point for directions. Apex’s one planned office is at 8550 Broadway, Suite B, Merrillville, IN 46410.' },
+        { question: 'Is there an Apex office at the US 41/US 30 crossroads?', answer: 'No. The crossroads is only a suggested starting point for directions. Apex’s one office is at 8550 Broadway, Suite B, Merrillville, IN 46410.' },
         { question: 'How long will it take to get there?', answer: 'That depends on your starting point and current conditions. Use the live directions above; Apex is not publishing a single drive time for all of Schererville.' }
       ] }
     ]

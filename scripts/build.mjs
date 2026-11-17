@@ -414,7 +414,7 @@ function pricingMarkup(items) {
       ${items.map((item) => `<tr><th scope="row">${escapeHtml(item.title)}</th><td>${escapeHtml(item.body)}</td></tr>`).join("\n")}
     </tbody>
   </table>
-  <div class="pricing-cards" aria-label="Planned pricing details">
+  <div class="pricing-cards" aria-label="Pricing details">
     ${items.map((item) => `<article class="pricing-card">
       <h3>${escapeHtml(item.title)}</h3>
       <dl><dt>Status</dt><dd>Not yet published</dd><dt>What Apex will explain</dt><dd>${escapeHtml(item.body)}</dd></dl>
@@ -603,7 +603,7 @@ function renderHero(pageKey, page) {
     <div class="signature-image">${imageMarkup(imageCatalog.shoreline, { hero: true })}</div>
     <div class="container signature-content"><p class="eyebrow">Wellness · Northwest Indiana</p>
       <h1 id="page-title">${escapeHtml(page.headlineLead)} <em>${escapeHtml(page.headlineEmphasis)}</em></h1>
-      <div class="signature-bottom"><div><p>${escapeHtml(page.intro)}</p><div class="hero-actions">${bookOnlineUrl() ? bookOnlineLinkMarkup("button") : buttonMarkup(site.cta)}<a class="hero-explore" href="#care-areas">Explore care areas <span aria-hidden="true">↗</span></a></div></div><p class="signature-launch"><span class="launch-dot" aria-hidden="true"></span>Planned launch<br><strong>${escapeHtml(site.launch.label)}</strong><span class="signature-launch-note">Coming soon · Subject to readiness</span></p></div>
+      <div class="signature-bottom"><div><p>${escapeHtml(page.intro)}</p><div class="hero-actions">${bookOnlineUrl() ? bookOnlineLinkMarkup("button") : buttonMarkup(site.cta)}<a class="hero-explore" href="#care-areas">Explore care areas <span aria-hidden="true">↗</span></a></div></div><p class="signature-launch"><span class="launch-dot" aria-hidden="true"></span>Opening<br><strong>${escapeHtml(site.launch.label)}</strong><span class="signature-launch-note">Coming soon · Subject to readiness</span></p></div>
     </div>
   </section>`;
   const image = imageForPage(pageKey, page);
@@ -678,7 +678,7 @@ function renderHome(page) {
 }
 
 function renderLaunchCta() {
-  return `<section class="section launch-section" aria-labelledby="launch-heading"><div class="container launch-section-inner"><div><p class="eyebrow">${escapeHtml(site.launch.status)} · ${escapeHtml(site.launch.label)}</p><h2 id="launch-heading">Be part of<br><em>what comes next.</em></h2></div><div class="launch-section-copy"><p>${escapeHtml(bookingStatus)}</p><div class="button-row">${bookOnlineUrl() ? `${bookOnlineLinkMarkup("button")}<a class="button-secondary" href="/plan-your-visit/">Plan your first visit</a>` : buttonMarkup(site.cta)}</div><p class="quiet-note">Launch timing and availability may change.</p></div></div></section>`;
+  return `<section class="section launch-section" aria-labelledby="launch-heading"><div class="container launch-section-inner"><div><p class="eyebrow">${escapeHtml(site.launch.status)} · ${escapeHtml(site.launch.label)}</p><h2 id="launch-heading">Be part of<br><em>what comes next.</em></h2></div><div class="launch-section-copy"><p>${escapeHtml(bookingStatus)}</p><div class="button-row">${bookOnlineUrl() ? `${bookOnlineLinkMarkup("button")}<a class="button-secondary" href="/plan-your-visit/">Plan your first visit</a>` : buttonMarkup(site.cta)}</div></div></div></section>`;
 }
 
 function renderBlogInline(paragraph, richText) {
@@ -1275,7 +1275,7 @@ async function build() {
     description: "The requested Apex Wellness page could not be found.",
     eyebrow: "404 · Page not found",
     h1: "We could not find that page.",
-    intro: "The address may have changed. Return home or review the planned areas of care.",
+    intro: "The address may have changed. Return home or review the areas of care.",
   };
   const notFoundJsonLd = pageJsonLd(notFoundPage);
   const notFoundMain = `<main id="main-content" class="page" tabindex="-1"><section class="hero" aria-labelledby="page-title"><div class="container section-narrow"><p class="eyebrow">${escapeHtml(notFoundPage.eyebrow)}</p><h1 id="page-title">${escapeHtml(notFoundPage.h1)}</h1><p>${escapeHtml(notFoundPage.intro)}</p><div class="button-row"><a class="button" href="/">Return home</a><a class="button-secondary" href="/founding-patients/">Book online</a></div></div></section></main>`;

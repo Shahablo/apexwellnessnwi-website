@@ -41,13 +41,13 @@ test('site guide answers known questions using bounded local information', () =>
   ]) assert.equal(answerWebsiteQuestion(question).href, path);
 });
 test('launch date is supplied by site configuration', () => {
-  assert.match(answerWebsiteQuestion('When do you open?', 'November 20, 2026').text, /planned launch is November 20, 2026/);
+  assert.match(answerWebsiteQuestion('When do you open?', 'November 20, 2026').text, /Apex opens November 20, 2026/);
 });
 
 test('the location answer preserves in-person-only launch plans and says online booking is open', () => {
   const answer = answerWebsiteQuestion('Do you offer telehealth?');
   assert.equal(answer.href, '/merrillville/');
-  assert.match(answer.text, /telehealth is not planned for launch/);
+  assert.match(answer.text, /telehealth is not offered/);
   assert.match(answer.text, /Coming soon/);
   assert.ok(answer.text.includes(bookingStatus));
   assert.ok(answer.text.includes(clinicHours.sentence));

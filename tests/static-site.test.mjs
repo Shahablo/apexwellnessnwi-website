@@ -418,7 +418,7 @@ test("deployment artifacts protect dotfiles and define site-wide security header
   }
   const cspLines = headers.split(/\r?\n/).filter((line) => /^\s+Content-Security-Policy:/i.test(line));
   assert.equal(cspLines.length, 1, "_headers must define one site-wide CSP");
-  assert.match(cspLines[0], /(?:^|;) script-src 'self'(?:;|$)/, "only same-origin executable scripts are allowed");
+  assert.match(cspLines[0], /(?:^|;) script-src 'self' https:\/\/www\.googletagmanager\.com https:\/\/www\.googleadservices\.com https:\/\/googleads\.g\.doubleclick\.net https:\/\/www\.google\.com https:\/\/google\.com https:\/\/pagead2\.googlesyndication\.com(?:;|$)/, "only same-origin scripts and the Google tag hosts are allowed");
   assert.doesNotMatch(cspLines[0], /'unsafe-inline'|'unsafe-eval'|'sha(?:256|384|512)-/i, "CSP must not allow inline execution or collect per-page JSON-LD hashes");
   assert.match(siteCss, /@media\s*\(scripting:\s*none\)[\s\S]*?\.nav-toggle\s*\{[\s\S]*?display:\s*none/i, "the no-JavaScript fallback must hide the inert menu toggle");
   assert.match(siteCss, /@media\s*\(scripting:\s*none\)[\s\S]*?\.site-nav\s*\{[\s\S]*?display:\s*flex[\s\S]*?max-height:\s*none[\s\S]*?overflow:\s*visible/i, "the no-JavaScript fallback must expose the complete mobile navigation");
@@ -547,7 +547,14 @@ test('measurement is first-party, aggregate, and excludes advertising vendors an
   assert.match(measurement, /utm_campaign/);
   assert.match(measurement, /form_submit_success/);
   assert.doesNotMatch(measurement, /XMLHttpRequest|localStorage|sessionStorage|document\.cookie|userAgent|FormData|\.value|textContent/);
-  assert.doesNotMatch(html, /googletagmanager|google-analytics|connect\.facebook\.net|clarity\.ms|hotjar|segment|mixpanel/i);
+  // The Google tag for Google Ads is the one third-party script (owner decision November 17, 2026).
+  assert.match(html, /<script src="https:\/\/www\.googletagmanager\.com\/gtag\/js\?id=AW-18529444653" async><\/script>/);
+  const googleTag = await readFile(join(publicRoot, 'assets', 'google-tag.js'), 'utf8');
+  assert.match(googleTag, /gtag\('set', 'allow_ad_personalization_signals', false\)/);
+  assert.match(googleTag, /gtag\('set', 'allow_google_signals', false\)/);
+  assert.match(googleTag, /gtag\('config', 'AW-18529444653'\)/);
+  assert.doesNotMatch(googleTag, /user_data|email|phone|FormData|\.value/);
+  assert.doesNotMatch(html, /google-analytics|connect\.facebook\.net|clarity\.ms|hotjar|segment|mixpanel|GTM-[A-Z0-9]/i);
 });
 
 test("blog pages expose article semantics, dates, sources, and a valid RSS feed", async () => {
@@ -597,7 +604,8 @@ test("future-dated blog posts stay out of public pages, the sitemap, and the fee
 
 test('all runtime scripts exist as deployable assets and the site guide stays local', async () => {
   for (const [slug, html] of htmlBySlug) {
-    for (const { attrs } of startTags(html, 'script').filter(({attrs}) => attrs.src)) {
+    // The Google tag is the one script loaded from another host; it is checked in the measurement test.
+    for (const { attrs } of startTags(html, 'script').filter(({attrs}) => attrs.src && !attrs.src.startsWith('https://www.googletagmanager.com/gtag/js?id=AW-'))) {
       const path = new URL(attrs.src, site.canonicalUrl).pathname;
       assert.equal(extname(path), '.js', `${slug} script must use deployable .js output`);
       assert.ok(existsSync(outputTargetForPath(path)), `${slug} missing script ${path}`);
@@ -818,9 +826,9 @@ test('the four ad booking pages build from the shared booking template with the 
     assert.doesNotMatch(html, /Launch List|consultation-form|founding-consultation/);
     assert.doesNotMatch(main.replace(/<[^>]+>/g, ' '), /\bfree\b|on us|no charge|testosterone|\bPSA\b|vitamin D|\bTSH\b|\bT4\b|\bTRT\b|low T\b|GLP|semaglutide|tirzepatide|pounds|\blbs\b|before and after|guarantee|\bdoctor\b|physician|nurse practitioner|Wajeeh|Atif|!/i, slug + ' copy rules');
     assert.match(html, /Coming soon/);
-    // No third-party scripts or pixels: only the site's own three scripts.
+    // The Google tag and the site's own scripts, nothing else.
     const scripts = startTags(html, 'script').filter(({ attrs }) => attrs.src).map(({ attrs }) => attrs.src.replace(/\?.*$/, ''));
-    assert.deepEqual(scripts, ['/assets/site-measurement.js', '/assets/site.js', '/assets/site-assistant.js'], slug + ' scripts');
+    assert.deepEqual(scripts, ['https://www.googletagmanager.com/gtag/js', '/assets/google-tag.js', '/assets/site-measurement.js', '/assets/site.js', '/assets/site-assistant.js'], slug + ' scripts');
   }
   assert.ok(findElementWithId(htmlBySlug.get('/founding-patients/'), 'services'), 'the other-services link has a target');
 });

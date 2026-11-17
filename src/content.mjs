@@ -35,7 +35,7 @@ export const site = Object.freeze({
   phoneHref: 'tel:+12192072456',
   tagline: 'Thoughtful care. Built around you.',
   contentUpdated: '2026-11-16',
-  launch: { date: '2026-11-20', label: 'November 20, 2026', status: 'Planned launch' },
+  launch: { date: '2026-11-20', label: 'November 20, 2026', status: 'Opening' },
   social: [
     { label: 'Instagram', href: 'https://www.instagram.com/apexwellnessnwi/' },
     { label: 'Facebook', href: 'https://www.facebook.com/profile.php?id=61593954582564' },
@@ -45,7 +45,7 @@ export const site = Object.freeze({
   description:
     'Apex Wellness is preparing weight, metabolic, hormone, and hair-loss care for adults in Northwest Indiana.',
   announcement:
-    'Planned launch: November 20, 2026 · Northwest Indiana.',
+    'Opening November 20, 2026 · Northwest Indiana.',
   cta: bookingPageCta,
   navigation: [
     { label: 'Home', href: '/' },
@@ -131,7 +131,7 @@ export const pages = Object.freeze({
     title: 'Weight, Hormone & Hair-Loss Care in Merrillville | Apex Wellness',
     description:
       'Weight, metabolic, hormone, and hair-loss care in Northwest Indiana. Coming soon to Merrillville. Online booking is open for visits from November 20.',
-    eyebrow: 'Planned launch · November 20, 2026 · Northwest Indiana',
+    eyebrow: 'Opening November 20, 2026 · Northwest Indiana',
     h1: 'Weight, hormones, hair loss. Coming to Merrillville.',
     headlineLead: 'Weight, hormones, hair loss.',
     headlineEmphasis: 'Coming to Merrillville.',
@@ -190,7 +190,7 @@ export const pages = Object.freeze({
           {
             title: 'Hair-loss care',
             body:
-              'Planned clinical evaluation and treatment for hair-loss concerns, with individual care decisions and clear details before treatment.',
+              'Clinical evaluation and treatment for hair-loss concerns, with individual care decisions and clear details before treatment.',
             href: '/hair-loss-care/'
           }
         ]
@@ -201,7 +201,7 @@ export const pages = Object.freeze({
         heading: 'Find the right starting page.',
         items: [{
           title: 'Hormone care in Merrillville',
-          body: 'Compare the planned men’s hormone health and women’s midlife care paths, then choose how to get opening information.',
+          body: 'Compare the men’s hormone health and women’s midlife care paths, then choose how to get opening information.',
           label: 'Explore hormone care',
           href: '/hormone-care-merrillville/'
         }]
@@ -247,7 +247,7 @@ export const pages = Object.freeze({
       {
         type: 'featureList',
         eyebrow: 'Why Apex',
-        heading: 'What our planned approach means.',
+        heading: 'What our approach means.',
         items: [
           'Care begins with an individual clinical evaluation and a plan appropriate to the person.',
           'Dosing, monitoring, and referral decisions rely on clinical judgment rather than an automatic protocol.',
@@ -261,7 +261,7 @@ export const pages = Object.freeze({
         eyebrow: 'Opening in Northwest Indiana',
         heading: 'Review the real details before deciding whether to book.',
         body:
-          `Coming soon to ${clinicAddress}. Our planned launch is November 20, 2026, subject to readiness. Find launch updates at apexwellnessnwi.com.`,
+          `Coming soon to ${clinicAddress}. We open November 20, 2026. Find launch updates at apexwellnessnwi.com.`,
         cta: bookingPageCta
       },
       {
@@ -281,20 +281,18 @@ export const pages = Object.freeze({
     navLabel: 'Weight & Metabolic',
     title: 'Medical Weight Loss in Merrillville, IN | Apex Wellness',
     description:
-      'Explore planned medical weight loss and metabolic care at Apex Wellness in Merrillville. Coming soon, with in-person visits. Online booking is open for visits from November 20.',
+      'Explore medical weight loss and metabolic care at Apex Wellness in Merrillville. Coming soon, with in-person visits. Online booking is open for visits from November 20.',
     eyebrow: 'Coming soon to Merrillville · Weight & metabolic care',
     h1: 'Medical Weight Management in Merrillville, IN',
     intro:
-      'The care model begins with evaluation, risks, goals, and relevant measurements. Medication may be discussed when clinically indicated, but it is never the only lever and is never guaranteed.',
+      'Care starts with an evaluation of your history, goals and relevant measurements, then a plan built around you: nutrition, strength, and medication when clinically appropriate.',
     cta: bookingPageCta,
     sections: [
       {
         type: 'audience',
         heading: 'Who this care may fit',
         body:
-          'Adults who want an evidence-informed plan that can include nutrition, protein and resistance-training support, appropriate measurements, careful medication consideration, side-effect review, plateau management, and maintenance planning.',
-        note:
-          'If you are looking for a specific prescription without an evaluation, this is not the right fit. Everything here starts with a clinical evaluation.'
+          'Adults who want an evidence-informed plan that can include nutrition, protein and resistance-training support, appropriate measurements, careful medication consideration, side-effect review, plateau management, and maintenance planning.'
       },
       {
         type: 'detail',
@@ -302,13 +300,6 @@ export const pages = Object.freeze({
         heading: 'A fuller picture before a plan.',
         body:
           'The intended evaluation covers relevant medical history and risks, goals, prior approaches, current medications, and factors that may affect weight or metabolic health. Findings and reasonable options, including no medication, are summarized before a treatment decision.'
-      },
-      {
-        type: 'detail',
-        eyebrow: 'Testing and measurement',
-        heading: 'Ordered only when clinically useful.',
-        body:
-          'Depending on your history, your clinician may look at metabolic and cardiovascular markers, body composition and any recent outside results. Testing is ordered when it changes the plan, and its cost is shown separately.'
       },
       {
         type: 'options',
@@ -331,21 +322,7 @@ export const pages = Object.freeze({
             title: 'Maintenance or discontinuation planning',
             body: 'The longer-term plan is considered before an intervention begins.'
           }
-        ],
-        note:
-          'Whether medication makes sense is a decision you and your clinician make together. Compounded and FDA-approved products are different things, and we will talk through the difference before anything is prescribed.'
-      },
-      {
-        type: 'followUp',
-        heading: 'Follow-up is part of responsible care.',
-        body:
-          'If care begins after launch, the written plan will define follow-up, relevant measurements, side-effect escalation, dose review when indicated, and criteria for maintaining, changing, stopping, or referring care.'
-      },
-      {
-        type: 'referral',
-        heading: 'When another clinician is the right destination',
-        body:
-          'Apex may recommend primary care, endocrinology, cardiology, bariatric medicine or surgery, nutrition services, or another specialty when findings fall outside the practice scope or a different service is more appropriate.'
+        ]
       },
       {
         type: 'faq',
@@ -378,7 +355,7 @@ export const pages = Object.freeze({
     navLabel: "Men's Hormone Health",
     title: 'Testosterone & Hormone Evaluation in Merrillville | Apex Wellness',
     description:
-      'Explore planned men’s hormone and testosterone evaluation at Apex Wellness in Merrillville. Coming soon; treatment depends on an individual clinical evaluation.',
+      'Explore men’s hormone and testosterone evaluation at Apex Wellness in Merrillville. Coming soon; treatment depends on an individual clinical evaluation.',
     eyebrow: 'Coming soon to Merrillville · Men’s hormone health',
     h1: 'Men’s Hormone Health in Merrillville, IN',
     intro:
@@ -391,7 +368,7 @@ export const pages = Object.freeze({
         heading: 'A November introduction to men’s health.',
         items: [{
           title: 'The mustache is optional',
-          body: 'Read how Apex introduces its planned men’s health conversations in Merrillville.',
+          body: 'Read how Apex introduces its men’s health conversations in Merrillville.',
           label: 'Read the Movember article',
           href: '/blog/movember-mens-health-merrillville/'
         }]
@@ -400,9 +377,7 @@ export const pages = Object.freeze({
         type: 'audience',
         heading: 'Who this care may fit',
         body:
-          'Men with symptoms or findings that merit a thoughtful evaluation and who want to understand what the numbers may mean, what alternatives exist, and what responsible monitoring would involve.',
-        note:
-          'If you want a prescription without an evaluation, this is not the place. If you want to know what is going on, it is.'
+          'Men with symptoms or findings that merit a thoughtful evaluation and who want to understand what the numbers may mean, what alternatives exist, and what responsible monitoring would involve.'
       },
       {
         type: 'detail',
@@ -410,13 +385,6 @@ export const pages = Object.freeze({
         heading: 'Symptoms and risk reviewed together.',
         body:
           'The evaluation considers relevant medical history, sleep, cardiovascular and blood-pressure factors, fertility goals, current medications, symptoms, and prior results. Options may include no hormone treatment.'
-      },
-      {
-        type: 'detail',
-        eyebrow: 'Testing',
-        heading: 'No diagnosis from one number.',
-        body:
-          'Appropriate testing may include repeat morning hormone measurements and other safety or explanatory markers based on history. Exact tests vary, and outside laboratory costs will be disclosed separately.'
       },
       {
         type: 'options',
@@ -439,21 +407,7 @@ export const pages = Object.freeze({
             title: 'Structured monitoring',
             body: 'The written plan should define visit and laboratory review based on the therapy and individual risk.'
           }
-        ],
-        note:
-          'Not every symptom is a hormone problem, and we will tell you when it is not.'
-      },
-      {
-        type: 'followUp',
-        heading: 'Monitoring continues after a treatment decision.',
-        body:
-          'If treatment is clinically appropriate after launch, follow-up will address response, adverse effects, relevant safety markers, dosing decisions, adherence, and whether treatment should continue.'
-      },
-      {
-        type: 'referral',
-        heading: 'When another clinician is the right destination',
-        body:
-          'Findings involving fertility, pituitary or testicular conditions, cardiovascular or blood concerns, cancer screening, or another issue outside the practice scope may require primary care or specialist evaluation.'
+        ]
       },
       {
         type: 'faq',
@@ -467,7 +421,7 @@ export const pages = Object.freeze({
           {
             question: 'Will home administration be available?',
             answer:
-              'Visits are planned to be in person at launch. Medication fulfillment, administration pathways, training and supply details are still being finalized and will be published before care opens.'
+              'Visits are in person. Medication fulfillment, administration pathways, training and supply details are still being finalized and will be published before care opens.'
           },
           {
             question: 'Does Apex use one “optimal” testosterone number?',
@@ -486,11 +440,11 @@ export const pages = Object.freeze({
     navLabel: "Women's Midlife Care",
     title: 'Menopause & Midlife Care in Merrillville, IN | Apex Wellness',
     description:
-      'Women’s midlife care is planned at Apex Wellness in Merrillville. Explore the care approach. Online booking is open for visits from November 20.',
+      'Women’s midlife care is offered at Apex Wellness in Merrillville. Explore the care approach. Online booking is open for visits from November 20.',
     eyebrow: 'Coming soon to Merrillville · Women’s midlife care',
     h1: 'Women’s Midlife Care in Merrillville, IN',
     intro:
-      'The approach is individualized rather than built around a generic “hormone balancing” promise. Hormonal and non-hormonal options may be discussed, and coordination or referral remains part of good care.',
+      'Care for perimenopause and menopause, built around your symptoms and goals. Hormonal and non-hormonal options are both on the table.',
     cta: bookingPageCta,
     sections: [
       {
@@ -499,7 +453,7 @@ export const pages = Object.freeze({
         heading: 'Why this care area is part of the Apex plan.',
         items: [{
           title: 'Women’s midlife care in Merrillville',
-          body: 'Read the local introduction to this planned area of care and the clinic being prepared on Broadway.',
+          body: 'Read the local introduction to this area of care and the clinic being prepared on Broadway.',
           label: 'Read the introduction',
           href: '/blog/womens-midlife-care-merrillville-conversation/'
         }]
@@ -519,9 +473,7 @@ export const pages = Object.freeze({
         type: 'audience',
         heading: 'Who this care may fit',
         body:
-          'Women with perimenopause, menopause, weight, sleep, metabolic, or related midlife concerns who want an individualized risk assessment and a clear discussion of options.',
-        note:
-          'Apex will not replace routine primary care, gynecologic care, recommended screening, urgent care, or emergency care.'
+          'Women with perimenopause, menopause, weight, sleep, metabolic, or related midlife concerns who want an individualized risk assessment and a clear discussion of options.'
       },
       {
         type: 'detail',
@@ -529,13 +481,6 @@ export const pages = Object.freeze({
         heading: 'Individual risk matters.',
         body:
           'The intended evaluation considers symptoms and goals alongside reproductive context when relevant, abnormal bleeding, cancer and clot history, cardiovascular and liver factors, sleep, metabolic health, current medications, and care already provided elsewhere.'
-      },
-      {
-        type: 'detail',
-        eyebrow: 'Testing',
-        heading: 'Individualized, not automatic.',
-        body:
-          'Laboratory testing is not always necessary to recognize perimenopause or menopause. Metabolic, thyroid, lipid, or other testing may be considered based on history, and appropriate outside results may reduce duplicate testing.'
       },
       {
         type: 'options',
@@ -558,21 +503,7 @@ export const pages = Object.freeze({
             title: 'Coordination with existing care',
             body: 'Primary care, gynecology, and other specialist care remain important when relevant.'
           }
-        ],
-        note:
-          'Hormone therapy is right for some people and not others. We will be straight with you about which.'
-      },
-      {
-        type: 'followUp',
-        heading: 'The plan includes reassessment.',
-        body:
-          'If care begins after launch, follow-up should address response, side effects, relevant monitoring, new risk information, and whether the current approach should continue, change, stop, or be referred.'
-      },
-      {
-        type: 'referral',
-        heading: 'When another clinician is the right destination',
-        body:
-          'Abnormal bleeding, pregnancy, findings that may need gynecologic or oncologic evaluation, complex cardiovascular or clotting concerns, or another condition outside the practice scope may require prompt coordination or referral.'
+        ]
       },
       {
         type: 'faq',
@@ -605,11 +536,11 @@ export const pages = Object.freeze({
     navLabel: 'Hair-Loss Care',
     title: 'Hair-Loss Care in Merrillville & NWI | Apex Wellness',
     description:
-      'Hair-loss care is coming to Apex Wellness in Merrillville, Northwest Indiana. Explore the planned service. Online booking is open for visits from November 20.',
+      'Hair-loss care is coming to Apex Wellness in Merrillville, Northwest Indiana. Explore the service. Online booking is open for visits from November 20.',
     eyebrow: 'Coming soon to Merrillville · Hair-loss care',
     h1: 'Hair-Loss Care in Merrillville, IN',
     intro:
-      'Apex is preparing to offer clinical evaluation and treatment for adults with hair-loss concerns. Individual care decisions come first, with service details and pricing explained before treatment.',
+      'Clinical evaluation and treatment for adults with thinning hair or balding, with clear pricing before treatment.',
     cta: bookingPageCta,
     sections: [
       {
@@ -620,26 +551,19 @@ export const pages = Object.freeze({
           'Once care opens, an individual evaluation will guide the conversation about treatment and next steps. The plan will reflect your circumstances and the scope of care available at Apex.'
       },
       {
-        type: 'detail',
-        eyebrow: 'Before treatment',
-        heading: 'Clear information before you decide.',
-        body:
-          'Treatment options, costs and follow-up are being finalized. Every plan starts with an evaluation, and we will be honest about what each option can and cannot do.'
-      },
-      {
         type: 'faq',
         heading: 'Hair-loss care questions',
         items: [
           {
             question: 'Can I book hair-loss care now?',
             answer:
-              `Yes. ${bookingStatus} You can also call (219) 207-2456. Hair-loss care is planned for opening.`,
+              `Yes. ${bookingStatus} You can also call (219) 207-2456.`,
             bookOnline: true
           },
           {
             question: 'Which hair-loss treatments will Apex offer?',
             answer:
-              'Hair-loss treatment is part of the planned care offering. Specific options and service details are being finalized; an individual evaluation will determine whether a treatment is appropriate.'
+              'Hair-loss treatment is part of our care. Specific options and service details are being finalized; an individual evaluation will determine whether a treatment is appropriate.'
           },
           {
             question: 'Should I send photos or medical details through the website?',
@@ -655,13 +579,13 @@ export const pages = Object.freeze({
     slug: '/how-it-works/',
     modified: '2026-11-16',
     navLabel: 'How It Works',
-    title: 'How Care Is Planned to Work | Apex Wellness',
+    title: 'How Care Works | Apex Wellness',
     description:
       'See the four-step Apex Wellness process, from choosing a care area through evaluation, appropriate testing, and a written plan.',
     eyebrow: 'How it works',
     h1: 'Thoughtful care, from the first conversation.',
     intro:
-      'Apex is preparing a process in which evaluation, appropriate testing, clinical options, full costs, and follow-up expectations are reviewed before treatment begins.',
+      'An evaluation, appropriate testing, a written plan and follow-up, with costs explained up front.',
     cta: bookingPageCta,
     sections: [
       {
@@ -700,26 +624,6 @@ export const pages = Object.freeze({
               'The plan should explain findings, reasonable options including no treatment, total costs, follow-up, monitoring, and when referral is appropriate.'
           }
         ]
-      },
-      {
-        type: 'featureList',
-        eyebrow: 'After the evaluation',
-        heading: 'Follow-through is part of the care model.',
-        items: [
-          'Results, side effects, refills, and dose changes are reviewed within the clinical process rather than handled by an automatic threshold.',
-          'Visits and relevant testing follow a cadence defined in the written plan.',
-          'Progress may be assessed with symptoms, measurements, laboratory data when relevant, function, adherence, and side effects.',
-          'Interventions may be introduced deliberately, with maintenance or discontinuation considered in advance.',
-          'Questions outside the approved practice scope are referred to an appropriate clinician.'
-        ]
-      },
-      {
-        type: 'prelaunch',
-        heading: 'What is available today',
-        body:
-          `Apex is coming soon to Merrillville. ${bookingStatus}`,
-        bookOnline: true,
-        cta: bookingPageCta
       }
     ]
   },
@@ -769,19 +673,13 @@ export const pages = Object.freeze({
         ]
       },
       {
-        type: 'notice',
-        heading: 'Payment will not guarantee treatment.',
-        body:
-          'When payment becomes available, treatment will still require appropriate evaluation, clinical eligibility, and informed consent. A prescription will never be promised in exchange for a fee.'
-      },
-      {
         type: 'faq',
         heading: 'Pricing questions',
         items: [
           {
             question: 'Is Apex Wellness cash-pay?',
             answer:
-              'The planned model is cash-pay. Final fees, payment methods, documentation, and any insurance-related information will be published on this page.'
+              'The model is cash-pay. Final fees, payment methods, documentation, and any insurance-related information will be published on this page.'
           },
           {
             question: 'Are labs or medications included?',
@@ -887,19 +785,6 @@ export const pages = Object.freeze({
             body: 'The experience should be private, inclusive, nonjudgmental, and designed for adults with real schedules and responsibilities.'
           }
         ]
-      },
-      {
-        type: 'verificationStatus',
-        eyebrow: 'Location and access',
-        heading: 'Operational details are still being finalized.',
-        body:
-          `Find us at ${clinicAddress}. Coming soon. Find launch updates at apexwellnessnwi.com.`
-      },
-      {
-        type: 'notice',
-        eyebrow: 'Photography',
-        heading: 'Real people. Clearly labeled photography.',
-        body: 'The portraits on this page show Shahab Siddique, Alexandria Auriemma and Shanon Mekola with graphic backdrops. Other images on the site may be illustrative.'
       }
     ]
   },
@@ -910,7 +795,7 @@ export const pages = Object.freeze({
     navLabel: 'FAQ',
     title: 'Frequently Asked Questions | Apex Wellness',
     description:
-      'Answers about Apex Wellness prelaunch status, planned care, eligibility, costs, privacy, location, clinic hours, and online booking.',
+      'Answers about Apex Wellness opening status, care, eligibility, costs, privacy, location, clinic hours, and online booking.',
     eyebrow: 'Frequently asked questions',
     h1: 'Questions, answered before you commit.',
     intro:
@@ -935,7 +820,7 @@ export const pages = Object.freeze({
           {
             question: 'When can I book an appointment?',
             answer:
-              `${bookingStatus} November 20, 2026 is our planned launch, subject to readiness. You can also call (219) 207-2456 to schedule.`,
+              `${bookingStatus} We open November 20, 2026. You can also call (219) 207-2456 to schedule.`,
             bookOnline: true
           },
           {
@@ -953,7 +838,7 @@ export const pages = Object.freeze({
           {
             question: 'Will Apex offer hair-loss treatment?',
             answer:
-              'Yes. Hair-loss care is part of the planned offering, alongside weight and metabolic care, men’s hormone health, and women’s midlife care. Coming soon; specific treatment options and fees are being finalized.'
+              'Yes. Hair-loss care is part of our care, alongside weight and metabolic care, men’s hormone health, and women’s midlife care. Coming soon; specific treatment options and fees are being finalized.'
           },
           {
             question: 'Does an evaluation guarantee treatment or a prescription?',
@@ -990,7 +875,7 @@ export const pages = Object.freeze({
           {
             question: 'Will Apex accept insurance?',
             answer:
-              'The planned model is cash-pay. Final billing and documentation details will be published on the Pricing page.'
+              'The model is cash-pay. Final billing and documentation details will be published on the Pricing page.'
           },
           {
             question: 'Will labs and medications be included?',
@@ -1022,7 +907,7 @@ export const pages = Object.freeze({
     description:
       'Grand opening: promotional labs for $49. The $49 covers your first visit and the labs, for the first 50 appointments scheduled. Book online or call (219) 207-2456.',
     announcement: `Coming soon to Merrillville · ${bookingStatus}`,
-    launchLabel: 'November 20, 2026 (planned; subject to readiness)',
+    launchLabel: 'November 20, 2026',
     eyebrow: 'Grand opening · Friday, November 20 · Merrillville',
     h1: 'Now booking first visits.',
     h1Accent: 'first visits.',
@@ -1151,8 +1036,8 @@ export const pages = Object.freeze({
         type: 'policySection',
         heading: 'Prelaunch limitations',
         paragraphs: [
-          'Descriptions of the planned practice, services, workflows, pricing structure, visit modalities, and availability may change before launch. Only information identified as finalized should be relied upon for a care or payment decision.',
-          `Our location at ${clinicAddress}, clinic hours and a planned launch date are identified on the site. Online booking is open for visits from November 20. Detailed clinical responsibilities, licensure information, legal practice details, contact channels, and pricing are still being finalized.`
+          'Descriptions of the practice, services, workflows, pricing structure, visit modalities, and availability may change before launch. Only information identified as finalized should be relied upon for a care or payment decision.',
+          `Our location at ${clinicAddress}, clinic hours and an opening date are identified on the site. Online booking is open for visits from November 20. Detailed clinical responsibilities, licensure information, legal practice details, contact channels, and pricing are still being finalized.`
         ]
       },
       {

@@ -171,7 +171,7 @@ test('the new planned care area is discoverable without displacing information l
     assert.match(html, /Coming soon/i);
   }
   const hair = htmlBySlug.get('/hair-loss-care/');
-  assert.match(hair, /Yes\. Online booking is open for visits from November 20\. You can also call \(219\) 207-2456\. Hair-loss care is planned for opening/);
+  assert.match(hair, /Yes\. Online booking is open for visits from November 20\. You can also call \(219\) 207-2456\./);
   assert.match(hair, /8550 Broadway, Suite B/);
   assert.doesNotMatch(hair, /minoxidil|finasteride|dutasteride|PRP|transplant|guaranteed regrowth/i);
   assert.match(htmlBySlug.get('/founding-patients/'), /href="\/hair-loss-care\/"/);
@@ -649,7 +649,7 @@ function escapeForTest(value) {
 
 test('editorial redesign preserves key content, semantic headings, and navigation fallbacks', () => {
   const home = htmlBySlug.get('/');
-  for (const phrase of ['Thoughtful care', 'Northwest Indiana', 'Launch timing and availability may change.', site.launch.label]) {
+  for (const phrase of ['Thoughtful care', 'Northwest Indiana', site.launch.label]) {
     assert.ok(home.includes(phrase), `homepage must retain ${phrase}`);
   }
   for (const [slug, html] of htmlBySlug) {
@@ -699,7 +699,7 @@ test('homepage names the planned care and location, keeps the planned-launch sta
   assert.match(home, /<div class="hero-actions"><a class="button" href="https:\/\/d2oe0ra32qx05a\.cloudfront\.net\/\?practiceKey=k_1_117405"[^>]*data-book-online>Book online<span class="visually-hidden"> \(opens a new tab\)<\/span><\/a><a class="hero-explore" href="#care-areas">Explore care areas /);
   assert.match(home, /<h3>Book when you are ready\.<\/h3><p>Online booking is open for visits from November 20\. Book online or call \(219\) 207-2456\.<\/p>/);
   assert.equal(site.launch.date, '2026-11-20');
-  assert.match(home, /Planned launch: November 20, 2026/);
+  assert.match(home, /Opening November 20, 2026/);
   assert.doesNotMatch(home, /November 4, 2026|2026-11-04/);
   assert.match(home, /<h1 id="page-title">Weight, hormones, hair loss\. <em>Coming to Merrillville\.<\/em><\/h1>/);
   for (const area of ['weight and metabolic care', 'men’s hormone health', 'women’s midlife care', 'hair-loss care for thinning and balding']) assert.match(home, new RegExp(area));
@@ -713,7 +713,7 @@ test('homepage names the planned care and location, keeps the planned-launch sta
       assert.doesNotMatch(html, /Join the Launch List/);
       continue;
     }
-    assert.match(html, /class="announcement-copy">Planned launch:/, `${slug} retains planned status`);
+    assert.match(html, /class="announcement-copy">Opening November 20, 2026/, `${slug} shows the opening date`);
     assert.match(html, /class="announcement-cta" href="\/founding-patients\/">Book online/, `${slug} announcement links to the booking page`);
     assert.doesNotMatch(html, /Join the Launch List|Get opening updates/, `${slug} must not invite people to the removed Launch List signup`);
   }
@@ -772,7 +772,7 @@ test('the QR landing page is a short booking page: the $49 offer, Book online, c
   // Public-copy rules for this page.
   assert.doesNotMatch(main.replace(/<[^>]+>/g, ' '), /\bfree\b|on us|no charge|testosterone|\bPSA\b|vitamin D|\bTSH\b|\bT4\b|\bTRT\b|low T\b|semaglutide|tirzepatide|before and after|guarantee|\bdoctor\b|physician|nurse practitioner|Wajeeh|Atif|!/i);
   assert.doesNotMatch(html, /first 100|APEXNOV/i);
-  assert.match(html, /data-launch-label="November 20, 2026 \(planned; subject to readiness\)"/);
+  assert.match(html, /data-launch-label="November 20, 2026"/);
   const css = await readFile(join(publicRoot, 'assets', 'site-design.css'), 'utf8');
   assert.match(css, /@media\(prefers-reduced-motion:no-preference\)\{\s*\.booking-hero-inner>\*\{animation:/, 'entrance motion only without a reduced-motion preference');
 });
@@ -922,7 +922,7 @@ test('no generated page, guide answer or email still says scheduling or booking 
     assert.ok(htmlBySlug.get(slug).includes(bookingStatus), `${slug} must say online booking is open`);
   }
   for (const [slug, html] of htmlBySlug) {
-    if (!bookingSlugs.has(slug)) assert.match(html, /class="announcement-copy">Planned launch: November 20, 2026/, `${slug} keeps the opening date`);
+    if (!bookingSlugs.has(slug)) assert.match(html, /class="announcement-copy">Opening November 20, 2026/, `${slug} keeps the opening date`);
     assert.match(html, /Coming soon/, `${slug} keeps the clinic's Coming soon status`);
   }
 

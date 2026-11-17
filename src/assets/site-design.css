@@ -1,7 +1,7 @@
 @font-face{font-family:Instrument Serif;src:url('./fonts/instrument-serif-latin-400-normal.woff2') format('woff2');font-style:normal;font-weight:400;font-display:swap}
 @font-face{font-family:Instrument Serif;src:url('./fonts/instrument-serif-latin-400-italic.woff2') format('woff2');font-style:italic;font-weight:400;font-display:swap}
 @font-face{font-family:Manrope;src:url('./fonts/manrope-latin-wght-normal.woff2') format('woff2');font-style:normal;font-weight:200 800;font-display:swap}
-:root{--font-display:'Instrument Serif',Georgia,serif;--font-body:Manrope,Arial,sans-serif;--color-canvas:#f6f4ed;--color-surface-alt:#eeece3;--color-ink:#183d36;--color-copy:#374740;--color-muted:#5d6860;--color-brand:#20483c;--color-brand-strong:#17372e;--color-accent:#785331;--color-border:#d2d4c7;--radius-sm:2px;--radius-md:4px;--radius-lg:6px;--content-width:88rem;--gutter:clamp(1.3rem,5vw,6rem);--section-space:clamp(5rem,8.5vw,9rem)}
+:root{--font-display:'Instrument Serif',Georgia,serif;--font-body:Manrope,Arial,sans-serif;--color-canvas:#f6f4ed;--color-surface-alt:#eeece3;--color-ink:#183d36;--color-copy:#374740;--color-muted:#5d6860;--color-brand:#20483c;--color-brand-strong:#17372e;--color-accent:#785331;--color-border:#d2d4c7;--radius-sm:2px;--radius-md:4px;--radius-lg:6px;--content-width:88rem;--gutter:clamp(1.3rem,5vw,6rem);--section-space:clamp(2.5rem,4vw,4rem)}
 body{font-weight:400;letter-spacing:-.012em;background:var(--color-canvas)}
 h1,h2,h3{font-family:var(--font-display);font-weight:400;letter-spacing:-.035em;line-height:1.03;text-wrap:balance}
 .announcement{background:#183d36;color:#f6f4ed;padding:.55rem 1rem;font:500 .67rem/1.6 var(--font-body);letter-spacing:.055em;text-align:center}
@@ -93,7 +93,7 @@ body{overflow-x:clip}
 .no-js-navigation a{font-size:.85rem;min-height:2rem}
 .hero-explore{font-size:.85rem}
 .hero-explore:hover{color:#ede9ca}
-.hero{background:var(--color-surface-alt);padding-block:clamp(3.5rem,6vw,6.5rem)}
+.hero{background:var(--color-surface-alt);padding-block:clamp(2rem,3.5vw,3.5rem)}
 .hero::after{display:none}
 .hero-copy{max-width:none}
 .hero h1{max-width:15ch;font-weight:400;margin:.6rem 0 2rem}
@@ -166,8 +166,8 @@ body{overflow-x:clip}
 .editorial-copy p{font-size:1rem;line-height:1.9;margin:0 0 1.5rem;max-width:55ch}
 .editorial-copy p.quiet-note{font-size:.84rem;border-left:1px solid var(--color-border);padding-left:1.5rem}
 .local-section h2{font-size:clamp(3.4rem,4.5vw,5.5rem);font-weight:400;line-height:1.04;margin:0}
-.section-editorial{padding-block:clamp(3rem,5vw,5.5rem)}
-.section-editorial+.section-editorial>.container{border-top:1px solid var(--color-border);padding-top:clamp(3rem,5vw,5.5rem)}
+.section-editorial{padding-block:clamp(1.75rem,3vw,3rem)}
+.section-editorial+.section-editorial>.container{border-top:1px solid var(--color-border);padding-top:clamp(1.75rem,3vw,3rem)}
 .section-editorial+.section-editorial{padding-top:0}
 .audience-section{padding-block:clamp(4rem,7vw,7rem)}
 .cards{gap:2rem;grid-template-columns:repeat(2,minmax(0,1fr))}
@@ -684,3 +684,22 @@ h1,h2,h3{letter-spacing:-.042em}
 .team-care-note{margin-top:1.25rem}
 }
 @media(forced-colors:active){.team-identity{background:Canvas}.section .team-identity h3,.team-identity .eyebrow,.team-identity p.team-headline{color:CanvasText}}
+
+/* Compact pass (Nov 17): smaller display type, shorter hero photo and tighter bands so
+   inner pages need less scrolling. The home page keeps its own editorial scale, apart
+   from the shared closing band and footer. */
+body:not(.page-home) .hero h1{font-size:clamp(2.3rem,3.4vw,3.3rem);line-height:1.05;margin-bottom:1rem}
+body:not(.page-home) .hero img{max-height:21rem;object-fit:cover}
+body:not(.page-home) .section h2{font-size:clamp(1.9rem,2.8vw,2.7rem);line-height:1.08}
+body:not(.page-home) .audience-section{padding-block:clamp(1.75rem,3vw,3rem)}
+.launch-section{padding-block:clamp(1.75rem,3vw,2.75rem)}
+.launch-section h2{font-size:clamp(2.2rem,3.4vw,3.4rem)}
+.site-footer{padding-top:clamp(2rem,3vw,3rem)}
+.footer-signature{padding-bottom:1.75rem;margin-bottom:1.75rem}
+.footer-signature>a{font-size:clamp(3.5rem,5vw,4.75rem)}
+:root{--section-space:clamp(2rem,3vw,3rem)}
+.footer-signature>a img{width:auto;height:clamp(5rem,9vw,8rem)}
+.footer-grid{row-gap:2rem}
+.footer-meta{margin-top:1.75rem;padding-top:1.5rem}
+body:not(.page-home) .section-heading{margin-bottom:1.5rem}
+body:not(.page-home) .planning-links{margin-top:1rem}

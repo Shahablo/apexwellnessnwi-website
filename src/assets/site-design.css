@@ -659,3 +659,28 @@ h1,h2,h3{letter-spacing:-.042em}
 }
 @media(prefers-reduced-motion:reduce){.booking-actions .button,.booking-actions .button::after,.booking-services a{transition:none}}
 @media(forced-colors:active){.booking-hero{background:Canvas;color:CanvasText}.booking-hero h1,.booking-hero h1 em,.booking-hero .eyebrow,.booking-offer,.booking-offer strong,.booking-call,.booking-strip{color:CanvasText}.booking-badge{border:2px solid CanvasText;box-shadow:none}.booking-actions .button,.booking-bar .button{border:1px solid ButtonText}.booking-bar{background:Canvas;border-top:1px solid CanvasText}.booking-services a{border:1px solid LinkText}}
+
+/* About page: portraits about twice the earlier size with the name set on the photo.
+   On large screens the photo scales with the window height so the whole team still fits
+   on one screen; mid-size and short windows keep the compact side-by-side card. */
+@media(max-width:62rem),(min-width:100rem) and (min-height:56rem){
+.team-card-head{display:block;position:relative;width:min(100%,clamp(10.5rem,calc(100vh - 38rem),21rem));margin-inline:auto;border-radius:1rem;overflow:hidden;box-shadow:0 .75rem 2rem #183d3612}
+.team-portrait img{border-radius:0;box-shadow:none}
+.team-identity{position:absolute;inset:auto 0 0 0;padding:2.6rem .9rem .7rem;background:linear-gradient(#10282300,#102823d9 55%);text-align:center}
+.team-identity .eyebrow{color:#e9dfc4;margin:0 0 .15rem}
+.section .team-identity h3{color:#fff;font-size:1.65rem;margin:0 0 .15rem}
+.team-identity p.team-headline{color:#f1ede1;font-size:.95rem;line-height:1.2}
+}
+@media(max-width:62rem){.team-card-head{width:min(100%,21rem)}}
+@media(min-width:100rem) and (min-height:56rem){
+.journal-header.about-header{padding-block:.9rem}
+.journal-header.about-header h1{font-size:2.5rem}
+.about-deck{font-size:.86rem;line-height:1.45}
+.about-deck p{margin:0}
+.people-section{padding-block:1.1rem 1.5rem}
+.team-profile{gap:.8rem}
+.team-biography p{font-size:.88rem;line-height:1.5;margin:0 0 .45rem}
+.team-biography p.team-aside{font-size:.82rem;padding:.45rem 0 0;margin:.5rem 0 0}
+.team-care-note{margin-top:1.25rem}
+}
+@media(forced-colors:active){.team-identity{background:Canvas}.section .team-identity h3,.team-identity .eyebrow,.team-identity p.team-headline{color:CanvasText}}

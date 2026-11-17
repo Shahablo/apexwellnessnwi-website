@@ -1176,11 +1176,20 @@ function buildRssFeed() {
 }
 
 function buildFavicon() {
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Apex Wellness">
-  <rect width="64" height="64" rx="14" fill="#17372e"/>
-  <path d="M30.6 19.5h2.6L21.6 47.5h-3.2zM33.6 19.5h6.6l11.6 28h-8.2z" fill="#f6f4ed"/>
-  <rect x="24" y="37.2" width="19" height="2.4" fill="#f6f4ed"/>
-  <circle cx="33.5" cy="13" r="4.4" fill="#d9a877"/>
+  // Copper-ring icon chosen by the owner on November 16, 2026. Same approved A mark and copper dot;
+  // matches the Facebook and Instagram profile picture.
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="Apex Wellness">
+  <circle cx="100" cy="100" r="100" fill="#183d36"/>
+  <circle cx="100" cy="100" r="93" fill="none" stroke="#d9a877" stroke-width="6"/>
+  <g transform="translate(100 103) scale(0.78) translate(-100 -105)">
+    <defs><clipPath id="a"><rect x="0" y="60" width="200" height="110"/></clipPath></defs>
+    <g clip-path="url(#a)" stroke="#f6f4ed" fill="none">
+      <line x1="100" y1="30" x2="38" y2="180" stroke-width="10"/>
+      <line x1="100" y1="30" x2="162" y2="180" stroke-width="25"/>
+    </g>
+    <rect x="61" y="124" width="74" height="8" fill="#f6f4ed"/>
+    <circle cx="100" cy="36" r="14" fill="#d9a877"/>
+  </g>
 </svg>
 `;
 }

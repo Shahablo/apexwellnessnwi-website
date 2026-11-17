@@ -554,6 +554,9 @@ test('measurement is first-party, aggregate, and excludes advertising vendors an
   assert.match(googleTag, /gtag\('set', 'allow_google_signals', false\)/);
   assert.match(googleTag, /gtag\('config', 'AW-18529444653'\)/);
   assert.doesNotMatch(googleTag, /user_data|email|phone|FormData|\.value/);
+  // Book online clicks are the one conversion event; the label carries no visitor details.
+  assert.match(googleTag, /closest\('a\[data-book-online\]'\)/);
+  assert.match(googleTag, /gtag\('event', 'conversion', \{ send_to: 'AW-18529444653\/3DBbCLLPu7odEK3Gw4NF' \}\)/);
   assert.doesNotMatch(html, /google-analytics|connect\.facebook\.net|clarity\.ms|hotjar|segment|mixpanel|GTM-[A-Z0-9]/i);
 });
 

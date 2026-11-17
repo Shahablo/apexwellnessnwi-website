@@ -543,7 +543,7 @@ function renderSection(section, index) {
 
     case "audience":
       return `<section class="section section-editorial audience-section" aria-labelledby="${id}"><div class="container editorial-row">
-        ${headingMarkup(section, id)}<div class="editorial-copy"><p>${escapeHtml(section.body)}</p><p class="quiet-note"><strong>Good to know:</strong> ${escapeHtml(section.note)}</p></div>
+        ${headingMarkup(section, id)}<div class="editorial-copy"><p>${escapeHtml(section.body)}</p>${section.note ? `<p class="quiet-note"><strong>Good to know:</strong> ${escapeHtml(section.note)}</p>` : ''}</div>
       </div></section>`;
 
     case "detail":

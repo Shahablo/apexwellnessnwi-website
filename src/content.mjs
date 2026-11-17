@@ -285,16 +285,14 @@ export const pages = Object.freeze({
     eyebrow: 'Coming soon to Merrillville · Weight & metabolic care',
     h1: 'Medical Weight Management in Merrillville, IN',
     intro:
-      'The care model begins with evaluation, risks, goals, and relevant measurements. Medication may be discussed when clinically indicated, but it is never the only lever and is never guaranteed.',
+      'Care starts with an evaluation of your history, goals and relevant measurements, then a plan built around you: nutrition, strength, and medication when clinically appropriate.',
     cta: bookingPageCta,
     sections: [
       {
         type: 'audience',
         heading: 'Who this care may fit',
         body:
-          'Adults who want an evidence-informed plan that can include nutrition, protein and resistance-training support, appropriate measurements, careful medication consideration, side-effect review, plateau management, and maintenance planning.',
-        note:
-          'If you are looking for a specific prescription without an evaluation, this is not the right fit. Everything here starts with a clinical evaluation.'
+          'Adults who want an evidence-informed plan that can include nutrition, protein and resistance-training support, appropriate measurements, careful medication consideration, side-effect review, plateau management, and maintenance planning.'
       },
       {
         type: 'detail',
@@ -302,13 +300,6 @@ export const pages = Object.freeze({
         heading: 'A fuller picture before a plan.',
         body:
           'The intended evaluation covers relevant medical history and risks, goals, prior approaches, current medications, and factors that may affect weight or metabolic health. Findings and reasonable options, including no medication, are summarized before a treatment decision.'
-      },
-      {
-        type: 'detail',
-        eyebrow: 'Testing and measurement',
-        heading: 'Ordered only when clinically useful.',
-        body:
-          'Depending on your history, your clinician may look at metabolic and cardiovascular markers, body composition and any recent outside results. Testing is ordered when it changes the plan, and its cost is shown separately.'
       },
       {
         type: 'options',
@@ -331,21 +322,7 @@ export const pages = Object.freeze({
             title: 'Maintenance or discontinuation planning',
             body: 'The longer-term plan is considered before an intervention begins.'
           }
-        ],
-        note:
-          'Whether medication makes sense is a decision you and your clinician make together. Compounded and FDA-approved products are different things, and we will talk through the difference before anything is prescribed.'
-      },
-      {
-        type: 'followUp',
-        heading: 'Follow-up is part of responsible care.',
-        body:
-          'If care begins after launch, the written plan will define follow-up, relevant measurements, side-effect escalation, dose review when indicated, and criteria for maintaining, changing, stopping, or referring care.'
-      },
-      {
-        type: 'referral',
-        heading: 'When another clinician is the right destination',
-        body:
-          'Apex may recommend primary care, endocrinology, cardiology, bariatric medicine or surgery, nutrition services, or another specialty when findings fall outside the practice scope or a different service is more appropriate.'
+        ]
       },
       {
         type: 'faq',
@@ -400,9 +377,7 @@ export const pages = Object.freeze({
         type: 'audience',
         heading: 'Who this care may fit',
         body:
-          'Men with symptoms or findings that merit a thoughtful evaluation and who want to understand what the numbers may mean, what alternatives exist, and what responsible monitoring would involve.',
-        note:
-          'If you want a prescription without an evaluation, this is not the place. If you want to know what is going on, it is.'
+          'Men with symptoms or findings that merit a thoughtful evaluation and who want to understand what the numbers may mean, what alternatives exist, and what responsible monitoring would involve.'
       },
       {
         type: 'detail',
@@ -410,13 +385,6 @@ export const pages = Object.freeze({
         heading: 'Symptoms and risk reviewed together.',
         body:
           'The evaluation considers relevant medical history, sleep, cardiovascular and blood-pressure factors, fertility goals, current medications, symptoms, and prior results. Options may include no hormone treatment.'
-      },
-      {
-        type: 'detail',
-        eyebrow: 'Testing',
-        heading: 'No diagnosis from one number.',
-        body:
-          'Appropriate testing may include repeat morning hormone measurements and other safety or explanatory markers based on history. Exact tests vary, and outside laboratory costs will be disclosed separately.'
       },
       {
         type: 'options',
@@ -439,21 +407,7 @@ export const pages = Object.freeze({
             title: 'Structured monitoring',
             body: 'The written plan should define visit and laboratory review based on the therapy and individual risk.'
           }
-        ],
-        note:
-          'Not every symptom is a hormone problem, and we will tell you when it is not.'
-      },
-      {
-        type: 'followUp',
-        heading: 'Monitoring continues after a treatment decision.',
-        body:
-          'If treatment is clinically appropriate after launch, follow-up will address response, adverse effects, relevant safety markers, dosing decisions, adherence, and whether treatment should continue.'
-      },
-      {
-        type: 'referral',
-        heading: 'When another clinician is the right destination',
-        body:
-          'Findings involving fertility, pituitary or testicular conditions, cardiovascular or blood concerns, cancer screening, or another issue outside the practice scope may require primary care or specialist evaluation.'
+        ]
       },
       {
         type: 'faq',
@@ -490,7 +444,7 @@ export const pages = Object.freeze({
     eyebrow: 'Coming soon to Merrillville · Women’s midlife care',
     h1: 'Women’s Midlife Care in Merrillville, IN',
     intro:
-      'The approach is individualized rather than built around a generic “hormone balancing” promise. Hormonal and non-hormonal options may be discussed, and coordination or referral remains part of good care.',
+      'Care for perimenopause and menopause, built around your symptoms and goals. Hormonal and non-hormonal options are both on the table.',
     cta: bookingPageCta,
     sections: [
       {
@@ -519,9 +473,7 @@ export const pages = Object.freeze({
         type: 'audience',
         heading: 'Who this care may fit',
         body:
-          'Women with perimenopause, menopause, weight, sleep, metabolic, or related midlife concerns who want an individualized risk assessment and a clear discussion of options.',
-        note:
-          'Apex will not replace routine primary care, gynecologic care, recommended screening, urgent care, or emergency care.'
+          'Women with perimenopause, menopause, weight, sleep, metabolic, or related midlife concerns who want an individualized risk assessment and a clear discussion of options.'
       },
       {
         type: 'detail',
@@ -529,13 +481,6 @@ export const pages = Object.freeze({
         heading: 'Individual risk matters.',
         body:
           'The intended evaluation considers symptoms and goals alongside reproductive context when relevant, abnormal bleeding, cancer and clot history, cardiovascular and liver factors, sleep, metabolic health, current medications, and care already provided elsewhere.'
-      },
-      {
-        type: 'detail',
-        eyebrow: 'Testing',
-        heading: 'Individualized, not automatic.',
-        body:
-          'Laboratory testing is not always necessary to recognize perimenopause or menopause. Metabolic, thyroid, lipid, or other testing may be considered based on history, and appropriate outside results may reduce duplicate testing.'
       },
       {
         type: 'options',
@@ -558,21 +503,7 @@ export const pages = Object.freeze({
             title: 'Coordination with existing care',
             body: 'Primary care, gynecology, and other specialist care remain important when relevant.'
           }
-        ],
-        note:
-          'Hormone therapy is right for some people and not others. We will be straight with you about which.'
-      },
-      {
-        type: 'followUp',
-        heading: 'The plan includes reassessment.',
-        body:
-          'If care begins after launch, follow-up should address response, side effects, relevant monitoring, new risk information, and whether the current approach should continue, change, stop, or be referred.'
-      },
-      {
-        type: 'referral',
-        heading: 'When another clinician is the right destination',
-        body:
-          'Abnormal bleeding, pregnancy, findings that may need gynecologic or oncologic evaluation, complex cardiovascular or clotting concerns, or another condition outside the practice scope may require prompt coordination or referral.'
+        ]
       },
       {
         type: 'faq',
@@ -609,7 +540,7 @@ export const pages = Object.freeze({
     eyebrow: 'Coming soon to Merrillville · Hair-loss care',
     h1: 'Hair-Loss Care in Merrillville, IN',
     intro:
-      'Apex is preparing to offer clinical evaluation and treatment for adults with hair-loss concerns. Individual care decisions come first, with service details and pricing explained before treatment.',
+      'Clinical evaluation and treatment for adults with thinning hair or balding, with clear pricing before treatment.',
     cta: bookingPageCta,
     sections: [
       {
@@ -618,13 +549,6 @@ export const pages = Object.freeze({
         heading: 'Start with your concerns and goals.',
         body:
           'Once care opens, an individual evaluation will guide the conversation about treatment and next steps. The plan will reflect your circumstances and the scope of care available at Apex.'
-      },
-      {
-        type: 'detail',
-        eyebrow: 'Before treatment',
-        heading: 'Clear information before you decide.',
-        body:
-          'Treatment options, costs and follow-up are being finalized. Every plan starts with an evaluation, and we will be honest about what each option can and cannot do.'
       },
       {
         type: 'faq',
@@ -661,7 +585,7 @@ export const pages = Object.freeze({
     eyebrow: 'How it works',
     h1: 'Thoughtful care, from the first conversation.',
     intro:
-      'Apex is preparing a process in which evaluation, appropriate testing, clinical options, full costs, and follow-up expectations are reviewed before treatment begins.',
+      'An evaluation, appropriate testing, a written plan and follow-up, with costs explained up front.',
     cta: bookingPageCta,
     sections: [
       {
@@ -700,26 +624,6 @@ export const pages = Object.freeze({
               'The plan should explain findings, reasonable options including no treatment, total costs, follow-up, monitoring, and when referral is appropriate.'
           }
         ]
-      },
-      {
-        type: 'featureList',
-        eyebrow: 'After the evaluation',
-        heading: 'Follow-through is part of the care model.',
-        items: [
-          'Results, side effects, refills, and dose changes are reviewed within the clinical process rather than handled by an automatic threshold.',
-          'Visits and relevant testing follow a cadence defined in the written plan.',
-          'Progress may be assessed with symptoms, measurements, laboratory data when relevant, function, adherence, and side effects.',
-          'Interventions may be introduced deliberately, with maintenance or discontinuation considered in advance.',
-          'Questions outside the approved practice scope are referred to an appropriate clinician.'
-        ]
-      },
-      {
-        type: 'prelaunch',
-        heading: 'What is available today',
-        body:
-          `Apex is coming soon to Merrillville. ${bookingStatus}`,
-        bookOnline: true,
-        cta: bookingPageCta
       }
     ]
   },
@@ -767,12 +671,6 @@ export const pages = Object.freeze({
             body: 'When billing begins, how to cancel or reschedule, when refunds may apply, and what happens if treatment is not clinically appropriate.'
           }
         ]
-      },
-      {
-        type: 'notice',
-        heading: 'Payment will not guarantee treatment.',
-        body:
-          'When payment becomes available, treatment will still require appropriate evaluation, clinical eligibility, and informed consent. A prescription will never be promised in exchange for a fee.'
       },
       {
         type: 'faq',
@@ -887,19 +785,6 @@ export const pages = Object.freeze({
             body: 'The experience should be private, inclusive, nonjudgmental, and designed for adults with real schedules and responsibilities.'
           }
         ]
-      },
-      {
-        type: 'verificationStatus',
-        eyebrow: 'Location and access',
-        heading: 'Operational details are still being finalized.',
-        body:
-          `Find us at ${clinicAddress}. Coming soon. Find launch updates at apexwellnessnwi.com.`
-      },
-      {
-        type: 'notice',
-        eyebrow: 'Photography',
-        heading: 'Real people. Clearly labeled photography.',
-        body: 'The portraits on this page show Shahab Siddique, Alexandria Auriemma and Shanon Mekola with graphic backdrops. Other images on the site may be illustrative.'
       }
     ]
   },

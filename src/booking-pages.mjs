@@ -12,7 +12,7 @@ const adPages = [
     navLabel: 'Book medical weight loss',
     title: 'Medical Weight Loss in Merrillville | Book for $49 | Apex Wellness',
     description:
-      'Book a first visit for medical weight loss at Apex Wellness in Merrillville. Grand opening: $49 for labs and your first visit, for the first 50 appointments scheduled. Coming soon; online booking is open.',
+      'Book a first visit for medical weight loss at Apex Wellness in Merrillville. Grand opening: $49 for labs and your first visit, for the first 50 appointments scheduled. Online booking is open.',
     eyebrow: 'Medical weight loss · Opening Friday, November 20',
     h1: 'Medical weight loss in Merrillville. Start for $49.',
     lead: 'Care that begins with an evaluation of your history, risks and goals.',
@@ -29,7 +29,7 @@ const adPages = [
     navLabel: 'Book men’s hormone health',
     title: 'Men’s Hormone Health in Merrillville | Book for $49 | Apex Wellness',
     description:
-      'Book a first visit for men’s hormone health at Apex Wellness in Merrillville. Grand opening: $49 for labs and your first visit, for the first 50 appointments scheduled. Coming soon; online booking is open.',
+      'Book a first visit for men’s hormone health at Apex Wellness in Merrillville. Grand opening: $49 for labs and your first visit, for the first 50 appointments scheduled. Online booking is open.',
     eyebrow: 'Men’s hormone health · Opening Friday, November 20',
     h1: 'Men’s hormone health in Merrillville. Start for $49.',
     lead: 'Symptoms, testing and health risks are reviewed together. One lab number does not decide the plan.',
@@ -46,7 +46,7 @@ const adPages = [
     navLabel: 'Book women’s midlife care',
     title: 'Perimenopause and Menopause Care in Merrillville | Book for $49 | Apex Wellness',
     description:
-      'Book a first visit for perimenopause and menopause care at Apex Wellness in Merrillville. Grand opening: $49 for labs and your first visit, for the first 50 appointments scheduled. Coming soon; online booking is open.',
+      'Book a first visit for perimenopause and menopause care at Apex Wellness in Merrillville. Grand opening: $49 for labs and your first visit, for the first 50 appointments scheduled. Online booking is open.',
     eyebrow: 'Women’s midlife care · Opening Friday, November 20',
     h1: 'Perimenopause and menopause care in Merrillville. Start for $49.',
     lead: 'An individualized look at perimenopause, menopause, weight, sleep and related midlife concerns.',
@@ -63,7 +63,7 @@ const adPages = [
     navLabel: 'Book hair-loss care',
     title: 'Hair-Loss Care in Merrillville | Book for $49 | Apex Wellness',
     description:
-      'Book a first visit for hair-loss care at Apex Wellness in Merrillville. Grand opening: $49 for labs and your first visit, for the first 50 appointments scheduled. Coming soon; online booking is open.',
+      'Book a first visit for hair-loss care at Apex Wellness in Merrillville. Grand opening: $49 for labs and your first visit, for the first 50 appointments scheduled. Online booking is open.',
     eyebrow: 'Hair-loss care · Opening Friday, November 20',
     h1: 'Hair-loss care in Merrillville. Start for $49.',
     lead: 'Clinical evaluation for adults with thinning hair and hair loss.',
@@ -73,6 +73,25 @@ const adPages = [
       'Clear information on options and costs before you decide.'
     ],
     learnMore: { label: 'Learn more about hair-loss care', href: '/hair-loss-care/' }
+  },
+  {
+    // Added November 17, 2026. Google restricts prescription drug terms on ad landing pages,
+    // so this page says "peptide therapy" only and never names a peptide.
+    key: 'book-peptide-therapy',
+    slug: '/book/peptide-therapy/',
+    navLabel: 'Book peptide therapy',
+    title: 'Peptide Therapy in Merrillville | Book for $49 | Apex Wellness',
+    description:
+      'Book a first visit for peptide therapy at Apex Wellness in Merrillville. Grand opening: $49 for labs and your first visit, for the first 50 appointments scheduled. Online booking is open.',
+    eyebrow: 'Peptide therapy · Opening Friday, November 20',
+    h1: 'Peptide therapy in Merrillville. Start for $49.',
+    lead: 'An in-person visit first, so any plan fits your goals and history.',
+    covers: [
+      'Your goals, injuries or symptoms and current medications.',
+      'An individual evaluation, with labs as clinically appropriate.',
+      'Whether a peptide fits, with options and costs before you decide.'
+    ],
+    learnMore: { label: 'Learn more about peptide therapy', href: '/peptide-therapy/' }
   }
 ];
 
@@ -85,7 +104,7 @@ export function bookingAdPages(shared) {
     navLabel: page.navLabel,
     title: page.title,
     description: page.description,
-    announcement: `Coming soon to Merrillville · ${bookingStatus}`,
+    announcement: `Opening November 20 in Merrillville · ${bookingStatus}`,
     eyebrow: page.eyebrow,
     h1: page.h1,
     h1Accent: 'Start for $49.',

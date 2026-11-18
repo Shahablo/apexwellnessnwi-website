@@ -148,7 +148,7 @@ assert.ok(existsSync(publicRoot), "public/ is missing; run `node scripts/build.m
 
 // /founding-patients/ and the four ad booking pages: short landing header, booking announcement, no site navigation.
 const bookingSlugs = new Set(Object.values(pages).filter((page) => page.landing).map((page) => page.slug));
-const adBookingSlugs = ['/book/weight-loss/', '/book/hormone-health/', '/book/womens-midlife/', '/book/hair-loss/'];
+const adBookingSlugs = ['/book/weight-loss/', '/book/hormone-health/', '/book/womens-midlife/', '/book/hair-loss/', '/book/peptide-therapy/'];
 
 const htmlBySlug = new Map();
 for (const page of pageList) {
@@ -168,7 +168,8 @@ test('the new planned care area is discoverable without displacing information l
     for (const href of [...carePaths, '/about/', '/how-it-works/', '/pricing/', '/blog/', '/faq/']) {
       assert.ok(header.includes(`href="${href}"`), `${slug} primary navigation is missing ${href}`);
     }
-    assert.match(html, /Coming soon/i);
+    assert.match(html, /November 20/);
+    assert.doesNotMatch(html.match(/<main[\s\S]*?<\/main>/)[0].replace(/<[^>]+>/g, ' '), /coming soon|preparing to|prelaunch/i, slug + ' drops prelaunch wording');
   }
   const hair = htmlBySlug.get('/hair-loss-care/');
   assert.match(hair, /Yes\. Online booking is open for visits from November 20\. You can also call \(219\) 207-2456\./);
@@ -724,7 +725,7 @@ test('homepage names the planned care and location, keeps the planned-launch sta
   assert.match(home, /class="signature-launch-note">8550 Broadway, Suite B/);
   for (const [slug, html] of htmlBySlug) {
     if (bookingSlugs.has(slug)) {
-      assert.match(html, /class="announcement-copy">Coming soon to Merrillville · Online booking is open for visits from November 20\.<\/span>/);
+      assert.match(html, /class="announcement-copy">Opening November 20 in Merrillville · Online booking is open for visits from November 20\.<\/span>/);
       assert.doesNotMatch(html, /November 1(?!\d)|2026-11-01/);
       assert.doesNotMatch(html, /Join the Launch List/);
       continue;
@@ -801,6 +802,7 @@ test('the four ad booking pages build from the shared booking template with the 
     ['/book/hormone-health/', ['Men’s hormone health in Merrillville. ', 'Learn more about men’s hormone health', '/mens-hormone-health/']],
     ['/book/womens-midlife/', ['Perimenopause and menopause care in Merrillville. ', 'Learn more about women’s midlife care', '/womens-midlife-care/']],
     ['/book/hair-loss/', ['Hair-loss care in Merrillville. ', 'Learn more about hair-loss care', '/hair-loss-care/']],
+    ['/book/peptide-therapy/', ['Peptide therapy in Merrillville. ', 'Learn more about peptide therapy', '/peptide-therapy/']],
   ]);
   assert.deepEqual([...bookingSlugs].sort(), [...adBookingSlugs, '/founding-patients/'].sort());
   const sitemap = await readFile(join(publicRoot, 'sitemap.xml'), 'utf8');
@@ -833,7 +835,7 @@ test('the four ad booking pages build from the shared booking template with the 
     assert.doesNotMatch(main, /<form|<img|<input|booking-services|Also at Apex/);
     assert.doesNotMatch(html, /Launch List|consultation-form|founding-consultation/);
     assert.doesNotMatch(main.replace(/<[^>]+>/g, ' '), /\bfree\b|on us|no charge|testosterone|\bPSA\b|vitamin D|\bTSH\b|\bT4\b|\bTRT\b|low T\b|GLP|semaglutide|tirzepatide|pounds|\blbs\b|before and after|guarantee|\bdoctor\b|physician|nurse practitioner|BPC-?157|TB-?500|sermorelin|gonadorelin|wolverine|Wajeeh|Atif|!/i, slug + ' copy rules');
-    assert.match(html, /Coming soon/);
+    assert.match(html, /November 20/);
     // The Google tag and the site's own scripts, nothing else.
     const scripts = startTags(html, 'script').filter(({ attrs }) => attrs.src).map(({ attrs }) => attrs.src.replace(/\?.*$/, ''));
     assert.deepEqual(scripts, ['https://www.googletagmanager.com/gtag/js', '/assets/google-tag.js', '/assets/site-measurement.js', '/assets/site.js', '/assets/site-assistant.js'], slug + ' scripts');
@@ -915,7 +917,8 @@ test('the ad landing pages open with the grand-opening offer band above the page
     // The hero offers Book online; only the hormone hub adds its own phone action as a second button.
     assert.match(html, new RegExp(`<div class="hero-actions">${bookOnline.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}(?:<a class="button-secondary" href="tel:\\+12192072456">Call Apex with a general question</a>)?</div>`), `${slug} hero actions`);
     assert.ok(html.includes(bookingStatus), `${slug} must say online booking is open`);
-    assert.match(html, /Coming soon/, `${slug} keeps the clinic's Coming soon status`);
+    // Dated blog articles, and the blog index that lists them, keep their original wording.
+    if (!slug.startsWith('/blog/')) assert.doesNotMatch(html, /Coming soon/, `${slug} drops the Coming soon wording`);
   }
   assert.equal([...offerBandPages].filter((slug) => htmlBySlug.has(slug)).length, 5);
 
@@ -939,7 +942,8 @@ test('no generated page, guide answer or email still says scheduling or booking 
   }
   for (const [slug, html] of htmlBySlug) {
     if (!bookingSlugs.has(slug)) assert.match(html, /class="announcement-copy">Opening November 20, 2026/, `${slug} keeps the opening date`);
-    assert.match(html, /Coming soon/, `${slug} keeps the clinic's Coming soon status`);
+    // Dated blog articles, and the blog index that lists them, keep their original wording.
+    if (!slug.startsWith('/blog/')) assert.doesNotMatch(html, /Coming soon/, `${slug} drops the Coming soon wording`);
   }
 
   // Clinic hours where the site talks about visiting or booking.

@@ -4,10 +4,11 @@ import { answerWebsiteQuestion, pexyNudgeCopy, shouldOfferPexy } from '../src/as
 import { site } from '../src/content.mjs';
 import { bookingStatus, clinicHours, grandOpeningOffer } from '../src/clinic-facts.mjs';
 
-test('the guide gives the owner-confirmed address while preserving prelaunch status', () => {
+test('the guide gives the owner-confirmed address and opening date', () => {
   const answer = answerWebsiteQuestion('Where is your clinic?');
   assert.ok(answer.text.includes(site.address.label));
-  assert.match(answer.text, /Coming soon/);
+  assert.match(answer.text, /November 20/);
+  assert.doesNotMatch(answer.text, /Coming soon|preparing/i);
 });
 
 test('Pexy invites only after a qualified desktop exit or engagement', () => {
@@ -48,7 +49,7 @@ test('the location answer preserves in-person-only launch plans and says online 
   const answer = answerWebsiteQuestion('Do you offer telehealth?');
   assert.equal(answer.href, '/merrillville/');
   assert.match(answer.text, /telehealth is not offered/);
-  assert.match(answer.text, /Coming soon/);
+  assert.match(answer.text, /November 20/);
   assert.ok(answer.text.includes(bookingStatus));
   assert.ok(answer.text.includes(clinicHours.sentence));
 });

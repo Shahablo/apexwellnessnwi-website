@@ -7,12 +7,12 @@ export const hormoneCareHubPage = {
   navLabel: 'Hormone Care',
   title: 'Hormone Care in Merrillville, IN | Apex Wellness',
   description: 'Explore men’s hormone health and women’s midlife care at Apex Wellness in Merrillville. Compare the care areas. Online booking is open for visits from November 20.',
-  eyebrow: 'Coming soon · Merrillville, Indiana',
+  eyebrow: 'Hormone care · Merrillville, Indiana',
   h1: 'Hormone care in Merrillville starts with a clear path.',
-  intro: 'Apex Wellness is preparing two distinct hormone-focused care paths at one Northwest Indiana clinic. Choose the page that fits what you want to explore. You can book a first visit online or call with a general clinic question.',
+  intro: 'Apex Wellness offers two distinct hormone-focused care paths at one Northwest Indiana clinic. Choose the page that fits what you want to explore. You can book a first visit online or call with a general clinic question.',
   heroImage: 'behindWindow',
   cta: { label: 'Call Apex with a general question', href: 'tel:+12192072456' },
-  ctaNote: 'Coming soon at 8550 Broadway, Suite B. Please save personal medical details for a secure clinical process.',
+  ctaNote: 'Opening November 20 at 8550 Broadway, Suite B. Please save personal medical details for a secure clinical process.',
   sections: [
     {
       type: 'linkCards',
@@ -37,7 +37,7 @@ export const hormoneCareHubPage = {
       type: 'detail',
       eyebrow: 'One local location',
       heading: 'The clinic is on Broadway in Merrillville.',
-      body: `Apex Wellness is preparing in-person visits at 8550 Broadway, Suite B, Merrillville, IN 46410. ${bookingStatus} ${clinicHours.sentence} Fees will be posted on the Pricing page.`
+      body: `Apex Wellness offers in-person visits at 8550 Broadway, Suite B, Merrillville, IN 46410. ${bookingStatus} ${clinicHours.sentence} Fees will be posted on the Pricing page.`
     },
     {
       type: 'linkCards',
@@ -64,7 +64,7 @@ export const hormoneCareHubPage = {
       items: [
         {
           question: 'Can I book hormone care today?',
-          answer: `You can book a first visit. Apex is coming soon. ${bookingStatus} You can also call (219) 207-2456.`,
+          answer: `You can book a first visit. ${bookingStatus} You can also call (219) 207-2456.`,
           bookOnline: true
         },
         {

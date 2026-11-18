@@ -709,17 +709,19 @@ test('homepage replaces the generic introduction with one staff-neutral approach
 
 test('homepage names the planned care and location, keeps the planned-launch status and offers online booking', async () => {
   const home = htmlBySlug.get('/');
-  assert.match(home, /<meta name="description" content="[^"]*Coming soon to Merrillville\. Online booking is open for visits from November 20\.">/);
+  assert.match(home, /<meta name="description" content="[^"]*peptide care in Merrillville, Indiana\. Online booking is open for visits from November 20\.">/);
   assert.match(home, /<div class="hero-actions"><a class="button" href="https:\/\/d2oe0ra32qx05a\.cloudfront\.net\/\?practiceKey=k_1_117405"[^>]*data-book-online>Book online<span class="visually-hidden"> \(opens a new tab\)<\/span><\/a><a class="hero-explore" href="#care-areas">Explore care areas /);
   assert.match(home, /<h3>Book when you are ready\.<\/h3><p>Online booking is open for visits from November 20\. Book online or call \(219\) 207-2456\.<\/p>/);
   assert.equal(site.launch.date, '2026-11-20');
   assert.match(home, /Opening November 20, 2026/);
   assert.doesNotMatch(home, /November 4, 2026|2026-11-04/);
-  assert.match(home, /<h1 id="page-title">Weight, hormones, hair loss\. <em>Coming to Merrillville\.<\/em><\/h1>/);
+  assert.match(home, /<h1 id="page-title">Weight, hormones, hair loss, peptides\. <em>Now booking in Merrillville\.<\/em><\/h1>/);
   for (const area of ['weight and metabolic care', 'men’s hormone health', 'women’s midlife care', 'hair-loss care for thinning and balding']) assert.match(home, new RegExp(area));
-  assert.match(home, /Coming soon to 8550 Broadway, Suite B/);
+  assert.match(home, /Doors open November 20 at 8550 Broadway, Suite B/);
+  assert.match(home, /href="\/peptide-therapy\/"/);
+  assert.doesNotMatch(home.match(/<main[\s\S]*?<\/main>/)[0].replace(/<[^>]+>/g, ' '), /coming soon|coming to merrillville|preparing|subject to readiness/i, 'home page drops prelaunch wording');
   assert.doesNotMatch(home, /A thoughtful(?:<br>|\s)+approach to/);
-  assert.match(home, /class="signature-launch-note">Coming soon · Subject to readiness/);
+  assert.match(home, /class="signature-launch-note">8550 Broadway, Suite B/);
   for (const [slug, html] of htmlBySlug) {
     if (bookingSlugs.has(slug)) {
       assert.match(html, /class="announcement-copy">Coming soon to Merrillville · Online booking is open for visits from November 20\.<\/span>/);

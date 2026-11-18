@@ -5,11 +5,11 @@ import { bookingStatus } from './clinic-facts.mjs';
 // An FAQ item with bookOnline: true gets the Book online link after its answer.
 export const visitDetails = Object.freeze({
   format: 'In-person visits at launch',
-  formatNote: 'Apex is preparing for in-person care in Merrillville. Telehealth is not offered.',
+  formatNote: 'Visits are in person in Merrillville. Telehealth is not offered.',
   locationPath: '/merrillville/',
   directionsUrl: 'https://www.google.com/maps/dir/?api=1&destination=8550%20Broadway%2C%20Suite%20B%2C%20Merrillville%2C%20IN%2046410',
   quickAnswers: [
-    { question: 'Where will visits take place?', answer: `At 8550 Broadway, Suite B, Merrillville, IN 46410. Apex is coming soon, with in-person visits. ${bookingStatus}`, bookOnline: true },
+    { question: 'Where will visits take place?', answer: `At 8550 Broadway, Suite B, Merrillville, IN 46410. Visits are in person. ${bookingStatus}`, bookOnline: true },
     { question: 'Will Apex offer telehealth at launch?', answer: 'No. Visits are in person.' },
     { question: 'What will care cost, and is insurance accepted?', answer: 'Apex is planning a cash-pay model. Final prices will be published on the Pricing page, with package inclusions and any separate costs explained.' }
   ],

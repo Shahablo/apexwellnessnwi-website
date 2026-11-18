@@ -6,13 +6,13 @@ export const womensHrtPage = {
   "description": "Explore women’s hormone replacement therapy at Apex Wellness in Merrillville, including menopause symptoms, potential benefits, options and FAQs.",
   "eyebrow": "Women's hormone care · Merrillville, Indiana",
   "h1": "Women's hormone replacement therapy. Care that starts with how you feel.",
-  "intro": "Hot flashes. Restless nights. Changes in comfort and intimacy. Perimenopause and menopause can affect everyday life. You deserve a thoughtful conversation about your symptoms and the options that may help. Apex is preparing to offer individualized women's midlife care in Merrillville. Hormone replacement therapy (HRT) may be one option, depending on your goals and health history.",
+  "intro": "Hot flashes. Restless nights. Changes in comfort and intimacy. Perimenopause and menopause can affect everyday life. You deserve a thoughtful conversation about your symptoms and the options that may help. Apex offers individualized women's midlife care in Merrillville. Hormone replacement therapy (HRT) may be one option, depending on your goals and health history.",
   "heroImage": "women",
   "cta": {
     "label": "Book online",
     "href": "/founding-patients/"
   },
-  "ctaNote": "Coming soon. Online booking is open for visits from November 20.",
+  "ctaNote": "Online booking is open for visits from November 20.",
   "sections": [
     {
       "type": "options",

@@ -703,3 +703,6 @@ body:not(.page-home) .audience-section{padding-block:clamp(1.75rem,3vw,3rem)}
 .footer-meta{margin-top:1.75rem;padding-top:1.5rem}
 body:not(.page-home) .section-heading{margin-bottom:1.5rem}
 body:not(.page-home) .planning-links{margin-top:1rem}
+
+/* Odd last care card (five care areas since Nov 17, 2026): center it in the two-column grid. */
+@media(min-width:48.01rem){.care-cards>.care-card:last-child:nth-child(odd){grid-column:1/-1;justify-self:center;width:calc(50% - .75rem)}}

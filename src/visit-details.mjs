@@ -23,14 +23,14 @@ export const visitDetails = Object.freeze({
 export const merrillvillePage = Object.freeze({
   slug: '/merrillville/', navLabel: 'Location', modified: '2026-11-16',
   title: 'Merrillville Location & In-Person Care | Apex Wellness',
-  description: 'Apex Wellness is coming soon to 8550 Broadway, Suite B, Merrillville, IN 46410. Find directions, clinic hours, in-person visit details and online booking.',
-  eyebrow: 'Our Merrillville location · Coming soon',
+  description: 'Apex Wellness opens November 20 at 8550 Broadway, Suite B, Merrillville, IN 46410. Find directions, clinic hours, in-person visit details and online booking.',
+  eyebrow: 'Our Merrillville location',
   h1: 'A local place to take your next step.',
   intro: 'We are getting Apex Wellness ready at 8550 Broadway, Suite B, in Merrillville. Weight and metabolic care, men’s hormone health, women’s midlife care and hair-loss care are offered, with visits in person at launch.',
   heroImage: 'behindWindow',
   cta: { label: 'Book online', href: '/founding-patients/' },
   secondaryCta: { label: 'Open directions', href: visitDetails.directionsUrl },
-  ctaNote: `Coming soon. ${bookingStatus} Photo: preparing our Merrillville space, October 2026.`,
+  ctaNote: `${bookingStatus} Photo: setting up our Merrillville space, October 2026.`,
   sections: [
     { type: 'locationDetails', heading: 'Find Apex on Broadway.', eyebrow: '8550 Broadway · Suite B', body: 'Use the full address, including Suite B, when planning your trip. Parking and arrival instructions will be shared before appointments begin.' },
     { type: 'detail', heading: 'One Merrillville location. Part of Northwest Indiana.', eyebrow: 'Our community', body: 'Our clinic is in Merrillville, with care intended for adults from Crown Point, Schererville, Munster, Dyer, St. John, Highland, Hobart and surrounding Northwest Indiana communities. These are nearby communities we hope to serve, not additional Apex locations.' },
@@ -39,15 +39,15 @@ export const merrillvillePage = Object.freeze({
       { title: 'From Crown Point', body: 'Find the right Broadway address and check driving or current transit information.', href: '/visit-from-crown-point/', label: 'Plan from Crown Point' },
       { title: 'From Schererville', body: 'Compare directions from the US 41/US 30 crossroads or downtown before you go.', href: '/visit-from-schererville/', label: 'Plan from Schererville' }
     ] },
-    { type: 'linkCards', heading: 'Explore the care we are preparing.', eyebrow: 'Four areas of care', items: [
+    { type: 'linkCards', heading: 'Explore our care.', eyebrow: 'Four areas of care', items: [
       { title: 'Weight & metabolic care', body: 'Read about the approach to medical weight management.', href: '/weight-management/', label: 'Explore weight care' },
       { title: 'Men’s hormone health', body: 'Read about the approach to hormone evaluation.', href: '/mens-hormone-health/', label: 'Explore men’s care' },
       { title: 'Women’s midlife care', body: 'Read about care for perimenopause and menopause concerns.', href: '/womens-midlife-care/', label: 'Explore midlife care' },
       { title: 'Hair-loss care', body: 'Read about the evaluation of hair-loss concerns.', href: '/hair-loss-care/', label: 'Explore hair-loss care' }
     ] },
     { type: 'faq', heading: 'Before planning a visit', items: [
-      { question: 'Is the clinic open for appointments or walk-ins?', answer: `Apex is coming soon. ${bookingStatus} Walk-in visits have not been announced, so please book ahead or call (219) 207-2456.`, bookOnline: true },
-      { question: 'Do I have to live in Merrillville to visit?', answer: 'No. Neighbors in Munster and elsewhere in Northwest Indiana can follow opening updates too. Apex is preparing one location at 8550 Broadway, Suite B, Merrillville; visits are in person there.' },
+      { question: 'Is the clinic open for appointments or walk-ins?', answer: `Apex opens November 20. ${bookingStatus} Walk-in visits have not been announced, so please book ahead or call (219) 207-2456.`, bookOnline: true },
+      { question: 'Do I have to live in Merrillville to visit?', answer: 'No. Neighbors in Munster and elsewhere in Northwest Indiana are welcome too. Apex has one location at 8550 Broadway, Suite B, Merrillville; visits are in person there.' },
       visitDetails.quickAnswers[1],
       { question: 'Can I ask about the location or access?', answer: 'Call (219) 207-2456 or email hello@apexwellnessnwi.com with a general location or accessibility question. Please keep medical details out of ordinary email.' },
       { question: 'Where can I find fees and visit details?', answer: `The Pricing and How It Works pages explain the process. Final fees will be posted on the Pricing page. ${bookingStatus}`, bookOnline: true }

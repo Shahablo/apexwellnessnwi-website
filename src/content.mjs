@@ -22,7 +22,7 @@ const emergencyNotice =
   'Apex Wellness does not provide urgent or emergency care. If you are experiencing a medical emergency, call 911 or go to the nearest emergency department.';
 
 const prelaunchNotice =
-  'Apex Wellness is coming soon to Merrillville. Find launch updates at apexwellnessnwi.com.';
+  'Apex Wellness opens November 20, 2026 at 8550 Broadway, Suite B, Merrillville.';
 
 export const site = Object.freeze({
   name: 'Apex Wellness',
@@ -44,7 +44,7 @@ export const site = Object.freeze({
     { label: 'NWI wellness community', href: 'https://www.facebook.com/groups/1778107663214102/' }
   ],
   description:
-    'Apex Wellness is preparing weight, metabolic, hormone, and hair-loss care for adults in Northwest Indiana.',
+    'Apex Wellness offers weight, metabolic, hormone, hair-loss and peptide care for adults in Northwest Indiana.',
   announcement:
     'Opening November 20, 2026 · Northwest Indiana.',
   cta: bookingPageCta,
@@ -87,7 +87,7 @@ export const site = Object.freeze({
     summary:
       'Weight, metabolic, hormone, and hair-loss care for adults in Northwest Indiana.',
     location:
-      `Coming soon to ${clinicAddress}.`,
+      `${clinicAddress}.`,
     copyright: '© 2026 Apex Wellness.'
   }
 });
@@ -110,7 +110,8 @@ const generalBooking = Object.freeze({
     { id: 'weight', label: 'Medical weight loss', line: 'A plan built on your history and labs.', href: '/weight-management/' },
     { id: 'hormones', label: 'Men’s hormone health', line: 'Symptoms and testing reviewed before any plan.', href: '/mens-hormone-health/' },
     { id: 'midlife', label: 'Women’s midlife care', line: 'Support through perimenopause and menopause.', href: '/womens-midlife-care/' },
-    { id: 'hair', label: 'Hair-loss care', line: 'Evaluation and care for hair loss and thinning.', href: '/hair-loss-care/' }
+    { id: 'hair', label: 'Hair-loss care', line: 'Evaluation and care for hair loss and thinning.', href: '/hair-loss-care/' },
+    { id: 'peptides', label: 'Peptide therapy', line: 'Recovery and hormone-support peptides, after a visit.', href: '/peptide-therapy/' }
   ],
   // Owner-supplied fine print for this page, word for word.
   finePrint:
@@ -147,7 +148,7 @@ export const pages = Object.freeze({
     },
     ctaNote: 'Online booking is open for visits from November 20.',
     editorial: {
-      careHeading: 'Four ways in.\nOne standard of care.',
+      careHeading: 'Five ways in.\nOne standard of care.',
       careAside: 'Evaluated before treated.\nNo shortcuts, no templates.',
       approachHeading: 'Thoughtful care.\nBuilt around you.',
       approachBody: `We built this practice around careful evaluation, clear conversations, and individual goals. ${bookingStatus}`,
@@ -169,8 +170,8 @@ export const pages = Object.freeze({
       },
       {
         type: 'cards',
-        eyebrow: 'Four areas of care',
-        heading: 'Four areas of care. One individualized approach.',
+        eyebrow: 'Five areas of care',
+        heading: 'Five areas of care. One individualized approach.',
         cards: [
           {
             title: 'Weight & metabolic care',
@@ -195,6 +196,12 @@ export const pages = Object.freeze({
             body:
               'Clinical evaluation and treatment for hair-loss concerns, with individual care decisions and clear details before treatment.',
             href: '/hair-loss-care/'
+          },
+          {
+            title: 'Peptide therapy',
+            body:
+              'Recovery and hormone-support peptides, prescribed only after an in-person visit and through a licensed compounding pharmacy.',
+            href: '/peptide-therapy/'
           }
         ]
       },
@@ -250,7 +257,7 @@ export const pages = Object.freeze({
         eyebrow: 'Our approach',
         heading: 'The plan starts with the person, not a product.',
         body:
-          'Apex is preparing a care model in which history, concerns, goals, risks, and appropriate testing are considered before a plan is written. Medication is discussed only when clinically appropriate, and outcomes are never guaranteed.'
+          'Apex uses a care model in which history, concerns, goals, risks, and appropriate testing are considered before a plan is written. Medication is discussed only when clinically appropriate, and outcomes are never guaranteed.'
       },
       {
         type: 'featureList',
@@ -269,7 +276,7 @@ export const pages = Object.freeze({
         eyebrow: 'Opening in Northwest Indiana',
         heading: 'Review the real details before deciding whether to book.',
         body:
-          `Coming soon to ${clinicAddress}. We open November 20, 2026. Find launch updates at apexwellnessnwi.com.`,
+          `${clinicAddress}. We open November 20, 2026.`,
         cta: bookingPageCta
       },
       {
@@ -289,8 +296,8 @@ export const pages = Object.freeze({
     navLabel: 'Weight & Metabolic',
     title: 'Medical Weight Loss in Merrillville, IN | Apex Wellness',
     description:
-      'Explore medical weight loss and metabolic care at Apex Wellness in Merrillville. Coming soon, with in-person visits. Online booking is open for visits from November 20.',
-    eyebrow: 'Coming soon to Merrillville · Weight & metabolic care',
+      'Explore medical weight loss and metabolic care at Apex Wellness in Merrillville, with in-person visits. Online booking is open for visits from November 20.',
+    eyebrow: 'Merrillville, Indiana · Weight & metabolic care',
     h1: 'Medical Weight Management in Merrillville, IN',
     intro:
       'Care starts with an evaluation of your history, goals and relevant measurements, then a plan built around you: nutrition, strength, and medication when clinically appropriate.',
@@ -363,8 +370,8 @@ export const pages = Object.freeze({
     navLabel: "Men's Hormone Health",
     title: 'Testosterone & Hormone Evaluation in Merrillville | Apex Wellness',
     description:
-      'Explore men’s hormone and testosterone evaluation at Apex Wellness in Merrillville. Coming soon; treatment depends on an individual clinical evaluation.',
-    eyebrow: 'Coming soon to Merrillville · Men’s hormone health',
+      'Explore men’s hormone and testosterone evaluation at Apex Wellness in Merrillville. Treatment depends on an individual clinical evaluation.',
+    eyebrow: 'Merrillville, Indiana · Men’s hormone health',
     h1: 'Men’s Hormone Health in Merrillville, IN',
     intro:
       'Symptoms, repeat testing when it matters, health risks, fertility goals and the alternatives all go into the plan. One lab number does not decide it.',
@@ -449,7 +456,7 @@ export const pages = Object.freeze({
     title: 'Menopause & Midlife Care in Merrillville, IN | Apex Wellness',
     description:
       'Women’s midlife care is offered at Apex Wellness in Merrillville. Explore the care approach. Online booking is open for visits from November 20.',
-    eyebrow: 'Coming soon to Merrillville · Women’s midlife care',
+    eyebrow: 'Merrillville, Indiana · Women’s midlife care',
     h1: 'Women’s Midlife Care in Merrillville, IN',
     intro:
       'Care for perimenopause and menopause, built around your symptoms and goals. Hormonal and non-hormonal options are both on the table.',
@@ -545,7 +552,7 @@ export const pages = Object.freeze({
     title: 'Hair-Loss Care in Merrillville & NWI | Apex Wellness',
     description:
       'Hair-loss care is coming to Apex Wellness in Merrillville, Northwest Indiana. Explore the service. Online booking is open for visits from November 20.',
-    eyebrow: 'Coming soon to Merrillville · Hair-loss care',
+    eyebrow: 'Merrillville, Indiana · Hair-loss care',
     h1: 'Hair-Loss Care in Merrillville, IN',
     intro:
       'Clinical evaluation and treatment for adults with thinning hair or balding, with clear pricing before treatment.',
@@ -602,7 +609,7 @@ export const pages = Object.freeze({
         heading: 'Four connected areas of care.',
         items: [{
           title: 'Why these four areas?',
-          body: 'Read the founder’s introduction to the areas Apex is preparing to offer in Merrillville.',
+          body: 'Read the founder’s introduction to the areas Apex offers in Merrillville.',
           label: 'Read the Apex story',
           href: '/blog/why-four-areas-of-care/'
         }]
@@ -639,7 +646,7 @@ export const pages = Object.freeze({
   pricing: {
     slug: '/pricing/',
     navLabel: 'Pricing',
-    title: 'Pricing and Prelaunch Status | Apex Wellness',
+    title: 'Pricing | Apex Wellness',
     description:
       'Learn how Apex Wellness plans to present cash-pay fees and which pricing details are still pending.',
     eyebrow: 'Pricing',
@@ -692,7 +699,7 @@ export const pages = Object.freeze({
           {
             question: 'Are labs or medications included?',
             answer:
-              'No inclusion should be assumed during prelaunch. The final pricing page will distinguish clinical fees from outside labs, medication, supplies, delivery, and other separate costs.'
+              'No inclusion should be assumed. The final pricing page will distinguish clinical fees from outside labs, medication, supplies, delivery, and other separate costs.'
           },
           {
             question: 'Can I pay or reserve an appointment now?',
@@ -807,23 +814,23 @@ export const pages = Object.freeze({
     eyebrow: 'Frequently asked questions',
     h1: 'Questions, answered before you commit.',
     intro:
-      'Get to know our care areas, location, and approach. Coming soon to Merrillville. Find launch updates at apexwellnessnwi.com.',
+      'Get to know our care areas, location, and approach at Apex Wellness in Merrillville. Online booking is open for visits from November 20.',
     cta: bookingPageCta,
     sections: [
       {
         type: 'faqGroup',
-        heading: 'Prelaunch and availability',
+        heading: 'Opening and availability',
         items: [
           {
             question: 'Is Apex Wellness open?',
             answer:
-              `Coming soon. ${bookingStatus} Find launch updates at apexwellnessnwi.com.`,
+              `Apex opens November 20, 2026. ${bookingStatus}`,
             bookOnline: true
           },
           {
             question: 'Where is Apex located?',
             answer:
-              `${clinicAddress}. We are preparing to open. Call or text (219) 207-2456, or email hello@apexwellnessnwi.com. ${clinicHours.sentence} Parking details will be posted before we open.`
+              `${clinicAddress}. We open November 20, 2026. Call or text (219) 207-2456, or email hello@apexwellnessnwi.com. ${clinicHours.sentence} Parking details will be posted before we open.`
           },
           {
             question: 'When can I book an appointment?',
@@ -846,7 +853,7 @@ export const pages = Object.freeze({
           {
             question: 'Will Apex offer hair-loss treatment?',
             answer:
-              'Yes. Hair-loss care is part of our care, alongside weight and metabolic care, men’s hormone health, and women’s midlife care. Coming soon; specific treatment options and fees are being finalized.'
+              'Yes. Hair-loss care is part of our care, alongside weight and metabolic care, men’s hormone health, and women’s midlife care. Specific treatment options and fees are being finalized.'
           },
           {
             question: 'Does an evaluation guarantee treatment or a prescription?',
@@ -888,7 +895,7 @@ export const pages = Object.freeze({
           {
             question: 'Will labs and medications be included?',
             answer:
-              'No inclusion should be assumed during prelaunch. Future pricing will clearly separate clinical fees from laboratory testing, medication, supplies, delivery, and outside services.'
+              'No inclusion should be assumed. Pricing will clearly separate clinical fees from laboratory testing, medication, supplies, delivery, and outside services.'
           },
           {
             question: 'How will clinical information and messages be handled?',
@@ -914,7 +921,7 @@ export const pages = Object.freeze({
     title: 'Book Online | $49 Grand Opening | Apex Wellness Merrillville',
     description:
       'Grand opening: promotional labs for $49. The $49 covers your first visit and the labs, for the first 50 appointments scheduled. Book online or call (219) 207-2456.',
-    announcement: `Coming soon to Merrillville · ${bookingStatus}`,
+    announcement: `Opening November 20 in Merrillville · ${bookingStatus}`,
     launchLabel: 'November 20, 2026',
     eyebrow: 'Grand opening · Friday, November 20 · Merrillville',
     h1: 'Now booking first visits.',
@@ -933,11 +940,11 @@ export const pages = Object.freeze({
     navLabel: 'Privacy Policy',
     title: 'Privacy Policy | Apex Wellness',
     description:
-      'Read how the Apex Wellness prelaunch website handles contact requests and optional Pexy website-question follow-ups.',
+      'Read how the Apex Wellness website handles contact requests and optional Pexy website-question follow-ups.',
     eyebrow: 'Updated October 28, 2026',
     h1: 'Privacy Policy',
     intro:
-      'This prelaunch policy explains the limited information collected through the Apex Wellness website, its contact forms, and Pexy’s optional follow-up form. It may be updated as clinical services and secure patient systems are introduced.',
+      'This policy explains the limited information collected through the Apex Wellness website, its contact forms, and Pexy’s optional follow-up form. It may be updated as clinical services and secure patient systems are introduced.',
     cta: bookingPageCta,
     effectiveDate: 'October 28, 2026',
     sections: [
@@ -1000,7 +1007,7 @@ export const pages = Object.freeze({
         type: 'policySection',
         heading: 'Your choices',
         paragraphs: [
-          'You may unsubscribe from marketing using the link in an email. You may also call (219) 207-2456 or email hello@apexwellnessnwi.com to request access, correction, or deletion of your prelaunch contact or Pexy follow-up information. Do not include medical details in that request.',
+          'You may unsubscribe from marketing using the link in an email. You may also call (219) 207-2456 or email hello@apexwellnessnwi.com to request access, correction, or deletion of your website contact or Pexy follow-up information. Do not include medical details in that request.',
           'Browser privacy controls may limit cookies or similar technologies. Essential security and form-protection functions may still be required for the site to operate.'
         ]
       },
@@ -1020,11 +1027,11 @@ export const pages = Object.freeze({
     navLabel: 'Terms of Use',
     title: 'Terms of Use | Apex Wellness',
     description:
-      'Read the terms governing use of the prelaunch Apex Wellness website and consultation-request form.',
+      'Read the terms governing use of the Apex Wellness website and consultation-request form.',
     eyebrow: `Effective ${effectiveDate}`,
     h1: 'Terms of Use',
     intro:
-      'These terms apply to the prelaunch Apex Wellness website. The site currently provides general information, contact request forms and a link to a separate online booking page. The site itself does not provide payment, clinical intake, or medical care.',
+      'These terms apply to the Apex Wellness website. The site currently provides general information, contact request forms and a link to a separate online booking page. The site itself does not provide payment, clinical intake, or medical care.',
     cta: bookingPageCta,
     effectiveDate,
     sections: [
@@ -1043,7 +1050,7 @@ export const pages = Object.freeze({
       },
       {
         type: 'policySection',
-        heading: 'Prelaunch limitations',
+        heading: 'Website limitations',
         paragraphs: [
           'Descriptions of the practice, services, workflows, pricing structure, visit modalities, and availability may change before launch. Only information identified as finalized should be relied upon for a care or payment decision.',
           `Our location at ${clinicAddress}, clinic hours and an opening date are identified on the site. Online booking is open for visits from November 20. Detailed clinical responsibilities, licensure information, legal practice details, contact channels, and pricing are still being finalized.`
@@ -1103,7 +1110,7 @@ export const pages = Object.freeze({
         type: 'policySection',
         heading: 'Consent is optional and revocable',
         paragraphs: [
-          'Submitting any contact request is optional. Consent to prelaunch email is not a condition of receiving medical care or making a purchase, neither of which is currently available through the site.',
+          'Submitting any contact request is optional. Consent to marketing email is not a condition of receiving medical care or making a purchase, neither of which is currently available through the site.',
           'You may unsubscribe at any time using the link in an email. Apex may retain a limited suppression record so that the unsubscribe request continues to be honored.'
         ]
       },
@@ -1132,7 +1139,7 @@ export const pages = Object.freeze({
     navLabel: 'Accessibility Statement',
     title: 'Accessibility Statement | Apex Wellness',
     description:
-      'Read the Apex Wellness commitment to an accessible website and learn how to request accessibility assistance during prelaunch.',
+      'Read the Apex Wellness commitment to an accessible website and learn how to request accessibility assistance.',
     eyebrow: `Effective ${effectiveDate}`,
     h1: 'Accessibility Statement',
     intro:
@@ -1160,7 +1167,7 @@ export const pages = Object.freeze({
         type: 'policySection',
         heading: 'Representative imagery and plain-language content',
         paragraphs: [
-          'Prelaunch photographs are representative imagery and do not identify Apex clinicians, patients, or facilities. Important information is intended to remain available in text rather than relying on an image alone.',
+          'Website photographs are representative imagery and do not identify Apex clinicians, patients, or facilities. Important information is intended to remain available in text rather than relying on an image alone.',
           `Our location is ${clinicAddress}. Parking, physical-access details, visit modality, and other accommodation information will be published here as they are confirmed. Please do not assume specific access features are available until those details are confirmed.`
         ]
       },
@@ -1179,11 +1186,11 @@ export const pages = Object.freeze({
     navLabel: 'Cancellation and Refunds',
     title: 'Cancellation and Refunds | Apex Wellness',
     description:
-      'Read the Apex Wellness prelaunch cancellation and refund status, and how to change a visit booked online.',
+      'Read the Apex Wellness cancellation and refund status, and how to change a visit booked online.',
     eyebrow: `Effective ${effectiveDate}`,
     h1: 'Cancellation and Refunds',
     intro:
-      'Apex Wellness is in prelaunch. Online booking is open for visits from November 20, 2026. This website does not accept enrollment or payment, so there is presently no payment made through it to refund. To change or cancel a visit you booked, call (219) 207-2456.',
+      'Online booking is open for visits from November 20, 2026. This website does not accept enrollment or payment, so there is presently no payment made through it to refund. To change or cancel a visit you booked, call (219) 207-2456.',
     cta: bookingPageCta,
     effectiveDate,
     sections: [
@@ -1192,7 +1199,7 @@ export const pages = Object.freeze({
         heading: 'Pre-opening consultation requests',
         paragraphs: [
           'A consultation request is not an appointment, reservation, membership, deposit, or promise of treatment.',
-          'You may unsubscribe from email using the link in any message. You may request deletion of your prelaunch contact information as described in the Privacy Policy.'
+          'You may unsubscribe from email using the link in any message. You may request deletion of your website contact information as described in the Privacy Policy.'
         ]
       },
       {
@@ -1200,7 +1207,7 @@ export const pages = Object.freeze({
         heading: 'Terms before future payment',
         paragraphs: [
           'Before Apex accepts any payment, the applicable price, services included and excluded, billing cadence, rescheduling deadline, late-cancellation or missed-visit rule, pause and termination process, refund eligibility, and any evaluation-fee credit will be shown in plain language.',
-          'You will have an opportunity to review and accept those terms before completing payment. Terms may differ by service and will not be applied retroactively to a free prelaunch consultation request.'
+          'You will have an opportunity to review and accept those terms before completing payment. Terms may differ by service and will not be applied retroactively to a website contact request.'
         ]
       },
       {
@@ -1215,7 +1222,7 @@ export const pages = Object.freeze({
         type: 'policySection',
         heading: 'Questions',
         paragraphs: [
-          'For a billing or policy question during prelaunch, email hello@apexwellnessnwi.com. Do not send payment details or medical information by email.'
+          'For a billing or policy question, email hello@apexwellnessnwi.com. Do not send payment details or medical information by email.'
         ]
       }
     ]

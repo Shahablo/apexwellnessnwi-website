@@ -14,7 +14,7 @@ test('the location route is discoverable and shows clinic hours, opening status 
   assert.match(home, /href="\/merrillville\/"/);
   assert.match(sitemap, /<loc>https:\/\/apexwellnessnwi.com\/merrillville\/<\/loc>/);
   assert.match(location, /8550 Broadway, Suite B/);
-  assert.ok(location.includes(`<dt>Availability</dt><dd>Coming soon. Online booking is open for visits from November 20. ${bookOnlineLink}</dd>`));
+  assert.ok(location.includes(`<dt>Availability</dt><dd>Opening November 20. Online booking is open for visits from November 20. ${bookOnlineLink}</dd>`));
   assert.ok(location.includes('<dt>Hours from November 20</dt><dd>Wednesday, Thursday and Friday: 11 a.m. to 5 p.m.<br>Saturday: 9 a.m. to 1 p.m.<br>Closed Sunday through Tuesday.<br>Closed Thanksgiving Day, November 26.</dd>'));
   assert.match(location, /Walk-in visits have not been announced/);
   assert.match(location, /Visits are in person/);
@@ -30,7 +30,7 @@ test('each care page links to practical next steps and its own working FAQ ancho
     for (const href of ['/merrillville/', '/pricing/', '/how-it-works/']) assert.ok(html.includes(`href="${href}"`), `${item.href}: ${href}`);
     assert.match(html, /In-person visits at launch/);
     assert.ok(html.includes('<dt>Hours from November 20</dt><dd>Wednesday, Thursday and Friday: 11 a.m. to 5 p.m.<br>Saturday: 9 a.m. to 1 p.m.</dd>'), `${item.href}: clinic hours`);
-    assert.ok(html.includes(`<p class="visit-details-note">Coming soon. Online booking is open for visits from November 20. ${bookOnlineLink}<a href="#`), `${item.href}: booking status`);
+    assert.ok(html.includes(`<p class="visit-details-note">Opening November 20. Online booking is open for visits from November 20. ${bookOnlineLink}<a href="#`), `${item.href}: booking status`);
     const anchor = html.match(/href="#([^"]+)">Jump to common questions/);
     assert.ok(anchor, item.href);
     assert.ok(html.includes(`id="${anchor[1]}"`), `${item.href}: resolved FAQ target`);
@@ -58,7 +58,7 @@ test('nearby-town visitor pages have distinct route help and one truthful clinic
     assert.match(html, /<meta name="robots" content="index, follow/);
     assert.match(html, /8550 Broadway, Suite B/);
     assert.match(html, /Merrillville, IN 46410/);
-    assert.match(html, /Coming soon/);
+    assert.match(html, /November 20/);
     assert.match(html, /href="\/merrillville\/"/);
     assert.match(html, unique);
     assert.match(html, /Online booking is open for visits from November 20\./);

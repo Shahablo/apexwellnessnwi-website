@@ -1094,16 +1094,22 @@ function buildHeaders() {
   X-Content-Type-Options: nosniff
   X-Frame-Options: DENY
 `;
-  const htmlPaths = [
+  // Cloudflare allows at most 100 _headers rules. Sections with nested pages
+  // (/blog/, /book/, /peptide-therapy/) get one splat rule instead of two rules per page.
+  const slugs = [
+    ...Object.values(pages).map((page) => page.slug),
+    ...publishedBlogPosts.map((post) => post.slug),
+  ].filter((slug) => slug !== "/");
+  const firstSegment = (slug) => slug.split("/").filter(Boolean)[0];
+  const nestedSections = new Set(slugs.filter((slug) => slug.split("/").filter(Boolean).length > 1).map(firstSegment));
+  const htmlPaths = [...new Set([
     "/",
     "/index.html",
     "/404.html",
-    ...Object.values(pages).filter((page) => page.slug !== "/").flatMap((page) => [
-      page.slug,
-      `${page.slug}index.html`,
-    ]),
-    ...publishedBlogPosts.flatMap((post) => [post.slug, `${post.slug}index.html`]),
-  ];
+    ...slugs.flatMap((slug) => nestedSections.has(firstSegment(slug))
+      ? [`/${firstSegment(slug)}/*`]
+      : [slug, `${slug}index.html`]),
+  ])];
   const cacheRules = htmlPaths.map((path) => `${path}\n  Cache-Control: no-cache, max-age=0, must-revalidate`).join("\n\n");
 
   return `${securityHeaders}

@@ -413,6 +413,9 @@ test("deployment artifacts protect dotfiles and define site-wide security header
   assert.match(assetsIgnore, /(?:^|\n)\s*(?:\.git|\*\*\/\.git)(?:\/\*\*)?\s*(?:\n|$)/i, ".assetsignore must exclude .git");
   assert.match(assetsIgnore, /(?:^|\n)\s*(?:\.\*|\*\*\/\.\*|\*\*\/\.[^\n]*)\s*(?:\n|$)/, ".assetsignore must exclude dotfiles");
   assert.match(headers, /(?:^|\n)\/\*\s*(?:\n|$)/, "_headers needs a site-wide /* rule");
+  const headerRules = headers.split(/\r?\n/).filter((line) => /^\//.test(line));
+  assert.ok(headerRules.length <= 90, `_headers has ${headerRules.length} rules; Cloudflare rejects more than 100`);
+  for (const section of ["/blog/*", "/peptide-therapy/*"]) assert.ok(headerRules.includes(section), `${section} cache rule`);
   for (const [index, line] of headers.split(/\r?\n/).entries()) {
     assert.ok(line.length <= 2000, `_headers line ${index + 1} exceeds Cloudflare's 2,000-character limit`);
   }

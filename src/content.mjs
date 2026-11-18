@@ -130,27 +130,27 @@ export const pages = Object.freeze({
   home: {
     slug: '/',
     navLabel: 'Home',
-    modified: '2026-11-16',
-    title: 'Weight, Hormone & Hair-Loss Care in Merrillville | Apex Wellness',
+    modified: '2026-11-17',
+    title: 'Weight, Hormone, Hair-Loss & Peptide Care in Merrillville | Apex Wellness',
     description:
-      'Weight, metabolic, hormone, and hair-loss care in Northwest Indiana. Coming soon to Merrillville. Online booking is open for visits from November 20.',
+      'Weight, metabolic, hormone, hair-loss and peptide care in Merrillville, Indiana. Online booking is open for visits from November 20.',
     eyebrow: 'Opening November 20, 2026 · Northwest Indiana',
-    h1: 'Weight, hormones, hair loss. Coming to Merrillville.',
-    headlineLead: 'Weight, hormones, hair loss.',
-    headlineEmphasis: 'Coming to Merrillville.',
+    h1: 'Weight, hormones, hair loss, peptides. Now booking in Merrillville.',
+    headlineLead: 'Weight, hormones, hair loss, peptides.',
+    headlineEmphasis: 'Now booking in Merrillville.',
     intro:
-      'Apex Wellness is preparing to open with weight and metabolic care, men’s hormone health, women’s midlife care, and hair-loss care for thinning and balding. Coming soon to 8550 Broadway, Suite B.',
+      'Apex Wellness offers weight and metabolic care, men’s hormone health, women’s midlife care, hair-loss care for thinning and balding, and peptide therapy. Doors open November 20 at 8550 Broadway, Suite B.',
     cta: bookingPageCta,
     secondaryCta: {
       label: 'Explore care options',
       href: '/weight-management/'
     },
-    ctaNote: 'Find launch updates at apexwellnessnwi.com',
+    ctaNote: 'Online booking is open for visits from November 20.',
     editorial: {
       careHeading: 'Four ways in.\nOne standard of care.',
       careAside: 'Evaluated before treated.\nNo shortcuts, no templates.',
       approachHeading: 'Thoughtful care.\nBuilt around you.',
-      approachBody: `We are building a practice around careful evaluation, clear conversations, and individual goals. ${bookingStatus}`,
+      approachBody: `We built this practice around careful evaluation, clear conversations, and individual goals. ${bookingStatus}`,
       processHeading: 'A simple first step.\nSpace to decide.',
       process: [
         { title: 'See the details.', body: 'Review the care areas, clinic hours and our Merrillville location. Ask questions before you decide.' },
@@ -162,7 +162,7 @@ export const pages = Object.freeze({
         type: 'trustPoints',
         items: [
           'Individual goals from the start',
-          'Four focused areas of care',
+          'Focused areas of care, including peptides',
           'Individual evaluation before treatment',
           'Clear information before you book'
         ]
@@ -204,7 +204,7 @@ export const pages = Object.freeze({
         heading: 'Find the right starting page.',
         items: [{
           title: 'Hormone care in Merrillville',
-          body: 'Compare the men’s hormone health and women’s midlife care paths, then choose how to get opening information.',
+          body: 'Compare the men’s hormone health and women’s midlife care paths, then book a first visit.',
           label: 'Explore hormone care',
           href: '/hormone-care-merrillville/'
         }, {
@@ -277,7 +277,7 @@ export const pages = Object.freeze({
         eyebrow: 'Region served',
         heading: 'Northwest Indiana',
         body:
-          `Coming soon to ${clinicAddress}, serving adults in Merrillville, Crown Point, Schererville, Munster, Dyer, St. John, Highland, Hobart, and surrounding Northwest Indiana communities.`
+          `At ${clinicAddress}, serving adults in Merrillville, Crown Point, Schererville, Munster, Dyer, St. John, Highland, Hobart, and surrounding Northwest Indiana communities.`
       }
     ]
   },

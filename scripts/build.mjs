@@ -805,9 +805,9 @@ function renderMain(pageKey, page) {
   return `<main id="main-content" class="page" tabindex="-1">
     ${page.offerBand ? offerBandMarkup() : ''}
     ${page.landing ? renderBookingLanding(page) : renderHero(pageKey, page)}
-    ${site.navigation.some((item) => item.section === 'care' && item.href === page.slug) ? renderCareDetails(page) : ''}
+    ${site.navigation.some((item) => item.section === 'care' && item.href === (page.navParent ?? page.slug)) ? renderCareDetails(page) : ''}
     ${page.sections.map(renderSection).join("\n")}
-    ${site.navigation.some((item) => item.section === 'care' && item.href === page.slug) ? renderSection({ type: 'linkCards', eyebrow: 'Plan your next step', heading: 'The details that help you decide.', items: visitDetails.planningLinks }, page.sections.length) : ''}
+    ${site.navigation.some((item) => item.section === 'care' && item.href === (page.navParent ?? page.slug)) ? renderSection({ type: 'linkCards', eyebrow: 'Plan your next step', heading: 'The details that help you decide.', items: visitDetails.planningLinks }, page.sections.length) : ''}
     ${page.landing ? '' : renderLaunchCta()}
   </main>`;
 }
@@ -861,7 +861,7 @@ function renderVisitPlanner(page) {
 function renderNavigation(page) {
   const visibleLinks = ['/about/', '/how-it-works/', '/pricing/', '/merrillville/', '/blog/', '/faq/'].map((href) => site.navigation.find((item) => item.href === href));
   const links = visibleLinks.map((item) => {
-    const current = item.href === page.slug || (page.kind === "blogPost" && item.href === "/blog/") ? ' aria-current="page"' : "";
+    const current = item.href === (page.navParent ?? page.slug) || (page.kind === "blogPost" && item.href === "/blog/") ? ' aria-current="page"' : "";
     return `<li><a href="${escapeHtml(item.href)}"${current}>${escapeHtml(item.label)}</a></li>`;
   }).join("\n");
 
@@ -872,7 +872,7 @@ function renderNavigation(page) {
         <span class="nav-toggle-label">Menu</span><span class="nav-toggle-icon" aria-hidden="true"></span>
       </button>
       <nav id="primary-navigation" class="site-nav" aria-label="Primary navigation">
-        <ul><li class="care-navigation"><details><summary>Our care</summary><div class="care-dropdown">${site.navigation.filter((item) => item.section === 'care').map((item) => `<a href="${item.href}"${item.href === page.slug ? ' aria-current="page"' : ''}>${escapeHtml(item.label)}<span aria-hidden="true">↗</span></a>`).join('')}</div></details></li>${links}</ul>
+        <ul><li class="care-navigation"><details><summary>Our care</summary><div class="care-dropdown">${site.navigation.filter((item) => item.section === 'care').map((item) => `<a href="${item.href}"${item.href === (page.navParent ?? page.slug) ? ' aria-current="page"' : ''}>${escapeHtml(item.label)}<span aria-hidden="true">↗</span></a>`).join('')}</div></details></li>${links}</ul>
         <a class="nav-cta" href="${escapeHtml(site.cta.href)}"${site.cta.href === page.slug ? ' aria-current="page"' : ""}>${escapeHtml(site.cta.label)}</a>
       </nav>
     </div>
@@ -893,7 +893,7 @@ function renderLandingNavigation(page) {
 // The booking page (page.landing) gets a short footer: contact, hours, four information links, policies and notices.
 // Its care areas are linked in the page body.
 function renderFooter(page) {
-  const footerLink = (item) => `<li><a href="${escapeHtml(item.href)}"${item.href === page.slug || (page.kind === "blogPost" && item.href === "/blog/") ? ' aria-current="page"' : ""}>${escapeHtml(item.label)}</a></li>`;
+  const footerLink = (item) => `<li><a href="${escapeHtml(item.href)}"${item.href === (page.navParent ?? page.slug) || (page.kind === "blogPost" && item.href === "/blog/") ? ' aria-current="page"' : ""}>${escapeHtml(item.label)}</a></li>`;
   const careLinks = site.navigation.filter((item) => item.section === 'care').map(footerLink).join("");
   const infoLinks = site.navigation.filter((item) => item.href !== '/' && item.section !== 'care').map(footerLink).join("");
   const policyLinks = site.policyNavigation.map(footerLink).join("");

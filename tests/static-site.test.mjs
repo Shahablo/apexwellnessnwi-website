@@ -159,7 +159,7 @@ for (const page of pageList) {
 
 test('the new planned care area is discoverable without displacing information links or collecting health interests', () => {
   const carePaths = site.navigation.filter((item) => item.section === 'care').map((item) => item.href);
-  assert.equal(carePaths.length, 5);
+  assert.equal(carePaths.length, 6);
   assert.ok(carePaths.includes('/womens-hormone-replacement-therapy/'));
   assert.ok(carePaths.includes('/hair-loss-care/'));
   for (const slug of ['/', '/hair-loss-care/']) {
@@ -259,7 +259,7 @@ test("generated pages use crawlable routes and contain no editor-only controls",
     assert.doesNotMatch(html, editorControl, `${page.slug} includes an editor control`);
     const currentLinks = startTags(html, "a").filter(({ attrs }) => attrs["aria-current"] === "page");
     if (!page.landing) {
-      const expectedCurrentHref = page.kind === "blogPost" ? "/blog/" : page.slug;
+      const expectedCurrentHref = page.kind === "blogPost" ? "/blog/" : page.navParent ?? page.slug;
       assert.ok(
         currentLinks.some(({ attrs }) => attrs.href === expectedCurrentHref),
         `${page.slug} needs an aria-current link in site navigation`,
@@ -781,7 +781,7 @@ test('the QR landing page is a short booking page: the $49 offer, Book online, c
   assert.doesNotMatch(main, /<form|<img|<input/);
   assert.equal(startTags(main, 'section').length, 2);
   // Public-copy rules for this page.
-  assert.doesNotMatch(main.replace(/<[^>]+>/g, ' '), /\bfree\b|on us|no charge|testosterone|\bPSA\b|vitamin D|\bTSH\b|\bT4\b|\bTRT\b|low T\b|semaglutide|tirzepatide|before and after|guarantee|\bdoctor\b|physician|nurse practitioner|Wajeeh|Atif|!/i);
+  assert.doesNotMatch(main.replace(/<[^>]+>/g, ' '), /\bfree\b|on us|no charge|testosterone|\bPSA\b|vitamin D|\bTSH\b|\bT4\b|\bTRT\b|low T\b|semaglutide|tirzepatide|before and after|guarantee|\bdoctor\b|physician|nurse practitioner|BPC-?157|TB-?500|sermorelin|gonadorelin|wolverine|Wajeeh|Atif|!/i);
   assert.doesNotMatch(html, /first 100|APEXNOV/i);
   assert.match(html, /data-launch-label="November 20, 2026"/);
   const css = await readFile(join(publicRoot, 'assets', 'site-design.css'), 'utf8');
@@ -827,7 +827,7 @@ test('the four ad booking pages build from the shared booking template with the 
     assert.ok(main.indexOf('booking-steps') < main.indexOf('booking-more'), slug + ' other services comes after the steps');
     assert.doesNotMatch(main, /<form|<img|<input|booking-services|Also at Apex/);
     assert.doesNotMatch(html, /Launch List|consultation-form|founding-consultation/);
-    assert.doesNotMatch(main.replace(/<[^>]+>/g, ' '), /\bfree\b|on us|no charge|testosterone|\bPSA\b|vitamin D|\bTSH\b|\bT4\b|\bTRT\b|low T\b|GLP|semaglutide|tirzepatide|pounds|\blbs\b|before and after|guarantee|\bdoctor\b|physician|nurse practitioner|Wajeeh|Atif|!/i, slug + ' copy rules');
+    assert.doesNotMatch(main.replace(/<[^>]+>/g, ' '), /\bfree\b|on us|no charge|testosterone|\bPSA\b|vitamin D|\bTSH\b|\bT4\b|\bTRT\b|low T\b|GLP|semaglutide|tirzepatide|pounds|\blbs\b|before and after|guarantee|\bdoctor\b|physician|nurse practitioner|BPC-?157|TB-?500|sermorelin|gonadorelin|wolverine|Wajeeh|Atif|!/i, slug + ' copy rules');
     assert.match(html, /Coming soon/);
     // The Google tag and the site's own scripts, nothing else.
     const scripts = startTags(html, 'script').filter(({ attrs }) => attrs.src).map(({ attrs }) => attrs.src.replace(/\?.*$/, ''));
@@ -946,7 +946,7 @@ test('no generated page, guide answer or email still says scheduling or booking 
 
 test('new booking and offer copy follows the public-copy rules', () => {
   // No "free" offer, no named lab tests or prescription drugs, no outcome promises, no clinician claims, no exclamation marks.
-  const forbidden = /\bfree\b|testosterone|\bPSA\b|vitamin D|\bTSH\b|\bT4\b|\bTRT\b|low T\b|semaglutide|tirzepatide|before and after|guarantee|\bdoctor\b|physician|!/i;
+  const forbidden = /\bfree\b|testosterone|\bPSA\b|vitamin D|\bTSH\b|\bT4\b|\bTRT\b|low T\b|semaglutide|tirzepatide|before and after|guarantee|\bdoctor\b|physician|BPC-?157|TB-?500|sermorelin|gonadorelin|wolverine|!/i;
   for (const slug of offerBandPages) {
     const band = htmlBySlug.get(slug).match(/<aside class="offer-band"[\s\S]*?<\/aside>/)?.[0];
     assert.ok(band, `${slug} offer band`);
@@ -1046,4 +1046,21 @@ test('October 9 website-reading guide uses its own date, current facts and delib
   const text = JSON.stringify(article);
   assert.match(text, /8550 Broadway, Suite B/);
   assert.doesNotMatch(text, /8560|Wajeeh|Bakhsh|guaranteed|—/i);
+});
+
+test('peptide therapy pages are built, linked and keep their copy rules', async () => {
+  const slugs = ['/peptide-therapy/', '/peptide-therapy/bpc-157/', '/peptide-therapy/tb-500/', '/peptide-therapy/wolverine-stack/', '/peptide-therapy/sermorelin/', '/peptide-therapy/gonadorelin/'];
+  const sitemap = await readFile(join(publicRoot, 'sitemap.xml'), 'utf8');
+  assert.ok(site.navigation.some((item) => item.href === '/peptide-therapy/' && item.section === 'care'), 'peptide therapy is in the care menu');
+  for (const slug of slugs) {
+    const html = await readFile(join(publicRoot, ...slug.split('/').filter(Boolean), 'index.html'), 'utf8');
+    const main = html.match(/<main[\s\S]*?<\/main>/)?.[0] ?? '';
+    const visible = main.replace(/<[^>]+>/g, ' ');
+    assert.ok(sitemap.includes('<loc>https://apexwellnessnwi.com' + slug + '</loc>'), slug + ' in sitemap');
+    assert.match(visible, /not FDA-approved/, slug + ' says compounded peptides are not FDA-approved');
+    assert.match(visible, /Anti-Doping/, slug + ' warns tested athletes');
+    assert.doesNotMatch(visible, /\bfree\b|testosterone|\bTRT\b|low T\b|semaglutide|tirzepatide|before and after|guarantee[sd]?\b(?! result)|\bdoctor\b|physician|legalized|FDA[- ]compliant|research use only(?!”)|Wajeeh|Atif|!/i, slug + ' copy rules');
+  }
+  const home = await readFile(join(publicRoot, 'index.html'), 'utf8');
+  assert.ok(home.includes('href="/peptide-therapy/"'), 'home links to peptide therapy');
 });

@@ -1,5 +1,6 @@
 import { womensHrtPage } from './womens-hrt-page.mjs';
 import { hormoneCareHubPage } from './hormone-care-hub.mjs';
+import { peptidePages } from './peptide-pages.mjs';
 import { merrillvillePage, visitDetails } from './visit-details.mjs';
 import { visitPlannerPage } from './visit-planner.mjs';
 import { nearbyVisitPages } from './nearby-visit-pages.mjs';
@@ -54,6 +55,7 @@ export const site = Object.freeze({
     { label: "Women's Midlife Care", href: '/womens-midlife-care/', section: 'care' },
     { label: "Women's HRT", href: '/womens-hormone-replacement-therapy/', section: 'care' },
     { label: 'Hair-Loss Care', href: '/hair-loss-care/', section: 'care' },
+    { label: 'Peptide Therapy', href: '/peptide-therapy/', section: 'care' },
     { label: 'Hormone Care Overview', href: '/hormone-care-merrillville/' },
     { label: 'How It Works', href: '/how-it-works/' },
     { label: 'Plan Your Visit', href: '/plan-your-visit/' },
@@ -119,6 +121,7 @@ const generalBooking = Object.freeze({
 export const pages = Object.freeze({
   'hormone-care-merrillville': hormoneCareHubPage,
   'womens-hormone-replacement-therapy': womensHrtPage,
+  ...peptidePages,
   'plan-your-visit': visitPlannerPage,
   merrillville: merrillvillePage,
   'visit-from-munster': nearbyVisitPages.munster,
@@ -204,6 +207,11 @@ export const pages = Object.freeze({
           body: 'Compare the men’s hormone health and women’s midlife care paths, then choose how to get opening information.',
           label: 'Explore hormone care',
           href: '/hormone-care-merrillville/'
+        }, {
+          title: 'Peptide therapy',
+          body: 'Recovery, sleep and hormone-support peptides, prescribed only after an in-person visit.',
+          label: 'Explore peptide therapy',
+          href: '/peptide-therapy/'
         }]
       },
       {

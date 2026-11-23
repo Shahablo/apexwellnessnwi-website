@@ -22,7 +22,7 @@ const emergencyNotice =
   'Apex Wellness does not provide urgent or emergency care. If you are experiencing a medical emergency, call 911 or go to the nearest emergency department.';
 
 const prelaunchNotice =
-  'Apex Wellness opens November 20, 2026 at 8550 Broadway, Suite B, Merrillville.';
+  'Apex Wellness is open at 8550 Broadway, Suite B, Merrillville.';
 
 export const site = Object.freeze({
   name: 'Apex Wellness',
@@ -36,7 +36,7 @@ export const site = Object.freeze({
   phoneHref: 'tel:+12192072456',
   tagline: 'Thoughtful care. Built around you.',
   contentUpdated: '2026-11-16',
-  launch: { date: '2026-11-20', label: 'November 20, 2026', status: 'Opening' },
+  launch: { date: '2026-11-20', label: 'November 20, 2026', status: 'Opened' },
   social: [
     { label: 'Instagram', href: 'https://www.instagram.com/apexwellnessnwi/' },
     { label: 'Facebook', href: 'https://www.facebook.com/profile.php?id=61593954582564' },
@@ -46,7 +46,7 @@ export const site = Object.freeze({
   description:
     'Apex Wellness offers weight, metabolic, hormone, hair-loss and peptide care for adults in Northwest Indiana.',
   announcement:
-    'Opening November 20, 2026 · Northwest Indiana.',
+    'Now open in Merrillville · Northwest Indiana.',
   cta: bookingPageCta,
   navigation: [
     { label: 'Home', href: '/' },
@@ -131,22 +131,22 @@ export const pages = Object.freeze({
   home: {
     slug: '/',
     navLabel: 'Home',
-    modified: '2026-11-17',
+    modified: '2026-11-23',
     title: 'Weight, Hormone, Hair-Loss & Peptide Care in Merrillville | Apex Wellness',
     description:
-      'Weight, metabolic, hormone, hair-loss and peptide care in Merrillville, Indiana. Online booking is open for visits from November 20.',
-    eyebrow: 'Opening November 20, 2026 · Northwest Indiana',
-    h1: 'Weight, hormones, hair loss, peptides. Now booking in Merrillville.',
+      'Weight, metabolic, hormone, hair-loss and peptide care in Merrillville, Indiana. Now open at 8550 Broadway, Suite B. Book online or call (219) 207-2456.',
+    eyebrow: 'Now open · Merrillville, Northwest Indiana',
+    h1: 'Weight, hormones, hair loss, peptides. Now open in Merrillville.',
     headlineLead: 'Weight, hormones, hair loss, peptides.',
-    headlineEmphasis: 'Now booking in Merrillville.',
+    headlineEmphasis: 'Now open in Merrillville.',
     intro:
-      'Apex Wellness offers weight and metabolic care, men’s hormone health, women’s midlife care, hair-loss care for thinning and balding, and peptide therapy. Doors open November 20 at 8550 Broadway, Suite B.',
+      'Apex Wellness offers weight and metabolic care, men’s hormone health, women’s midlife care, hair-loss care for thinning and balding, and peptide therapy. Now open at 8550 Broadway, Suite B.',
     cta: bookingPageCta,
     secondaryCta: {
       label: 'Explore care options',
       href: '/weight-management/'
     },
-    ctaNote: 'Online booking is open for visits from November 20.',
+    ctaNote: 'Online booking is open.',
     editorial: {
       careHeading: 'Five ways in.\nOne standard of care.',
       careAside: 'Evaluated before treated.\nNo shortcuts, no templates.',
@@ -276,7 +276,7 @@ export const pages = Object.freeze({
         eyebrow: 'Opening in Northwest Indiana',
         heading: 'Review the real details before deciding whether to book.',
         body:
-          `${clinicAddress}. We open November 20, 2026.`,
+          `${clinicAddress}. Open since November 20, 2026.`,
         cta: bookingPageCta
       },
       {
@@ -296,7 +296,7 @@ export const pages = Object.freeze({
     navLabel: 'Weight & Metabolic',
     title: 'Medical Weight Loss in Merrillville, IN | Apex Wellness',
     description:
-      'Explore medical weight loss and metabolic care at Apex Wellness in Merrillville, with in-person visits. Online booking is open for visits from November 20.',
+      'Explore medical weight loss and metabolic care at Apex Wellness in Merrillville, with in-person visits. Online booking is open.',
     eyebrow: 'Merrillville, Indiana · Weight & metabolic care',
     h1: 'Medical Weight Management in Merrillville, IN',
     intro:
@@ -455,7 +455,7 @@ export const pages = Object.freeze({
     navLabel: "Women's Midlife Care",
     title: 'Menopause & Midlife Care in Merrillville, IN | Apex Wellness',
     description:
-      'Women’s midlife care is offered at Apex Wellness in Merrillville. Explore the care approach. Online booking is open for visits from November 20.',
+      'Women’s midlife care is offered at Apex Wellness in Merrillville. Explore the care approach. Online booking is open.',
     eyebrow: 'Merrillville, Indiana · Women’s midlife care',
     h1: 'Women’s Midlife Care in Merrillville, IN',
     intro:
@@ -551,7 +551,7 @@ export const pages = Object.freeze({
     navLabel: 'Hair-Loss Care',
     title: 'Hair-Loss Care in Merrillville & NWI | Apex Wellness',
     description:
-      'Hair-loss care is coming to Apex Wellness in Merrillville, Northwest Indiana. Explore the service. Online booking is open for visits from November 20.',
+      'Hair-loss care is coming to Apex Wellness in Merrillville, Northwest Indiana. Explore the service. Online booking is open.',
     eyebrow: 'Merrillville, Indiana · Hair-loss care',
     h1: 'Hair-Loss Care in Merrillville, IN',
     intro:
@@ -814,7 +814,7 @@ export const pages = Object.freeze({
     eyebrow: 'Frequently asked questions',
     h1: 'Questions, answered before you commit.',
     intro:
-      'Get to know our care areas, location, and approach at Apex Wellness in Merrillville. Online booking is open for visits from November 20.',
+      'Get to know our care areas, location, and approach at Apex Wellness in Merrillville. Online booking is open.',
     cta: bookingPageCta,
     sections: [
       {
@@ -824,18 +824,18 @@ export const pages = Object.freeze({
           {
             question: 'Is Apex Wellness open?',
             answer:
-              `Apex opens November 20, 2026. ${bookingStatus}`,
+              `Apex opened November 20, 2026. ${bookingStatus}`,
             bookOnline: true
           },
           {
             question: 'Where is Apex located?',
             answer:
-              `${clinicAddress}. We open November 20, 2026. Call or text (219) 207-2456, or email hello@apexwellnessnwi.com. ${clinicHours.sentence} Parking details will be posted before we open.`
+              `${clinicAddress}. We opened November 20, 2026. Call or text (219) 207-2456, or email hello@apexwellnessnwi.com. ${clinicHours.sentence} Ask us about parking when you book.`
           },
           {
             question: 'When can I book an appointment?',
             answer:
-              `${bookingStatus} We open November 20, 2026. You can also call (219) 207-2456 to schedule.`,
+              `${bookingStatus} You can also call (219) 207-2456 to schedule.`,
             bookOnline: true
           },
           {
@@ -921,9 +921,9 @@ export const pages = Object.freeze({
     title: 'Book Online | $49 Grand Opening | Apex Wellness Merrillville',
     description:
       'Grand opening: promotional labs for $49. The $49 covers your first visit and the labs, for the first 50 appointments scheduled. Book online or call (219) 207-2456.',
-    announcement: `Opening November 20 in Merrillville · ${bookingStatus}`,
+    announcement: `Now open in Merrillville · ${bookingStatus}`,
     launchLabel: 'November 20, 2026',
-    eyebrow: 'Grand opening · Friday, November 20 · Merrillville',
+    eyebrow: 'Grand opening · Now open · Merrillville',
     h1: 'Now booking first visits.',
     h1Accent: 'first visits.',
     // Offer line under the headline: the first sentence is set large, the second beside it.
@@ -1053,7 +1053,7 @@ export const pages = Object.freeze({
         heading: 'Website limitations',
         paragraphs: [
           'Descriptions of the practice, services, workflows, pricing structure, visit modalities, and availability may change before launch. Only information identified as finalized should be relied upon for a care or payment decision.',
-          `Our location at ${clinicAddress}, clinic hours and an opening date are identified on the site. Online booking is open for visits from November 20. Detailed clinical responsibilities, licensure information, legal practice details, contact channels, and pricing are still being finalized.`
+          `Our location at ${clinicAddress}, clinic hours and an opening date are identified on the site. Online booking is open. Detailed clinical responsibilities, licensure information, legal practice details, contact channels, and pricing are still being finalized.`
         ]
       },
       {
@@ -1190,7 +1190,7 @@ export const pages = Object.freeze({
     eyebrow: `Effective ${effectiveDate}`,
     h1: 'Cancellation and Refunds',
     intro:
-      'Online booking is open for visits from November 20, 2026. This website does not accept enrollment or payment, so there is presently no payment made through it to refund. To change or cancel a visit you booked, call (219) 207-2456.',
+      'Online booking is open. This website does not accept enrollment or payment, so there is presently no payment made through it to refund. To change or cancel a visit you booked, call (219) 207-2456.',
     cta: bookingPageCta,
     effectiveDate,
     sections: [

@@ -37,7 +37,7 @@ export function bookOnlineUrl(config = scheduling) {
 export const visitPlannerPage = Object.freeze({
   kind: 'visitPlanner', slug: '/plan-your-visit/', modified: '2026-11-16',
   navLabel: 'Plan your visit', title: 'Plan Your First Visit | Apex Wellness',
-  description: 'Walk through the visit format, clinic hours, costs and how to book at Apex Wellness in Merrillville. Online booking is open for visits from November 20.',
+  description: 'Walk through the visit format, clinic hours, costs and how to book at Apex Wellness in Merrillville. Online booking is open.',
   eyebrow: 'Your first step', h1: 'Let’s plan your first visit.',
   intro: 'A short walkthrough of where you’ll come, what to expect about costs, and how to book. No medical details needed.',
   sections: []

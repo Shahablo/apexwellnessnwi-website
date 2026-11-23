@@ -6,13 +6,13 @@ export const hormoneCareHubPage = {
   offerBand: true,
   navLabel: 'Hormone Care',
   title: 'Hormone Care in Merrillville, IN | Apex Wellness',
-  description: 'Explore men’s hormone health and women’s midlife care at Apex Wellness in Merrillville. Compare the care areas. Online booking is open for visits from November 20.',
+  description: 'Explore men’s hormone health and women’s midlife care at Apex Wellness in Merrillville. Compare the care areas. Online booking is open.',
   eyebrow: 'Hormone care · Merrillville, Indiana',
   h1: 'Hormone care in Merrillville starts with a clear path.',
   intro: 'Apex Wellness offers two distinct hormone-focused care paths at one Northwest Indiana clinic. Choose the page that fits what you want to explore. You can book a first visit online or call with a general clinic question.',
   heroImage: 'behindWindow',
   cta: { label: 'Call Apex with a general question', href: 'tel:+12192072456' },
-  ctaNote: 'Opening November 20 at 8550 Broadway, Suite B. Please save personal medical details for a secure clinical process.',
+  ctaNote: 'Now open at 8550 Broadway, Suite B. Please save personal medical details for a secure clinical process.',
   sections: [
     {
       type: 'linkCards',

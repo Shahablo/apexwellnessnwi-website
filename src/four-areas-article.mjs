@@ -1,16 +1,19 @@
+import { nowOpenNote } from './clinic-facts.mjs';
+
 export const fourAreasArticle = Object.freeze({
   slug: '/blog/why-four-areas-of-care/',
   status: 'published',
   editorialType: 'nonmedical',
   title: 'Why Apex Wellness Focuses on Four Areas of Care | Merrillville, IN',
-  description: 'Apex Wellness is coming soon to Merrillville. Here is the thinking behind its four planned areas of care, and where to find the details that are confirmed so far.',
+  description: 'Apex Wellness is now open in Merrillville. Here is the thinking behind its focused areas of care, and where to find the details for each one.',
   eyebrow: 'About Apex',
   readTime: '3 minute read',
   h1: 'Four areas of care. On purpose.',
   intro: 'Apex Wellness is coming soon to Merrillville with a deliberately short list: weight and metabolic care, men’s hormone health, women’s midlife care, and hair-loss care. Those are the areas the clinic plans to focus on, not a promise that every service or appointment is available today.\n\nWhy these four? They reflect the questions the practice was created to make room for. A shorter list also makes it easier to say clearly what Apex intends to do, and what still needs to be confirmed before opening.',
   excerpt: 'The thinking behind Apex’s four planned care areas, with a straightforward look at what is confirmed and what is still to come.',
   published: '2026-10-22',
-  modified: '2026-11-16',
+  modified: '2026-11-23',
+  updateNote: nowOpenNote,
   richText: true,
   category: 'About Apex',
   author: 'Apex Wellness Editorial Team',
@@ -34,8 +37,8 @@ export const fourAreasArticle = Object.freeze({
     {
       heading: 'What is confirmed, and what is not',
       paragraphs: [
-        'The care focus and the location are confirmed: 8550 Broadway, Suite B, Merrillville, IN 46410. Apex is still Coming soon. Online booking is open for visits from November 20. The clinical team and final fees will be shared when they are confirmed. A date on a planning calendar is not an open door.',
-        'For now, the care pages explain the intended scope. Online booking is open for visits from November 20. [Book online](https://apexwellnessnwi.com/founding-patients/).'
+        'The care focus and the location are confirmed: 8550 Broadway, Suite B, Merrillville, IN 46410. Apex is still Coming soon. Online booking is open. The clinical team and final fees will be shared when they are confirmed. A date on a planning calendar is not an open door.',
+        'For now, the care pages explain the intended scope. Online booking is open. [Book online](https://apexwellnessnwi.com/founding-patients/).'
       ]
     },
     {

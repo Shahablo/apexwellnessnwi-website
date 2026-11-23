@@ -1,4 +1,4 @@
-import { launchListClosedNote } from './clinic-facts.mjs';
+import { launchListClosedNote, nowOpenNote } from './clinic-facts.mjs';
 
 export const comingSoonStatusArticle = Object.freeze({
   slug: '/blog/what-coming-soon-means-at-apex/',
@@ -12,7 +12,8 @@ export const comingSoonStatusArticle = Object.freeze({
   intro: 'A sign that says Coming soon raises more questions than it answers. Where? When? What kind of clinic? Can I book yet? This is the plain version, first published in October 2026, with the confirmed parts separated from the parts still being finalized.\n\nIf you read nothing else: Apex is a new medical clinic in Merrillville focused on four areas of care, the planned opening is November 20, 2026, subject to readiness, and online booking is open for visits from November 20.',
   excerpt: 'The confirmed facts about Apex Wellness in Merrillville, the parts still being finalized, and how to book a visit.',
   published: '2026-10-20',
-  modified: '2026-11-16',
+  modified: '2026-11-23',
+  updateNote: nowOpenNote,
   category: 'Apex Wellness Updates',
   author: 'Apex Wellness Editorial Team',
   heroImage: 'clinic',
@@ -30,7 +31,7 @@ export const comingSoonStatusArticle = Object.freeze({
         'The approach: an individual evaluation before any treatment is discussed. Nobody is handed a prescription at the door.',
         'The planned opening date: November 20, 2026, subject to readiness.',
         'Clinic hours from November 20: Wednesday, Thursday and Friday, 11 a.m. to 5 p.m., and Saturday, 9 a.m. to 1 p.m. Closed Sunday through Tuesday, and closed Thanksgiving Day, November 26.',
-        'Booking: online booking is open for visits from November 20. You can also call (219) 207-2456.'
+        'Booking: online booking is open. You can also call (219) 207-2456.'
       ],
       paragraphsAfterBullets: [
         'A planned date is a target that depends on readiness: the clinical team, systems, supplies and the space itself. We will say so plainly if it moves.'

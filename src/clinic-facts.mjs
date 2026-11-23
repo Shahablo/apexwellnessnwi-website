@@ -3,8 +3,15 @@
 // modules, so its copies are checked against this file in tests/site-help.test.mjs.
 export const openingDay = Object.freeze({ date: '2026-11-20', label: 'Friday, November 20, 2026' });
 
-// The clinic opens on opening day; online booking for visits from that day is already open.
-export const bookingStatus = 'Online booking is open for visits from November 20.';
+// The clinic opened on November 20, 2026 and is open now.
+export const bookingStatus = 'Online booking is open.';
+
+// Dated note for launch-era articles written before the clinic opened (added November 23, 2026).
+export const nowOpenNote = Object.freeze({
+  text: 'Update, November 23, 2026: Apex Wellness is now open at 8550 Broadway, Suite B, Merrillville.',
+  linkLabel: 'Book online',
+  href: '/founding-patients/'
+});
 
 // Dated note for the articles written about the Launch List. The signup left the website on November 16, 2026.
 export const launchListClosedNote = Object.freeze({

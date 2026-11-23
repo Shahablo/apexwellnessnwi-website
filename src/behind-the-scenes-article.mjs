@@ -1,3 +1,5 @@
+import { nowOpenNote } from './clinic-facts.mjs';
+
 // Owner-supplied October 24 v8 campaign, paired with the final 30-second master.
 export const behindTheScenesArticle = Object.freeze({
   slug: '/blog/before-the-doors-open-apex-wellness/',
@@ -11,7 +13,8 @@ export const behindTheScenesArticle = Object.freeze({
   intro: 'Getting Apex Wellness ready has meant making progress in all kinds of ways. Some of it is easy to see: our name on the door, posters in place, and a space that is starting to look like Apex. Some of it happens between those pictures, in pickup arrangements, equipment orders and trips back and forth to the printer.\n\nWe wanted to share a little of that part of the story. We are still getting ready at 8550 Broadway, Suite B, in Merrillville. This was a day of practical jobs, a few stubborn obstacles and some genuinely enjoyable introductions around the neighborhood.',
   excerpt: 'A stubborn window, plenty of errands and a few good local donuts. Come behind the scenes as Apex gets ready in Merrillville.',
   published: '2026-10-24',
-  modified: '2026-11-16',
+  modified: '2026-11-23',
+  updateNote: nowOpenNote,
   category: 'Behind Apex',
   author: 'Apex Wellness Editorial Team',
   heroImage: 'behindPosters',

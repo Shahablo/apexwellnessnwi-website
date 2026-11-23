@@ -23,7 +23,7 @@ export const visitDetails = Object.freeze({
 export const merrillvillePage = Object.freeze({
   slug: '/merrillville/', navLabel: 'Location', modified: '2026-11-16',
   title: 'Merrillville Location & In-Person Care | Apex Wellness',
-  description: 'Apex Wellness opens November 20 at 8550 Broadway, Suite B, Merrillville, IN 46410. Find directions, clinic hours, in-person visit details and online booking.',
+  description: 'Apex Wellness is open at 8550 Broadway, Suite B, Merrillville, IN 46410. Find directions, clinic hours, in-person visit details and online booking.',
   eyebrow: 'Our Merrillville location',
   h1: 'A local place to take your next step.',
   intro: 'We are getting Apex Wellness ready at 8550 Broadway, Suite B, in Merrillville. Weight and metabolic care, men’s hormone health, women’s midlife care and hair-loss care are offered, with visits in person at launch.',
@@ -46,7 +46,7 @@ export const merrillvillePage = Object.freeze({
       { title: 'Hair-loss care', body: 'Read about the evaluation of hair-loss concerns.', href: '/hair-loss-care/', label: 'Explore hair-loss care' }
     ] },
     { type: 'faq', heading: 'Before planning a visit', items: [
-      { question: 'Is the clinic open for appointments or walk-ins?', answer: `Apex opens November 20. ${bookingStatus} Walk-in visits have not been announced, so please book ahead or call (219) 207-2456.`, bookOnline: true },
+      { question: 'Is the clinic open for appointments or walk-ins?', answer: `Apex is open. ${bookingStatus} Walk-in visits have not been announced, so please book ahead or call (219) 207-2456.`, bookOnline: true },
       { question: 'Do I have to live in Merrillville to visit?', answer: 'No. Neighbors in Munster and elsewhere in Northwest Indiana are welcome too. Apex has one location at 8550 Broadway, Suite B, Merrillville; visits are in person there.' },
       visitDetails.quickAnswers[1],
       { question: 'Can I ask about the location or access?', answer: 'Call (219) 207-2456 or email hello@apexwellnessnwi.com with a general location or accessibility question. Please keep medical details out of ordinary email.' },

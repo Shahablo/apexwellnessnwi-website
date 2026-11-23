@@ -1,16 +1,19 @@
+import { nowOpenNote } from './clinic-facts.mjs';
+
 export const openingWeekArticle = Object.freeze({
   slug: '/blog/apex-wellness-opens-friday-first-visit/',
   status: 'published',
   editorialType: 'nonmedical',
-  title: 'Apex Wellness Opens Friday in Merrillville: Your First Visit',
-  description: 'Apex Wellness opens Friday, November 20 at 8550 Broadway, Suite B in Merrillville. Here is what a first visit looks like, what to bring and how the $49 opening offer works.',
+  title: 'Apex Wellness Is Now Open in Merrillville: Your First Visit',
+  description: 'Apex Wellness opened November 20 at 8550 Broadway, Suite B in Merrillville. Here is what a first visit looks like, what to bring and how the $49 opening offer works.',
   eyebrow: 'Opening week',
   readTime: '2 minute read',
   h1: 'We open Friday. Here is what your first visit looks like.',
   intro: 'The paint is dry, the chairs are in and the doors open Friday, November 20. If you have been meaning to do something about your weight, your energy, your hormones or your hair, this is a good week to stop meaning to.\n\nHere is the short version of what to expect.',
   excerpt: 'Doors open Friday, November 20. What a first visit looks like, what to bring and how the $49 opening offer works.',
   published: '2026-11-17',
-  modified: '2026-11-17',
+  modified: '2026-11-23',
+  updateNote: nowOpenNote,
   richText: true,
   category: 'About Apex',
   author: 'Apex Wellness Editorial Team',

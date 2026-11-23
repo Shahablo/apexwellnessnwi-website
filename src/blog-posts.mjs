@@ -1,3 +1,4 @@
+import { nowOpenNote } from './clinic-facts.mjs';
 import { personalGoalsArticle } from './personal-goals-article.mjs';
 import { choosingAPracticeArticle } from './choosing-a-practice-article.mjs';
 import { launchListArticle } from './launch-list-article.mjs';
@@ -12,8 +13,10 @@ import { buildoutPartOneArticle } from './buildout-part-one-article.mjs';
 import { midlifeLocalConversationArticle } from './midlife-local-conversation-article.mjs';
 import { midwestObesityMapArticle } from './midwest-obesity-map-article.mjs';
 import { openingWeekArticle } from './opening-week-article.mjs';
+import { menopauseSymptomsArticle } from './menopause-symptoms-article.mjs';
 
 export const blogPosts = Object.freeze([
+  menopauseSymptomsArticle,
   openingWeekArticle,
   movemberArticle,
   midwestObesityMapArticle,
@@ -30,15 +33,16 @@ export const blogPosts = Object.freeze([
   personalGoalsArticle,
   {
     "slug": "/blog/apex-wellness-coming-soon-merrillville/",
-    "title": "Apex Wellness Coming Soon to Merrillville | Launch Update",
-    "description": "Weight, metabolic, hormone, and hair-loss care. Coming soon to 8550 Broadway, Suite B, Merrillville, IN 46410. Find launch updates at Apex Wellness.",
+    "title": "Apex Wellness Is Now Open in Merrillville | Launch Update",
+    "description": "Apex Wellness opened November 20, 2026 at 8550 Broadway, Suite B, Merrillville, IN 46410. Weight, metabolic, hormone, hair-loss and peptide care.",
     "eyebrow": "Apex Wellness updates",
     "readTime": "3 minute read",
     "h1": "Apex Wellness Is Coming Soon to Merrillville",
     "intro": "Thoughtful care. Built around you.\n\nApex Wellness is coming soon to 8550 Broadway, Suite B, Merrillville, IN 46410. Our planned launch is November 20, 2026, subject to readiness. Find launch updates at apexwellnessnwi.com.\n\nWe are building a practice for adults who want a thoughtful conversation about their health, their goals, and the life they want to keep taking part in.",
     "excerpt": "Our Merrillville address, four areas of care, and an easy way to follow the launch.",
     "published": "2026-09-15",
-    "modified": "2026-11-11",
+    "modified": "2026-11-23",
+    "updateNote": nowOpenNote,
     "category": "Apex Wellness Updates",
     "author": "Apex Wellness Editorial Team",
     "heroImage": "shoreline",

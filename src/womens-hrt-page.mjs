@@ -1,6 +1,8 @@
+import { menopauseSymptomsArticle } from './menopause-symptoms-article.mjs';
+
 export const womensHrtPage = {
   "slug": "/womens-hormone-replacement-therapy/",
-  "modified": "2026-11-16",
+  "modified": "2026-11-23",
   "navLabel": "Women's HRT",
   "title": "Women's Hormone Replacement Therapy in Merrillville | Apex Wellness",
   "description": "Explore women’s hormone replacement therapy at Apex Wellness in Merrillville, including menopause symptoms, potential benefits, options and FAQs.",
@@ -12,7 +14,7 @@ export const womensHrtPage = {
     "label": "Book online",
     "href": "/founding-patients/"
   },
-  "ctaNote": "Online booking is open for visits from November 20.",
+  "ctaNote": "Online booking is open.",
   "sections": [
     {
       "type": "options",
@@ -142,7 +144,14 @@ export const womensHrtPage = {
           "body": "Explore perimenopause, menopause, sleep, weight and metabolic concerns.",
           "label": "Explore women’s midlife care",
           "href": "/womens-midlife-care/"
-        }
+        },
+        // Shown only once the article is published, so this page never links to a draft.
+        ...(menopauseSymptomsArticle.status === "draft" ? [] : [{
+          "title": "More than hot flashes",
+          "body": "The menopause symptoms women are rarely told about, and when to bring them up.",
+          "label": "Read the article",
+          "href": menopauseSymptomsArticle.slug
+        }])
       ]
     }
   ]

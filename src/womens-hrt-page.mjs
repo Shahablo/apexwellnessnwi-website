@@ -1,3 +1,5 @@
+import { menopauseSymptomsArticle } from './menopause-symptoms-article.mjs';
+
 export const womensHrtPage = {
   "slug": "/womens-hormone-replacement-therapy/",
   "modified": "2026-11-16",
@@ -142,7 +144,14 @@ export const womensHrtPage = {
           "body": "Explore perimenopause, menopause, sleep, weight and metabolic concerns.",
           "label": "Explore women’s midlife care",
           "href": "/womens-midlife-care/"
-        }
+        },
+        // Shown only once the article is published, so this page never links to a draft.
+        ...(menopauseSymptomsArticle.status === "draft" ? [] : [{
+          "title": "More than hot flashes",
+          "body": "The menopause symptoms women are rarely told about, and when to bring them up.",
+          "label": "Read the article",
+          "href": menopauseSymptomsArticle.slug
+        }])
       ]
     }
   ]

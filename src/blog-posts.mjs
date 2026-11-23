@@ -12,8 +12,10 @@ import { buildoutPartOneArticle } from './buildout-part-one-article.mjs';
 import { midlifeLocalConversationArticle } from './midlife-local-conversation-article.mjs';
 import { midwestObesityMapArticle } from './midwest-obesity-map-article.mjs';
 import { openingWeekArticle } from './opening-week-article.mjs';
+import { menopauseSymptomsArticle } from './menopause-symptoms-article.mjs';
 
 export const blogPosts = Object.freeze([
+  menopauseSymptomsArticle,
   openingWeekArticle,
   movemberArticle,
   midwestObesityMapArticle,

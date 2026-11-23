@@ -14,7 +14,7 @@ export const womensHrtPage = {
     "label": "Book online",
     "href": "/founding-patients/"
   },
-  "ctaNote": "Online booking is open for visits from November 20.",
+  "ctaNote": "Online booking is open.",
   "sections": [
     {
       "type": "options",

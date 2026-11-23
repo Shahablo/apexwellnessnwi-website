@@ -13,7 +13,7 @@ const adPages = [
     title: 'Medical Weight Loss in Merrillville | Book for $49 | Apex Wellness',
     description:
       'Book a first visit for medical weight loss at Apex Wellness in Merrillville. Grand opening: $49 for labs and your first visit, for the first 50 appointments scheduled. Online booking is open.',
-    eyebrow: 'Medical weight loss · Opening Friday, November 20',
+    eyebrow: 'Medical weight loss · Now open in Merrillville',
     h1: 'Medical weight loss in Merrillville. Start for $49.',
     lead: 'Care that begins with an evaluation of your history, risks and goals.',
     covers: [
@@ -30,7 +30,7 @@ const adPages = [
     title: 'Men’s Hormone Health in Merrillville | Book for $49 | Apex Wellness',
     description:
       'Book a first visit for men’s hormone health at Apex Wellness in Merrillville. Grand opening: $49 for labs and your first visit, for the first 50 appointments scheduled. Online booking is open.',
-    eyebrow: 'Men’s hormone health · Opening Friday, November 20',
+    eyebrow: 'Men’s hormone health · Now open in Merrillville',
     h1: 'Men’s hormone health in Merrillville. Start for $49.',
     lead: 'Symptoms, testing and health risks are reviewed together. One lab number does not decide the plan.',
     covers: [
@@ -47,7 +47,7 @@ const adPages = [
     title: 'Perimenopause and Menopause Care in Merrillville | Book for $49 | Apex Wellness',
     description:
       'Book a first visit for perimenopause and menopause care at Apex Wellness in Merrillville. Grand opening: $49 for labs and your first visit, for the first 50 appointments scheduled. Online booking is open.',
-    eyebrow: 'Women’s midlife care · Opening Friday, November 20',
+    eyebrow: 'Women’s midlife care · Now open in Merrillville',
     h1: 'Perimenopause and menopause care in Merrillville. Start for $49.',
     lead: 'An individualized look at perimenopause, menopause, weight, sleep and related midlife concerns.',
     covers: [
@@ -64,7 +64,7 @@ const adPages = [
     title: 'Hair-Loss Care in Merrillville | Book for $49 | Apex Wellness',
     description:
       'Book a first visit for hair-loss care at Apex Wellness in Merrillville. Grand opening: $49 for labs and your first visit, for the first 50 appointments scheduled. Online booking is open.',
-    eyebrow: 'Hair-loss care · Opening Friday, November 20',
+    eyebrow: 'Hair-loss care · Now open in Merrillville',
     h1: 'Hair-loss care in Merrillville. Start for $49.',
     lead: 'Clinical evaluation for adults with thinning hair and hair loss.',
     covers: [
@@ -83,7 +83,7 @@ const adPages = [
     title: 'Peptide Therapy in Merrillville | Book for $49 | Apex Wellness',
     description:
       'Book a first visit for peptide therapy at Apex Wellness in Merrillville. Grand opening: $49 for labs and your first visit, for the first 50 appointments scheduled. Online booking is open.',
-    eyebrow: 'Peptide therapy · Opening Friday, November 20',
+    eyebrow: 'Peptide therapy · Now open in Merrillville',
     h1: 'Peptide therapy in Merrillville. Start for $49.',
     lead: 'An in-person visit first, so any plan fits your goals and history.',
     covers: [
@@ -104,7 +104,7 @@ export function bookingAdPages(shared) {
     navLabel: page.navLabel,
     title: page.title,
     description: page.description,
-    announcement: `Opening November 20 in Merrillville · ${bookingStatus}`,
+    announcement: `Now open in Merrillville · ${bookingStatus}`,
     eyebrow: page.eyebrow,
     h1: page.h1,
     h1Accent: 'Start for $49.',

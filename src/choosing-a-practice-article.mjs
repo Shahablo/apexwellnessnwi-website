@@ -60,7 +60,7 @@ export const choosingAPracticeArticle = Object.freeze({
       "heading": "Where Apex stands",
       "paragraphs": [
         "Apex Wellness is Coming soon to 8550 Broadway, Suite B, Merrillville, IN 46410. Our planned care covers weight and metabolic health, men's hormone health, women's midlife care and hair loss. You can read how care is planned to work and the current pricing status on this site.",
-        "Online booking is open for visits from November 20. [Book online](https://apexwellnessnwi.com/founding-patients/). When you visit, bring this worksheet. We would rather answer these questions than have you guess."
+        "Online booking is open. [Book online](https://apexwellnessnwi.com/founding-patients/). When you visit, bring this worksheet. We would rather answer these questions than have you guess."
       ]
     }
   ],

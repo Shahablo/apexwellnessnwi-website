@@ -15,11 +15,11 @@ export const nearbyVisitPages = Object.freeze({
     description: 'Coming from Munster? Apex Wellness has one in-person clinic in Merrillville. Save the Suite B address, check your route and book online.',
     eyebrow: 'For Munster neighbors',
     h1: 'From Munster, find us in Merrillville.',
-    intro: 'Apex Wellness offers in-person visits at 8550 Broadway, Suite B, in Merrillville. If you live or work in Munster, that is the one Apex location to save. Online booking is open for visits from November 20.',
+    intro: 'Apex Wellness offers in-person visits at 8550 Broadway, Suite B, in Merrillville. If you live or work in Munster, that is the one Apex location to save. Online booking is open.',
     heroImage: 'behindPosters',
     cta: bookingPage,
     secondaryCta: { label: 'Directions from Munster', href: directionsFrom('Munster, IN') },
-    ctaNote: 'Opening November 20. Photo: posters in the Apex Merrillville windows, October 2026.',
+    ctaNote: 'Now open. Photo: posters in the Apex Merrillville windows, October 2026.',
     sections: [
       { type: 'detail', eyebrow: 'A Munster starting point', heading: 'Use your own address for the last mile.', body: 'Calumet Avenue connects Munster to the US 30 corridor, which continues toward Merrillville. Your best route depends on where in Munster you start and current road conditions. The directions button opens a live route from Munster to the exact Suite B address; enter your own starting address for a route that fits your trip.' },
       { type: 'linkCards', eyebrow: 'Before a future visit', heading: 'Keep the useful details together.', items: [
@@ -29,7 +29,7 @@ export const nearbyVisitPages = Object.freeze({
       ] },
       { type: 'faq', heading: 'Questions from Munster', items: [
         { question: 'Does Apex have a Munster office?', answer: 'No. Apex has one clinic at 8550 Broadway, Suite B, Merrillville, IN 46410. This page helps Munster visitors plan for that location.' },
-        { question: 'Can I reserve a visit from this page?', answer: 'Yes. Online booking is open for visits from November 20, or call (219) 207-2456.', bookOnline: true }
+        { question: 'Can I reserve a visit from this page?', answer: 'Yes. Online booking is open, or call (219) 207-2456.', bookOnline: true }
       ] }
     ]
   }),
@@ -39,11 +39,11 @@ export const nearbyVisitPages = Object.freeze({
     description: 'Crown Point visitors can find Apex Wellness at its one coming-soon Merrillville clinic on Broadway. Check a live route, current transit and opening updates.',
     eyebrow: 'For Crown Point neighbors',
     h1: 'Crown Point to Apex: find the right Broadway address.',
-    intro: 'Broadway runs through Crown Point and toward Merrillville. Apex has one clinic farther north at 8550 Broadway, Suite B, Merrillville. Save the full address before your visit. Online booking is open for visits from November 20.',
+    intro: 'Broadway runs through Crown Point and toward Merrillville. Apex has one clinic farther north at 8550 Broadway, Suite B, Merrillville. Save the full address before your visit. Online booking is open.',
     heroImage: 'behindWindow',
     cta: bookingPage,
     secondaryCta: { label: 'Directions from Crown Point', href: directionsFrom('Crown Point, IN') },
-    ctaNote: 'Opening November 20. Directions are for planning, not a booked visit. Photo: Shahab setting up the Apex storefront in Merrillville, October 2026.',
+    ctaNote: 'Now open. Directions are for planning, not a booked visit. Photo: Shahab setting up the Apex storefront in Merrillville, October 2026.',
     sections: [
       { type: 'detail', eyebrow: 'The Broadway connection', heading: 'One road name, one Apex address.', body: 'Crown Point’s street map labels Broadway/State Road 53. Apex’s clinic is on Broadway in Merrillville, so the town name and Suite B matter when you enter directions. Check the live route for your starting point and any roadwork instead of relying on a fixed travel-time estimate.' },
       { type: 'linkCards', eyebrow: 'Drive or transit', heading: 'Choose the trip you can verify.', items: [
@@ -63,11 +63,11 @@ export const nearbyVisitPages = Object.freeze({
     description: 'Starting in Schererville? Compare live routes from the US 41/US 30 crossroads or downtown to Apex Wellness at its one Merrillville clinic.',
     eyebrow: 'For Schererville neighbors',
     h1: 'Coming from Schererville? Start where you are.',
-    intro: 'A route from the US 41/US 30 crossroads may look different from one starting in downtown Schererville. Both lead to the same Apex clinic at 8550 Broadway, Suite B, Merrillville. Use a live map before traveling. Online booking is open for visits from November 20.',
+    intro: 'A route from the US 41/US 30 crossroads may look different from one starting in downtown Schererville. Both lead to the same Apex clinic at 8550 Broadway, Suite B, Merrillville. Use a live map before traveling. Online booking is open.',
     heroImage: 'behindPosters',
     cta: bookingPage,
     secondaryCta: { label: 'Directions from Schererville', href: directionsFrom('Schererville, IN') },
-    ctaNote: 'Opening November 20. Photo: posters in the Apex Merrillville windows, October 2026.',
+    ctaNote: 'Now open. Photo: posters in the Apex Merrillville windows, October 2026.',
     sections: [
       { type: 'detail', eyebrow: 'Two starting points', heading: 'Pick the route that fits your part of town.', body: 'Schererville’s US 41/US 30 crossroads connects with US 30 toward Merrillville. Downtown near Town Hall is a different starting point, so a single townwide travel estimate would be misleading. Open the example that is closest to you, then enter your own address and check current conditions.' },
       { type: 'linkCards', eyebrow: 'Compare live directions', heading: 'Start with a place you recognize.', items: [

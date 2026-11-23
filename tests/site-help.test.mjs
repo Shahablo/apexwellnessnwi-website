@@ -42,7 +42,7 @@ test('site guide answers known questions using bounded local information', () =>
   ]) assert.equal(answerWebsiteQuestion(question).href, path);
 });
 test('launch date is supplied by site configuration', () => {
-  assert.match(answerWebsiteQuestion('When do you open?', 'November 20, 2026').text, /Apex opens November 20, 2026/);
+  assert.match(answerWebsiteQuestion('When do you open?', 'November 20, 2026').text, /Apex opened November 20, 2026/);
 });
 
 test('the location answer preserves in-person-only launch plans and says online booking is open', () => {
@@ -98,7 +98,7 @@ test('Pexy separates the $49 promotional labs offer, online booking, contact req
 
   const request = answerWebsiteQuestion('Can I book an appointment?');
   assert.equal(request.href, '/plan-your-visit/');
-  assert.match(request.text, /^Online booking is open for visits from November 20\. Use the Book online button on the Plan Your Visit page, or call \(219\) 207-2456\./);
+  assert.match(request.text, /^Online booking is open\. Use the Book online button on the Plan Your Visit page, or call \(219\) 207-2456\./);
   assert.match(request.text, /does not book a time/);
   assert.match(request.text, /name, email, phone/);
   assert.equal(answerWebsiteQuestion('How do I book a visit?').text, request.text);
@@ -106,7 +106,7 @@ test('Pexy separates the $49 promotional labs offer, online booking, contact req
   const list = answerWebsiteQuestion('How do I join the launch list?');
   assert.equal(list.href, '/founding-patients/');
   // The Launch List signup left the website on November 16, 2026; the answer now points to booking.
-  assert.match(list.text, /^Online booking is open for visits from November 20\. To book, use the Book online button on the booking page or call \(219\) 207-2456\./);
+  assert.match(list.text, /^Online booking is open\. To book, use the Book online button on the booking page or call \(219\) 207-2456\./);
   assert.equal(list.label, 'Book online');
   assert.doesNotMatch(list.text, /Launch List/);
 

@@ -379,7 +379,7 @@ function renderCareDetails(page) {
       <div><dt>${escapeHtml(clinicHours.heading)}</dt><dd>${clinicHours.rows.map((row) => `${escapeHtml(row.label)}: ${escapeHtml(row.hours)}`).join("<br>")}</dd></div>
       <div><dt>Cost</dt><dd><a href="/pricing/">Cash-pay · Pricing details</a></dd></div>
     </dl>
-    <p class="visit-details-note">Opening November 20. ${escapeHtml(bookingStatus)} ${bookOnlineLinkMarkup()}<a href="${escapeHtml(faqHref)}">Jump to common questions <span aria-hidden="true">↓</span></a></p>
+    <p class="visit-details-note">Now open. ${escapeHtml(bookingStatus)} ${bookOnlineLinkMarkup()}<a href="${escapeHtml(faqHref)}">Jump to common questions <span aria-hidden="true">↓</span></a></p>
   </div></aside>`;
 }
 
@@ -483,7 +483,7 @@ function renderSection(section, index) {
     case 'locationDetails':
       return `<section class="section location-details" aria-labelledby="${id}"><div class="container editorial-row">
         ${headingMarkup(section, id)}<div class="editorial-copy"><address>${escapeHtml(site.address.streetAddress)}<br>${escapeHtml(site.address.addressLocality)}, ${escapeHtml(site.address.addressRegion)} ${escapeHtml(site.address.postalCode)}</address><p>${escapeHtml(section.body)}</p>
-        <dl class="location-facts"><div><dt>Visits</dt><dd>${escapeHtml(visitDetails.format)}</dd></div><div><dt>${escapeHtml(clinicHours.heading)}</dt><dd>${[...clinicHours.rows.map((row) => `${row.label}: ${row.hours}`), clinicHours.closed, clinicHours.holiday.note].map(escapeHtml).join("<br>")}</dd></div><div><dt>Availability</dt><dd>Opening November 20. ${escapeHtml(bookingStatus)} ${bookOnlineLinkMarkup()}</dd></div><div><dt>General questions</dt><dd><a href="${escapeHtml(site.phoneHref)}">${escapeHtml(site.phone)}</a><br><a href="mailto:${escapeHtml(site.email)}">${escapeHtml(site.email)}</a></dd></div></dl>
+        <dl class="location-facts"><div><dt>Visits</dt><dd>${escapeHtml(visitDetails.format)}</dd></div><div><dt>${escapeHtml(clinicHours.heading)}</dt><dd>${[...clinicHours.rows.map((row) => `${row.label}: ${row.hours}`), clinicHours.closed, clinicHours.holiday.note].map(escapeHtml).join("<br>")}</dd></div><div><dt>Availability</dt><dd>Now open. ${escapeHtml(bookingStatus)} ${bookOnlineLinkMarkup()}</dd></div><div><dt>General questions</dt><dd><a href="${escapeHtml(site.phoneHref)}">${escapeHtml(site.phone)}</a><br><a href="mailto:${escapeHtml(site.email)}">${escapeHtml(site.email)}</a></dd></div></dl>
         <a class="text-link" href="${escapeHtml(visitDetails.directionsUrl)}">Open directions in Google Maps <span aria-hidden="true">↗</span></a></div>
       </div></section>`;
 
@@ -739,7 +739,7 @@ function renderBlogPost(page) {
         ${articleSections}
         <aside class="medical-note" aria-labelledby="medical-disclaimer"><h2 id="medical-disclaimer">${escapeHtml(disclaimerHeading)}</h2><p>${escapeHtml(disclaimer)}</p></aside>
         <section class="article-sources" aria-labelledby="sources-reviewed"><h2 id="sources-reviewed">Sources reviewed</h2><ul>${sourceList}</ul><p class="editorial-note">${escapeHtml(page.editorialNote || "Published by Apex Wellness for general education. No individual physician medical review is claimed unless a reviewer is explicitly named. Sources and publication dates are provided so you can evaluate the information; your own care requires a clinical conversation.")}</p></section>
-        <section class="article-cta" aria-labelledby="keep-exploring"><p class="eyebrow">Keep exploring</p><h2 id="keep-exploring">Useful information is a start. Individual care is the next step.</h2><p>${escapeHtml(page.ctaBody || "Apex Wellness opens November 20 in Merrillville.")}</p>${bookOnlineUrl() ? `<p class="article-cta-booking">${escapeHtml(bookingStatus)} ${bookOnlineLinkMarkup()}</p>` : ""}<div class="button-row">${buttonMarkup(page.relatedService, true)}${buttonMarkup(site.cta)}</div></section>
+        <section class="article-cta" aria-labelledby="keep-exploring"><p class="eyebrow">Keep exploring</p><h2 id="keep-exploring">Useful information is a start. Individual care is the next step.</h2><p>${escapeHtml(page.ctaBody || "Apex Wellness is open in Merrillville.")}</p>${bookOnlineUrl() ? `<p class="article-cta-booking">${escapeHtml(bookingStatus)} ${bookOnlineLinkMarkup()}</p>` : ""}<div class="button-row">${buttonMarkup(page.relatedService, true)}${buttonMarkup(site.cta)}</div></section>
       </div>
     </article>
   </main>`;
@@ -826,7 +826,7 @@ function renderVisitPlanner(page) {
           <div class="visit-fact"><strong>8550 Broadway, Suite B</strong><br>Merrillville, IN 46410<br><a href="/merrillville/">Location and directions</a></div>
           <div class="visit-fact">${hoursMarkup()}</div>
           <p>We offer weight and metabolic care, men’s hormone health, women’s midlife care, hair-loss care and peptide therapy for adults.</p>
-          <p class="visit-note">Opening November 20. ${escapeHtml(bookingStatus)} ${bookOnlineLinkMarkup()}</p>
+          <p class="visit-note">Now open. ${escapeHtml(bookingStatus)} ${bookOnlineLinkMarkup()}</p>
           <div class="visit-actions"><button class="button" type="button" data-visit-next hidden>Next: costs</button></div>
         </section>
         <section data-visit-step aria-labelledby="visit-step-two"><h2 id="visit-step-two" tabindex="-1">Know the costs before you commit.</h2>
@@ -836,7 +836,7 @@ function renderVisitPlanner(page) {
           <div class="visit-actions"><button class="button-secondary" type="button" data-visit-back hidden>Back</button><button class="button" type="button" data-visit-next hidden>Next: your next step</button></div>
         </section>
         <section data-visit-step aria-labelledby="visit-step-three"><h2 id="visit-step-three" tabindex="-1">${booking ? 'Continue to scheduling.' : 'Your next chapter starts here.'}</h2>
-          ${booking ? `<p>Continue to Apex’s Tebra scheduling page to review available appointments. A request is not booked until Apex confirms it.</p><a class="button" href="${escapeHtml(booking)}" rel="noreferrer" referrerpolicy="no-referrer">Continue to Tebra</a>` : `<p>Apex opens November 20 in Merrillville. ${escapeHtml(bookingStatus)} Book online, or call <a href="tel:+12192072456">(219) 207-2456</a>.</p>
+          ${booking ? `<p>Continue to Apex’s Tebra scheduling page to review available appointments. A request is not booked until Apex confirms it.</p><a class="button" href="${escapeHtml(booking)}" rel="noreferrer" referrerpolicy="no-referrer">Continue to Tebra</a>` : `<p>Apex is open in Merrillville. ${escapeHtml(bookingStatus)} Book online, or call <a href="tel:+12192072456">(219) 207-2456</a>.</p>
           ${bookOnlineUrl() ? `<p class="book-online">${bookOnlineLinkMarkup("button")}</p>` : ""}
           <p>Prefer that we reach out? Leave your name, email and phone number, and we’ll call or email you about arranging a visit.</p>
           <div id="consultation-request"><form id="consultation-form" action="/api/appointment-contact" method="post" aria-labelledby="visit-step-three" aria-describedby="appointment-guidance" data-success-message="Thanks for taking the first step. Your request is saved, and Apex can call or email you about arranging a visit. This form has not booked an appointment, and you have not joined the newsletter.">

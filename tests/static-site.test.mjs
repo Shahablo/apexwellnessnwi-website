@@ -172,7 +172,7 @@ test('the new planned care area is discoverable without displacing information l
     assert.doesNotMatch(html.match(/<main[\s\S]*?<\/main>/)[0].replace(/<[^>]+>/g, ' '), /coming soon|preparing to|prelaunch/i, slug + ' drops prelaunch wording');
   }
   const hair = htmlBySlug.get('/hair-loss-care/');
-  assert.match(hair, /Yes\. Online booking is open for visits from November 20\. You can also call \(219\) 207-2456\./);
+  assert.match(hair, /Yes\. Online booking is open\. You can also call \(219\) 207-2456\./);
   assert.match(hair, /8550 Broadway, Suite B/);
   assert.doesNotMatch(hair, /minoxidil|finasteride|dutasteride|PRP|transplant|guaranteed regrowth/i);
   assert.match(htmlBySlug.get('/founding-patients/'), /href="\/hair-loss-care\/"/);
@@ -708,29 +708,29 @@ test('homepage replaces the generic introduction with one staff-neutral approach
   assert.match(home, /href="\/about\/">Our approach to care/);
 });
 
-test('homepage names the planned care and location, keeps the planned-launch status and offers online booking', async () => {
+test('homepage names the care and location, shows it is open and offers online booking', async () => {
   const home = htmlBySlug.get('/');
-  assert.match(home, /<meta name="description" content="[^"]*peptide care in Merrillville, Indiana\. Online booking is open for visits from November 20\.">/);
+  assert.match(home, /<meta name="description" content="[^"]*peptide care in Merrillville, Indiana\. Now open at 8550 Broadway, Suite B\. Book online or call \(219\) 207-2456\.">/);
   assert.match(home, /<div class="hero-actions"><a class="button" href="https:\/\/d2oe0ra32qx05a\.cloudfront\.net\/\?practiceKey=k_1_117405"[^>]*data-book-online>Book online<span class="visually-hidden"> \(opens a new tab\)<\/span><\/a><a class="hero-explore" href="#care-areas">Explore care areas /);
-  assert.match(home, /<h3>Book when you are ready\.<\/h3><p>Online booking is open for visits from November 20\. Book online or call \(219\) 207-2456\.<\/p>/);
+  assert.match(home, /<h3>Book when you are ready\.<\/h3><p>Online booking is open\. Book online or call \(219\) 207-2456\.<\/p>/);
   assert.equal(site.launch.date, '2026-11-20');
-  assert.match(home, /Opening November 20, 2026/);
+  assert.match(home, /Now open in Merrillville · Northwest Indiana/);
   assert.doesNotMatch(home, /November 4, 2026|2026-11-04/);
-  assert.match(home, /<h1 id="page-title">Weight, hormones, hair loss, peptides\. <em>Now booking in Merrillville\.<\/em><\/h1>/);
+  assert.match(home, /<h1 id="page-title">Weight, hormones, hair loss, peptides\. <em>Now open in Merrillville\.<\/em><\/h1>/);
   for (const area of ['weight and metabolic care', 'men’s hormone health', 'women’s midlife care', 'hair-loss care for thinning and balding']) assert.match(home, new RegExp(area));
-  assert.match(home, /Doors open November 20 at 8550 Broadway, Suite B/);
+  assert.match(home, /Now open at 8550 Broadway, Suite B/);
   assert.match(home, /href="\/peptide-therapy\/"/);
   assert.doesNotMatch(home.match(/<main[\s\S]*?<\/main>/)[0].replace(/<[^>]+>/g, ' '), /coming soon|coming to merrillville|preparing|subject to readiness/i, 'home page drops prelaunch wording');
   assert.doesNotMatch(home, /A thoughtful(?:<br>|\s)+approach to/);
   assert.match(home, /class="signature-launch-note">8550 Broadway, Suite B/);
   for (const [slug, html] of htmlBySlug) {
     if (bookingSlugs.has(slug)) {
-      assert.match(html, /class="announcement-copy">Opening November 20 in Merrillville · Online booking is open for visits from November 20\.<\/span>/);
+      assert.match(html, /class="announcement-copy">Now open in Merrillville · Online booking is open\.<\/span>/);
       assert.doesNotMatch(html, /November 1(?!\d)|2026-11-01/);
       assert.doesNotMatch(html, /Join the Launch List/);
       continue;
     }
-    assert.match(html, /class="announcement-copy">Opening November 20, 2026/, `${slug} shows the opening date`);
+    assert.match(html, /class="announcement-copy">Now open in Merrillville · Northwest Indiana/, `${slug} shows the opening date`);
     assert.match(html, /class="announcement-cta" href="\/founding-patients\/">Book online/, `${slug} announcement links to the booking page`);
     assert.doesNotMatch(html, /Join the Launch List|Get opening updates/, `${slug} must not invite people to the removed Launch List signup`);
   }
@@ -749,7 +749,7 @@ test('the QR landing page is a short booking page: the $49 offer, Book online, c
   assert.ok(main);
   assert.match(html, /<title>Book Online \| \$49 Grand Opening \| Apex Wellness Merrillville<\/title>/);
   assert.match(html, /<meta name="description" content="Grand opening: promotional labs for \$49\. The \$49 covers your first visit and the labs, for the first 50 appointments scheduled\. Book online or call \(219\) 207-2456\.">/);
-  assert.match(main, /<p class="eyebrow">Grand opening · Friday, November 20 · Merrillville<\/p>\s*<h1 id="page-title">Now booking <em>first visits\.<\/em><\/h1>/);
+  assert.match(main, /<p class="eyebrow">Grand opening · Now open · Merrillville<\/p>\s*<h1 id="page-title">Now booking <em>first visits\.<\/em><\/h1>/);
   assert.match(main, /<p class="booking-offer"><strong>\$49 for labs and your first visit\.<\/strong> First 50 appointments only\.<\/p>/);
   assert.match(main, /<p class="booking-badge" aria-hidden="true"><span>Grand opening<\/span><strong>\$49<\/strong><span>Labs \+ first visit<\/span><\/p>/);
 
@@ -844,7 +844,7 @@ test('the four ad booking pages build from the shared booking template with the 
 });
 
 const bookingUrl = 'https://d2oe0ra32qx05a.cloudfront.net/?practiceKey=k_1_117405';
-const bookingStatus = 'Online booking is open for visits from November 20.';
+const bookingStatus = 'Online booking is open.';
 // The four ad landing pages, the men's page that shares their template, and nothing else.
 const offerBandPages = new Set(['/weight-management/', '/hormone-care-merrillville/', '/womens-midlife-care/', '/hair-loss-care/', '/mens-hormone-health/']);
 
@@ -941,7 +941,7 @@ test('no generated page, guide answer or email still says scheduling or booking 
     assert.ok(htmlBySlug.get(slug).includes(bookingStatus), `${slug} must say online booking is open`);
   }
   for (const [slug, html] of htmlBySlug) {
-    if (!bookingSlugs.has(slug)) assert.match(html, /class="announcement-copy">Opening November 20, 2026/, `${slug} keeps the opening date`);
+    if (!bookingSlugs.has(slug)) assert.match(html, /class="announcement-copy">Now open in Merrillville · Northwest Indiana/, `${slug} keeps the opening date`);
     // Dated blog articles, and the blog index that lists them, keep their original wording.
     if (!slug.startsWith('/blog/')) assert.doesNotMatch(html, /Coming soon/, `${slug} drops the Coming soon wording`);
   }

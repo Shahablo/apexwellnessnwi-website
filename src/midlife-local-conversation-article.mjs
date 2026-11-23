@@ -34,8 +34,8 @@ export const midlifeLocalConversationArticle = Object.freeze({
     {
       heading: 'Where to follow along',
       paragraphs: [
-        'Our women’s midlife care page explains the planned focus. The Merrillville page shows the location. Online booking is open for visits from November 20. [Book a women’s midlife care visit](https://apexwellnessnwi.com/book/womens-midlife/).',
-        'Apex is Coming soon, and online booking is open for visits from November 20. The door tells you where.'
+        'Our women’s midlife care page explains the planned focus. The Merrillville page shows the location. Online booking is open. [Book a women’s midlife care visit](https://apexwellnessnwi.com/book/womens-midlife/).',
+        'Apex is now open in Merrillville, and online booking is open. The door tells you where.'
       ]
     }
   ],

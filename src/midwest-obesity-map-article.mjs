@@ -28,14 +28,14 @@ export const midwestObesityMapArticle = Object.freeze({
       heading: 'Why Apex is paying attention',
       paragraphs: [
         'Weight and metabolic health is part of Apex’s planned focus at 8550 Broadway, Suite B. We are interested in the regional picture because it shows why the subject deserves a clear place in the conversation. A large estimate can point to a topic worth understanding; it cannot tell us what someone wants from care or which services would be appropriate for them.',
-        'That is why our website names the care area plainly and keeps its current status clear. Apex is still preparing to open. We will publish the clinical team, exact services and prices when those details are confirmed. Online booking is open for visits from November 20.'
+        'That is why our website names the care area plainly and keeps its current status clear. Apex is still preparing to open. We will publish the clinical team, exact services and prices when those details are confirmed. Online booking is open.'
       ]
     },
     {
       heading: 'One useful way to read the next headline',
       paragraphs: [
         'When a health statistic sounds close to home, look for three things: the year, the place and the method. Here, the year is 2025, the place is the broader Midwest, and the method is self-reported height and weight in a survey. Those details make the figure more useful, not less.',
-        'If you are getting to know Apex, our weight and metabolic care page describes the planned area. Online booking is open for visits from November 20. [Book a medical weight loss visit](https://apexwellnessnwi.com/book/weight-loss/).'
+        'If you are getting to know Apex, our weight and metabolic care page describes the planned area. Online booking is open. [Book a medical weight loss visit](https://apexwellnessnwi.com/book/weight-loss/).'
       ]
     }
   ],

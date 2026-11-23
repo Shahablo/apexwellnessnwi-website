@@ -21,7 +21,7 @@ export function answerWebsiteQuestion(input, launchLabel = 'November 20, 2026') 
   const result = (text, label, href, followupEligible = false) => ({ text, label, href, followupEligible });
   const asks = (pattern) => pattern.test(question);
   const launchOffer = 'Apex’s grand-opening offer is promotional labs for $49 for the first 50 appointments scheduled. The $49 covers your first visit and the promotional labs. Labs as clinically appropriate. One per person. Additional testing or treatment is separate. Appointments subject to availability.';
-  const bookingOpen = 'Online booking is open for visits from November 20.';
+  const bookingOpen = 'Online booking is open.';
   const clinicHours = 'Hours from November 20: Wednesday, Thursday and Friday, 11 a.m. to 5 p.m. Saturday, 9 a.m. to 1 p.m. Closed Sunday through Tuesday. Closed Thanksgiving Day, November 26.';
 
   // Safety and privacy take priority over promotional or navigation answers.
@@ -65,13 +65,13 @@ export function answerWebsiteQuestion(input, launchLabel = 'November 20, 2026') 
     return result('You can call or text (219) 207-2456, or email hello@apexwellnessnwi.com with general questions. Please do not send medical records or sensitive health details through those public contact routes. Pexy does not automatically forward your question to staff.', 'Contact and location', '/merrillville/');
   }
   if (asks(/\b(hours?|thanksgiving|holidays?|weekends?|(?:mon|tues|wednes|thurs|fri|satur|sun)days?)\b/)) {
-    return result(`${clinicHours} Apex opens ${plannedDate}. ${bookingOpen}`, 'Location and clinic hours', '/merrillville/');
+    return result(`${clinicHours} Apex opened ${plannedDate}. ${bookingOpen}`, 'Location and clinic hours', '/merrillville/');
   }
   if (asks(/\b(parking|directions?|where|location|address|merrillville|suite|near me|telehealth|virtual|remote|in.person)\b/)) {
-    return result(`8550 Broadway, Suite B, Merrillville, IN 46410. Apex opens ${plannedDate}. Visits are in person; telehealth is not offered. ${clinicHours} Parking details have not been announced. ${bookingOpen}`, 'Location and visit details', '/merrillville/');
+    return result(`8550 Broadway, Suite B, Merrillville, IN 46410. Apex opened ${plannedDate}. Visits are in person; telehealth is not offered. ${clinicHours} Parking details have not been announced. ${bookingOpen}`, 'Location and visit details', '/merrillville/');
   }
   if (asks(/\b(open|opening|launch|november|date|when)\b/)) {
-    return result(`Apex opens ${plannedDate} in Merrillville. ${bookingOpen} Use the Book online button on the booking page or call (219) 207-2456.`, 'Book online', '/founding-patients/');
+    return result(`Apex opened ${plannedDate} in Merrillville. ${bookingOpen} Use the Book online button on the booking page or call (219) 207-2456.`, 'Book online', '/founding-patients/');
   }
   if (asks(/\b(accessib\w*|screen reader|website problem|site problem)\b/)) {
     return result('If something on the website is hard to use, the accessibility page explains how to report it. Pexy cannot send a report for you, so please use the contact route on that page.', 'Website accessibility', '/accessibility/');
@@ -85,16 +85,16 @@ export function answerWebsiteQuestion(input, launchLabel = 'November 20, 2026') 
 
   // Care-area answers describe the existing public pages, not individual eligibility or treatment.
   if (asks(/\b(hair|balding|alopecia|thinning)\b/)) {
-    return result('Hair-loss care is one of the areas Apex offers adults. The page introduces the approach; specific treatment and fees are decided after a visit. Online booking is open for visits from November 20. Pexy cannot assess a personal hair-loss concern.', 'Explore hair-loss care', '/hair-loss-care/');
+    return result('Hair-loss care is one of the areas Apex offers adults. The page introduces the approach; specific treatment and fees are decided after a visit. Online booking is open. Pexy cannot assess a personal hair-loss concern.', 'Explore hair-loss care', '/hair-loss-care/');
   }
   if (asks(/\b(menopause|perimenopause|women|woman|midlife)\b/)) {
-    return result('Women’s midlife care is an Apex care area. The page explains the intended focus on individual evaluation and discussion of options. Any care decision depends on an evaluation. Online booking is open for visits from November 20.', 'Explore women’s midlife care', '/womens-midlife-care/');
+    return result('Women’s midlife care is an Apex care area. The page explains the intended focus on individual evaluation and discussion of options. Any care decision depends on an evaluation. Online booking is open.', 'Explore women’s midlife care', '/womens-midlife-care/');
   }
   if (asks(/\b(testosterone|trt|men|man|male hormones?)\b/)) {
-    return result('Men’s hormone health is an Apex care area. The page describes an evaluation-first approach. No prescription, treatment, or eligibility is guaranteed. Online booking is open for visits from November 20.', 'Explore men’s hormone health', '/mens-hormone-health/');
+    return result('Men’s hormone health is an Apex care area. The page describes an evaluation-first approach. No prescription, treatment, or eligibility is guaranteed. Online booking is open.', 'Explore men’s hormone health', '/mens-hormone-health/');
   }
   if (asks(/\b(weight|glp|semaglutide|tirzepatide|metabolic|ozempic|wegovy|zepbound|medications?|prescriptions?)\b/)) {
-    return result('Weight and metabolic care is an Apex care area. Specific medications, prescriptions, eligibility, and outcomes cannot be promised through this site. The care page explains the evaluation-first approach. Online booking is open for visits from November 20.', 'Explore weight and metabolic care', '/weight-management/');
+    return result('Weight and metabolic care is an Apex care area. Specific medications, prescriptions, eligibility, and outcomes cannot be promised through this site. The care page explains the evaluation-first approach. Online booking is open.', 'Explore weight and metabolic care', '/weight-management/');
   }
   if (asks(/\b(labs?|blood ?work|tests?|testing)\b/)) {
     return result(`Testing decisions depend on a future clinical evaluation. ${launchOffer} Pexy cannot decide which tests someone needs.`, 'Read the offer terms', '/founding-patients/');
@@ -103,7 +103,7 @@ export function answerWebsiteQuestion(input, launchLabel = 'November 20, 2026') 
     return result('Apex offers focused care for adults. A qualified clinician determines whether a service fits a person’s needs; Pexy cannot prequalify anyone. Apex will not replace primary, specialist, urgent, or emergency care.', 'How care works', '/how-it-works/');
   }
   if (asks(/\b(service|care|offer|hormone|treat|what do you do)\b/)) {
-    return result('Apex offers care in Merrillville for weight and metabolic health, men’s hormone health, women’s midlife care, hair loss and peptide therapy. Online booking is open for visits from November 20.', 'Explore the care areas', '/how-it-works/');
+    return result('Apex offers care in Merrillville for weight and metabolic health, men’s hormone health, women’s midlife care, hair loss and peptide therapy. Online booking is open.', 'Explore the care areas', '/how-it-works/');
   }
 
   return result('I do not have a verified answer to that one, and I would rather say so than guess. You can browse the FAQs or ask the Apex team to follow up about a general website question. Please leave medical or personal health details out of the form.', 'Browse all FAQs', '/faq/', true);

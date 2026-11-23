@@ -2,7 +2,7 @@ const ADDRESS = "8550 Broadway, Suite B, Merrillville, IN 46410";
 const SITE = "https://apexwellnessnwi.com";
 const LOGO = SITE + "/assets/images/apex-icon-as-a-email-20261026.png";
 // Owner-confirmed November 16, 2026. Emails link to the site's own offer page, which carries the Book online button.
-const BOOKING = "Online booking is open for visits from November 20. Book from our website or call (219) 207-2456.";
+const BOOKING = "Online booking is open. Book from our website or call (219) 207-2456.";
 const BOOKING_PAGE = { url: SITE + "/founding-patients/", label: "See how to book" };
 
 function escapeHtml(value) {

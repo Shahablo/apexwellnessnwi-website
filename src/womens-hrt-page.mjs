@@ -2,7 +2,7 @@ import { menopauseSymptomsArticle } from './menopause-symptoms-article.mjs';
 
 export const womensHrtPage = {
   "slug": "/womens-hormone-replacement-therapy/",
-  "modified": "2026-11-16",
+  "modified": "2026-11-23",
   "navLabel": "Women's HRT",
   "title": "Women's Hormone Replacement Therapy in Merrillville | Apex Wellness",
   "description": "Explore women’s hormone replacement therapy at Apex Wellness in Merrillville, including menopause symptoms, potential benefits, options and FAQs.",

@@ -1,12 +1,12 @@
 // Menopause series, part 1, adapted from the Instagram carousel posted November 23, 2026.
-// Clinical copy: keep status "draft" until version-specific medical authorization is recorded
-// (docs/editorial-publishing.md). When it is approved, set status to "published", set
-// `published` and `modified` to the real release date, and the Women's HRT page link card
-// (src/womens-hrt-page.mjs) turns on automatically.
+// Clinical copy. Owner confirmed on November 23, 2026 that this exact version is clinically
+// authorized (pre-release source SHA-256 e5dead0ecc061dcce2b86435fc1e2083fb59c46a11ab2dcaa3a04a3c241b869a). No named reviewer was supplied,
+// so no "medically reviewed by" credit is published. Any substantive copy or source change
+// reopens authorization (docs/editorial-publishing.md).
 export const menopauseSymptomsArticle = Object.freeze({
   slug: '/blog/menopause-symptoms-more-than-hot-flashes/',
-  status: 'draft',
-  editorialType: 'clinical-pending-authorization',
+  status: 'published',
+  editorialType: 'clinical-owner-authorized',
   title: 'Menopause Symptoms: More Than Hot Flashes | Apex Wellness Merrillville',
   description: 'Brain fog, 3 a.m. wake-ups and a shorter fuse can all be menopause. Learn the symptoms women are rarely told about and when to talk with a clinician.',
   eyebrow: 'Women’s hormone care',

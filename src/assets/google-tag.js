@@ -8,9 +8,17 @@ gtag('set', 'allow_ad_personalization_signals', false);
 gtag('set', 'allow_google_signals', false);
 gtag('config', 'AW-18529444653');
 
-// Count a click on any Book online button as the "Book online click"
-// conversion. Sends only the conversion label, nothing about the visitor.
+// One conversion action per kind of button, whatever page it is on:
+// - any Book online button   -> "Book online click" (created November 17, 2026)
+// - any call (tel:) link     -> "Call button click" (Phone call lead, created November 24, 2026)
+// One click listener on the whole document catches every current and future
+// button, so new pages need no extra tagging. Sends only the conversion label,
+// nothing about the visitor or the number dialed.
+var BOOK_ONLINE_CONVERSION = 'AW-18529444653/3DBbCLLPu7odEK3Gw4NF';
+var CALL_CLICK_CONVERSION = 'AW-18529444653/XPU2CISZ7r4dEK3Gw4NF';
 document.addEventListener('click', function (event) {
-  var link = event.target && event.target.closest ? event.target.closest('a[data-book-online]') : null;
-  if (link) gtag('event', 'conversion', { send_to: 'AW-18529444653/3DBbCLLPu7odEK3Gw4NF' });
+  var link = event.target && event.target.closest ? event.target.closest('a[data-book-online], a[href^="tel:"]') : null;
+  if (!link) return;
+  var sendTo = link.hasAttribute('data-book-online') ? BOOK_ONLINE_CONVERSION : CALL_CLICK_CONVERSION;
+  gtag('event', 'conversion', { send_to: sendTo });
 });

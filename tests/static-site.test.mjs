@@ -7,6 +7,7 @@ import { fileURLToPath } from "node:url";
 import test from "node:test";
 
 import { pages, site } from "../src/content.mjs";
+import { clinicPhone } from "../src/clinic-facts.mjs";
 import { blogPosts } from "../src/blog-posts.mjs";
 import { personalGoalsArticle } from "../src/personal-goals-article.mjs";
 import { choosingAPracticeArticle } from "../src/choosing-a-practice-article.mjs";
@@ -711,7 +712,7 @@ test('homepage replaces the generic introduction with one staff-neutral approach
 test('homepage names the care and location, shows it is open and offers online booking', async () => {
   const home = htmlBySlug.get('/');
   assert.match(home, /<meta name="description" content="[^"]*peptide care in Merrillville, Indiana\. Now open at 8550 Broadway, Suite B\. Book online or call \(219\) 207-2456\.">/);
-  assert.match(home, /<div class="hero-actions"><a class="button" href="https:\/\/d2oe0ra32qx05a\.cloudfront\.net\/\?practiceKey=k_1_117405"[^>]*data-book-online>Book online<span class="visually-hidden"> \(opens a new tab\)<\/span><\/a><a class="hero-explore" href="#care-areas">Explore care areas /);
+  assert.match(home, /<div class="hero-actions"><a class="button" href="https:\/\/d2oe0ra32qx05a\.cloudfront\.net\/\?practiceKey=k_1_117405"[^>]*data-book-online>Book online<span class="visually-hidden"> \(opens a new tab\)<\/span><\/a><a class="button-secondary hero-call" href="tel:\+12192072456">Call \(219\) 207-2456<\/a><a class="hero-explore" href="#care-areas">Explore care areas /);
   assert.match(home, /<h3>Book when you are ready\.<\/h3><p>Online booking is open\. Book online or call \(219\) 207-2456\.<\/p>/);
   assert.equal(site.launch.date, '2026-11-20');
   assert.match(home, /Now open in Merrillville · Northwest Indiana/);
@@ -1072,4 +1073,37 @@ test('peptide therapy pages are built, linked and keep their copy rules', async 
   }
   const home = await readFile(join(publicRoot, 'index.html'), 'utf8');
   assert.ok(home.includes('href="/peptide-therapy/"'), 'home links to peptide therapy');
+});
+
+test('the public phone number lives only in src/clinic-facts.mjs (and Pexy\'s checked copy)', async () => {
+  // The owner switches the public number on November 27, 2026; one source keeps every page, button,
+  // schema entry and email in step. Any 219 number written directly into page source fails here.
+  const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
+  const allowed = new Set(['src/clinic-facts.mjs', 'src/assets/site-help.mjs']);
+  const phonePattern = /\(219\) \d{3}-\d{4}|219-\d{3}-\d{4}|\+1219\d{7}/;
+  const files = ['scripts/build.mjs'];
+  const walk = async (dir) => {
+    for (const entry of await readdir(join(root, dir), { withFileTypes: true })) {
+      const path = dir + '/' + entry.name;
+      if (entry.isDirectory()) await walk(path);
+      else if (/\.(mjs|js)$/.test(entry.name)) files.push(path);
+    }
+  };
+  await walk('src');
+  const offenders = [];
+  for (const file of files) {
+    if (allowed.has(file)) continue;
+    if (phonePattern.test(await readFile(join(root, file), 'utf8'))) offenders.push(file);
+  }
+  assert.deepEqual(offenders, []);
+  assert.equal(site.phone, clinicPhone.display);
+  assert.equal(site.phoneHref, clinicPhone.href);
+  assert.equal(clinicPhone.href, 'tel:' + clinicPhone.e164);
+});
+
+test('homepage hero has a call button that dials the public clinic number', () => {
+  const home = htmlBySlug.get('/');
+  const call = `<a class="button-secondary hero-call" href="${clinicPhone.href}">Call ${clinicPhone.display}</a>`;
+  assert.equal(home.split(call).length - 1, 1, 'one call button in the hero');
+  assert.ok(home.indexOf('data-book-online>Book online') < home.indexOf(call), 'Book online stays first');
 });

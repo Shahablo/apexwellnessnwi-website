@@ -1,4 +1,4 @@
-import { bookingStatus } from './clinic-facts.mjs';
+import { bookingStatus, clinicPhone } from './clinic-facts.mjs';
 
 // Owner-confirmed October 25 launch format. Online booking and clinic hours were
 // owner-confirmed November 16; no clinical eligibility promise.
@@ -46,10 +46,10 @@ export const merrillvillePage = Object.freeze({
       { title: 'Hair-loss care', body: 'Read about the evaluation of hair-loss concerns.', href: '/hair-loss-care/', label: 'Explore hair-loss care' }
     ] },
     { type: 'faq', heading: 'Before planning a visit', items: [
-      { question: 'Is the clinic open for appointments or walk-ins?', answer: `Apex is open. ${bookingStatus} Walk-in visits have not been announced, so please book ahead or call (219) 207-2456.`, bookOnline: true },
+      { question: 'Is the clinic open for appointments or walk-ins?', answer: `Apex is open. ${bookingStatus} Walk-in visits have not been announced, so please book ahead or call ${clinicPhone.display}.`, bookOnline: true },
       { question: 'Do I have to live in Merrillville to visit?', answer: 'No. Neighbors in Munster and elsewhere in Northwest Indiana are welcome too. Apex has one location at 8550 Broadway, Suite B, Merrillville; visits are in person there.' },
       visitDetails.quickAnswers[1],
-      { question: 'Can I ask about the location or access?', answer: 'Call (219) 207-2456 or email hello@apexwellnessnwi.com with a general location or accessibility question. Please keep medical details out of ordinary email.' },
+      { question: 'Can I ask about the location or access?', answer: `Call ${clinicPhone.display} or email hello@apexwellnessnwi.com with a general location or accessibility question. Please keep medical details out of ordinary email.` },
       { question: 'Where can I find fees and visit details?', answer: `The Pricing and How It Works pages explain the process. Final fees will be posted on the Pricing page. ${bookingStatus}`, bookOnline: true }
     ] }
   ]

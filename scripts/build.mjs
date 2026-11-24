@@ -5,7 +5,7 @@ import { fileURLToPath } from "node:url";
 
 import { pages, site } from "../src/content.mjs";
 import { visitDetails } from "../src/visit-details.mjs";
-import { bookingStatus, clinicHours, grandOpeningOffer, openingDay } from "../src/clinic-facts.mjs";
+import { bookingStatus, clinicHours, grandOpeningOffer, openingDay, clinicPhone } from "../src/clinic-facts.mjs";
 import { bookOnlineUrl, schedulingUrl } from "../src/visit-planner.mjs";
 import { blogPosts } from "../src/blog-posts.mjs";
 
@@ -192,7 +192,7 @@ function pageJsonLd(page) {
         addressCountry: site.address.addressCountry,
       },
       email: site.email,
-      telephone: "+12192072456",
+      telephone: clinicPhone.e164,
       logo: `${site.canonicalUrl}/assets/images/apex-brand-mark.png`,
       areaServed: {
         "@type": "AdministrativeArea",
@@ -337,7 +337,7 @@ function offerBandMarkup() {
         <p class="offer-band-headline">${escapeHtml(grandOpeningOffer.headline)}</p>
         <p class="offer-band-limit">${escapeHtml(grandOpeningOffer.limit)} <a href="/founding-patients/">Offer details</a></p>
       </div>
-      <div class="offer-band-actions">${booking}<a class="button-secondary" href="${escapeHtml(site.phoneHref)}">Call 219-207-2456</a></div>
+      <div class="offer-band-actions">${booking}<a class="button-secondary" href="${escapeHtml(site.phoneHref)}">Call ${escapeHtml(clinicPhone.dashed)}</a></div>
     </div></aside>`;
 }
 
@@ -345,7 +345,7 @@ function offerBandMarkup() {
 function bookOnlineMarkup() {
   const url = bookOnlineUrl();
   if (!url) return "";
-  return `<p class="book-online"><a class="button" href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer" aria-describedby="book-online-note" data-book-online>Book online</a></p><p id="book-online-note" class="book-online-note">Online booking opens our secure scheduling page (Tebra) in a new tab. Prefer the phone? Call <a href="tel:+12192072456">(219) 207-2456</a>.</p>`;
+  return `<p class="book-online"><a class="button" href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer" aria-describedby="book-online-note" data-book-online>Book online</a></p><p id="book-online-note" class="book-online-note">Online booking opens our secure scheduling page (Tebra) in a new tab. Prefer the phone? Call <a href="${escapeHtml(clinicPhone.href)}">${escapeHtml(clinicPhone.display)}</a>.</p>`;
 }
 
 function headingMarkup(section, id) {
@@ -604,7 +604,7 @@ function renderHero(pageKey, page) {
     <div class="signature-image">${imageMarkup(imageCatalog.shoreline, { hero: true })}</div>
     <div class="container signature-content"><p class="eyebrow">Wellness · Northwest Indiana</p>
       <h1 id="page-title">${escapeHtml(page.headlineLead)} <em>${escapeHtml(page.headlineEmphasis)}</em></h1>
-      <div class="signature-bottom"><div><p>${escapeHtml(page.intro)}</p><div class="hero-actions">${bookOnlineUrl() ? bookOnlineLinkMarkup("button") : buttonMarkup(site.cta)}<a class="hero-explore" href="#care-areas">Explore care areas <span aria-hidden="true">↗</span></a></div></div><p class="signature-launch"><span class="launch-dot" aria-hidden="true"></span>Opening<br><strong>${escapeHtml(site.launch.label)}</strong><span class="signature-launch-note">8550 Broadway, Suite B</span></p></div>
+      <div class="signature-bottom"><div><p>${escapeHtml(page.intro)}</p><div class="hero-actions">${bookOnlineUrl() ? bookOnlineLinkMarkup("button") : buttonMarkup(site.cta)}<a class="button-secondary hero-call" href="${escapeHtml(clinicPhone.href)}">Call ${escapeHtml(clinicPhone.display)}</a><a class="hero-explore" href="#care-areas">Explore care areas <span aria-hidden="true">↗</span></a></div></div><p class="signature-launch"><span class="launch-dot" aria-hidden="true"></span>Opening<br><strong>${escapeHtml(site.launch.label)}</strong><span class="signature-launch-note">8550 Broadway, Suite B</span></p></div>
     </div>
   </section>`;
   const image = imageForPage(pageKey, page);
@@ -831,12 +831,12 @@ function renderVisitPlanner(page) {
         </section>
         <section data-visit-step aria-labelledby="visit-step-two"><h2 id="visit-step-two" tabindex="-1">Know the costs before you commit.</h2>
           <p>Apex is a cash-pay practice. Final prices and what is included will be published on the Pricing page.</p>
-          <div class="visit-fact"><strong>${escapeHtml(grandOpeningOffer.headline)}</strong><p class="offer-limit">${escapeHtml(grandOpeningOffer.limit)}</p><p>${escapeHtml(grandOpeningOffer.finePrint)} Book online or call <a href="tel:+12192072456">(219) 207-2456</a> to schedule. A contact request does not reserve this offer.</p>${bookOnlineMarkup()}</div>
+          <div class="visit-fact"><strong>${escapeHtml(grandOpeningOffer.headline)}</strong><p class="offer-limit">${escapeHtml(grandOpeningOffer.limit)}</p><p>${escapeHtml(grandOpeningOffer.finePrint)} Book online or call <a href="${escapeHtml(clinicPhone.href)}">${escapeHtml(clinicPhone.display)}</a> to schedule. A contact request does not reserve this offer.</p>${bookOnlineMarkup()}</div>
           <p><a href="/pricing/">Review our pricing information</a></p>
           <div class="visit-actions"><button class="button-secondary" type="button" data-visit-back hidden>Back</button><button class="button" type="button" data-visit-next hidden>Next: your next step</button></div>
         </section>
         <section data-visit-step aria-labelledby="visit-step-three"><h2 id="visit-step-three" tabindex="-1">${booking ? 'Continue to scheduling.' : 'Your next chapter starts here.'}</h2>
-          ${booking ? `<p>Continue to Apex’s Tebra scheduling page to review available appointments. A request is not booked until Apex confirms it.</p><a class="button" href="${escapeHtml(booking)}" rel="noreferrer" referrerpolicy="no-referrer">Continue to Tebra</a>` : `<p>Apex is open in Merrillville. ${escapeHtml(bookingStatus)} Book online, or call <a href="tel:+12192072456">(219) 207-2456</a>.</p>
+          ${booking ? `<p>Continue to Apex’s Tebra scheduling page to review available appointments. A request is not booked until Apex confirms it.</p><a class="button" href="${escapeHtml(booking)}" rel="noreferrer" referrerpolicy="no-referrer">Continue to Tebra</a>` : `<p>Apex is open in Merrillville. ${escapeHtml(bookingStatus)} Book online, or call <a href="${escapeHtml(clinicPhone.href)}">${escapeHtml(clinicPhone.display)}</a>.</p>
           ${bookOnlineUrl() ? `<p class="book-online">${bookOnlineLinkMarkup("button")}</p>` : ""}
           <p>Prefer that we reach out? Leave your name, email and phone number, and we’ll call or email you about arranging a visit.</p>
           <div id="consultation-request"><form id="consultation-form" action="/api/appointment-contact" method="post" aria-labelledby="visit-step-three" aria-describedby="appointment-guidance" data-success-message="Thanks for taking the first step. Your request is saved, and Apex can call or email you about arranging a visit. This form has not booked an appointment, and you have not joined the newsletter.">
@@ -849,12 +849,12 @@ function renderVisitPlanner(page) {
             <label class="consent field-full" for="contact-consent"><input id="contact-consent" name="contact_consent" type="checkbox" value="true" required><span>Apex may call or email me about this request and arranging a future visit. This does not subscribe me to marketing emails or text messages. I have read the <a href="/privacy/">Privacy Policy</a> and <a href="/communications-consent/">Communications Consent</a>.</span></label>
             <button class="button" type="submit" data-loading-label="Saving…">Ask Apex to contact me</button>
             <p id="form-status" class="form-status" role="status" aria-live="polite" aria-atomic="true" tabindex="-1"></p>
-            <noscript><p>JavaScript is required to send the form. You can call <a href="tel:+12192072456">(219) 207-2456</a> for general questions.</p></noscript>
+            <noscript><p>JavaScript is required to send the form. You can call <a href="${escapeHtml(clinicPhone.href)}">${escapeHtml(clinicPhone.display)}</a> for general questions.</p></noscript>
           </form></div><p class="visit-note">This form does not book an appointment. No deposit. No commitment to care.</p>`}
           <div class="visit-actions"><button class="button-secondary" type="button" data-visit-back hidden>Back</button></div>
         </section>
       </div>
-      <p class="visit-note">Questions about the clinic? Call <a href="tel:+12192072456">(219) 207-2456</a>. For a medical emergency, call 911.</p>
+      <p class="visit-note">Questions about the clinic? Call <a href="${escapeHtml(clinicPhone.href)}">${escapeHtml(clinicPhone.display)}</a>. For a medical emergency, call 911.</p>
     </div>
   </main>`;
 }

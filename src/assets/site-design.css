@@ -706,3 +706,8 @@ body:not(.page-home) .planning-links{margin-top:1rem}
 
 /* Odd last care card (five care areas since Nov 17, 2026): center it in the two-column grid. */
 @media(min-width:48.01rem){.care-cards>.care-card:last-child:nth-child(odd){grid-column:1/-1;justify-self:center;width:calc(50% - .75rem)}}
+/* Home hero call button (November 24, 2026): light outline so it reads on the dark hero image, sized like Book online. */
+.signature-bottom .hero-call{background:transparent;border:1px solid #ffffffb3;color:#fff;min-height:3.5rem;padding:.9rem 1.4rem;border-radius:0}
+.signature-bottom .hero-call:hover{background:#ffffff1f;border-color:#fff;color:#fff}
+@media(forced-colors:active){.signature-bottom .hero-call{background:ButtonFace;color:ButtonText;border:1px solid ButtonText}}
+.signature-bottom .hero-call{align-self:stretch;justify-content:flex-start}

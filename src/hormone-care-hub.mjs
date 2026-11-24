@@ -1,4 +1,4 @@
-import { bookingStatus, clinicHours } from './clinic-facts.mjs';
+import { bookingStatus, clinicHours, clinicPhone } from './clinic-facts.mjs';
 
 export const hormoneCareHubPage = {
   slug: '/hormone-care-merrillville/',
@@ -11,7 +11,7 @@ export const hormoneCareHubPage = {
   h1: 'Hormone care in Merrillville starts with a clear path.',
   intro: 'Apex Wellness offers two distinct hormone-focused care paths at one Northwest Indiana clinic. Choose the page that fits what you want to explore. You can book a first visit online or call with a general clinic question.',
   heroImage: 'behindWindow',
-  cta: { label: 'Call Apex with a general question', href: 'tel:+12192072456' },
+  cta: { label: 'Call Apex with a general question', href: clinicPhone.href },
   ctaNote: 'Now open at 8550 Broadway, Suite B. Please save personal medical details for a secure clinical process.',
   sections: [
     {
@@ -53,8 +53,8 @@ export const hormoneCareHubPage = {
         {
           title: 'Ask a general clinic question',
           body: 'Call the published Apex number about the location, the opening or booking a visit.',
-          label: 'Call (219) 207-2456',
-          href: 'tel:+12192072456'
+          label: `Call ${clinicPhone.display}`,
+          href: clinicPhone.href
         }
       ]
     },
@@ -64,7 +64,7 @@ export const hormoneCareHubPage = {
       items: [
         {
           question: 'Can I book hormone care today?',
-          answer: `You can book a first visit. ${bookingStatus} You can also call (219) 207-2456.`,
+          answer: `You can book a first visit. ${bookingStatus} You can also call ${clinicPhone.display}.`,
           bookOnline: true
         },
         {

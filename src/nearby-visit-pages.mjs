@@ -1,3 +1,4 @@
+import { clinicPhone } from './clinic-facts.mjs';
 // Route orientation checked October 27, 2026 against the towns' road maps and
 // GPTC's route listing. These pages do not promise a route, travel time, parking,
 // transit stop at Apex, appointment, or additional clinic location.
@@ -29,7 +30,7 @@ export const nearbyVisitPages = Object.freeze({
       ] },
       { type: 'faq', heading: 'Questions from Munster', items: [
         { question: 'Does Apex have a Munster office?', answer: 'No. Apex has one clinic at 8550 Broadway, Suite B, Merrillville, IN 46410. This page helps Munster visitors plan for that location.' },
-        { question: 'Can I reserve a visit from this page?', answer: 'Yes. Online booking is open, or call (219) 207-2456.', bookOnline: true }
+        { question: 'Can I reserve a visit from this page?', answer: `Yes. Online booking is open, or call ${clinicPhone.display}.`, bookOnline: true }
       ] }
     ]
   }),

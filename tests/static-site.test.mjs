@@ -559,9 +559,11 @@ test('measurement is first-party, aggregate, and excludes advertising vendors an
   assert.match(googleTag, /gtag\('set', 'allow_google_signals', false\)/);
   assert.match(googleTag, /gtag\('config', 'AW-18529444653'\)/);
   assert.doesNotMatch(googleTag, /user_data|email|phone|FormData|\.value/);
-  // Book online clicks are the one conversion event; the label carries no visitor details.
-  assert.match(googleTag, /closest\('a\[data-book-online\]'\)/);
-  assert.match(googleTag, /gtag\('event', 'conversion', \{ send_to: 'AW-18529444653\/3DBbCLLPu7odEK3Gw4NF' \}\)/);
+  // Two conversion actions, one per kind of button; the labels carry no visitor details.
+  assert.match(googleTag, /closest\('a\[data-book-online\], a\[href\^="tel:"\]'\)/);
+  assert.match(googleTag, /BOOK_ONLINE_CONVERSION = 'AW-18529444653\/3DBbCLLPu7odEK3Gw4NF'/);
+  assert.match(googleTag, /CALL_CLICK_CONVERSION = 'AW-18529444653\/XPU2CISZ7r4dEK3Gw4NF'/);
+  assert.match(googleTag, /gtag\('event', 'conversion', \{ send_to: sendTo \}\)/);
   assert.doesNotMatch(html, /google-analytics|connect\.facebook\.net|clarity\.ms|hotjar|segment|mixpanel|GTM-[A-Z0-9]/i);
 });
 
@@ -1106,4 +1108,42 @@ test('homepage hero has a call button that dials the public clinic number', () =
   const call = `<a class="button-secondary hero-call" href="${clinicPhone.href}">Call ${clinicPhone.display}</a>`;
   assert.equal(home.split(call).length - 1, 1, 'one call button in the hero');
   assert.ok(home.indexOf('data-book-online>Book online') < home.indexOf(call), 'Book online stays first');
+});
+
+test('every Book online button and every call link reports to its one Google Ads conversion', async () => {
+  // Runs the shipped google-tag.js against a minimal stand-in for the browser.
+  const source = await readFile(join(publicRoot, 'assets', 'google-tag.js'), 'utf8');
+  let clickHandler = null;
+  const sandbox = {
+    window: {},
+    document: { addEventListener: (type, handler) => { if (type === 'click') clickHandler = handler; } },
+  };
+  sandbox.window.dataLayer = [];
+  new Function('window', 'document', source + '\nwindow.__gtag = gtag;')(sandbox.window, sandbox.document);
+  const conversions = () => sandbox.window.dataLayer.filter((entry) => entry[0] === 'event' && entry[1] === 'conversion').map((entry) => entry[2].send_to);
+  const link = (attrs) => ({ hasAttribute: (name) => name in attrs, matches: () => true });
+  const target = (found) => ({ closest: (selector) => {
+    assert.equal(selector, 'a[data-book-online], a[href^="tel:"]');
+    return found;
+  } });
+  clickHandler({ target: target(link({ 'data-book-online': '' })) });
+  clickHandler({ target: target(link({ href: 'tel:+12192072456' })) });
+  clickHandler({ target: target(null) });
+  assert.deepEqual(conversions(), ['AW-18529444653/3DBbCLLPu7odEK3Gw4NF', 'AW-18529444653/XPU2CISZ7r4dEK3Gw4NF']);
+
+  // Audit: every page loads the tag, every Tebra booking link is marked Book online, and every page has a call link.
+  let bookLinks = 0;
+  let callLinks = 0;
+  for (const [slug, html] of htmlBySlug) {
+    assert.match(html, /gtag\/js\?id=AW-18529444653/, slug + ' loads the Google tag');
+    assert.match(html, /\/assets\/google-tag\.js/, slug + ' loads the conversion script');
+    for (const [anchor] of html.matchAll(/<a\b[^>]*>/g)) {
+      if (anchor.includes('d2oe0ra32qx05a.cloudfront.net')) {
+        bookLinks += 1;
+        assert.match(anchor, /data-book-online/, slug + ' has an untagged booking link: ' + anchor);
+      }
+      if (anchor.includes('href="tel:')) callLinks += 1;
+    }
+  }
+  assert.ok(bookLinks > 0 && callLinks > 0);
 });

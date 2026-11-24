@@ -1,4 +1,4 @@
-import { nowOpenNote } from './clinic-facts.mjs';
+import { nowOpenNote, clinicPhone } from './clinic-facts.mjs';
 
 export const openingWeekArticle = Object.freeze({
   slug: '/blog/apex-wellness-opens-friday-first-visit/',
@@ -50,7 +50,7 @@ export const openingWeekArticle = Object.freeze({
     {
       heading: 'How to book',
       paragraphs: [
-        '[Book online](https://apexwellnessnwi.com/founding-patients/) in about a minute, or call (219) 207-2456. If you would like to know who you will be meeting first, [meet the team](https://apexwellnessnwi.com/about/).',
+        `[Book online](https://apexwellnessnwi.com/founding-patients/) in about a minute, or call ${clinicPhone.display}. If you would like to know who you will be meeting first, [meet the team](https://apexwellnessnwi.com/about/).`,
         'See you Friday.'
       ]
     }

@@ -1,4 +1,4 @@
-import { nowOpenNote } from './clinic-facts.mjs';
+import { nowOpenNote, clinicPhone } from './clinic-facts.mjs';
 
 // Owner-supplied October 24 v8 campaign, paired with the final 30-second master.
 export const behindTheScenesArticle = Object.freeze({
@@ -69,7 +69,7 @@ export const behindTheScenesArticle = Object.freeze({
       heading: 'Come along for the next part',
       paragraphs: [
         'There is still work ahead, and we are excited to bring you along as we get Apex ready. The name on the door feels good; the less visible checks still matter just as much.',
-        'Follow Apex Wellness NWI for opening updates. Our grand-opening offer is promotional labs for $49 for the first 50 appointments scheduled. The $49 covers your first visit and the promotional labs. Labs as clinically appropriate. One per person. Additional testing or treatment is separate. Appointments subject to availability. Book online or call (219) 207-2456 to schedule. We are still preparing to open.'
+        `Follow Apex Wellness NWI for opening updates. Our grand-opening offer is promotional labs for $49 for the first 50 appointments scheduled. The $49 covers your first visit and the promotional labs. Labs as clinically appropriate. One per person. Additional testing or treatment is separate. Appointments subject to availability. Book online or call ${clinicPhone.display} to schedule. We are still preparing to open.`
       ]
     }
   ],

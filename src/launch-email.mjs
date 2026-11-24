@@ -1,5 +1,6 @@
 import { renderLaunchEmail } from "./launch-email-copy.mjs";
 
+import { clinicPhone } from './clinic-facts.mjs';
 const ORIGIN = "https://apexwellnessnwi.com";
 const BREVO_URL = "https://api.brevo.com/v3/smtp/email";
 const VERIFY_LIFETIME_MS = 24 * 60 * 60 * 1_000;
@@ -361,7 +362,7 @@ export async function handleLaunchEmailAction(request, env) {
     : await unsubscribe(env, id, token);
   if (!succeeded) return page("Link unavailable", "This link has expired or cannot be used.", null);
   return isVerify
-    ? page("You're confirmed", "You're on the Apex Wellness Launch List. Watch for opening updates in your inbox. Joining the list has not booked a visit. Online booking is open. Book from our website or call (219) 207-2456.", null, null, null, null, true)
+    ? page("You're confirmed", `You're on the Apex Wellness Launch List. Watch for opening updates in your inbox. Joining the list has not booked a visit. Online booking is open. Book from our website or call ${clinicPhone.display}.`, null, null, null, null, true)
     : page("You're unsubscribed", "Your opening-update emails have stopped. We'll miss having you along. If you ever want to check in, Apex Wellness is right here in Merrillville.", null, null, null, null, true);
 }
 

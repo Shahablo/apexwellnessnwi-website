@@ -5,7 +5,7 @@ import { merrillvillePage, visitDetails } from './visit-details.mjs';
 import { visitPlannerPage } from './visit-planner.mjs';
 import { nearbyVisitPages } from './nearby-visit-pages.mjs';
 import { bookingAdPages } from './booking-pages.mjs';
-import { bookingStatus, clinicHours, grandOpeningOffer } from './clinic-facts.mjs';
+import { bookingStatus, clinicHours, grandOpeningOffer, clinicPhone } from './clinic-facts.mjs';
 
 // Sitewide call to action. Since November 16, 2026 it opens the booking page; the Launch List signup is no longer on the site.
 const bookingPageCta = Object.freeze({
@@ -32,8 +32,8 @@ export const site = Object.freeze({
   address: { streetAddress: '8550 Broadway, Suite B', addressLocality: 'Merrillville', addressRegion: 'IN', postalCode: '46410', addressCountry: 'US', label: clinicAddress },
   status: 'Prelaunch',
   email: 'hello@apexwellnessnwi.com',
-  phone: '(219) 207-2456',
-  phoneHref: 'tel:+12192072456',
+  phone: clinicPhone.display,
+  phoneHref: clinicPhone.href,
   tagline: 'Thoughtful care. Built around you.',
   contentUpdated: '2026-11-16',
   launch: { date: '2026-11-20', label: 'November 20, 2026', status: 'Opened' },
@@ -95,7 +95,7 @@ export const site = Object.freeze({
 // Booking block shared by /founding-patients/ and the four ad booking pages in src/booking-pages.mjs.
 const generalBooking = Object.freeze({
   badge: { top: 'Grand opening', price: '$49', bottom: 'Labs + first visit' },
-  callLabel: 'Call (219) 207-2456',
+  callLabel: `Call ${clinicPhone.display}`,
   hoursLine: 'Wed–Fri 11 a.m.–5 p.m. · Sat 9 a.m.–1 p.m.',
   addressLine: clinicAddress,
   stepsHeading: 'How it works',
@@ -134,7 +134,7 @@ export const pages = Object.freeze({
     modified: '2026-11-23',
     title: 'Weight, Hormone, Hair-Loss & Peptide Care in Merrillville | Apex Wellness',
     description:
-      'Weight, metabolic, hormone, hair-loss and peptide care in Merrillville, Indiana. Now open at 8550 Broadway, Suite B. Book online or call (219) 207-2456.',
+      `Weight, metabolic, hormone, hair-loss and peptide care in Merrillville, Indiana. Now open at 8550 Broadway, Suite B. Book online or call ${clinicPhone.display}.`,
     eyebrow: 'Now open · Merrillville, Northwest Indiana',
     h1: 'Weight, hormones, hair loss, peptides. Now open in Merrillville.',
     headlineLead: 'Weight, hormones, hair loss, peptides.',
@@ -155,7 +155,7 @@ export const pages = Object.freeze({
       processHeading: 'A simple first step.\nSpace to decide.',
       process: [
         { title: 'See the details.', body: 'Review the care areas, clinic hours and our Merrillville location. Ask questions before you decide.' },
-        { title: 'Book when you are ready.', body: `${bookingStatus} Book online or call (219) 207-2456.` }
+        { title: 'Book when you are ready.', body: `${bookingStatus} Book online or call ${clinicPhone.display}.` }
       ]
     },
     sections: [
@@ -226,7 +226,7 @@ export const pages = Object.freeze({
         eyebrow: 'Book a first visit',
         heading: 'Your next step starts with clear information.',
         body:
-          `${bookingStatus} Book online or call (219) 207-2456.`,
+          `${bookingStatus} Book online or call ${clinicPhone.display}.`,
         cta: bookingPageCta
       },
       {
@@ -572,7 +572,7 @@ export const pages = Object.freeze({
           {
             question: 'Can I book hair-loss care now?',
             answer:
-              `Yes. ${bookingStatus} You can also call (219) 207-2456.`,
+              `Yes. ${bookingStatus} You can also call ${clinicPhone.display}.`,
             bookOnline: true
           },
           {
@@ -704,7 +704,7 @@ export const pages = Object.freeze({
           {
             question: 'Can I pay or reserve an appointment now?',
             answer:
-              `You can book a visit now. ${bookingStatus} You can also call (219) 207-2456. This website does not take payment.`,
+              `You can book a visit now. ${bookingStatus} You can also call ${clinicPhone.display}. This website does not take payment.`,
             bookOnline: true
           },
           {
@@ -830,18 +830,18 @@ export const pages = Object.freeze({
           {
             question: 'Where is Apex located?',
             answer:
-              `${clinicAddress}. We opened November 20, 2026. Call or text (219) 207-2456, or email hello@apexwellnessnwi.com. ${clinicHours.sentence} Ask us about parking when you book.`
+              `${clinicAddress}. We opened November 20, 2026. ${clinicPhone.callOrText} ${clinicPhone.display}, or email hello@apexwellnessnwi.com. ${clinicHours.sentence} Ask us about parking when you book.`
           },
           {
             question: 'When can I book an appointment?',
             answer:
-              `${bookingStatus} You can also call (219) 207-2456 to schedule.`,
+              `${bookingStatus} You can also call ${clinicPhone.display} to schedule.`,
             bookOnline: true
           },
           {
             question: 'Does sending a contact request reserve an appointment?',
             answer:
-              'No. A contact request asks Apex to call or email you about arranging a visit. To reserve a time, book online or call (219) 207-2456.',
+              `No. A contact request asks Apex to call or email you about arranging a visit. To reserve a time, book online or call ${clinicPhone.display}.`,
             bookOnline: true
           }
         ]
@@ -920,7 +920,7 @@ export const pages = Object.freeze({
     navLabel: 'Book online',
     title: 'Book Online | $49 Grand Opening | Apex Wellness Merrillville',
     description:
-      'Grand opening: promotional labs for $49. The $49 covers your first visit and the labs, for the first 50 appointments scheduled. Book online or call (219) 207-2456.',
+      `Grand opening: promotional labs for $49. The $49 covers your first visit and the labs, for the first 50 appointments scheduled. Book online or call ${clinicPhone.display}.`,
     announcement: `Now open in Merrillville · ${bookingStatus}`,
     launchLabel: 'November 20, 2026',
     eyebrow: 'Grand opening · Now open · Merrillville',
@@ -1007,7 +1007,7 @@ export const pages = Object.freeze({
         type: 'policySection',
         heading: 'Your choices',
         paragraphs: [
-          'You may unsubscribe from marketing using the link in an email. You may also call (219) 207-2456 or email hello@apexwellnessnwi.com to request access, correction, or deletion of your website contact or Pexy follow-up information. Do not include medical details in that request.',
+          `You may unsubscribe from marketing using the link in an email. You may also call ${clinicPhone.display} or email hello@apexwellnessnwi.com to request access, correction, or deletion of your website contact or Pexy follow-up information. Do not include medical details in that request.`,
           'Browser privacy controls may limit cookies or similar technologies. Essential security and form-protection functions may still be required for the site to operate.'
         ]
       },
@@ -1094,7 +1094,7 @@ export const pages = Object.freeze({
     eyebrow: 'Updated October 26, 2026',
     h1: 'Communications Consent',
     intro:
-      'Separate permissions apply to Launch List emails, optional manual Launch List calls, appointment follow-up and Pexy’s general-question follow-up. The Launch List requires a phone number, but Apex will not call from that signup unless the separate optional call box is checked. For website or accessibility support, call (219) 207-2456 or email hello@apexwellnessnwi.com. Pexy’s form requests an email for a reply to one general question. None of these forms authorizes text messages, automated calls or unrelated promotional calls.',
+      `Separate permissions apply to Launch List emails, optional manual Launch List calls, appointment follow-up and Pexy’s general-question follow-up. The Launch List requires a phone number, but Apex will not call from that signup unless the separate optional call box is checked. For website or accessibility support, call ${clinicPhone.display} or email hello@apexwellnessnwi.com. Pexy’s form requests an email for a reply to one general question. None of these forms authorizes text messages, automated calls or unrelated promotional calls.`,
     cta: bookingPageCta,
     effectiveDate: 'October 26, 2026',
     sections: [
@@ -1159,7 +1159,7 @@ export const pages = Object.freeze({
         type: 'policySection',
         heading: 'Request help or report a barrier',
         paragraphs: [
-          'Until a dedicated accessibility contact is published, call (219) 207-2456 or email hello@apexwellnessnwi.com. Do not add health details; Apex can request only the minimum additional information needed when responding.',
+          `Until a dedicated accessibility contact is published, call ${clinicPhone.display} or email hello@apexwellnessnwi.com. Do not add health details; Apex can request only the minimum additional information needed when responding.`,
           'Do not include medical or other sensitive information. Apex will use the email address you provide to respond and work toward a reasonable accessible alternative.'
         ]
       },
@@ -1190,7 +1190,7 @@ export const pages = Object.freeze({
     eyebrow: `Effective ${effectiveDate}`,
     h1: 'Cancellation and Refunds',
     intro:
-      'Online booking is open. This website does not accept enrollment or payment, so there is presently no payment made through it to refund. To change or cancel a visit you booked, call (219) 207-2456.',
+      `Online booking is open. This website does not accept enrollment or payment, so there is presently no payment made through it to refund. To change or cancel a visit you booked, call ${clinicPhone.display}.`,
     cta: bookingPageCta,
     effectiveDate,
     sections: [

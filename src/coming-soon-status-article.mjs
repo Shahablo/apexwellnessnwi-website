@@ -1,4 +1,4 @@
-import { launchListClosedNote, nowOpenNote } from './clinic-facts.mjs';
+import { launchListClosedNote, nowOpenNote, clinicPhone } from './clinic-facts.mjs';
 
 export const comingSoonStatusArticle = Object.freeze({
   slug: '/blog/what-coming-soon-means-at-apex/',
@@ -31,7 +31,7 @@ export const comingSoonStatusArticle = Object.freeze({
         'The approach: an individual evaluation before any treatment is discussed. Nobody is handed a prescription at the door.',
         'The planned opening date: November 20, 2026, subject to readiness.',
         'Clinic hours from November 20: Wednesday, Thursday and Friday, 11 a.m. to 5 p.m., and Saturday, 9 a.m. to 1 p.m. Closed Sunday through Tuesday, and closed Thanksgiving Day, November 26.',
-        'Booking: online booking is open. You can also call (219) 207-2456.'
+        `Booking: online booking is open. You can also call ${clinicPhone.display}.`
       ],
       paragraphsAfterBullets: [
         'A planned date is a target that depends on readiness: the clinical team, systems, supplies and the space itself. We will say so plainly if it moves.'

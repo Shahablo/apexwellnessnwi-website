@@ -2,7 +2,8 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { answerWebsiteQuestion, pexyNudgeCopy, shouldOfferPexy } from '../src/assets/site-help.mjs';
 import { site } from '../src/content.mjs';
-import { bookingStatus, clinicHours, grandOpeningOffer } from '../src/clinic-facts.mjs';
+import { bookingStatus, clinicHours, clinicPhone, grandOpeningOffer } from '../src/clinic-facts.mjs';
+import { readFile } from 'node:fs/promises';
 
 test('the guide gives the owner-confirmed address and opening date', () => {
   const answer = answerWebsiteQuestion('Where is your clinic?');
@@ -175,4 +176,12 @@ test('unknown and adversarial questions never manufacture an answer or HTML', ()
   assert.match(reply.text, /do not have a verified answer/);
   assert.doesNotMatch(reply.text, /<script>/);
   assert.match(reply.href, /^\//);
+});
+
+test('Pexy\'s phone copy matches clinicPhone in src/clinic-facts.mjs', async () => {
+  const source = await readFile(new URL('../src/assets/site-help.mjs', import.meta.url), 'utf8');
+  assert.ok(source.includes(`const phone = '${clinicPhone.display}';`), 'Pexy phone number');
+  assert.ok(source.includes(`const callOrText = '${clinicPhone.callOrText.toLowerCase()}';`), 'Pexy call or text wording');
+  const contact = answerWebsiteQuestion('What is your phone number?');
+  assert.ok(contact.text.startsWith(`You can ${clinicPhone.callOrText.toLowerCase()} ${clinicPhone.display},`), contact.text);
 });

@@ -22,6 +22,9 @@ export function answerWebsiteQuestion(input, launchLabel = 'November 20, 2026') 
   const asks = (pattern) => pattern.test(question);
   const launchOffer = 'Apex’s grand-opening offer is promotional labs for $49 for the first 50 appointments scheduled. The $49 covers your first visit and the promotional labs. Labs as clinically appropriate. One per person. Additional testing or treatment is separate. Appointments subject to availability.';
   const bookingOpen = 'Online booking is open.';
+  // Mirrors clinicPhone in src/clinic-facts.mjs (display and callOrText, lowercased here).
+  const phone = '(219) 207-2456';
+  const callOrText = 'call or text';
   const clinicHours = 'Hours from November 20: Wednesday, Thursday and Friday, 11 a.m. to 5 p.m. Saturday, 9 a.m. to 1 p.m. Closed Sunday through Tuesday. Closed Thanksgiving Day, November 26.';
 
   // Safety and privacy take priority over promotional or navigation answers.
@@ -37,7 +40,7 @@ export function answerWebsiteQuestion(input, launchLabel = 'November 20, 2026') 
     return result('Pexy cannot change your preferences and has not submitted a request for you. You can use the unsubscribe link in an Apex promotional email. For another data request, follow the contact route in the privacy policy.', 'Privacy and contact requests', '/privacy/');
   }
   if (asks(/\b(?:talk|speak)\s+to\s+(?:a\s+)?(?:person|human|someone|staff|team)\b/)) {
-    return result('You can call or text (219) 207-2456, or email hello@apexwellnessnwi.com with general questions. Please do not send medical records or sensitive health details through those public contact routes. Pexy does not automatically forward your question to staff.', 'Contact and location', '/merrillville/');
+    return result(`You can ${callOrText} ${phone}, or email hello@apexwellnessnwi.com with general questions. Please do not send medical records or sensitive health details through those public contact routes. Pexy does not automatically forward your question to staff.`, 'Contact and location', '/merrillville/');
   }
   if (asks(/\b(privacy|data|store|save|ai|bot|human|person|chat|recorded|monitored)\b/)) {
     return result('I’m Pexy, an automated website guide with a fixed set of answers. I am not a person or clinician. Your question to Pexy stays in this page and is not sent to Apex or an AI service. If I cannot answer a general question, you can separately ask the team to reply using a short form. Only what you type into that form is sent.', 'Read the privacy policy', '/privacy/');
@@ -46,13 +49,13 @@ export function answerWebsiteQuestion(input, launchLabel = 'November 20, 2026') 
   // Distinguish the public offer, online booking, contact request, and email list. Only online booking or a call books a visit.
   // Questions that reuse wording from earlier printed materials still route to the current offer.
   if (asks(/\$\s?49\b/) || asks(/\b(49 dollars?|first (?:50|fifty)|50 appointments?|promotional labs?|promo(?:tional|tion)? (?:offer|pricing|price|deal|special)|promos?|promotions?|labs? (?:offer|special|deal)|launch offer|grand.?opening|opening offer|poster offer|first (?:100|hundred)|(?:100|hundred) assessments?|free (?:initial |wellness )?assessments?|selected (?:baseline )?labs?)\b/)) {
-    return result(`${launchOffer} To schedule, use the Book online button on the offer page or call (219) 207-2456. Sending a contact request does not reserve the offer or an appointment.`, 'Offer terms and Book online', '/founding-patients/');
+    return result(`${launchOffer} To schedule, use the Book online button on the offer page or call ${phone}. Sending a contact request does not reserve the offer or an appointment.`, 'Offer terms and Book online', '/founding-patients/');
   }
   if (asks(/\b(appointment|book|booking|schedule|scheduling|reserve|visit request|request a visit|first visit|consultation|tebra|walk.?in)\b/)) {
-    return result(`${bookingOpen} Use the Book online button on the Plan Your Visit page, or call (219) 207-2456. That page also has a contact request form for manual follow-up. The form asks for name, email, phone, and separate contact consent; it does not book a time, start clinical intake, or reserve the $49 promotional labs offer. Please keep medical details out of the form.`, 'Plan your visit and book online', '/plan-your-visit/');
+    return result(`${bookingOpen} Use the Book online button on the Plan Your Visit page, or call ${phone}. That page also has a contact request form for manual follow-up. The form asks for name, email, phone, and separate contact consent; it does not book a time, start clinical intake, or reserve the $49 promotional labs offer. Please keep medical details out of the form.`, 'Plan your visit and book online', '/plan-your-visit/');
   }
   if (asks(/\b(launch list|sign ?up|join|newsletter|email updates|opening updates|founding patients|qr code|qr)\b/)) {
-    return result(`${bookingOpen} To book, use the Book online button on the booking page or call (219) 207-2456. The printed Apex QR code leads to this page.`, 'Book online', '/founding-patients/');
+    return result(`${bookingOpen} To book, use the Book online button on the booking page or call ${phone}. The printed Apex QR code leads to this page.`, 'Book online', '/founding-patients/');
   }
 
   if (asks(/\b(labs?|blood ?work|tests?|testing)\b/) && asks(/\b(included|free|covered|cost)\b/)) {
@@ -62,7 +65,7 @@ export function answerWebsiteQuestion(input, launchLabel = 'November 20, 2026') 
     return result('Apex plans to be cash-pay. The final prices, what each fee includes, payment details, and any separate testing, medication, or outside costs are not public yet. They will be posted on the Pricing page. No insurance coverage or reimbursement is promised.', 'Pricing and what to expect', '/pricing/');
   }
   if (asks(/\b(call|text|phone|email|contact|reach|talk to (?:someone|staff)|speak to (?:someone|staff))\b/)) {
-    return result('You can call or text (219) 207-2456, or email hello@apexwellnessnwi.com with general questions. Please do not send medical records or sensitive health details through those public contact routes. Pexy does not automatically forward your question to staff.', 'Contact and location', '/merrillville/');
+    return result(`You can ${callOrText} ${phone}, or email hello@apexwellnessnwi.com with general questions. Please do not send medical records or sensitive health details through those public contact routes. Pexy does not automatically forward your question to staff.`, 'Contact and location', '/merrillville/');
   }
   if (asks(/\b(hours?|thanksgiving|holidays?|weekends?|(?:mon|tues|wednes|thurs|fri|satur|sun)days?)\b/)) {
     return result(`${clinicHours} Apex opened ${plannedDate}. ${bookingOpen}`, 'Location and clinic hours', '/merrillville/');
@@ -71,13 +74,13 @@ export function answerWebsiteQuestion(input, launchLabel = 'November 20, 2026') 
     return result(`8550 Broadway, Suite B, Merrillville, IN 46410. Apex opened ${plannedDate}. Visits are in person; telehealth is not offered. ${clinicHours} Parking details have not been announced. ${bookingOpen}`, 'Location and visit details', '/merrillville/');
   }
   if (asks(/\b(open|opening|launch|november|date|when)\b/)) {
-    return result(`Apex opened ${plannedDate} in Merrillville. ${bookingOpen} Use the Book online button on the booking page or call (219) 207-2456.`, 'Book online', '/founding-patients/');
+    return result(`Apex opened ${plannedDate} in Merrillville. ${bookingOpen} Use the Book online button on the booking page or call ${phone}.`, 'Book online', '/founding-patients/');
   }
   if (asks(/\b(accessib\w*|screen reader|website problem|site problem)\b/)) {
     return result('If something on the website is hard to use, the accessibility page explains how to report it. Pexy cannot send a report for you, so please use the contact route on that page.', 'Website accessibility', '/accessibility/');
   }
   if (asks(/\b(cancel\w*|reschedul\w*|polic(?:y|ies)|terms)\b/)) {
-    return result('To change or cancel a visit you booked, call (219) 207-2456. You can read the current website policies; final cancellation and payment terms will be shared before you pay.', 'Cancellation and refunds', '/cancellation-refunds/');
+    return result(`To change or cancel a visit you booked, call ${phone}. You can read the current website policies; final cancellation and payment terms will be shared before you pay.`, 'Cancellation and refunds', '/cancellation-refunds/');
   }
   if (asks(/\b(who|physician|doctor|clinician|provider|team|founder|shahab)\b/)) {
     return result('Apex was founded by Shahab Siddique. The confirmed care team, roles and credentials will be shared on the About page. Pexy cannot identify a clinician for a visit.', 'Meet the founder', '/about/');

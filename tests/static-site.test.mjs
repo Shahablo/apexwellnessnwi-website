@@ -173,7 +173,7 @@ test('the new planned care area is discoverable without displacing information l
     assert.doesNotMatch(html.match(/<main[\s\S]*?<\/main>/)[0].replace(/<[^>]+>/g, ' '), /coming soon|preparing to|prelaunch/i, slug + ' drops prelaunch wording');
   }
   const hair = htmlBySlug.get('/hair-loss-care/');
-  assert.match(hair, /Yes\. Online booking is open\. You can also call \(219\) 207-2456\./);
+  assert.match(hair, /Yes\. Online booking is open\. You can also call \(219\) 525-5100\./);
   assert.match(hair, /8550 Broadway, Suite B/);
   assert.doesNotMatch(hair, /minoxidil|finasteride|dutasteride|PRP|transplant|guaranteed regrowth/i);
   assert.match(htmlBySlug.get('/founding-patients/'), /href="\/hair-loss-care\/"/);
@@ -528,7 +528,7 @@ test('the confirmed clinic identity and owner-confirmed hours appear consistentl
     assert.equal(clinic['@id'], 'https://apexwellnessnwi.com/#organization');
     assert.equal(clinic.address.streetAddress, '8550 Broadway, Suite B');
     assert.equal(clinic.address.postalCode, '46410');
-    assert.equal(clinic.telephone, '+12192072456');
+    assert.equal(clinic.telephone, '+12195255100');
     assert.ok(clinic.sameAs.includes('https://www.linkedin.com/company/apex-wellness-nwi/'));
     assert.ok(clinic.sameAs.includes(site.googleBusinessUrl));
     assert.equal(clinic['@type'], 'MedicalClinic', `${slug} keeps the existing clinic schema type`);
@@ -710,9 +710,9 @@ test('homepage replaces the generic introduction with one staff-neutral approach
 
 test('homepage names the care and location, shows it is open and offers online booking', async () => {
   const home = htmlBySlug.get('/');
-  assert.match(home, /<meta name="description" content="[^"]*peptide care in Merrillville, Indiana\. Now open at 8550 Broadway, Suite B\. Book online or call \(219\) 207-2456\.">/);
-  assert.match(home, /<div class="hero-actions"><a class="button" href="https:\/\/d2oe0ra32qx05a\.cloudfront\.net\/\?practiceKey=k_1_117405"[^>]*data-book-online>Book online<span class="visually-hidden"> \(opens a new tab\)<\/span><\/a><a class="button-secondary hero-call" href="tel:\+12192072456">Call \(219\) 207-2456<\/a><a class="hero-explore" href="#care-areas">Explore care areas /);
-  assert.match(home, /<h3>Book when you are ready\.<\/h3><p>Online booking is open\. Book online or call \(219\) 207-2456\.<\/p>/);
+  assert.match(home, /<meta name="description" content="[^"]*peptide care in Merrillville, Indiana\. Now open at 8550 Broadway, Suite B\. Book online or call \(219\) 525-5100\.">/);
+  assert.match(home, /<div class="hero-actions"><a class="button" href="https:\/\/d2oe0ra32qx05a\.cloudfront\.net\/\?practiceKey=k_1_117405"[^>]*data-book-online>Book online<span class="visually-hidden"> \(opens a new tab\)<\/span><\/a><a class="button-secondary hero-call" href="tel:\+12195255100">Call \(219\) 525-5100<\/a><a class="hero-explore" href="#care-areas">Explore care areas /);
+  assert.match(home, /<h3>Book when you are ready\.<\/h3><p>Online booking is open\. Book online or call \(219\) 525-5100\.<\/p>/);
   assert.equal(site.launch.date, '2026-11-20');
   assert.match(home, /Now open in Merrillville · Northwest Indiana/);
   assert.doesNotMatch(home, /November 4, 2026|2026-11-04/);
@@ -748,17 +748,17 @@ test('the QR landing page is a short booking page: the $49 offer, Book online, c
   const main = html.match(/<main[\s\S]*?<\/main>/)?.[0];
   assert.ok(main);
   assert.match(html, /<title>Book Online \| \$49 Grand Opening \| Apex Wellness Merrillville<\/title>/);
-  assert.match(html, /<meta name="description" content="Grand opening: promotional labs for \$49\. The \$49 covers your first visit and the labs, for the first 50 appointments scheduled\. Book online or call \(219\) 207-2456\.">/);
+  assert.match(html, /<meta name="description" content="Grand opening: promotional labs for \$49\. The \$49 covers your first visit and the labs, for the first 50 appointments scheduled\. Book online or call \(219\) 525-5100\.">/);
   assert.match(main, /<p class="eyebrow">Grand opening · Now open · Merrillville<\/p>\s*<h1 id="page-title">Now booking <em>first visits\.<\/em><\/h1>/);
   assert.match(main, /<p class="booking-offer"><strong>\$49 for labs and your first visit\.<\/strong> First 50 appointments only\.<\/p>/);
   assert.match(main, /<p class="booking-badge" aria-hidden="true"><span>Grand opening<\/span><strong>\$49<\/strong><span>Labs \+ first visit<\/span><\/p>/);
 
   // One action: Book online first, the phone second, in the hero and again at the end. Both keep what first-party measurement counts.
   const bookOnline = '<a class="button" href="https://d2oe0ra32qx05a.cloudfront.net/?practiceKey=k_1_117405" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer" data-book-online>Book online<span class="visually-hidden"> (opens a new tab)</span></a>';
-  const call = '<a class="booking-call" href="tel:+12192072456">Call (219) 207-2456</a>';
+  const call = '<a class="booking-call" href="tel:+12195255100">Call (219) 525-5100</a>';
   assert.equal(main.split(bookOnline + call).length - 1, 2, 'hero and closing actions');
   assert.ok(main.indexOf(bookOnline) < main.indexOf('booking-strip'), 'the first Book online button sits above the hours and address');
-  assert.ok(html.includes('<div class="booking-bar">' + bookOnline + '<a class="booking-bar-call" href="tel:+12192072456">Call</a></div>'), 'phone-width booking bar');
+  assert.ok(html.includes('<div class="booking-bar">' + bookOnline + '<a class="booking-bar-call" href="tel:+12195255100">Call</a></div>'), 'phone-width booking bar');
   assert.match(html, /<nav class="landing-nav" aria-label="Booking">\s*<a class="nav-cta" href="https:\/\/d2oe0ra32qx05a\.cloudfront\.net\/\?practiceKey=k_1_117405"[^>]*data-book-online>Book online/);
   assert.match(main, /<p class="booking-strip"><span>Wed–Fri 11 a\.m\.–5 p\.m\. · Sat 9 a\.m\.–1 p\.m\.<\/span> <span>8550 Broadway, Suite B, Merrillville, IN 46410<\/span><\/p>/);
 
@@ -796,7 +796,7 @@ test('the QR landing page is a short booking page: the $49 offer, Book online, c
 
 test('the four ad booking pages build from the shared booking template with the offer, fine print, booking link and noindex', async () => {
   const bookOnline = '<a class="button" href="https://d2oe0ra32qx05a.cloudfront.net/?practiceKey=k_1_117405" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer" data-book-online>Book online<span class="visually-hidden"> (opens a new tab)</span></a>';
-  const call = '<a class="booking-call" href="tel:+12192072456">Call (219) 207-2456</a>';
+  const call = '<a class="booking-call" href="tel:+12195255100">Call (219) 525-5100</a>';
   const expected = new Map([
     ['/book/weight-loss/', ['Medical weight loss in Merrillville. ', 'Learn more about medical weight loss', '/weight-management/']],
     ['/book/hormone-health/', ['Men’s hormone health in Merrillville. ', 'Learn more about men’s hormone health', '/mens-hormone-health/']],
@@ -850,7 +850,7 @@ const offerBandPages = new Set(['/weight-management/', '/hormone-care-merrillvil
 
 test('every Book online link is the one exact Tebra address, opened in a new tab without a referrer', async () => {
   const offerButton = `<a class="button" href="${bookingUrl}" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer" aria-describedby="book-online-note" data-book-online>Book online</a>`;
-  const note = '<p id="book-online-note" class="book-online-note">Online booking opens our secure scheduling page (Tebra) in a new tab. Prefer the phone? Call <a href="tel:+12192072456">(219) 207-2456</a>.</p>';
+  const note = '<p id="book-online-note" class="book-online-note">Online booking opens our secure scheduling page (Tebra) in a new tab. Prefer the phone? Call <a href="tel:+12195255100">(219) 525-5100</a>.</p>';
 
   for (const [slug, html] of htmlBySlug) {
     const mentions = html.split('cloudfront.net').length - 1;
@@ -899,7 +899,7 @@ test('the ad landing pages open with the grand-opening offer band above the page
         <p class="offer-band-headline">Grand opening: $49 for labs and your first visit</p>
         <p class="offer-band-limit">First 50 appointments scheduled. <a href="/founding-patients/">Offer details</a></p>
       </div>
-      <div class="offer-band-actions">${bookOnline}<a class="button-secondary" href="tel:+12192072456">Call 219-207-2456</a></div>
+      <div class="offer-band-actions">${bookOnline}<a class="button-secondary" href="tel:+12195255100">Call 219-525-5100</a></div>
     </div></aside>`;
 
   for (const [slug, html] of htmlBySlug) {
@@ -915,7 +915,7 @@ test('the ad landing pages open with the grand-opening offer band above the page
     assert.ok(html.indexOf('class="offer-band"') < html.indexOf('<section class="hero"'), `${slug} band comes before the hero`);
     assert.equal(startTags(html, 'h1').length, 1, `${slug} keeps one H1`);
     // The hero offers Book online; only the hormone hub adds its own phone action as a second button.
-    assert.match(html, new RegExp(`<div class="hero-actions">${bookOnline.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}(?:<a class="button-secondary" href="tel:\\+12192072456">Call Apex with a general question</a>)?</div>`), `${slug} hero actions`);
+    assert.match(html, new RegExp(`<div class="hero-actions">${bookOnline.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}(?:<a class="button-secondary" href="tel:\\+12195255100">Call Apex with a general question</a>)?</div>`), `${slug} hero actions`);
     assert.ok(html.includes(bookingStatus), `${slug} must say online booking is open`);
     // Dated blog articles, and the blog index that lists them, keep their original wording.
     if (!slug.startsWith('/blog/')) assert.doesNotMatch(html, /Coming soon/, `${slug} drops the Coming soon wording`);
@@ -983,12 +983,12 @@ test('the retired launch-offer wording is absent from every generated page', asy
   const visit = htmlBySlug.get('/plan-your-visit/');
   assert.match(visit, /<strong>Grand opening: \$49 for labs and your first visit<\/strong><p class="offer-limit">First 50 appointments scheduled\.<\/p>/);
   assert.match(visit, /\$49 covers your first visit and the promotional labs\. Labs as clinically appropriate\. One per person\. First 50 appointments scheduled\. Additional testing or treatment is separate\. Appointments subject to availability\./);
-  assert.match(visit, /Book online or call <a href="tel:\+12192072456">\(219\) 207-2456<\/a> to schedule\. A contact request does not reserve this offer\./);
+  assert.match(visit, /Book online or call <a href="tel:\+12195255100">\(219\) 525-5100<\/a> to schedule\. A contact request does not reserve this offer\./);
   assert.match(visit, /data-help-question="How does the \$49 promotional labs offer work\?">\$49 labs<\/button>/);
   assert.match(visit, /data-help-question="How do I book a visit\?">Book a visit<\/button><button type="button" data-help-question="What are your hours\?">Hours<\/button>/);
 
   const story = htmlBySlug.get('/blog/before-the-doors-open-apex-wellness/');
-  assert.match(story, /Our grand-opening offer is promotional labs for \$49 for the first 50 appointments scheduled\. The \$49 covers your first visit and the promotional labs\. Labs as clinically appropriate\. One per person\. Additional testing or treatment is separate\. Appointments subject to availability\. Book online or call \(219\) 207-2456 to schedule/);
+  assert.match(story, /Our grand-opening offer is promotional labs for \$49 for the first 50 appointments scheduled\. The \$49 covers your first visit and the promotional labs\. Labs as clinically appropriate\. One per person\. Additional testing or treatment is separate\. Appointments subject to availability\. Book online or call \(219\) 525-5100 to schedule/);
 });
 
 test('all CSS assets and self-hosted fonts resolve without third-party runtime calls', async () => {

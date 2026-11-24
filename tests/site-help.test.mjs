@@ -82,7 +82,7 @@ test('Pexy separates the $49 promotional labs offer, online booking, contact req
   assert.equal(offer.href, '/founding-patients/');
   assert.match(offer.text, /grand-opening offer is promotional labs for \$49 for the first 50 appointments scheduled/);
   assert.match(offer.text, /The \$49 covers your first visit and the promotional labs\. Labs as clinically appropriate\. One per person\. Additional testing or treatment is separate\. Appointments subject to availability\./);
-  assert.match(offer.text, /To schedule, use the Book online button on the offer page or call \(219\) 207-2456\./);
+  assert.match(offer.text, /To schedule, use the Book online button on the offer page or call \(219\) 525-5100\./);
   assert.match(offer.text, /does not reserve/);
   assert.doesNotMatch(offer.text, /\bfree\b|no charge|first[ -]100|assessment|included/i);
   // Questions that reuse wording from earlier printed materials get the current offer.
@@ -99,7 +99,7 @@ test('Pexy separates the $49 promotional labs offer, online booking, contact req
 
   const request = answerWebsiteQuestion('Can I book an appointment?');
   assert.equal(request.href, '/plan-your-visit/');
-  assert.match(request.text, /^Online booking is open\. Use the Book online button on the Plan Your Visit page, or call \(219\) 207-2456\./);
+  assert.match(request.text, /^Online booking is open\. Use the Book online button on the Plan Your Visit page, or call \(219\) 525-5100\./);
   assert.match(request.text, /does not book a time/);
   assert.match(request.text, /name, email, phone/);
   assert.equal(answerWebsiteQuestion('How do I book a visit?').text, request.text);
@@ -107,12 +107,12 @@ test('Pexy separates the $49 promotional labs offer, online booking, contact req
   const list = answerWebsiteQuestion('How do I join the launch list?');
   assert.equal(list.href, '/founding-patients/');
   // The Launch List signup left the website on November 16, 2026; the answer now points to booking.
-  assert.match(list.text, /^Online booking is open\. To book, use the Book online button on the booking page or call \(219\) 207-2456\./);
+  assert.match(list.text, /^Online booking is open\. To book, use the Book online button on the booking page or call \(219\) 525-5100\./);
   assert.equal(list.label, 'Book online');
   assert.doesNotMatch(list.text, /Launch List/);
 
   const cancel = answerWebsiteQuestion('How does cancellation work?');
-  assert.match(cancel.text, /^To change or cancel a visit you booked, call \(219\) 207-2456\./);
+  assert.match(cancel.text, /^To change or cancel a visit you booked, call \(219\) 525-5100\./);
   assert.doesNotMatch(cancel.text, /not open/i);
 });
 

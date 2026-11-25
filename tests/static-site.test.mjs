@@ -552,19 +552,16 @@ test('measurement is first-party, aggregate, and excludes advertising vendors an
   assert.match(measurement, /utm_campaign/);
   assert.match(measurement, /form_submit_success/);
   assert.doesNotMatch(measurement, /XMLHttpRequest|localStorage|sessionStorage|document\.cookie|userAgent|FormData|\.value|textContent/);
-  // The Google tag for Google Ads is the one third-party script (owner decision November 17, 2026).
-  assert.match(html, /<script src="https:\/\/www\.googletagmanager\.com\/gtag\/js\?id=AW-18529444653" async><\/script>/);
-  const googleTag = await readFile(join(publicRoot, 'assets', 'google-tag.js'), 'utf8');
-  assert.match(googleTag, /gtag\('set', 'allow_ad_personalization_signals', false\)/);
-  assert.match(googleTag, /gtag\('set', 'allow_google_signals', false\)/);
-  assert.match(googleTag, /gtag\('config', 'AW-18529444653'\)/);
-  assert.doesNotMatch(googleTag, /user_data|email|phone|FormData|\.value/);
-  // Two conversion actions, one per kind of button; the labels carry no visitor details.
-  assert.match(googleTag, /closest\('a\[data-book-online\], a\[href\^="tel:"\]'\)/);
-  assert.match(googleTag, /BOOK_ONLINE_CONVERSION = 'AW-18529444653\/3DBbCLLPu7odEK3Gw4NF'/);
-  assert.match(googleTag, /CALL_CLICK_CONVERSION = 'AW-18529444653\/XPU2CISZ7r4dEK3Gw4NF'/);
-  assert.match(googleTag, /gtag\('event', 'conversion', \{ send_to: sendTo \}\)/);
-  assert.doesNotMatch(html, /google-analytics|connect\.facebook\.net|clarity\.ms|hotjar|segment|mixpanel|GTM-[A-Z0-9]/i);
+  // Google Tag Manager loads the Google Ads tags (owner decision November 24, 2026); the page loads only our own loader.
+  assert.match(html, /<script src="\/assets\/tag-manager\.js\?v=[a-f0-9]+" defer><\/script>/);
+  assert.doesNotMatch(html, /gtag\/js\?id=/, 'the Google tag now comes through Tag Manager, not a second direct load');
+  const tagManager = await readFile(join(publicRoot, 'assets', 'tag-manager.js'), 'utf8');
+  assert.match(tagManager, /gtag\('set', 'allow_ad_personalization_signals', false\)/);
+  assert.match(tagManager, /gtag\('set', 'allow_google_signals', false\)/);
+  assert.match(tagManager, /'https:\/\/www\.googletagmanager\.com\/gtm\.js\?id=GTM-KXG4NF6G'/);
+  assert.ok(tagManager.indexOf("allow_ad_personalization_signals") < tagManager.indexOf('gtm.js?id='), 'privacy settings are queued before the container loads');
+  assert.doesNotMatch(tagManager, /user_data|email|FormData|\.value|textContent|href\)/);
+  assert.doesNotMatch(html, /google-analytics|connect\.facebook\.net|clarity\.ms|hotjar|segment|mixpanel/i);
 });
 
 test("blog pages expose article semantics, dates, sources, and a valid RSS feed", async () => {
@@ -614,8 +611,8 @@ test("future-dated blog posts stay out of public pages, the sitemap, and the fee
 
 test('all runtime scripts exist as deployable assets and the site guide stays local', async () => {
   for (const [slug, html] of htmlBySlug) {
-    // The Google tag is the one script loaded from another host; it is checked in the measurement test.
-    for (const { attrs } of startTags(html, 'script').filter(({attrs}) => attrs.src && !attrs.src.startsWith('https://www.googletagmanager.com/gtag/js?id=AW-'))) {
+    // Tag Manager is loaded by /assets/tag-manager.js, so every script tag on the page is our own.
+    for (const { attrs } of startTags(html, 'script').filter(({attrs}) => attrs.src)) {
       const path = new URL(attrs.src, site.canonicalUrl).pathname;
       assert.equal(extname(path), '.js', `${slug} script must use deployable .js output`);
       assert.ok(existsSync(outputTargetForPath(path)), `${slug} missing script ${path}`);
@@ -839,9 +836,9 @@ test('the four ad booking pages build from the shared booking template with the 
     assert.doesNotMatch(html, /Launch List|consultation-form|founding-consultation/);
     assert.doesNotMatch(main.replace(/<[^>]+>/g, ' '), /\bfree\b|on us|no charge|testosterone|\bPSA\b|vitamin D|\bTSH\b|\bT4\b|\bTRT\b|low T\b|GLP|semaglutide|tirzepatide|pounds|\blbs\b|before and after|guarantee|\bdoctor\b|physician|nurse practitioner|BPC-?157|TB-?500|sermorelin|gonadorelin|wolverine|Wajeeh|Atif|!/i, slug + ' copy rules');
     assert.match(html, /November 20/);
-    // The Google tag and the site's own scripts, nothing else.
+    // The Tag Manager loader and the site's own scripts, nothing else.
     const scripts = startTags(html, 'script').filter(({ attrs }) => attrs.src).map(({ attrs }) => attrs.src.replace(/\?.*$/, ''));
-    assert.deepEqual(scripts, ['https://www.googletagmanager.com/gtag/js', '/assets/google-tag.js', '/assets/site-measurement.js', '/assets/site.js', '/assets/site-assistant.js'], slug + ' scripts');
+    assert.deepEqual(scripts, ['/assets/tag-manager.js', '/assets/site-measurement.js', '/assets/site.js', '/assets/site-assistant.js'], slug + ' scripts');
   }
   assert.ok(findElementWithId(htmlBySlug.get('/founding-patients/'), 'services'), 'the other-services link has a target');
 });
@@ -1110,18 +1107,26 @@ test('homepage hero has a call button that dials the public clinic number', () =
   assert.ok(home.indexOf('data-book-online>Book online') < home.indexOf(call), 'Book online stays first');
 });
 
-test('every Book online button and every call link reports to its one Google Ads conversion', async () => {
-  // Runs the shipped google-tag.js against a minimal stand-in for the browser.
-  const source = await readFile(join(publicRoot, 'assets', 'google-tag.js'), 'utf8');
+test('every Book online button and every call link tells Tag Manager, which maps each to one Google Ads conversion', async () => {
+  // Runs the shipped tag-manager.js against a minimal stand-in for the browser.
+  const source = await readFile(join(publicRoot, 'assets', 'tag-manager.js'), 'utf8');
   let clickHandler = null;
+  const injected = [];
   const sandbox = {
     window: {},
-    document: { addEventListener: (type, handler) => { if (type === 'click') clickHandler = handler; } },
+    document: {
+      addEventListener: (type, handler) => { if (type === 'click') clickHandler = handler; },
+      createElement: (name) => ({ name }),
+      head: { appendChild: (element) => injected.push(element) },
+    },
   };
   sandbox.window.dataLayer = [];
-  new Function('window', 'document', source + '\nwindow.__gtag = gtag;')(sandbox.window, sandbox.document);
-  const conversions = () => sandbox.window.dataLayer.filter((entry) => entry[0] === 'event' && entry[1] === 'conversion').map((entry) => entry[2].send_to);
-  const link = (attrs) => ({ hasAttribute: (name) => name in attrs, matches: () => true });
+  new Function('window', 'document', source)(sandbox.window, sandbox.document);
+  assert.equal(injected.length, 1);
+  assert.equal(injected[0].src, 'https://www.googletagmanager.com/gtm.js?id=GTM-KXG4NF6G');
+  assert.equal(injected[0].async, true);
+  const events = () => sandbox.window.dataLayer.filter((entry) => entry && entry.event).map((entry) => entry.event);
+  const link = (attrs) => ({ hasAttribute: (name) => name in attrs });
   const target = (found) => ({ closest: (selector) => {
     assert.equal(selector, 'a[data-book-online], a[href^="tel:"]');
     return found;
@@ -1129,14 +1134,26 @@ test('every Book online button and every call link reports to its one Google Ads
   clickHandler({ target: target(link({ 'data-book-online': '' })) });
   clickHandler({ target: target(link({ href: 'tel:+12192072456' })) });
   clickHandler({ target: target(null) });
-  assert.deepEqual(conversions(), ['AW-18529444653/3DBbCLLPu7odEK3Gw4NF', 'AW-18529444653/XPU2CISZ7r4dEK3Gw4NF']);
+  assert.deepEqual(events(), ['apex_book_online_click', 'apex_call_click']);
+  for (const entry of sandbox.window.dataLayer.filter((item) => item && item.event)) {
+    assert.deepEqual(Object.keys(entry), ['event'], 'events carry no other data');
+  }
+
+  // The Tag Manager container kept in the repo maps those two events to the two Google Ads conversions.
+  const container = JSON.parse(await readFile(new URL('../docs/tag-manager/apex-gtm-container.json', import.meta.url), 'utf8')).containerVersion;
+  assert.equal(container.container.publicId, 'GTM-KXG4NF6G');
+  const triggerEvent = Object.fromEntries(container.trigger.map((trigger) => [trigger.triggerId, trigger.customEventFilter[0].parameter.find((p) => p.key === 'arg1').value]));
+  const labels = Object.fromEntries(container.tag.filter((tag) => tag.type === 'awct').map((tag) => [triggerEvent[tag.firingTriggerId[0]], tag.parameter.find((p) => p.key === 'conversionLabel').value]));
+  assert.deepEqual(labels, { apex_book_online_click: '3DBbCLLPu7odEK3Gw4NF', apex_call_click: 'XPU2CISZ7r4dEK3Gw4NF' });
+  const googleTag = container.tag.find((tag) => tag.type === 'googtag');
+  const settings = Object.fromEntries(googleTag.parameter.find((p) => p.key === 'configSettingsTable').list.map((row) => [row.map[0].value, row.map[1].value]));
+  assert.deepEqual(settings, { allow_ad_personalization_signals: 'false', allow_google_signals: 'false' });
 
   // Audit: every page loads the tag, every Tebra booking link is marked Book online, and every page has a call link.
   let bookLinks = 0;
   let callLinks = 0;
   for (const [slug, html] of htmlBySlug) {
-    assert.match(html, /gtag\/js\?id=AW-18529444653/, slug + ' loads the Google tag');
-    assert.match(html, /\/assets\/google-tag\.js/, slug + ' loads the conversion script');
+    assert.match(html, /\/assets\/tag-manager\.js/, slug + ' loads Tag Manager');
     for (const [anchor] of html.matchAll(/<a\b[^>]*>/g)) {
       if (anchor.includes('d2oe0ra32qx05a.cloudfront.net')) {
         bookLinks += 1;

@@ -985,8 +985,7 @@ function renderDocument(pageKey, page, jsonLd, { noIndex = false, mainOverride =
   <link rel="preload" as="font" href="/assets/fonts/instrument-serif-latin-400-normal.woff2" type="font/woff2" crossorigin>
   <link rel="preload" as="font" href="/assets/fonts/manrope-latin-wght-normal.woff2" type="font/woff2" crossorigin>
   <script type="application/ld+json">${jsonLd}</script>
-  <script src="https://www.googletagmanager.com/gtag/js?id=AW-18529444653" async></script>
-  <script src="${escapeHtml(assetUrl("google-tag.js"))}" defer></script>
+  <script src="${escapeHtml(assetUrl("tag-manager.js"))}" defer></script>
   <script src="${escapeHtml(assetUrl("site-measurement.js"))}" defer></script>
   <script src="${escapeHtml(assetUrl("site.js"))}" defer></script>
   <script src="${escapeHtml(assetUrl("site-assistant.js"))}" defer></script>
@@ -1025,7 +1024,7 @@ async function prepareAssets() {
   await cp(join(sourceAssetsDirectory, "site.css"), join(publicAssetsDirectory, "site.css"));
   await cp(join(sourceAssetsDirectory, "site.js"), join(publicAssetsDirectory, "site.js"));
   await cp(join(sourceAssetsDirectory, "site-measurement.js"), join(publicAssetsDirectory, "site-measurement.js"));
-  await cp(join(sourceAssetsDirectory, "google-tag.js"), join(publicAssetsDirectory, "google-tag.js"));
+  await cp(join(sourceAssetsDirectory, "tag-manager.js"), join(publicAssetsDirectory, "tag-manager.js"));
   await cp(join(sourceAssetsDirectory, 'site-design.css'), join(publicAssetsDirectory, 'site-design.css'));
   await cp(join(sourceAssetsDirectory, 'launch-email-action.css'), join(publicAssetsDirectory, 'launch-email-action.css'));
   await cp(join(sourceAssetsDirectory, 'visit-planner.js'), join(publicAssetsDirectory, 'visit-planner.js'));
@@ -1046,7 +1045,7 @@ async function prepareAssets() {
   assetVersions.set("site.css", await fingerprint(join(sourceAssetsDirectory, "site.css")));
   assetVersions.set("site.js", await fingerprint(join(sourceAssetsDirectory, "site.js")));
   assetVersions.set("site-measurement.js", await fingerprint(join(sourceAssetsDirectory, "site-measurement.js")));
-  assetVersions.set("google-tag.js", await fingerprint(join(sourceAssetsDirectory, "google-tag.js")));
+  assetVersions.set("tag-manager.js", await fingerprint(join(sourceAssetsDirectory, "tag-manager.js")));
   assetVersions.set('site-design.css', await fingerprint(join(sourceAssetsDirectory, 'site-design.css')));
   assetVersions.set('visit-planner.js', await fingerprint(join(sourceAssetsDirectory, 'visit-planner.js')));
   assetVersions.set('site-assistant.js', await fingerprint(join(publicAssetsDirectory, 'site-assistant.js')));
@@ -1065,8 +1064,12 @@ function buildHeaders() {
   // JSON-LD is an HTML data block, not executable script. It does not need a
   // script-src hash; collecting one per page would eventually exceed the
   // Cloudflare _headers line limit as the site grows.
-  // The Google tag (Google Ads, owner decision November 17, 2026) is the only
-  // third-party script. Its hosts are the ones Google documents for the tag.
+  // Google Tag Manager (GTM-KXG4NF6G, owner decision November 24, 2026) loads the
+  // Google Ads tags. Owner chose "Google tags only": the policy allows Google's tag
+  // and Google Ads hosts and nothing else, so another vendor's tag (Meta, TikTok,
+  // chat widgets), Google Analytics or custom code added in Tag Manager is blocked
+  // until this list is changed in a reviewed pull request. Do not add
+  // 'unsafe-inline' or 'unsafe-eval' here.
   const googleTagHosts = "https://www.googletagmanager.com https://www.googleadservices.com https://googleads.g.doubleclick.net https://www.google.com https://google.com https://pagead2.googlesyndication.com";
   const csp = [
     "default-src 'self'",

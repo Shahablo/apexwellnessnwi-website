@@ -941,12 +941,12 @@ export const pages = Object.freeze({
     title: 'Privacy Policy | Apex Wellness',
     description:
       'Read how the Apex Wellness website handles contact requests and optional Pexy website-question follow-ups.',
-    eyebrow: 'Updated October 28, 2026',
+    eyebrow: 'Updated November 24, 2026',
     h1: 'Privacy Policy',
     intro:
       'This policy explains the limited information collected through the Apex Wellness website, its contact forms, and Pexy’s optional follow-up form. It may be updated as clinical services and secure patient systems are introduced.',
     cta: bookingPageCta,
-    effectiveDate: 'October 28, 2026',
+    effectiveDate: 'November 24, 2026',
     sections: [
       {
         type: 'policySection',
@@ -983,7 +983,7 @@ export const pages = Object.freeze({
         paragraphs: [
           'Apex counts page views, clicks to the Launch List, Plan Your Visit, phone or email actions, and whether a website form was viewed, started or successfully submitted. These counts are sent only to an Apex website endpoint and stored as daily totals. Reports may separate the specific website page, originating page for an action, broad device category, broad geographic region, referring website domain, and normalized UTM source, medium and campaign labels supplied in an Apex marketing link.',
           'The measurement does not set cookies, create visitor or session profiles, or store raw IP addresses, IP hashes, device identifiers, full URLs, query strings, exact locations, form values, Pexy questions, or the full referring-page address. Geographic reporting is limited to Indiana, elsewhere in the United States, outside the United States, or unknown. Referrer reporting keeps only the website domain. Form measurement records only the form category and funnel step, never what someone typed.',
-          'Apex also uses the Google tag for Google Ads. It tells Apex whether a visit followed a click on one of its Google ads, and to do that it sends Google the address of the page viewed, sets an advertising cookie in your browser and shares standard browser details such as IP address. Ad personalization and remarketing are turned off, and Apex does not send Google what you type into any form. Google handles this information under its own privacy policy. You can block it with your browser’s privacy settings or an ad blocker and still use the whole site.',
+          'Apex also uses Google Tag Manager to load the Google tag for Google Ads. It tells Apex whether a visit, a Book online click or a click on a phone number followed a click on one of its Google ads. To do that it sends Google the address of the page viewed, sets an advertising cookie in your browser and shares standard browser details such as IP address. Ad personalization and remarketing are turned off, and Apex does not send Google what you type into any form or the number you call. Google handles this information under its own privacy policy. You can block it with your browser’s privacy settings or an ad blocker and still use the whole site.',
           'Google Analytics, Meta Pixel, and other advertising tags are not installed on this website.'
         ]
       },

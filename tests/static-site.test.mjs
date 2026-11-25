@@ -424,6 +424,11 @@ test("deployment artifacts protect dotfiles and define site-wide security header
   const cspLines = headers.split(/\r?\n/).filter((line) => /^\s+Content-Security-Policy:/i.test(line));
   assert.equal(cspLines.length, 1, "_headers must define one site-wide CSP");
   assert.match(cspLines[0], /(?:^|;) script-src 'self' https:\/\/www\.googletagmanager\.com https:\/\/www\.googleadservices\.com https:\/\/googleads\.g\.doubleclick\.net https:\/\/www\.google\.com https:\/\/google\.com https:\/\/pagead2\.googlesyndication\.com(?:;|$)/, "only same-origin scripts and the Google tag hosts are allowed");
+  assert.match(cspLines[0], /(?:^|;) connect-src 'self' https:\/\/www\.googletagmanager\.com https:\/\/www\.googleadservices\.com https:\/\/googleads\.g\.doubleclick\.net https:\/\/www\.google\.com https:\/\/google\.com https:\/\/pagead2\.googlesyndication\.com https:\/\/ad\.doubleclick\.net(?:;|$)/, "requests may go only to same-origin, the Google tag hosts and Google Ads' ad.doubleclick.net");
+  for (const directive of ["script-src", "img-src", "frame-src"]) {
+    const value = cspLines[0].split(";").map((part) => part.trim()).find((part) => part.startsWith(`${directive} `));
+    assert.ok(value && !value.includes("ad.doubleclick.net"), `${directive} must not allow ad.doubleclick.net; Google Ads needs it for connect-src only`);
+  }
   assert.doesNotMatch(cspLines[0], /'unsafe-inline'|'unsafe-eval'|'sha(?:256|384|512)-/i, "CSP must not allow inline execution or collect per-page JSON-LD hashes");
   assert.match(siteCss, /@media\s*\(scripting:\s*none\)[\s\S]*?\.nav-toggle\s*\{[\s\S]*?display:\s*none/i, "the no-JavaScript fallback must hide the inert menu toggle");
   assert.match(siteCss, /@media\s*\(scripting:\s*none\)[\s\S]*?\.site-nav\s*\{[\s\S]*?display:\s*flex[\s\S]*?max-height:\s*none[\s\S]*?overflow:\s*visible/i, "the no-JavaScript fallback must expose the complete mobile navigation");

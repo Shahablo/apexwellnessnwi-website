@@ -1071,10 +1071,14 @@ function buildHeaders() {
   // until this list is changed in a reviewed pull request. Do not add
   // 'unsafe-inline' or 'unsafe-eval' here.
   const googleTagHosts = "https://www.googletagmanager.com https://www.googleadservices.com https://googleads.g.doubleclick.net https://www.google.com https://google.com https://pagead2.googlesyndication.com";
+  // Google's CSP guide for Google Ads tags also lists ad.doubleclick.net under
+  // connect-src (requests only, not scripts or images). Tag Manager diagnostics
+  // reported it blocked on November 25, 2026, so it is allowed for connect-src alone.
+  const googleAdsConnectHosts = "https://ad.doubleclick.net";
   const csp = [
     "default-src 'self'",
     "base-uri 'self'",
-    `connect-src 'self' ${googleTagHosts}`,
+    `connect-src 'self' ${googleTagHosts} ${googleAdsConnectHosts}`,
     "font-src 'self'",
     "form-action 'self'",
     "frame-ancestors 'none'",

@@ -48,7 +48,7 @@ test("branded launch emails retain action, consent and plain-text fallbacks", ()
     assert.match(email.htmlContent, /margin-left:-30px/);
     assert.doesNotMatch(email.htmlContent, /Merrillville, Indiana/);
     // Online booking opened November 16, 2026; every follow-up says so and none says scheduling is still to come.
-    assert.match(email.textContent, /Online booking is open\. Book from our website or call \(219\) 207-2456\./);
+    assert.match(email.textContent, /Online booking is open\. Book from our website or call \(219\) 525-5100\./);
     assert.doesNotMatch(email.subject + email.htmlContent + email.textContent, /appointment requests are coming soon|when scheduling opens|appointment-request link/i);
     if (stage !== "day10") {
       assert.match(email.textContent, /See how to book: https:\/\/apexwellnessnwi\.com\/founding-patients\//);
@@ -275,7 +275,7 @@ test("verification is double opt-in, deduplicated, and phone never enters Brevo"
     assert.equal(confirmed.status, 200);
     const confirmedHtml = await confirmed.text();
     assert.match(confirmedHtml, /You're confirmed/);
-    assert.match(confirmedHtml, /Joining the list has not booked a visit\. Online booking is open\. Book from our website or call \(219\) 207-2456\./);
+    assert.match(confirmedHtml, /Joining the list has not booked a visit\. Online booking is open\. Book from our website or call \(219\) 525-5100\./);
     assert.match(confirmedHtml, /<a href="\/">Visit Apex Wellness<\/a>/);
     assert.doesNotMatch(confirmedHtml, /\bThanks\b/);
     assert.equal(db.row("SELECT status FROM launch_email_subscriptions").status, "confirmed");

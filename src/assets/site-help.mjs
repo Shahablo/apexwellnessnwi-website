@@ -23,8 +23,8 @@ export function answerWebsiteQuestion(input, launchLabel = 'November 20, 2026') 
   const launchOffer = 'Apex’s grand-opening offer is promotional labs for $49 for the first 50 appointments scheduled. The $49 covers your first visit and the promotional labs. Labs as clinically appropriate. One per person. Additional testing or treatment is separate. Appointments subject to availability.';
   const bookingOpen = 'Online booking is open.';
   // Mirrors clinicPhone in src/clinic-facts.mjs (display and callOrText, lowercased here).
-  const phone = '(219) 207-2456';
-  const callOrText = 'call or text';
+  const phone = '(219) 525-5100';
+  const callOrText = 'call';
   const clinicHours = 'Hours from November 20: Wednesday, Thursday and Friday, 11 a.m. to 5 p.m. Saturday, 9 a.m. to 1 p.m. Closed Sunday through Tuesday. Closed Thanksgiving Day, November 26.';
 
   // Safety and privacy take priority over promotional or navigation answers.

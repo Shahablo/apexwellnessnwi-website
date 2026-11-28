@@ -425,6 +425,11 @@ test("deployment artifacts protect dotfiles and define site-wide security header
   assert.equal(cspLines.length, 1, "_headers must define one site-wide CSP");
   assert.match(cspLines[0], /(?:^|;) script-src 'self' https:\/\/www\.googletagmanager\.com https:\/\/www\.googleadservices\.com https:\/\/googleads\.g\.doubleclick\.net https:\/\/www\.google\.com https:\/\/google\.com https:\/\/pagead2\.googlesyndication\.com(?:;|$)/, "only same-origin scripts and the Google tag hosts are allowed");
   assert.match(cspLines[0], /(?:^|;) connect-src 'self' https:\/\/www\.googletagmanager\.com https:\/\/www\.googleadservices\.com https:\/\/googleads\.g\.doubleclick\.net https:\/\/www\.google\.com https:\/\/google\.com https:\/\/pagead2\.googlesyndication\.com https:\/\/ad\.doubleclick\.net(?:;|$)/, "requests may go only to same-origin, the Google tag hosts and Google Ads' ad.doubleclick.net");
+  assert.match(cspLines[0], /(?:^|;) frame-src https:\/\/www\.googletagmanager\.com https:\/\/td\.doubleclick\.net https:\/\/d2oe0ra32qx05a\.cloudfront\.net(?:;|$)/, "frames: Google's tag hosts and Tebra's hosted booking page only");
+  for (const directive of ["script-src", "img-src", "connect-src"]) {
+    const value = cspLines[0].split(";").map((part) => part.trim()).find((part) => part.startsWith(`${directive} `));
+    assert.ok(value && !value.includes("cloudfront.net"), `${directive} must not allow the booking host; it is only framed`);
+  }
   for (const directive of ["script-src", "img-src", "frame-src"]) {
     const value = cspLines[0].split(";").map((part) => part.trim()).find((part) => part.startsWith(`${directive} `));
     assert.ok(value && !value.includes("ad.doubleclick.net"), `${directive} must not allow ad.doubleclick.net; Google Ads needs it for connect-src only`);
@@ -758,13 +763,15 @@ test('the QR landing page is a short booking page: the $49 offer, Book online, c
   assert.match(main, /<p class="booking-offer"><strong>\$49 for labs and your first visit\.<\/strong> First 50 appointments only\.<\/p>/);
   assert.match(main, /<p class="booking-badge" aria-hidden="true"><span>Grand opening<\/span><strong>\$49<\/strong><span>Labs \+ first visit<\/span><\/p>/);
 
-  // One action: Book online first, the phone second, in the hero and again at the end. Both keep what first-party measurement counts.
-  const bookOnline = '<a class="button" href="https://d2oe0ra32qx05a.cloudfront.net/?practiceKey=k_1_117405" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer" data-book-online>Book online<span class="visually-hidden"> (opens a new tab)</span></a>';
+  // One action: Book online first, the phone second, in the hero and again at the end.
+  // Since November 28, 2026 Book online jumps to the Tebra scheduler embedded on this page (#schedule).
+  const bookOnline = '<a class="button" href="#schedule">Book online</a>';
   const call = '<a class="booking-call" href="tel:+12195255100">Call (219) 525-5100</a>';
   assert.equal(main.split(bookOnline + call).length - 1, 2, 'hero and closing actions');
   assert.ok(main.indexOf(bookOnline) < main.indexOf('booking-strip'), 'the first Book online button sits above the hours and address');
   assert.ok(html.includes('<div class="booking-bar">' + bookOnline + '<a class="booking-bar-call" href="tel:+12195255100">Call</a></div>'), 'phone-width booking bar');
-  assert.match(html, /<nav class="landing-nav" aria-label="Booking">\s*<a class="nav-cta" href="https:\/\/d2oe0ra32qx05a\.cloudfront\.net\/\?practiceKey=k_1_117405"[^>]*data-book-online>Book online/);
+  assert.match(html, /<nav class="landing-nav" aria-label="Booking">\s*<a class="nav-cta" href="#schedule">Book online<\/a>/);
+  assertEmbeddedScheduler('/founding-patients/', main);
   assert.match(main, /<p class="booking-strip"><span>Wed–Fri 11 a\.m\.–5 p\.m\. · Sat 9 a\.m\.–1 p\.m\.<\/span> <span>8550 Broadway, Suite B, Merrillville, IN 46410<\/span><\/p>/);
 
   const steps = [...main.matchAll(/<li><span class="booking-step-number" aria-hidden="true">\d<\/span><span>([^<]+)<\/span><\/li>/g)].map((match) => match[1]);
@@ -780,7 +787,7 @@ test('the QR landing page is a short booking page: the $49 offer, Book online, c
   }
   // The care block is the "other services" destination of the ad booking pages: heading, four cards, then Book online.
   assert.match(main, /<div class="booking-care" id="services">\s*<h2 id="booking-care-heading">What we help with<\/h2>\s*<ul class="booking-services"/);
-  assert.match(main, /<\/ul>\s*<\/div>\s*<div class="booking-actions booking-actions-close"><a class="button" href="https:\/\/d2oe0ra32qx05a\.cloudfront\.net\/\?practiceKey=k_1_117405"/);
+  assert.match(main, /<\/ul>\s*<\/div>\s*<div class="booking-actions booking-actions-close"><a class="button" href="#schedule">Book online<\/a>/);
   assert.match(html, /<meta name="robots" content="index, follow, max-image-preview:large">/);
   const visible = main.replace(/<[^>]+>/g, ' ');
   for (const phrase of ['weight loss', 'hormone', 'menopause', 'hair loss']) assert.ok(visible.includes(phrase), 'visible text names ' + phrase);
@@ -790,7 +797,7 @@ test('the QR landing page is a short booking page: the $49 offer, Book online, c
   // Nothing competes with booking: no signup, no form, no long sections, no image.
   assert.doesNotMatch(html, /Launch List|consultation-form|#consultation-request|founding-consultation|class="faq-list"|<details/);
   assert.doesNotMatch(main, /<form|<img|<input/);
-  assert.equal(startTags(main, 'section').length, 2);
+  assert.equal(startTags(main, 'section').length, 3, 'offer, scheduler, details');
   // Public-copy rules for this page.
   assert.doesNotMatch(main.replace(/<[^>]+>/g, ' '), /\bfree\b|on us|no charge|testosterone|\bPSA\b|vitamin D|\bTSH\b|\bT4\b|\bTRT\b|low T\b|semaglutide|tirzepatide|before and after|guarantee|\bdoctor\b|physician|nurse practitioner|BPC-?157|TB-?500|sermorelin|gonadorelin|wolverine|Wajeeh|Atif|!/i);
   assert.doesNotMatch(html, /first 100|APEXNOV/i);
@@ -799,8 +806,8 @@ test('the QR landing page is a short booking page: the $49 offer, Book online, c
   assert.match(css, /@media\(prefers-reduced-motion:no-preference\)\{\s*\.booking-hero-inner>\*\{animation:/, 'entrance motion only without a reduced-motion preference');
 });
 
-test('the four ad booking pages build from the shared booking template with the offer, fine print, booking link and noindex', async () => {
-  const bookOnline = '<a class="button" href="https://d2oe0ra32qx05a.cloudfront.net/?practiceKey=k_1_117405" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer" data-book-online>Book online<span class="visually-hidden"> (opens a new tab)</span></a>';
+test('the four ad booking pages build from the shared booking template with the offer, fine print, embedded scheduler and noindex', async () => {
+  const bookOnline = '<a class="button" href="#schedule">Book online</a>';
   const call = '<a class="booking-call" href="tel:+12195255100">Call (219) 525-5100</a>';
   const expected = new Map([
     ['/book/weight-loss/', ['Medical weight loss in Merrillville. ', 'Learn more about medical weight loss', '/weight-management/']],
@@ -827,8 +834,11 @@ test('the four ad booking pages build from the shared booking template with the 
     assert.ok(main.includes('<p class="booking-offer"><strong>$49 for labs and your first visit.</strong> First 50 appointments only.</p>'), slug + ' offer');
     assert.equal(main.split(bookOnline + call).length - 1, 2, slug + ' hero and closing actions');
     assert.ok(main.indexOf(bookOnline) < main.indexOf('booking-strip'), slug + ' first Book online button sits in the hero');
-    assert.equal(startTags(html, 'a').filter(({ attrs }) => 'data-book-online' in attrs).length, 4, slug + ' header, hero, closing row and phone bar');
+    // Header, hero, closing row and phone bar jump to the scheduler; the one new-tab link is the fallback under it.
+    assert.equal(startTags(html, 'a').filter(({ attrs }) => attrs.href === '#schedule').length, 4, slug + ' header, hero, closing row and phone bar');
+    assert.equal(startTags(html, 'a').filter(({ attrs }) => 'data-book-online' in attrs).length, 1, slug + ' new-tab fallback under the scheduler');
     assert.ok(html.includes('<div class="booking-bar">' + bookOnline), slug + ' phone-width booking bar');
+    assertEmbeddedScheduler(slug, main);
     assert.match(main, /<p class="booking-strip"><span>Wed–Fri 11 a\.m\.–5 p\.m\. · Sat 9 a\.m\.–1 p\.m\.<\/span> <span>8550 Broadway, Suite B, Merrillville, IN 46410<\/span><\/p>/);
     assert.equal([...main.matchAll(/<ul class="booking-covers"[^>]*>((?:<li>[^<]+<\/li>){3})<\/ul>/g)].length, 1, slug + ' three points on the first visit');
     assert.equal([...main.matchAll(/<span class="booking-step-number" aria-hidden="true">\d<\/span>/g)].length, 3, slug + ' three steps');
@@ -853,6 +863,24 @@ const bookingStatus = 'Online booking is open.';
 // The four ad landing pages, the men's page that shares their template, and nothing else.
 const offerBandPages = new Set(['/weight-management/', '/hormone-care-merrillville/', '/womens-midlife-care/', '/hair-loss-care/', '/mens-hormone-health/']);
 
+// The booking pages embed Tebra's hosted scheduler (owner request November 28, 2026): Google Ads will not send
+// ad clicks straight to Tebra. One frame per booking page, right after the offer, with the exact booking address,
+// no referrer, an accessible title and the new-tab link and phone number underneath as a fallback.
+function assertEmbeddedScheduler(slug, main) {
+  const frames = startTags(main, 'iframe');
+  assert.equal(frames.length, 1, slug + ' has one embedded scheduler');
+  const [{ attrs }] = frames;
+  assert.deepEqual(Object.keys(attrs).sort(), ['data-booking-frame', 'referrerpolicy', 'src', 'title'], slug + ' scheduler frame attributes');
+  assert.equal(attrs.src, 'https://d2oe0ra32qx05a.cloudfront.net/?practiceKey=k_1_117405', slug + ' frames the exact booking address');
+  assert.equal(attrs.referrerpolicy, 'no-referrer', slug + ' frame sends no referrer');
+  assert.equal(attrs.title, 'Apex Wellness online booking (Tebra)', slug + ' frame has an accessible title');
+  const section = main.match(/<section class="booking-scheduler" id="schedule" aria-labelledby="schedule-heading">[\s\S]*?<\/section>/)?.[0];
+  assert.ok(section, slug + ' scheduler section');
+  assert.ok(main.indexOf('booking-hero') < main.indexOf(section) && main.indexOf(section) < main.indexOf('booking-details'), slug + ' scheduler sits right after the offer');
+  assert.match(section, /<h2 id="schedule-heading">Pick a day and time<\/h2>/);
+  assert.ok(section.includes('<p class="booking-frame-note">Booking is handled securely by Tebra, our patient scheduling system. Calendar not showing? <a href="https://d2oe0ra32qx05a.cloudfront.net/?practiceKey=k_1_117405" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer" data-book-online>Book online<span class="visually-hidden"> (opens a new tab)</span></a> or call <a href="tel:+12195255100">(219) 525-5100</a>.</p>'), slug + ' fallback link and phone');
+}
+
 test('every Book online link is the one exact Tebra address, opened in a new tab without a referrer', async () => {
   const offerButton = `<a class="button" href="${bookingUrl}" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer" aria-describedby="book-online-note" data-book-online>Book online</a>`;
   const note = '<p id="book-online-note" class="book-online-note">Online booking opens our secure scheduling page (Tebra) in a new tab. Prefer the phone? Call <a href="tel:+12195255100">(219) 525-5100</a>.</p>';
@@ -860,8 +888,10 @@ test('every Book online link is the one exact Tebra address, opened in a new tab
   for (const [slug, html] of htmlBySlug) {
     const mentions = html.split('cloudfront.net').length - 1;
     const bookingLinks = startTags(html, 'a').filter(({ attrs }) => 'data-book-online' in attrs);
-    // Plain links only: no script, frame, image, pixel, form or tracking parameter points at the booking host.
-    assert.equal(mentions, bookingLinks.length, `${slug} may reference the booking host only in Book online links`);
+    const bookingFrames = startTags(html, 'iframe').filter(({ attrs }) => (attrs.src || '').includes('cloudfront.net'));
+    // Links, plus the one scheduler frame on a booking page. No script, image, pixel, form or tracking parameter points at the booking host.
+    assert.equal(bookingFrames.length, bookingSlugs.has(slug) ? 1 : 0, `${slug} scheduler frames`);
+    assert.equal(mentions, bookingLinks.length + bookingFrames.length, `${slug} may reference the booking host only in Book online links and the booking-page scheduler`);
     assert.doesNotMatch(html, /cloudfront\.net[^"]*(?:utm_|&)/, `${slug} must not add parameters to the booking address`);
     for (const { attrs, raw } of bookingLinks) {
       assert.equal(attrs.href, bookingUrl, `${slug} Book online must use the exact booking address`);
@@ -880,9 +910,10 @@ test('every Book online link is the one exact Tebra address, opened in a new tab
     assert.doesNotMatch(htmlBySlug.get(slug), /data-book-online/, `${slug} must not carry a Book online link`);
   }
 
-  // The QR page is the booking page: four Book online links (header, hero, closing row, phone bar) and no form.
+  // The QR page is the booking page: the embedded scheduler, one new-tab fallback link under it, and no form.
   const landing = htmlBySlug.get('/founding-patients/');
-  assert.equal(startTags(landing, 'a').filter(({ attrs }) => 'data-book-online' in attrs).length, 4);
+  assert.equal(startTags(landing, 'a').filter(({ attrs }) => 'data-book-online' in attrs).length, 1);
+  assert.equal(startTags(landing, 'iframe').length, 1);
   assert.doesNotMatch(landing, /<form id="consultation-form"/);
 
   const visit = htmlBySlug.get('/plan-your-visit/');
@@ -1116,9 +1147,10 @@ test('every Book online button and every call link tells Tag Manager, which maps
   // Runs the shipped tag-manager.js against a minimal stand-in for the browser.
   const source = await readFile(join(publicRoot, 'assets', 'tag-manager.js'), 'utf8');
   let clickHandler = null;
+  let blurHandler = null;
   const injected = [];
   const sandbox = {
-    window: {},
+    window: { addEventListener: (type, handler) => { if (type === 'blur') blurHandler = handler; } },
     document: {
       addEventListener: (type, handler) => { if (type === 'click') clickHandler = handler; },
       createElement: (name) => ({ name }),
@@ -1140,6 +1172,21 @@ test('every Book online button and every call link tells Tag Manager, which maps
   clickHandler({ target: target(link({ href: 'tel:+12192072456' })) });
   clickHandler({ target: target(null) });
   assert.deepEqual(events(), ['apex_book_online_click', 'apex_call_click']);
+
+  // Clicking into the embedded scheduler moves focus into its frame: counted once per page as the same Book online
+  // conversion. A blur to anything else (another tab, another frame) is not counted.
+  const blurTo = async (element) => {
+    sandbox.document.activeElement = element;
+    blurHandler();
+    await new Promise((resolve) => setTimeout(resolve, 5));
+  };
+  const frame = (attrs) => ({ tagName: 'IFRAME', hasAttribute: (name) => name in attrs });
+  await blurTo({ tagName: 'BODY', hasAttribute: () => false });
+  await blurTo(frame({}));
+  assert.deepEqual(events(), ['apex_book_online_click', 'apex_call_click'], 'other blurs are not conversions');
+  await blurTo(frame({ 'data-booking-frame': '' }));
+  await blurTo(frame({ 'data-booking-frame': '' }));
+  assert.deepEqual(events(), ['apex_book_online_click', 'apex_call_click', 'apex_book_online_click'], 'first click into the scheduler counts once');
   for (const entry of sandbox.window.dataLayer.filter((item) => item && item.event)) {
     assert.deepEqual(Object.keys(entry), ['event'], 'events carry no other data');
   }

@@ -1,6 +1,6 @@
 // Short booking pages, one per Google ad group, built from the same template as /founding-patients/
 // (renderBookingLanding in scripts/build.mjs). Added November 16, 2026.
-// Only the fields below vary per page. The offer line, steps, fine print, hours and booking link are shared.
+// Only the fields below vary per page. The offer line, steps, fine print, hours, booking link and embedded scheduler are shared.
 // The pages overlap the service pages, so they are noindex and stay out of the sitemap and navigation.
 // Wording is drawn from the matching service page: no drug names, no named lab tests, no outcome promises.
 import { bookingStatus } from './clinic-facts.mjs';

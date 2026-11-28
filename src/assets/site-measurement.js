@@ -126,6 +126,18 @@
     });
   }, { capture: true });
 
+  // Booking pages: the first click into the embedded Tebra scheduler counts once with Plan Your Visit,
+  // like the Book online button. Detected from focus moving into the frame; nothing inside it is read.
+  let bookingFrameCounted = false;
+  window.addEventListener("blur", () => {
+    window.setTimeout(() => {
+      const frame = document.activeElement;
+      if (bookingFrameCounted || frame?.tagName !== "IFRAME" || !frame.hasAttribute("data-booking-frame")) return;
+      bookingFrameCounted = true;
+      measurement.record("cta_click", { page_key: currentPageKey, target_group: "plan_visit" });
+    }, 0);
+  });
+
   const observedForms = [
     { selector: '#consultation-form[action="/api/founding-consultation"]', group: "launch_list" },
     { selector: '#consultation-form[action="/api/appointment-contact"]', group: "plan_visit" },

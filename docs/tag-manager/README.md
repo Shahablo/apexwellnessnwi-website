@@ -11,6 +11,8 @@ The website (`src/assets/tag-manager.js`, loaded on every page) does three thing
    - any **Book online** button (`a[data-book-online]`): `apex_book_online_click`
    - any **phone link** (`a[href^="tel:"]`): `apex_call_click`
 
+   Since November 28, 2026 the booking pages (`/founding-patients/` and `/book/*`) show Tebra's scheduler embedded on the page, and their Book online buttons jump to it. A frame from another site cannot report clicks, so the first time a visitor clicks into the scheduler on a page (focus moves into the frame) the site pushes the same `apex_book_online_click` once. The Google Ads conversion therefore keeps counting booking starts with no Tag Manager change. Nothing typed in the scheduler is visible to the page or its tags.
+
    The events carry no other data: no page text, form values or the number dialed.
 3. Loads the container.
 

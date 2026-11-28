@@ -34,6 +34,24 @@ export function bookOnlineUrl(config = scheduling) {
   return verifiedSchedulingUrl(config.publicUrl);
 }
 
+// Embedded scheduler on the booking pages (/founding-patients/ and /book/*). Owner request November 28, 2026.
+// Google Ads disapproves an ad whose final URL leaves apexwellnessnwi.com, so ads cannot point at Tebra directly.
+// Instead the booking pages show Tebra's hosted booking page in a frame on our own page.
+// Checked November 28, 2026: Tebra sends no X-Frame-Options or frame-ancestors header for this page,
+// it renders and loads open times inside a frame on another site, and it sends no messages to the parent page.
+// Only the hosted booking page host can be framed; a tebra.com profile page cannot.
+export function bookingFrameUrl(config = scheduling) {
+  const url = bookOnlineUrl(config);
+  if (!url) return null;
+  return new URL(url).hostname === bookingPageHost ? url : null;
+}
+
+// The origin the site's Content-Security-Policy lets the booking frame load from, or null when nothing is framed.
+export function bookingFrameOrigin(config = scheduling) {
+  const url = bookingFrameUrl(config);
+  return url ? new URL(url).origin : null;
+}
+
 export const visitPlannerPage = Object.freeze({
   kind: 'visitPlanner', slug: '/plan-your-visit/', modified: '2026-11-16',
   navLabel: 'Plan your visit', title: 'Plan Your First Visit | Apex Wellness',

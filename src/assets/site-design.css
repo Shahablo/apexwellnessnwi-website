@@ -595,6 +595,16 @@ h1,h2,h3{letter-spacing:-.042em}
 .booking-more .button-secondary{min-height:3rem;padding:.7rem 1.2rem;border-color:var(--color-ink);font-size:.95rem;font-weight:700}
 .booking-learn{display:inline-flex;align-items:center;min-height:2.75rem;color:var(--color-ink);font-size:.95rem;font-weight:600;text-underline-offset:.3em}
 .booking-bar{display:none}
+/* Embedded Tebra scheduler on the booking pages (#schedule). The frame scrolls inside itself; its height leaves room for the page header. */
+.booking-scheduler{background:#fffdf8;border-bottom:1px solid var(--color-border);scroll-margin-top:0}
+.booking-scheduler-inner{padding-block:clamp(1.5rem,2.6vw,2.4rem)}
+.booking-scheduler-head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:.3rem 1.5rem;margin-bottom:1rem}
+.booking-scheduler h2{margin:0;color:var(--color-ink);font:400 clamp(2rem,3.2vw,2.8rem)/1.05 var(--font-display);letter-spacing:-.025em}
+.booking-scheduler-head p{margin:0;color:var(--color-muted);font-size:1rem;line-height:1.5}
+.booking-frame{border:1px solid var(--color-border);border-top:3px solid #a46d4b;background:#fff;box-shadow:0 1rem 2.4rem #183d3614}
+.booking-frame iframe{display:block;width:100%;height:max(34rem,min(46rem,calc(100vh - 9rem)));border:0;background:#fff}
+.booking-frame-note{margin:.85rem 0 0;color:var(--color-muted);font-size:.85rem;line-height:1.6;max-width:none}
+.booking-frame-note a{color:var(--color-ink);font-weight:700;text-underline-offset:.2em}
 .landing-page .site-footer{padding-top:2.25rem}
 .landing-page .footer-signature{padding-bottom:1.5rem;margin-bottom:1.75rem}
 .landing-page .footer-signature>a img{width:9rem}.landing-page .footer-signature>a span{font-size:1.75rem}
@@ -636,6 +646,10 @@ h1,h2,h3{letter-spacing:-.042em}
   .booking-bar .button{flex:1;min-height:3.25rem;border:0;background:#f0dfbd;color:#183d36;font-size:1.05rem;font-weight:800;letter-spacing:0}
   .booking-bar .button:hover{background:#fff;color:#183d36}
   .booking-bar-call{display:inline-flex;align-items:center;justify-content:center;min-width:4.75rem;padding:0 1rem;border:1px solid #f6f4ed99;color:#fff;font-size:1rem;font-weight:700;text-decoration:none}
+  .booking-scheduler-inner{padding-block:1.25rem 1.5rem}
+  .booking-scheduler-head{margin-bottom:.75rem}
+  .booking-frame iframe{height:max(30rem,min(44rem,calc(100svh - 11rem)))}
+  body.scheduler-in-view .booking-bar{display:none}
   .landing-page .footer-grid{gap:1.4rem 1rem}
   .landing-page .footer-grid>div>p{margin-bottom:.5rem}
   .landing-page .footer-meta{gap:.6rem}.landing-page .footer-meta p{font-size:.78rem;line-height:1.55}

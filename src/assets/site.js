@@ -358,11 +358,22 @@
     }, { once: true });
   }
 
+  // Booking pages: hide the phone-width Book online bar while the embedded scheduler is on screen,
+  // so the bar never covers the bottom of the calendar it points to.
+  function initializeSchedulerBar() {
+    const scheduler = document.querySelector("#schedule .booking-frame");
+    if (!scheduler || !document.querySelector(".booking-bar") || !("IntersectionObserver" in window)) return;
+    new IntersectionObserver((entries) => {
+      document.body.classList.toggle("scheduler-in-view", entries.some((entry) => entry.isIntersecting));
+    }, { threshold: 0.15 }).observe(scheduler);
+  }
+
   function initialize() {
     if (redirectLegacyPriorityFragment()) return;
     initializeNavigation();
     initializeConsultationForm();
     initializeMobileConversionCta();
+    initializeSchedulerBar();
   }
 
   if (document.readyState === "loading") {

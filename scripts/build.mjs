@@ -6,7 +6,7 @@ import { fileURLToPath } from "node:url";
 import { pages, site } from "../src/content.mjs";
 import { visitDetails } from "../src/visit-details.mjs";
 import { bookingStatus, clinicHours, grandOpeningOffer, openingDay, clinicPhone } from "../src/clinic-facts.mjs";
-import { bookOnlineUrl, schedulingUrl } from "../src/visit-planner.mjs";
+import { bookOnlineUrl, bookingFrameOrigin, bookingFrameUrl, schedulingUrl } from "../src/visit-planner.mjs";
 import { blogPosts } from "../src/blog-posts.mjs";
 
 const rootDirectory = fileURLToPath(new URL("../", import.meta.url));
@@ -314,6 +314,30 @@ function bookOnlineLinkMarkup(className = "") {
   const url = bookOnlineUrl();
   if (!url) return "";
   return `<a${className ? ` class="${className}"` : ""} href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer" data-book-online>Book online<span class="visually-hidden"> (opens a new tab)</span></a>`;
+}
+
+// Booking pages only: Book online jumps to the scheduler embedded on the same page (#schedule) instead of
+// opening Tebra in a new tab. Falls back to the new-tab link when no scheduler can be embedded.
+// The jump is not counted as a conversion; starting to use the scheduler is (see tag-manager.js).
+function bookingJumpMarkup(className = "") {
+  if (!bookingFrameUrl()) return bookOnlineLinkMarkup(className);
+  return `<a${className ? ` class="${className}"` : ""} href="#schedule">Book online</a>`;
+}
+
+// The embedded Tebra scheduler. Tebra runs everything inside the frame on its own site: what a patient types goes
+// to Tebra, and this page, its Tag Manager tags and its measurement cannot read it. No referrer is sent.
+// The new-tab link stays under the frame for anyone whose browser blocks or cannot show it.
+function bookingSchedulerMarkup() {
+  const url = bookingFrameUrl();
+  if (!url) return "";
+  return `<section class="booking-scheduler" id="schedule" aria-labelledby="schedule-heading"><div class="container booking-scheduler-inner">
+      <div class="booking-scheduler-head">
+        <h2 id="schedule-heading">Pick a day and time</h2>
+        <p>Choose a time below. Booking takes about a minute.</p>
+      </div>
+      <div class="booking-frame"><iframe src="${escapeHtml(url)}" title="Apex Wellness online booking (Tebra)" referrerpolicy="no-referrer" data-booking-frame></iframe></div>
+      <p class="booking-frame-note">Booking is handled securely by Tebra, our patient scheduling system. Calendar not showing? ${bookOnlineLinkMarkup()} or call <a href="${escapeHtml(site.phoneHref)}">${escapeHtml(site.phone)}</a>.</p>
+    </div></section>`;
 }
 
 // Owner-confirmed clinic hours as a short block. The heading says they start on opening day.
@@ -745,7 +769,7 @@ function renderBlogPost(page) {
   </main>`;
 }
 
-// The booking page at /founding-patients/: offer, Book online, call, then steps, four care cards, Book online again and fine print.
+// The booking page at /founding-patients/: offer, Book online, call, the embedded scheduler, then steps, four care cards, Book online again and fine print.
 // Kept short on purpose. Booking links reuse bookOnlineLinkMarkup so first-party measurement counts them.
 function renderBookingLanding(page) {
   const { booking } = page;
@@ -770,9 +794,10 @@ function renderBookingLanding(page) {
       <p class="booking-badge" aria-hidden="true"><span>${escapeHtml(booking.badge.top)}</span><strong>${escapeHtml(booking.badge.price)}</strong><span>${escapeHtml(booking.badge.bottom)}</span></p>
       ${booking.lead ? `<p class="booking-lead">${escapeHtml(booking.lead)}</p>` : ""}
       <p class="booking-offer"><strong>${escapeHtml(page.intro.slice(0, offerBreak))}</strong> ${escapeHtml(page.intro.slice(offerBreak + 1))}</p>
-      <div class="booking-actions">${bookOnlineLinkMarkup("button")}${call}</div>
+      <div class="booking-actions">${bookingJumpMarkup("button")}${call}</div>
       <p class="booking-strip"><span>${escapeHtml(booking.hoursLine)}</span> <span>${escapeHtml(booking.addressLine)}</span></p>
     </div></section>
+    ${bookingSchedulerMarkup()}
     <section class="booking-details" aria-labelledby="booking-steps-heading"><div class="container booking-details-inner">
       ${covers}
       <div class="booking-steps-block">
@@ -780,7 +805,7 @@ function renderBookingLanding(page) {
         <ol class="booking-steps">${booking.steps.map((step, index) => `<li><span class="booking-step-number" aria-hidden="true">${index + 1}</span><span>${escapeHtml(step)}</span></li>`).join("")}</ol>
       </div>
       ${care}
-      <div class="booking-actions booking-actions-close">${bookOnlineLinkMarkup("button")}${call}</div>
+      <div class="booking-actions booking-actions-close">${bookingJumpMarkup("button")}${call}</div>
       <p class="booking-fine-print">${escapeHtml(booking.finePrint)} ${escapeHtml(booking.closedNote)}</p>
       ${more}
     </div></section>`;
@@ -885,7 +910,7 @@ function renderLandingNavigation(page) {
     <div class="container site-header-inner">
       <a class="brand premium-brand" href="/" aria-label="Apex Wellness home"><img src="/assets/images/apex-icon-as-a-lockup-20261026.svg" width="172" height="98" alt="Apex Wellness"></a>
       <nav class="landing-nav" aria-label="Booking">
-        ${bookOnlineLinkMarkup("nav-cta")}
+        ${bookingJumpMarkup("nav-cta")}
       </nav>
     </div>
   </header>`;
@@ -997,7 +1022,7 @@ function renderDocument(pageKey, page, jsonLd, { noIndex = false, mainOverride =
   ${page.landing ? renderLandingNavigation(page) : renderNavigation(page)}
   ${mainOverride || renderMain(pageKey, page)}
   ${renderFooter(page)}
-  ${page.landing && bookOnlineUrl() ? `<div class="booking-bar">${bookOnlineLinkMarkup("button")}<a class="booking-bar-call" href="${escapeHtml(site.phoneHref)}">Call</a></div>` : ""}
+  ${page.landing && bookOnlineUrl() ? `<div class="booking-bar">${bookingJumpMarkup("button")}<a class="booking-bar-call" href="${escapeHtml(site.phoneHref)}">Call</a></div>` : ""}
   ${renderSiteHelp(page)}
 </body>
 </html>
@@ -1082,7 +1107,9 @@ function buildHeaders() {
     "font-src 'self'",
     "form-action 'self'",
     "frame-ancestors 'none'",
-    "frame-src https://www.googletagmanager.com https://td.doubleclick.net",
+    // The booking pages embed Tebra's hosted scheduler (owner request November 28, 2026). Only that exact
+    // origin is added, and only to frame-src: Tebra's own scripts run inside its frame under its own rules.
+    `frame-src https://www.googletagmanager.com https://td.doubleclick.net${bookingFrameOrigin() ? ` ${bookingFrameOrigin()}` : ""}`,
     `img-src 'self' data: ${googleTagHosts}`,
     "manifest-src 'self'",
     "media-src 'self'",
